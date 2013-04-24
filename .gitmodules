@@ -1,0 +1,3 @@
+[submodule "src/StarORF"]
+    path=src/StarORF
+    url=git@github.com:starteam/starorf_html.git
