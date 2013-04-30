@@ -6,5 +6,3 @@ To test StarX widgets clone the repository, run serve.sh (requires Python Simple
 Point your favorite browser to http://localhost:8000/ to navigate developer samples.
 
 Navigate wiki to learn more about how to intagrate StarX widgets into edX platform.
-
-
