@@ -1,7 +1,7 @@
 $(function(){
 	window._starx_debug = [] ;
 	//var base_url = 'http://starapp.mit.edu/test/';
-	var base_url = 'http://localhost:8000/StarX/';
+	var base_url = 'http://localhost:8002/StarX/';
 	function wait_for_require(callback)
 	{
 		setTimeout( function() {
