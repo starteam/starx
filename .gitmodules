@@ -3,4 +3,4 @@
 	url = git@github.com:starteam/starorf_html.git
 [submodule ".idea"]
 	path = .idea
-	url = git@github.com:iceraj/starorfx_idea.git
+	url = git@github.com:iceraj/starx_idea.git
