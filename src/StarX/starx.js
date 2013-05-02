@@ -39,6 +39,7 @@ $(function(){
 			});
 			require( [data.StarX] , function( StarX ) { 
 				StarX.configure(data);
+
 			} ) ;
 			return "<span id='"+id+"'>" + str.substr(2, str.length - 4 ) + "</span>";
 			} else {
@@ -99,6 +100,7 @@ $(function(){
 				
 		});
 		in_load = false;
+
 	}
 	
 	function bind()
@@ -111,5 +113,6 @@ $(function(){
 	}
 
 	load_require_js(bind);
+
 });
 
