@@ -3,16 +3,23 @@
          <meta charset="UTF-8">
          <title>StarBiochem Version 0.01</title>
          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-         <script type="text/javascript" src="jsmol/JSmol.min.js"></script>
-         
+         <!--
+         <script type="text/javascript" src="jsmol/js/JSmoljQuery.js"></script>
+         <script type="text/javascript" src="jsmol/js/JSmolCore.js"></script>
+         <script type="text/javascript" src="jsmol/js/JSmol.js"></script>
+         <script type="text/javascript" src="jsmol/js/JSmolApplet.js"></script>
+         <script type="text/javascript" src="jsmol/js/JSmolControls.js"></script>
+         <script type="text/javascript" src="jsmol/js/JSmolApi.js"></script>
+         <script type="text/javascript" src="jsmol/js/j2sjmol.js"></script>-->
     </head>
 
     <body>
         <h1>StarX demo page</h1>
         <div>{["StarX":"StarBiochem", "width":500, "height":500,"color":"red"]}</div>
-        
+        <div id='jmol'></div>
+        Rest of the text
         	<script>
-	function this_context()
+	function this_context(id)
 	{
 	
  	jmol_isReady = function(applet) {
@@ -42,33 +49,14 @@ console.log(Jmol._getElement(viewer_addr));
 	info.script = "set antialiasDisplay;load jsmol/data/caffeine.mol;";
 	info.disableJ2SLoadMonitor = true;
 	info.disableInitialConsole = true;
-	Jmol.getApplet('viewer', info);
+    window.Qmol = Jmol;
+    console.info( "Qmol 1 ?" + window.Qmol ) ;
+	Jmol.setXHTML(id);
+	Jmol.getApplet(id, info);
+    console.info( "Qmol 2 ?" + window.Qmol ) ;
 	}
 
-	$(function() {
-	
-	function wait_for_require(callback)
-	{
-		alert( "HERE " + typeof( Jmol ) ) ;
-		setTimeout( function() {
-			if( typeof(Jmol)!='undefined' )
-			{
-				callback();
-			} else {
-				wait_for_require(callback);
-				console.info( "Wait for cvallback" ) ;
-			}
-		}, 20 ) ;
-	}
-	
-	alert( "HERE" ) ;
-	wait_for_require(function() { 
-	
-	console.info( "Got back! " + Jmol ) ; 
-		this_context();
-	} ) ;
-	
-	} ) ;
+    console.info( "What is defined?" ) ;
 	</script>
         
         <script src='StarX/starx.js'></script>

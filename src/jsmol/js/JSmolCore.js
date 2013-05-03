@@ -104,7 +104,6 @@ Jmol = (function(document) {
 	}
 })(document);
 
-
 (function (Jmol, $) {
 
 // this library is organized into the following sections:
@@ -1415,3 +1414,5 @@ Jmol._setDraggable = function(Obj) {
 }
 
 })(Jmol, jQuery);
+
+window.Jmol = Jmol;

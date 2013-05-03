@@ -22,7 +22,6 @@
 //  JSmolGLmol.js
 //  
 //  are optional 
-
 ;(function (Jmol) {
 
 	Jmol._getCanvas = function(id, Info, checkOnly, checkWebGL, checkHTML5) {
@@ -413,7 +412,7 @@
 	  	return;
 	  if (!trigger) {
 			Jmol._execLog += ("settimeout for " + es[0][0]._id + " " + es[0][3] + " len=" + es.length + "\n")
-		  setTimeout("Jmol.__nextExecution(true)",10)
+		  setTimeout("console.info(window.Qmol);Jmol.__nextExecution(true)",10)
 	  	return;
 	  }
 	  var e = es.shift();

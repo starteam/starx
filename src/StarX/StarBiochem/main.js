@@ -7,7 +7,7 @@ define([], function() {
     var viewer;
 
     function parse_config(config_obj) {
-//        config.element_id = config_obj.element_id;
+        config.element_id = config_obj.element_id;
         console.info( "Hi from StarBiochem.js ");
         console.log(config.element_id) ;
 
@@ -26,14 +26,20 @@ define([], function() {
     }
 
     jmol_isReady = function(applet) {
-        var element = $('#' + config.element_id);
+        var element = $('#' + config.element_id+'_Chucksbutton');
+        element.append( "Hello World" ) ;
+        //return ;
 
-        element.append("<style>" + viewer_addr + " {background-color:rgba(122,122,0,0.5); position:absolute; top:0px; left:0px;}</style>");
-        element.append("<button id='starBiochemX_UI' onclick='javascript:onClickFunction(" + myviewer + ")'>isosurface vdw 4 etc</button>");
+//        element.append("<style>" + viewer_addr + " {background-color:rgba(122,122,0,0.5); position:absolute; top:0px; left:0px;}</style>");
+        element.append("<button id='starBiochemX_UI'>isosurface vdw 4 etc</button>");
         element.append("<style>#starBiochemX_UI {background-color:rgba(0,0,122,0.1); position:absolute; top:10px; left:10px;}</style>HELLO WORLD");
+    	console.log("Am I here?" + element.html());
     	$('#starBiochemX_UI').css('z-index',2);
     	console.log(Jmol._getElement(element));
-//    	Jmol._getElement(applet, "appletdiv").style.border="1px solid blue";
+    	$('#starBiochemX_UI').click( function() {
+    		alert( "click on button");
+    	} );
+//    	Jmol._getElement(applet, "appletdiv").style;.border="1px solid blue";
     }	
 
     var toggle = true;
@@ -53,16 +59,21 @@ define([], function() {
     
     function initialize_UI() {
         var element = $('#' + config.element_id);
-        
-        viewer = Jmol.getApplet('viewer', config);
+        element.append(' <script type="text/javascript" src="jsmol/js/JSmoljQuery.js"></script> <script type="text/javascript" src="jsmol/js/JSmolCore.js"></script> <script type="text/javascript" src="jsmol/js/JSmol.js"></script> <script type="text/javascript" src="jsmol/js/JSmolApplet.js"></script> <script type="text/javascript" src="jsmol/js/JSmolControls.js"></script> <script type="text/javascript" src="jsmol/js/JSmolApi.js"></script> <script type="text/javascript" src="jsmol/js/j2sjmol.js"></script>');
+        element.append(' <div id="'+config.element_id+'_Chucksbutton"></div>');
+        Jmol.setXHTML( config.element_id ) ;     
+        viewer = Jmol.getApplet(config.element_id, config);
+//        setTimeout( function() {
+//            console.info( element ) ;
+////        this_context('jmol');
+//           this_context(config.element_id);
+//    },100);
     }
 
 return {
- configure2: function( config ) {
+ configure: function( config ) {
      parse_config(config);
      initialize_UI();
      console.info("StarBiochem/main.js");
  },
- configure: function(config) {
- }
 }});
