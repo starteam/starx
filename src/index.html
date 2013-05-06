@@ -1,57 +1,12 @@
 <html>
-    <head>
-         <meta charset="UTF-8">
-         <title>StarBiochem Version 0.01</title>
-         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    </head>
+	<head>
+		<meta charset="UTF-8">
+		<title>StarBiochem Version 0.02</title>
+	</head>
 
-    <body>
-        <h1>StarX demo page</h1>
-        <div>{["StarX":"StarBiochem", "width":500, "height":500,"color":"red"]}</div>
-        <div id='jmol'></div>
-        Rest of the text
-        	<script>
-	function this_context(id)
-	{
-	
- 	jmol_isReady = function(applet) {
-var myviewer = $("div").data("myviewer");
-var viewer_addr = "#" + myviewer;
-
-$(viewer_addr).append("<style>" + viewer_addr + " {background-color:rgba(122,122,0,0.5); position:absolute; top:0px; left:0px;}</style>");
-$(viewer_addr).append("<button id='starBiochemX_UI' onclick='javascript:onClickFunction(" + myviewer + ")'>isosurface vdw 4 etc</button>");
-$(viewer_addr).append("<style>#starBiochemX_UI {background-color:rgba(0,0,122,0.1); position:absolute; top:10px; left:10px;}</style>HELLO WORLD");
-$('#starBiochemX_UI').css('z-index',2);
-console.log(Jmol._getElement(viewer_addr));
-//Jmol._getElement(applet, "appletdiv").style.border="1px solid blue";
-}	
- 	
- 	
-	var info = {
-		width: 500,
-		height: 500,
-		color: "red",
-	};
-	info.debug = false;
-	info.addSelectionOptions = false;
-	info.serverURL = "http://chemapps.stolaf.edu/jmol/jsmol/jsmol.php";
-	info.use = "HTML5";
-	info.j2sPath = "jsmol/j2s";
-	info.readyFunction = jmol_isReady;
-	info.script = "set antialiasDisplay;load jsmol/data/caffeine.mol;";
-	info.disableJ2SLoadMonitor = true;
-	info.disableInitialConsole = true;
-    window.Qmol = Jmol;
-    console.info( "Qmol 1 ?" + window.Qmol ) ;
-	Jmol.setXHTML(id);
-	Jmol.getApplet(id, info);
-    console.info( "Qmol 2 ?" + window.Qmol ) ;
-	}
-
-    console.info( "What is defined?" ) ;
-	</script>
-        
-        <script src='StarX/starx.js'></script>
+	<body>
+		<div>{["StarX":"StarBiochem", "width":500, "height":500,"color":"red"]}</div>
     </body>
-
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src='StarX/starx.js'></script>
 </html>
