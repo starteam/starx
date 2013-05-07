@@ -1,0 +1,46 @@
+To use starx.js you need the following (StarBiochem example):
+
+	starx project branch (e.g. starx chuck) from github
+		- src
+			-- index.html (an example of how to start your star widget (e.g. StarBiochem))
+			-- jsmol (essential stuff for JSmol)
+				--- data (files that can be loaded by JSmol
+				--- j2s (Jmol files converted to JavaScript)
+				--- js (essential stuff)
+				--- Jmol.properties
+				--- JSmol.min.core.js
+				--- JSmol.min.js)
+			-- ... (other definitions of star widgets)
+			-- StarBiochem.js (definition of StarBiochem star widget)
+			-- StarX
+				... (other star widgets )
+				--- StarBiochem (JavaScript for loading JSmol and creating StarBiochem UI)
+					--- main.js
+					--- other supporting js files for StarBiochem
+
+
+
+Techniques:
+
+DEBUGGING:
+
+Originally used in StarBiochem.js to determine if the starx configuration was loading StarBiochem
+$('#' + config.element_id).html(StarBiochem ? "Loading StarBiochem" : "Failed initializing StarBiochem");
+
+
+CODING CONVENTIONS:
+
+Originally used in starx.js to show what was passed with config. Note use of try/catch
+	function parse(str)
+	{
+		try {
+			var json = "{" + str.substr(2,str.length-4) + "}" ;
+			var data = JSON.parse(json);
+			console.info( data ) ;  
+		} catch(e) {
+			return "STARX: ERROR PARSING: " + str.substr(2,str.length-4) + ":ERROR PARSING :STARX" ;
+		}
+	}
+			
+			
+			
