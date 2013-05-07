@@ -5,7 +5,8 @@ define([], function() {
 	function parse_config(config_obj) 
 	{
 		jsmol_state.element_id = config_obj.element_id;
-
+		jsmol_state.element_id_ui = config_obj.element_id + "_ui";
+		jsmol_state.element_id_ui_button = config_obj.element_id + "_ui_button";
 		jsmol_state.width = config_obj.width ? config_obj.width : 300;
 		jsmol_state.height = config_obj.height ? config_obj.height : 300;
 		jsmol_state.color = config_obj.color ? config_obj.color : "green";
@@ -23,45 +24,58 @@ define([], function() {
 
 	jmol_isReady = function(applet) 
 	{
-		var element_ui = $('#' + jsmol_state.element_id + '_ui');
-		element_ui.append(" <button id='" + jsmol_state.element_id + "_ui_isosurface'>isosurface vdw 4 etc</button>");
-		init_ui_isosurface();
-		element_ui.append(" <style>" + jsmol_state.element_id + '_ui' + " {background-color:rgba(0,0,122,0.1); position:absolute; top:10px; left:10px;}</style>");
-		element_ui.css('z-index',2);
+		var element = $('#' + jsmol_state.element_id);
+		initialize_StarBiochem_UI();
+		initialize_StarBiochem_UI_Behavior();
+		initialize_StarBiochem_UI_LAF();
 	}
 
-	function init_ui_isosurface() 
+	function initialize_StarBiochem_UI() 
 	{
-		var viewer = jsmol_state.jsmol;
-		var element_ui_isosurface = $('#' + jsmol_state.element_id + '_ui_isosurface');
-		element_ui_isosurface.click( 
-			function() 
-			{
-				if(jsmol_state.toggle) {
-					jsmol_state.toggle = false;
-					Jmol.script (viewer, "select *; rotate;");
-					Jmol.script (viewer, "select *; isosurface vdw;");		
+		$('#' + jsmol_state.element_id).append("<div id='" + jsmol_state.element_id + "_ui'></div>");
+		$('#' + jsmol_state.element_id_ui).append(" <button id='" + jsmol_state.element_id_ui_button + "'>isosurface vdw 5 etc</button>");
+	}
+
+	function initialize_StarBiochem_UI_Behavior()
+	{
+		$('#' + jsmol_state.element_id_ui_button).click( 
+				function() 
+				{
+					var viewer = jsmol_state.jsmol;
+					if(jsmol_state.toggle) {
+						jsmol_state.toggle = false;
+						Jmol.script (viewer, "select *; rotate;");
+						Jmol.script (viewer, "select *; isosurface vdw;");		
+					}
+					else {
+						jsmol_state.toggle = true;
+						Jmol.script (viewer, "select *; rotate 0;");
+						Jmol.script (viewer, "select *; isosurface DELETE;");
+					};
 				}
-				else {
-					jsmol_state.toggle = true;
-					Jmol.script (viewer, "select *; rotate 0;");
-					Jmol.script (viewer, "select *; isosurface DELETE;");
-				};
-			}
 		);
 	}
-    
-	function initialize_UI() {
-		var element = $('#' + jsmol_state.element_id);
-		element.append(' <script type="text/javascript" src="jsmol/js/JSmoljQuery.js"></script> <script type="text/javascript" src="jsmol/js/JSmolCore.js"></script> <script type="text/javascript" src="jsmol/js/JSmol.js"></script> <script type="text/javascript" src="jsmol/js/JSmolApplet.js"></script> <script type="text/javascript" src="jsmol/js/JSmolControls.js"></script> <script type="text/javascript" src="jsmol/js/JSmolApi.js"></script> <script type="text/javascript" src="jsmol/js/j2sjmol.js"></script>');
-		element.append(" <style>" + jsmol_state.element_id + " {background-color:rgba(122,122,0,0.5); position:absolute; top:0px; left:0px;}</style>");
-		Jmol.setXHTML( jsmol_state.element_id ) ;     
-		jsmol_state.jsmol = Jmol.getApplet(jsmol_state.element_id, jsmol_state);
+	
+	function initialize_StarBiochem_UI_LAF() 
+	{
+		var element_ui_button = $('#' + jsmol_state.element_id_ui_button);
+		console.log("element_ui_button: " + element_ui_button)
 
-		element.append(" <div id='" + jsmol_state.element_id + "_ui'></div>");
-		element.style.border="1px solid blue";
+//		element_ui_button.style.border("1px solid blue");	
+//		element_ui_button.append(" <style>" + jsmol_state.element_id + "_ui_button" + " {background-color:rgba(122,122,0,0.5); position:relative; top:10px; left:10px;}</style>");
+//		element_ui_button.append(" <style>" + jsmol_state.element_id + "_ui_isosurface {background-color:rgba(0,0,122,0.9); position:absolute; top:10px; left:10px;}</style>");
+//		element_ui_button.css('z-index',2);
 	}
 
+	function initialize_UI()
+	{
+		var element = $('#' + jsmol_state.element_id);
+		element.append('<script type="text/javascript" src="jsmol/js/JSmoljQuery.js"></script> <script type="text/javascript" src="jsmol/js/JSmolCore.js"></script> <script type="text/javascript" src="jsmol/js/JSmol.js"></script> <script type="text/javascript" src="jsmol/js/JSmolApplet.js"></script> <script type="text/javascript" src="jsmol/js/JSmolControls.js"></script> <script type="text/javascript" src="jsmol/js/JSmolApi.js"></script> <script type="text/javascript" src="jsmol/js/j2sjmol.js"></script>');
+		Jmol.setXHTML( jsmol_state.element_id ) ;   
+		jsmol_state.jsmol = Jmol.getApplet(jsmol_state.element_id, jsmol_state);
+	}
+
+	
 return {
 	configure: function( config ) {
 		parse_config(config);
