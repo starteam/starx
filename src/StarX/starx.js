@@ -30,7 +30,6 @@ $(function(){
 		try {
 			var json = "{" + str.substr(2,str.length-4) + "}" ;
 			var data = JSON.parse(json);
-			console.info( data ) ;
 			var id = "STARX_"+Math.round(1000000*Math.random());
 			data.element_id = id ;
 			if(window.requirejs) {
@@ -41,7 +40,8 @@ $(function(){
 				StarX.configure(data);
 
 			} ) ;
-			return "<span id='"+id+"'>" + str.substr(2, str.length - 4 ) + "</span>";
+//			return "<span id='"+id+"'>" + str.substr(2, str.length - 4 ) + "</span>";
+			return "<span id='"+id+"'></span>";
 			} else {
 				return "REQUIRE NOT THERE" ;
 			}
