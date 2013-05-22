@@ -1,7 +1,7 @@
 $(function(){
 	window._starx_debug = [] ;
 	//var base_url = 'http://starapp.mit.edu/test/';
-	var base_url = 'http://localhost:8002/StarX/';
+	var base_url = 'http://localhost:8002/';
 	function wait_for_require(callback)
 	{
 		setTimeout( function() {
@@ -18,7 +18,7 @@ $(function(){
 	{
 		var head = document.getElementsByTagName('head')[0];
     		var script = document.createElement('script');
-		var url = base_url + 'require.js';
+		var url = base_url + 'StarX/require.js';
 		script.src = url;
 		head.appendChild(script);
 //		document.body.appendChild(script);
@@ -36,7 +36,7 @@ $(function(){
 			requirejs.config({
 				baseUrl: base_url 
 			});
-			require( [data.StarX] , function( StarX ) { 
+			require( ['StarX/'+data.StarX] , function( StarX ) {
 				StarX.configure(data);
 
 			} ) ;
