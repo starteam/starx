@@ -1,4 +1,4 @@
-define(['StarBiochem/main'], function (StarBiochem) {
+define(['../StarBiochem/main'], function (StarBiochem) {
     return {
         configure: function (config) {
             if (StarBiochem) {
