@@ -25,10 +25,7 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             else:
                 return self.list_directory(path)
         for key in self.mapping:
-            print key
-            print self.mapping[key]
             path = re.sub(key, self.mapping[key], path)
-        print path
         ctype = self.guess_type(path)
         try:
             # Always read in binary mode. Opening files in text mode may cause
@@ -37,9 +34,11 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             f = open(path, 'rb')
         except IOError:
             self.send_error(404, "File not found")
+            print "File not found: {0}".format(path)
             return None
         self.send_response(200)
         self.send_header("Content-type", ctype)
+        self.send_header("Cache-Control", "no-cache no-store")
         fs = os.fstat(f.fileno())
         self.send_header("Content-Length", str(fs[6]))
         self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
