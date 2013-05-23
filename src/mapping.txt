@@ -1,1 +1,1 @@
-/StarORF/ /../../starorf_html/src/
+/StarORF/ /../starorf_html/src/
