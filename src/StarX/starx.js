@@ -89,7 +89,10 @@ starx_ready(function () {
                 test_and_add(list[i - 1], elements);
             }
         }
+        if( list.length > 0 )
+        {
         test_and_add(list[list.length - 1], elements);
+        }
         $(elements).each(function () {
             var element = $(this);
             var html = element.html();
