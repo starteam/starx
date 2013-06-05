@@ -1,7 +1,18 @@
-$(function () {
+function starx_ready(fn) {
+    if( typeof( $ ) != 'undefined' )
+    {
+        $(fn);
+    }
+    else {
+        alert( "JQuery ($) is not defined in loading document.");
+        fn();
+    }
+}
+
+starx_ready(function () {
     window._starx_debug = [];
     //var base_url = 'http://starapp.mit.edu/test/';
-    var base_url = 'http://localhost:8002/';
+    var base_url = ''; // 'http://localhost:8002/';
 
     function wait_for_require(callback) {
         setTimeout(function () {
@@ -33,8 +44,8 @@ $(function () {
                 requirejs.config({
                     baseUrl: base_url,
                     paths: {
-                        "jquery": "http://code.jquery.com/jquery-2.0.0.min",
-                        "jquery-ui": "http://code.jquery.com/ui/1.10.3/jquery-ui.min",
+                        "jquery": base_url + "StarX/lib/jquery-2.0.0.min",
+                        "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
                         "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui"
                     },
                     map: {
@@ -78,7 +89,10 @@ $(function () {
                 test_and_add(list[i - 1], elements);
             }
         }
+        if( list.length > 0 )
+        {
         test_and_add(list[list.length - 1], elements);
+        }
         $(elements).each(function () {
             var element = $(this);
             var html = element.html();
