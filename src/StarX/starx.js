@@ -1,10 +1,9 @@
 function starx_ready(fn) {
-    if( typeof( $ ) != 'undefined' )
-    {
+    if (typeof( $ ) != 'undefined') {
         $(fn);
     }
     else {
-        alert( "JQuery ($) is not defined in loading document.");
+        alert("JQuery ($) is not defined in loading document.");
         fn();
     }
 }
@@ -89,9 +88,8 @@ starx_ready(function () {
                 test_and_add(list[i - 1], elements);
             }
         }
-        if( list.length > 0 )
-        {
-        test_and_add(list[list.length - 1], elements);
+        if (list.length > 0) {
+            test_and_add(list[list.length - 1], elements);
         }
         $(elements).each(function () {
             var element = $(this);
