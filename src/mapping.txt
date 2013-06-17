@@ -1,2 +1,3 @@
 /StarORF/ /../starorf_html/src/
 /StarDistanceMap/ /../stardistancemap_html/src/
+/StarBiochem/ /../../starbiochem_html/StarBiochem/
