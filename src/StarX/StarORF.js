@@ -1,4 +1,4 @@
-define(['StarORF/main','jquery','jquery-ui', 'css!jquery-ui-css'], function (StarORF,$) {
+define(['StarORF/main','jquery'], function (StarORF,$) {
     return {
         configure: function (config) {
             $('#' + config.element_id).html(StarORF ? "Loading StarORF" : "Failed initializing StarORF");

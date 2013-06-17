@@ -1,10 +1,9 @@
 function starx_ready(fn) {
-    if( typeof( $ ) != 'undefined' )
-    {
+    if (typeof( $ ) != 'undefined') {
         $(fn);
     }
     else {
-        alert( "JQuery ($) is not defined in loading document.");
+        alert("JQuery ($) is not defined in loading document.");
         fn();
     }
 }
@@ -54,9 +53,45 @@ starx_ready(function () {
                         }
                     }
                 });
-                require(['StarX/' + data.StarX], function (StarX) {
-                    StarX.configure(data);
+                var errorHandler = requirejs.onError;
+                requirejs.onError = function (error) {
+                    // this is fallback if StarX/MODULE.js is not defined
+                    // we try to do that code for you... i.e. auto-load
+                    if (error.requireType == 'scripterror') {
+                        requirejs.onError = errorHandler;
 
+                        var flag = false;
+                        for (var m in error.requireModules) {
+                            if (error.requireModules[m].indexOf('StarX/') == 0) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            require(['../' + data.StarX + '/main'], function (project) {
+                                if (project) {
+                                    if (project.configure) {
+                                        project.configure(data);
+                                    }
+                                    else if (project[data.StarX]) {
+                                        new project[data.StarX](data);
+                                    }
+                                }
+                                else {
+                                    document.getElementById(config.element_id).text = "project StarDistanceMap not found";
+                                }
+                            });
+                        } else {
+                            errorHandler(error);
+                        }
+                    }
+                    else {
+                        errorHandler(error);
+                    }
+                }
+                require(['StarX/' + data.StarX], function (StarX) {
+                    requirejs.onError = errorHandler;
+                    StarX.configure(data);
                 });
 //			return "<span id='"+id+"'>" + str.substr(2, str.length - 4 ) + "</span>";
                 return "<span id='" + id + "'></span>";
@@ -89,9 +124,8 @@ starx_ready(function () {
                 test_and_add(list[i - 1], elements);
             }
         }
-        if( list.length > 0 )
-        {
-        test_and_add(list[list.length - 1], elements);
+        if (list.length > 0) {
+            test_and_add(list[list.length - 1], elements);
         }
         $(elements).each(function () {
             var element = $(this);
