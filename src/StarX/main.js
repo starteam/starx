@@ -16,6 +16,7 @@ define(['require','exports','jquery'], function( require, exports , $ ) {
                     paths: {
                         "jquery": base_url + "StarX/lib/jquery-1.10.1.min",
                         "libs/jquery": "StarDistanceMap/libs/jquery",
+                        "libs/soyutils":"StarX/lib/soyutils",
                         "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
                         "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui"
                     },
