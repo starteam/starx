@@ -1,2 +1,0 @@
-/StarORF/ /../../starorf_html/src/
-/StarDistanceMap/ /../../stardistancemap_html/src/

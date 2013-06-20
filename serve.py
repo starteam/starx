@@ -54,10 +54,12 @@ if __name__ == '__main__':
         mapping[key] = val
     f.close()
     del f
+    os.chdir("src")
     PORT = 8002
     h = MyHandler
     h.mapping = mapping
     httpd = SocketServer.TCPServer(("", PORT), h)
     print "serving at port", PORT
-    httpd.serve_forever()
+    while True:
+        httpd.handle_request()
 
