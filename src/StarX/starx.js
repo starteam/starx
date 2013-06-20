@@ -43,7 +43,8 @@ starx_ready(function () {
                 requirejs.config({
                     baseUrl: base_url,
                     paths: {
-                        "jquery": base_url + "StarX/lib/jquery-2.0.0.min",
+                        "jquery": base_url + "StarX/lib/jquery-1.10.1.min",
+                        "libs/jquery": "StarDistanceMap/libs/jquery",
                         "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
                         "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui"
                     },
@@ -74,7 +75,8 @@ starx_ready(function () {
                                         project.configure(data);
                                     }
                                     else if (project[data.StarX]) {
-                                        new project[data.StarX](data);
+                                        q = new project[data.StarX]();
+                                        q.configure(data);
                                     }
                                 }
                                 else {
