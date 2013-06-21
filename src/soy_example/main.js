@@ -1,4 +1,4 @@
-define(['jquery','autoload_example/test.soy'], function ($,test) {
+define(['jquery','soy_example/test.soy'], function ($,test) {
     console.info("soy is:" + test);
     return {
         configure: function (config) {
