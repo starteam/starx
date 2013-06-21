@@ -9,7 +9,6 @@ import os
 def run(input_file,cp_dir):
     intermediate_file = input_file + ".bare.js"
     output_file = input_file + ".js"
-    print os.getcwd();
     ret = subprocess.call(
         ["java", "-jar", "{0}/tools/SoyToJsSrcCompiler.jar".format(cp_dir), "--shouldProvideRequireSoyNamespaces",
          "--shouldDeclareTopLevelNamespaces", "--shouldGenerateJsdoc", "--outputPathFormat",
