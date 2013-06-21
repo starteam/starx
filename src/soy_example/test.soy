@@ -1,0 +1,27 @@
+{namespace test}
+
+/**
+ * Says hello to the world.
+        @param my_list
+*/
+{template .helloWorld}
+        <h1>Hello world!</h1>
+        <b>Test</b>
+        <ul>
+        {foreach $element in $my_list}
+            <li><em>{$element}</em></li>
+        {/foreach}
+        </ul>
+        {call .footer}
+        {/call}
+{/template}
+
+
+/**
+ * Says hello to the world.
+*/
+{template .footer}
+        <b>Produced by STAR team. </b>
+{/template}
+
+
