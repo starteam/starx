@@ -6,12 +6,12 @@ import re
 import os
 
 
-def run(input_file):
+def run(input_file,cp_dir):
     intermediate_file = input_file + ".bare.js"
     output_file = input_file + ".js"
     print os.getcwd();
     ret = subprocess.call(
-        ["java", "-jar", "tools/SoyToJsSrcCompiler.jar", "--shouldProvideRequireSoyNamespaces",
+        ["java", "-jar", "{0}/tools/SoyToJsSrcCompiler.jar".format(cp_dir), "--shouldProvideRequireSoyNamespaces",
          "--shouldDeclareTopLevelNamespaces", "--shouldGenerateJsdoc", "--outputPathFormat",
          intermediate_file, input_file])
     inp = open(intermediate_file, 'r')
@@ -41,4 +41,4 @@ def run(input_file):
 
 
 if __name__ == '__main__':
-    run(sys.argv[1])
+    run(sys.argv[1], os.path.dirname(sys.argv[0]))
