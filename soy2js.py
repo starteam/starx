@@ -23,7 +23,7 @@ def run(input_file,cp_dir):
         match = re.match(r'goog.provide\(\'([^\']*)\'\)', line)
         if match:
             package = match.group(1)
-            line = "define(['require','exports','libs/soyutils'],function(require,exports,soy){{\n var {0}= {0} ? {0} : {{}};".format(package)
+            line = "define(['require','exports','lib/soyutils'],function(require,exports,soy){{\n var {0}= {0} ? {0} : {{}};".format(package)
             need_close = True
         if re.match(r'goog.require', line):
             line = ''
