@@ -54,7 +54,8 @@ define(['require','exports','jquery'], function( require, exports , $ ) {
                                     }
                                 }
                                 else {
-                                    document.getElementById(config.element_id).text = "project StarDistanceMap not found";
+                                    var config = data;
+                                    document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
                                 }
                             });
                         } else {

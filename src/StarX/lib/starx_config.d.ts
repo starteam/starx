@@ -1,4 +1,4 @@
-declare interface StarXConfig {
+interface StarXConfig {
     element_id: string;
     StarX: string;
 }
