@@ -1,7 +1,7 @@
 // This file was automatically generated from test.soy.
 // Please don't edit this file by hand.
 
-define(['require','exports','libs/soyutils'],function(require,exports,soy){
+define(['require','exports','lib/soyutils'],function(require,exports,soy){
  var test= test ? test : {};
 
 
