@@ -1,6 +1,27 @@
 (function () {
 
-    var base_url = 'http://edx-starx:8002/';
+    function get_base_url()
+    {
+        var module = "StarX/main";
+        var module_ext = ".js";
+        var base_url = 'http://starx.mit.edu/';
+        var main_url;
+        var scripts = document.getElementsByTagName('script');
+        for( var i = 0; i < scripts.length ; i++ )
+        {
+            var script = scripts[i];
+            if( script.getAttribute('data-requiremodule') == module )
+            {
+                main_url = script.getAttribute('src');
+            }
+        }
+        if( main_url )
+        {
+            base_url = main_url.substring(0,main_url.length - module.length - module_ext.length );
+        }
+        return base_url;
+    }
+    var base_url = get_base_url();
 
     var define_module = function () {
         requirejs.config({
