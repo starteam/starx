@@ -1,6 +1,7 @@
 (function () {
 
-    var base_url = 'http://edx-starx:8002/'
+    var base_url = 'http://edx-starx:8002/';
+
     var define_module = function () {
         requirejs.config({
             baseUrl: base_url,
@@ -19,14 +20,30 @@
                 }
             }
         });
+        require(['StarX/main'], function (StarX) {
+            console.info( "StarX/main loaded");
+        });
+    };
+
+    var wait = function()
+    {
+        console.info( "waiting for require...");
+        if(! window.require )
+        {
+            setTimeout( wait , 100 );
+        }
+        else
+        {
+            define_module();
+        }
     }
 
     var load_require = function () {
         var head = document.getElementsByTagName('head').item(0);
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
-        script.setAttribute('src', 'http://starx.mit.edu/StarX/');
-        script.onload = define_module;
+        script.setAttribute('src', 'http://starx.mit.edu/StarX/require.js');
+        script.onload = wait;
         head.appendChild(script);
     }
 
@@ -39,7 +56,3 @@
 
 
 })();
-
-
-})
-();

@@ -28,49 +28,21 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                         }
                     }
                 });
-                var errorHandler = requirejs.onError;
-                requirejs.onError = function (error) {
-                    // this is fallback if StarX/MODULE.js is not defined
-                    // we try to do that code for you... i.e. auto-load
-                    if (error.requireType == 'scripterror') {
-                        requirejs.onError = errorHandler;
-
-                        var flag = false;
-                        for (var m in error.requireModules) {
-                            if (error.requireModules[m].indexOf('StarX/') == 0) {
-                                flag = true;
-                                break;
-                            }
+                require(['../' + data.StarX + '/main'], function (project) {
+                    if (project) {
+                        if (project.configure) {
+                            project.configure(data);
                         }
-                        if (flag) {
-                            require(['../' + data.StarX + '/main'], function (project) {
-                                if (project) {
-                                    if (project.configure) {
-                                        project.configure(data);
-                                    }
-                                    else if (project[data.StarX]) {
-                                        q = new project[data.StarX]();
-                                        q.configure(data);
-                                    }
-                                }
-                                else {
-                                    var config = data;
-                                    document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
-                                }
-                            });
-                        } else {
-                            errorHandler(error);
+                        else if (project[data.StarX]) {
+                            q = new project[data.StarX]();
+                            q.configure(data);
                         }
                     }
                     else {
-                        errorHandler(error);
+                        var config = data;
+                        document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
                     }
-                }
-                require(['StarX/' + data.StarX], function (StarX) {
-                    requirejs.onError = errorHandler;
-                    StarX.configure(data);
                 });
-//			return "<span id='"+id+"'>" + str.substr(2, str.length - 4 ) + "</span>";
                 return "<span id='" + id + "'></span>";
             } else {
                 return "REQUIRE NOT THERE";
@@ -95,7 +67,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         in_load = true;
         var elements = [];
         var list = $("*:contains('{[\"StarX\":')");
-        console.info("in load");
+        //console.info("in load");
         for (var i = 1; i < list.length; i++) {
             if (!list[i - 1].contains(list[i])) {
                 test_and_add(list[i - 1], elements);
@@ -129,11 +101,12 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     function bind() {
         $('body').bind('DOMNodeInserted', function (e) {
-            console.info('element', e.target, ' changed.');
+            //console.info('element', e.target, ' changed.');
             load();
         });
         load();
     }
 
     bind();
+    exports.load = load;
 });
