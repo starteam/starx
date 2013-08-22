@@ -2,22 +2,18 @@
 
     function get_base_url()
     {
-        var module = "StarX/main";
-        var module_ext = ".js";
+        var module = "StarX/starx.js";
         var base_url = 'http://starx.mit.edu/';
         var main_url;
         var scripts = document.getElementsByTagName('script');
         for( var i = 0; i < scripts.length ; i++ )
         {
             var script = scripts[i];
-            if( script.getAttribute('data-requiremodule') == module )
+            var src = script.getAttribute('src');
+            if( src.indexOf(module) == src.length-module.length)
             {
-                main_url = script.getAttribute('src');
+                base_url = src.substring(0,src.length - module.length );
             }
-        }
-        if( main_url )
-        {
-            base_url = main_url.substring(0,main_url.length - module.length - module_ext.length );
         }
         return base_url;
     }
@@ -62,8 +58,9 @@
     var load_require = function () {
         var head = document.getElementsByTagName('head').item(0);
         var script = document.createElement('script');
+
         script.setAttribute('type', 'text/javascript');
-        script.setAttribute('src', 'http://starx.mit.edu/StarX/require.js');
+        script.setAttribute('src', get_base_url() + '/StarX/require.js');
         script.onload = wait;
         head.appendChild(script);
     }
