@@ -1,22 +1,28 @@
 (function () {
 
-    function get_base_url()
-    {
+    function get_base_url() {
         var module = "StarX/starx.js";
         var base_url = 'http://starx.mit.edu/';
         var main_url;
         var scripts = document.getElementsByTagName('script');
-        for( var i = 0; i < scripts.length ; i++ )
-        {
+        for (var i = 0; i < scripts.length; i++) {
             var script = scripts[i];
             var src = script.getAttribute('src');
-            if( src.indexOf(module) == src.length-module.length)
-            {
-                base_url = src.substring(0,src.length - module.length );
+            if (src) {
+                if (src.indexOf(module) == src.length - module.length) {
+                    base_url = src.substring(0, src.length - module.length);
+                    break;
+                }
+                if( src.indexOf(module+"?") != -1 )
+                {
+                    base_url = src.substring(0,src.indexOf(module+"?"));
+                    break;
+                }
             }
         }
         return base_url;
     }
+
     var base_url = get_base_url();
 
     var define_module = function () {
@@ -38,19 +44,16 @@
             }
         });
         require(['StarX/main'], function (StarX) {
-            console.info( "StarX/main loaded");
+            console.info("StarX/main loaded");
         });
     };
 
-    var wait = function()
-    {
-        console.info( "waiting for require...");
-        if(! window.require )
-        {
-            setTimeout( wait , 100 );
+    var wait = function () {
+        console.info("waiting for require...");
+        if (!window.require) {
+            setTimeout(wait, 100);
         }
-        else
-        {
+        else {
             define_module();
         }
     }
