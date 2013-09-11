@@ -29,7 +29,7 @@
         requirejs.config({
             baseUrl: base_url,
             paths: {
-                "jquery": base_url + "StarX/lib/jquery-1.10.1.min",
+                "jquery": "StarX/lib/jquery-1.10.1.min",
                 "lib/jquery": "StarX/lib/jquery",
                 "lib/soyutils": "StarX/lib/soyutils",
                 "lib/google_analytics": "StarX/lib/google_analytics",
