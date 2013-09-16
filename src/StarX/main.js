@@ -43,6 +43,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 }
                 else {
+                        console.info( "Has other");
                     var config = data;
                     document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
                 }
@@ -90,8 +91,8 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                 var splits = html.split(/(\{\['+del+'StarX'+del+':.*\]\})/);
                 var new_html = '';
                 for (var i = 0; i < splits.length; i++) {
-                    if (splits[i].indexOf('{[' + del + 'StarX' + del + ':') >= 0) {
-                        new_html += parse(splits[i], del);
+                    if (splits[i].trim().indexOf('{[' + del + 'StarX' + del + ':') == 0) {
+                        new_html += parse(splits[i].trim(), del);
                     }
                     else {
                         new_html += splits[i];

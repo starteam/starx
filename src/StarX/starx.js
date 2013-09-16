@@ -1,34 +1,37 @@
 (function () {
 
-    function get_base_url()
-    {
-        var module = "StarX/main";
-        var module_ext = ".js";
+    function get_base_url() {
+        var module = "StarX/starx.js";
         var base_url = 'http://starx.mit.edu/';
         var main_url;
         var scripts = document.getElementsByTagName('script');
-        for( var i = 0; i < scripts.length ; i++ )
-        {
+        for (var i = 0; i < scripts.length; i++) {
             var script = scripts[i];
-            if( script.getAttribute('data-requiremodule') == module )
-            {
-                main_url = script.getAttribute('src');
+            var src = script.getAttribute('src');
+            if (src) {
+                if (src.indexOf(module) == src.length - module.length) {
+                    base_url = src.substring(0, src.length - module.length);
+                    break;
+                }
+                if( src.indexOf(module+"?") != -1 )
+                {
+                    base_url = src.substring(0,src.indexOf(module+"?"));
+                    break;
+                }
             }
-        }
-        if( main_url )
-        {
-            base_url = main_url.substring(0,main_url.length - module.length - module_ext.length );
         }
         return base_url;
     }
+
     var base_url = get_base_url();
 
     var define_module = function () {
         requirejs.config({
             baseUrl: base_url,
             paths: {
-                "jquery": base_url + "StarX/lib/jquery-1.10.1.min",
+                "jquery": "StarX/lib/jquery-1.10.1.min",
                 "lib/jquery": "StarX/lib/jquery",
+                "lib/underscore": "StarX/lib/underscore",
                 "lib/soyutils": "StarX/lib/soyutils",
                 "lib/google_analytics": "StarX/lib/google_analytics",
                 "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
@@ -42,19 +45,16 @@
             }
         });
         require(['StarX/main'], function (StarX) {
-            console.info( "StarX/main loaded");
+            console.info("StarX/main loaded");
         });
     };
 
-    var wait = function()
-    {
-        console.info( "waiting for require...");
-        if(! window.require )
-        {
-            setTimeout( wait , 100 );
+    var wait = function () {
+        console.info("waiting for require...");
+        if (!window.require) {
+            setTimeout(wait, 100);
         }
-        else
-        {
+        else {
             define_module();
         }
     }
@@ -62,8 +62,9 @@
     var load_require = function () {
         var head = document.getElementsByTagName('head').item(0);
         var script = document.createElement('script');
+
         script.setAttribute('type', 'text/javascript');
-        script.setAttribute('src', 'http://starx.mit.edu/StarX/require.js');
+        script.setAttribute('src', get_base_url() + '/StarX/require.js');
         script.onload = wait;
         head.appendChild(script);
     }
