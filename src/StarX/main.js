@@ -43,6 +43,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 }
                 else {
+                        console.info( "Has other");
                     var config = data;
                     document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
                 }
