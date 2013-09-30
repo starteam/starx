@@ -1,0 +1,30 @@
+{namespace test}
+
+/**
+ * Says hello to the world.
+*/
+{template .helloWorld}
+        <h1>Hello {call exports.world/}</h1>
+        <b>{call exports.test/}</b><br/>
+       {call exports.sum}
+        {param a:2/}
+        {param b:3/}
+       {/call}
+       <br/>
+       <button>{call exports.switch/}</button>
+{/template}
+
+/**
+* Say a+b = $(a+b)
+* @param a
+* @param b
+*/
+{template .sum}
+    {$a} + {$b} {call exports.is/} {$a+$b}
+{/template}
+
+/**
+*/
+{template .next_language}
+i18n_example/ne
+{/template}
