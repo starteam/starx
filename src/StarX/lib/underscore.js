@@ -4,6 +4,7 @@ define(["require", "exports", "StarX/underscore"], function(require, exports) {
 
     exports._ = _;
     window._ = _backup;
+    _.noConflict();
 
     var version = (function () {
         function version() {
