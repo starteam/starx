@@ -7,6 +7,7 @@ var underscore = require('StarX/underscore');
 declare var exports;
 exports._ = _;
 window._ = _backup;
+_.noConflict();
 
 
 export class version {
