@@ -1,45 +1,36 @@
 import google_analytics = module("google_analytics");
-declare var exports;
-declare var window;
 
-var _gaq = window._gaq;
-var _gat = window._gat;
+var str = "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');";
+var script = document.createElement("script");
+script.innerText = str;
+document.head.appendChild(script);
 
-delete window._gaq;
-delete window._gat;
+declare var ga;
 
-exports._gaq = _gaq;
-exports._gat = _gat;
-
-_gaq.push(['_setAccount', 'UA-1048253-18']);
-_gaq.push(['_trackPageview']);
+ga('create', 'UA-1048253-23', {'cookieDomain': 'none'});  // Creates a tracker.
+ga('send', 'pageview');     // Sends a pageview.
 
 export class GoogleAnalytics {
     constructor(account:string) {
-        if (google_analytics) {
-            _gaq.push(['_setAccount', account]);
+        if (ga) {
+            console.info("GA: " + account);
+            console.info(google_analytics);
+            ga('create', 'account');
         }
-        console.info("GA: ");
-        console.info(google_analytics);
 
     }
 
     setAccount(account:string) {
-        _gaq.push(['_setAccount', account]);
+        if (ga) {
+            console.info("GA2: " + account);
+            ga('create', 'account');
+        }
     }
 
     trackEvent(category:string, action:string, detail:string) {
-        _gaq.push(['_trackEvent', category, action, detail]);
-    }
-
-    version():any {
-        if (google_analytics) {
-            return google_analytics;
-        }
-        else {
-            return "";
+        if (ga) {
+            console.info("_trackEvent: " + category + " " + action + " " + detail);
+            ga('send', 'event', category, action, detail);
         }
     }
-
-
 }
