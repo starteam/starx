@@ -6,9 +6,12 @@ define(["require", "exports", "google_analytics"], function(require, exports, __
     script.innerText = str;
     document.head.appendChild(script);
 
-    ga('create', 'UA-1048253-23', { 'cookieDomain': 'none' });
-    ga('send', 'pageview');
+    var ga = window['ga'];
 
+    if (ga) {
+        ga('create', 'UA-1048253-23', { 'cookieDomain': 'none' });
+        ga('send', 'pageview');
+    }
     var GoogleAnalytics = (function () {
         function GoogleAnalytics(account) {
             if (ga) {
