@@ -5,11 +5,13 @@ var script = document.createElement("script");
 script.innerText = str;
 document.head.appendChild(script);
 
-declare var ga;
+declare var window;
+var ga = window['ga'];
 
-ga('create', 'UA-1048253-23', {'cookieDomain': 'none'});  // Creates a tracker.
-ga('send', 'pageview');     // Sends a pageview.
-
+if(ga){
+    ga('create', 'UA-1048253-23', {'cookieDomain': 'none'});  // Creates a tracker.
+    ga('send', 'pageview');     // Sends a pageview.
+}
 export class GoogleAnalytics {
     constructor(account:string) {
         if (ga) {
