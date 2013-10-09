@@ -2,6 +2,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
     // restore window.$ version
     $.noConflict();
 
+    var widget_ids = {};
 
     function get_base_url() {
         var module = "StarX/main";
@@ -30,6 +31,8 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
             console.info(json);
             var data = JSON.parse(json);
             var id = "STARX_" + Math.round(1000000 * Math.random());
+            widget_ids[id] = 1;
+
             data.element_id = id;
 
             require(['../' + data.StarX + '/main'], function (project) {
@@ -106,9 +109,27 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     }
 
+    function starx_child(element)
+    {
+        if( element )
+        {
+            if( element['id'] && widget_ids[ element['id']] == 1 )
+            {
+                return true;
+            }
+            if( element.parentElement )
+            {
+                return starx_child(element.parentElement);
+            }
+        }
+        return false;
+    }
     function bind() {
         $('body').bind('DOMNodeInserted', function (e) {
-            //console.info('element', e.target, ' changed.');
+            if(starx_child(e.target))
+            {
+                return;
+            }
             load();
         });
         load();
