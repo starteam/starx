@@ -28,7 +28,6 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         try {
             str = str.replace(new RegExp(del, "g"), '"');
             var json = "{" + str.substr(2, str.length - 4) + "}";
-            console.info(json);
             var data = JSON.parse(json);
             var id = "STARX_" + Math.round(1000000 * Math.random());
             widget_ids[id] = 1;
@@ -46,7 +45,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 }
                 else {
-                        console.info( "Has other");
+                    console.info("Has other");
                     var config = data;
                     document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
                 }
@@ -65,19 +64,20 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     var in_load = false;
 
-    function load() {
-        load_delimited('"');
-        load_delimited("'");
+    function load(target) {
+        load_delimited('"', target);
+        load_delimited("'", target);
     }
 
-    function load_delimited(del) {
+    function load_delimited(del, target) {
         if (in_load) {
             return;
         }
         in_load = true;
         var elements = [];
-        var list = $("*:contains('{[" + del + "StarX" + del + ":')");
-        //console.info("in load");
+        var list = $("*:contains('{[" + del + "StarX" + del + ":')", target);
+        console.info("in load " + del + " " ) ; console.info( target );
+        console.info("in load " + list.length );
         for (var i = 1; i < list.length; i++) {
             if (!list[i - 1].contains(list[i])) {
                 test_and_add(list[i - 1], elements);
@@ -109,32 +109,37 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     }
 
-    function starx_child(element)
-    {
-        if( element )
-        {
-            if( element['id'] && widget_ids[ element['id']] == 1 )
-            {
+    function starx_child(element) {
+        if (element) {
+            if (element['id'] && widget_ids[ element['id']] == 1) {
                 return true;
             }
-            if( element.parentElement )
-            {
+            if (element.parentElement) {
                 return starx_child(element.parentElement);
             }
         }
         return false;
     }
+
     function bind() {
         $('body').bind('DOMNodeInserted', function (e) {
-            if(starx_child(e.target))
-            {
+            if (starx_child(e.target)) {
                 return;
             }
-            load();
+            load(e.target);
         });
-        load();
+        load(document.body);
     }
 
-    bind();
+    if (window.STARX_SELECTOR) {
+        _.each($(window.STARX_SELECTOR), function (e) {
+            var q = $(e);
+            var text = q.text();
+            q.html( parse( text , '"' ));
+        });
+        if (!window.STARX_NO_BIND) {
+            bind();
+        }
+    }
     exports.load = load;
 });
