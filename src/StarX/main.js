@@ -32,10 +32,8 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
             var id = "STARX_" + Math.round(1000000 * Math.random());
             widget_ids[id] = 1;
 
-            function callback()
-            {
-                data.element_id = id;
-
+            data.element_id = id;
+            function callback() {
                 require(['../' + data.StarX + '/main'], function (project) {
                     if (project) {
                         if (project.configure) {
@@ -53,7 +51,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 });
             };
-            return { html:"<span id='" + id + "'></span>", callback:callback };
+            return { html: "<span id='" + id + "'></span>", callback: callback };
         } catch (e) {
             return "STARX: ERROR PARSING: " + str.substr(2, str.length - 4) + ":ERROR PARSING :STARX";
         }
@@ -90,7 +88,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         if (list.length > 0) {
             test_and_add(list[list.length - 1], elements);
         }
-        var callbacks = [] ;
+        var callbacks = [];
         $(elements).each(function () {
             var element = $(this);
             var html = element.html();
@@ -108,8 +106,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                         new_html += splits[i];
                     }
                 }
-                element.html(new_html).ready( function(){
-                    $( callbacks).each( function() {this();});
+                element.html(new_html).ready(function () {
+                    $(callbacks).each(function () {
+                        this();
+                    });
                 })
             }
 
@@ -142,22 +142,24 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     function init() {
         if (window.STARX_SELECTOR) {
-            console.info("STARX_SELECTOR");
-            console.info($(window.STARX_SELECTOR));
             _.each($(window.STARX_SELECTOR), function (e) {
                 var q = $(e);
                 var text = q.text();
-                var p = parse(text, '"');
-                q.html(p.html).ready( function() {
-                    p.callback();
-                });
+                if (q.hasClass('starx_handled')) {
+                    return;
+                }
+                if (text.indexOf("{[") >= 0) {
+                    var p = parse(text, '"');
+                    q.html(p.html).addClass('starx_handled').ready(function () {
+                        p.callback();
+                    });
+                }
             });
             if (!window.STARX_NO_BIND) {
                 bind();
             }
         }
-        else
-        {
+        else {
             bind();
         }
     }
