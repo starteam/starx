@@ -16,13 +16,14 @@ export class StarSimpleText {
     timer:any = null;
     textarea_id:string;
 
-    last_line_break_index(val) {
+    last_line_break_index(val, pos ) {
+        pos = pos > 0 ? pos-1: pos;
         var min_index = 0;
-        var nn = val.lastIndexOf("\n");
+        var nn = val.lastIndexOf("\n", pos);
         if (nn != -1) {
             min_index = nn;
         }
-        var rr = val.lastIndexOf("\r");
+        var rr = val.lastIndexOf("\r", pos );
         if (rr != -1) {
             min_index = min_index > rr ? min_index : rr;
         }
@@ -50,7 +51,7 @@ export class StarSimpleText {
                     continue;
                 }
                 var iter = 0;
-                while (line.length > self.config.cols && iter < max_iter) {
+                while (line.length >= self.config.cols && iter < max_iter) {
                     iter++;
                     var break_point = self.last_space_index(line, self.config.cols);
                     if (break_point == -1 || break_point == 0) {
@@ -67,6 +68,8 @@ export class StarSimpleText {
                 }
             }
             elem['value'] = new_lines.join("\n");
+            console.info( "NEW TEXT");
+            console.info( elem['value']);
         }
     }
 
@@ -77,11 +80,17 @@ export class StarSimpleText {
             var iter = 0;
             var changed = false;
             var val = elem['value'];
+            var pos = val.length;
+            if( elem['selectionStart'])
+            {
+                pos = elem['selectionStart'];
+            }
+
+
             while (iter < max_iter) {
                 iter++;
-                var len = val.length;
-                var min_index = self.last_line_break_index(val);
-                if (len - min_index < self.config.cols) {
+                var min_index = self.last_line_break_index(val,pos);
+                if (pos - min_index < self.config.cols) {
                     break;
                 }
                 else {
@@ -98,6 +107,8 @@ export class StarSimpleText {
             }
             if (changed) {
                 elem['value'] = val;
+                elem['selectionStart'] = pos;
+                elem['selectionEnd'] = pos;
                 console.info(val);
             }
         }
@@ -109,7 +120,7 @@ export class StarSimpleText {
     }
 
     change(el, event) {
-        this.process_change(200);
+        this.process_change(1000);
         this.save_to_jshidden();
     }
 
@@ -127,6 +138,12 @@ export class StarSimpleText {
         return ret.attr('value');
     }
 
+    apply_css()
+    {
+        var elem = document.getElementById(this.textarea_id);
+        $(elem).css('min-height','300px');
+    }
+
     configure(config:any) {
         this.config = config;
         var self:StarSimpleText = this;
@@ -139,10 +156,16 @@ export class StarSimpleText {
 
         var textarea = '<textarea id="' + self.textarea_id + '" cols="' + config.cols + '" rows="' + config.rows + '">' + text + '</textarea>';
         top.html(textarea);
-        $('#' + self.textarea_id).off('keyup').off('change').on('keyup',function (e) {
+        $('#' + self.textarea_id).off('keyup').off('change').off('blur').on('keyup',function (e) {
             self.keyup(this, e);
         }).on('change', function (e) {
+                console.info( "Change");
                 self.change(this, e);
-            });
+            }).on('blur',function(e){
+                console.info( "Blur");
+                self.change(this,e);
+            }).ready( function() {
+                self.apply_css();
+            })
     }
 }
