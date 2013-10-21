@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>StarDistanceMappingWidget Version 0.0.1</title>
+</head>
+
+<body>
+Basic demonstration of embedding StarORF into a webpage.
+You will need to paste:
+{ [ "StarX": "StarDistanceMap" } ]
+<br>
+Here is an example of result:
+<div style='border:1px solid #e0e0e0; padding:8px; border-radius:5px;'>
+
+
+<div>{["StarX":"StarDistanceMap","state":"starx_distance_matrix","config":{"color_genes":"true","edit_chromosome_count":false,"genes":[{"id":"M-4","name":"M-4"},{"id":"Sup4","name":"Sup4"}],"gene_groups":[{"title":"Mutants","genes":["M-4","Sup4"]}],"chromosomes":[{"name":"Chromosome 1","sex_linked":false}]}]}</div>
+
+    <div>{["StarX":"StarDistanceMap","state":"starx_distance_matrix","config":{"color_genes":"true","edit_chromosome_count":true,"genes":[{"id":"M-4","name":"M-4"},{"id":"Sup4","name":"Sup4"}],"gene_groups":[{"title":"Mutants","genes":["M-4","Sup4"]}],"chromosomes":[{"name":"Chromosome 1","sex_linked":false}]}]}</div>
+
+</div>
+</body>
+<script data-main='StarX/main' src='StarX/starx.js'></script>
+</html>
