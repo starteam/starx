@@ -7,7 +7,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
     function get_base_url() {
         var module = "StarX/main";
         var module_ext = ".js";
-        var base_url = 'http://starx.mit.edu/';
+        var base_url = location.protocol + '//starx.mit.edu/';
         var main_url;
         var scripts = document.getElementsByTagName('script');
         for (var i = 0; i < scripts.length; i++) {
