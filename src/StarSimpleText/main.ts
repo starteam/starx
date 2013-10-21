@@ -128,6 +128,10 @@ export class StarSimpleText {
         var elem = document.getElementById(this.textarea_id);
         var val = elem['value'];
         var jq = $('[name=' + this.config.state + ']');
+        if( this.config['show_length'])
+        {
+            jq.show().text(val.length + " characters");
+        }
         var ret = $('#' + jq.attr('inputid'));
         ret.attr('value', val);
     }
