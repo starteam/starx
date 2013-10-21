@@ -2,7 +2,7 @@
 
     function get_base_url() {
         var module = "StarX/starx.js";
-        var base_url = 'http://starx.mit.edu/';
+        var base_url = location.protocol + '//starx.mit.edu/';
 //        base_url = 'http://localhost:8002/';
         var main_url;
         var scripts = document.getElementsByTagName('script');
@@ -49,6 +49,10 @@
         window.STARX_NO_BIND = true;
 
         require(['StarX/main'], function (StarX) {
+            if( StarX.init )
+            {
+                StarX.init();
+            }
             console.info("StarX/main loaded");
         });
     };
@@ -80,5 +84,6 @@
         define_module();
     }
 
-
 })();
+
+console.info( "STARXX - loaded!!!");
