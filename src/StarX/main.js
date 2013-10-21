@@ -76,8 +76,9 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         in_load = true;
         var elements = [];
         var list = $("*:contains('{[" + del + "StarX" + del + ":')", target);
-        console.info("in load " + del + " " ) ; console.info( target );
-        console.info("in load " + list.length );
+        console.info("in load " + del + " ");
+        console.info(target);
+        console.info("in load " + list.length);
         for (var i = 1; i < list.length; i++) {
             if (!list[i - 1].contains(list[i])) {
                 test_and_add(list[i - 1], elements);
@@ -131,15 +132,25 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         load(document.body);
     }
 
-    if (window.STARX_SELECTOR) {
-        _.each($(window.STARX_SELECTOR), function (e) {
-            var q = $(e);
-            var text = q.text();
-            q.html( parse( text , '"' ));
-        });
-        if (!window.STARX_NO_BIND) {
-            bind();
+    function init() {
+        if (window.STARX_SELECTOR) {
+            console.info("STARX_SELECTOR");
+            console.info(window.STARX_SELECTOR)
+        )
+            ;
+            _.each($(window.STARX_SELECTOR), function (e) {
+                var q = $(e);
+                var text = q.text();
+                q.html(parse(text, '"')).addClass('starx_handled');
+            });
+            if (!window.STARX_NO_BIND) {
+                bind();
+            }
         }
     }
+
+    init();
+
     exports.load = load;
+    exports.init = init;
 });
