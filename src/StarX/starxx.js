@@ -3,7 +3,10 @@
     function get_base_url() {
         var module = "StarX/starx.js";
         var base_url = location.protocol + '//starx.mit.edu/';
-//        base_url = 'http://localhost:8002/';
+        if( location.hostname == 'localhost')
+        {
+            base_url = 'http://localhost:8002/';
+        }
         var main_url;
         var scripts = document.getElementsByTagName('script');
         for (var i = 0; i < scripts.length; i++) {

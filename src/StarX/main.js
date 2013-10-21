@@ -8,6 +8,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         var module = "StarX/main";
         var module_ext = ".js";
         var base_url = location.protocol + '//starx.mit.edu/';
+        if (location.hostname == 'localhost') {
+            base_url = 'http://localhost:8002/';
+        }
+
         var main_url;
         var scripts = document.getElementsByTagName('script');
         for (var i = 0; i < scripts.length; i++) {
