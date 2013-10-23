@@ -125,7 +125,11 @@ define(["require", "exports", "jquery", "lib/google_analytics"], function(requir
         StarSimpleText.prototype.get_from_jshidden = function () {
             var jq = $('[name=' + this.config.state + ']');
             var ret = $('#' + jq.attr('inputid'));
-            return decodeURI(ret.attr('value'));
+            try  {
+                return decodeURI(ret.attr('value'));
+            } catch (e) {
+                return ret ? ret.attr('value') : '';
+            }
         };
 
         StarSimpleText.prototype.apply_css = function () {
