@@ -133,13 +133,13 @@ export class StarSimpleText {
             jq.show().text(val.length + " characters");
         }
         var ret = $('#' + jq.attr('inputid'));
-        ret.attr('value', val);
+        ret.attr('value', encodeURI( val ) );
     }
 
     get_from_jshidden() {
         var jq = $('[name=' + this.config.state + ']');
         var ret = $('#' + jq.attr('inputid'));
-        return ret.attr('value');
+        return decodeURI(ret.attr('value'));
     }
 
     apply_css()

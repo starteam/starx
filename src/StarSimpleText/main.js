@@ -119,13 +119,13 @@ define(["require", "exports", "jquery", "lib/google_analytics"], function(requir
                 jq.show().text(val.length + " characters");
             }
             var ret = $('#' + jq.attr('inputid'));
-            ret.attr('value', val);
+            ret.attr('value', encodeURI(val));
         };
 
         StarSimpleText.prototype.get_from_jshidden = function () {
             var jq = $('[name=' + this.config.state + ']');
             var ret = $('#' + jq.attr('inputid'));
-            return ret.attr('value');
+            return decodeURI(ret.attr('value'));
         };
 
         StarSimpleText.prototype.apply_css = function () {
