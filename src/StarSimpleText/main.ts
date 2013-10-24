@@ -16,14 +16,14 @@ export class StarSimpleText {
     timer:any = null;
     textarea_id:string;
 
-    last_line_break_index(val, pos ) {
-        pos = pos > 0 ? pos-1: pos;
+    last_line_break_index(val, pos) {
+        pos = pos > 0 ? pos - 1 : pos;
         var min_index = 0;
         var nn = val.lastIndexOf("\n", pos);
         if (nn != -1) {
             min_index = nn;
         }
-        var rr = val.lastIndexOf("\r", pos );
+        var rr = val.lastIndexOf("\r", pos);
         if (rr != -1) {
             min_index = min_index > rr ? min_index : rr;
         }
@@ -51,25 +51,30 @@ export class StarSimpleText {
                     continue;
                 }
                 var iter = 0;
+                var line_processed = false;
+
                 while (line.length >= self.config.cols && iter < max_iter) {
+                    line_processed = false;
                     iter++;
                     var break_point = self.last_space_index(line, self.config.cols);
                     if (break_point == -1 || break_point == 0) {
                         new_lines.push(line);
+                        line_processed = true;
                         break;
                     }
                     else {
                         new_lines.push(line.substr(0, break_point));
                         line = line.substr(line.charAt(break_point) == ' ' ? break_point + 1 : break_point);
+                        line_processed = false;
                     }
                 }
-                if (iter == max_iter) {
+                if (!line_processed) {
                     new_lines.push(line);
                 }
             }
             elem['value'] = new_lines.join("\n");
-            console.info( "NEW TEXT");
-            console.info( elem['value']);
+            console.info("NEW TEXT");
+            console.info(elem['value']);
         }
     }
 
@@ -81,15 +86,14 @@ export class StarSimpleText {
             var changed = false;
             var val = elem['value'];
             var pos = val.length;
-            if( elem['selectionStart'])
-            {
+            if (elem['selectionStart']) {
                 pos = elem['selectionStart'];
             }
 
 
             while (iter < max_iter) {
                 iter++;
-                var min_index = self.last_line_break_index(val,pos);
+                var min_index = self.last_line_break_index(val, pos);
                 if (pos - min_index < self.config.cols) {
                     break;
                 }
@@ -128,12 +132,11 @@ export class StarSimpleText {
         var elem = document.getElementById(this.textarea_id);
         var val = elem['value'];
         var jq = $('[name=' + this.config.state + ']');
-        if( this.config['show_length'])
-        {
+        if (this.config['show_length']) {
             jq.show().text(val.length + " characters");
         }
         var ret = $('#' + jq.attr('inputid'));
-        ret.attr('value', encodeURI( val ) );
+        ret.attr('value', encodeURI(val));
     }
 
     get_from_jshidden() {
@@ -142,15 +145,14 @@ export class StarSimpleText {
         try {
             return decodeURI(ret.attr('value'));
         }
-        catch(e) {
-            return ret ? ret.attr('value') : '' ;
+        catch (e) {
+            return ret ? ret.attr('value') : '';
         }
     }
 
-    apply_css()
-    {
+    apply_css() {
         var elem = document.getElementById(this.textarea_id);
-        $(elem).css('min-height','300px');
+        $(elem).css('min-height', '300px');
     }
 
     configure(config:any) {
@@ -167,13 +169,13 @@ export class StarSimpleText {
         top.html(textarea);
         $('#' + self.textarea_id).off('keyup').off('change').off('blur').on('keyup',function (e) {
             self.keyup(this, e);
-        }).on('change', function (e) {
-                console.info( "Change");
+        }).on('change',function (e) {
+                console.info("Change");
                 self.change(this, e);
-            }).on('blur',function(e){
-                console.info( "Blur");
-                self.change(this,e);
-            }).ready( function() {
+            }).on('blur',function (e) {
+                console.info("Blur");
+                self.change(this, e);
+            }).ready(function () {
                 self.apply_css();
             })
     }

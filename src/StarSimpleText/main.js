@@ -43,18 +43,23 @@ define(["require", "exports", "jquery", "lib/google_analytics"], function(requir
                         continue;
                     }
                     var iter = 0;
+                    var line_processed = false;
+
                     while (line.length >= self.config.cols && iter < max_iter) {
+                        line_processed = false;
                         iter++;
                         var break_point = self.last_space_index(line, self.config.cols);
                         if (break_point == -1 || break_point == 0) {
                             new_lines.push(line);
+                            line_processed = true;
                             break;
                         } else {
                             new_lines.push(line.substr(0, break_point));
                             line = line.substr(line.charAt(break_point) == ' ' ? break_point + 1 : break_point);
+                            line_processed = false;
                         }
                     }
-                    if (iter == max_iter) {
+                    if (!line_processed) {
                         new_lines.push(line);
                     }
                 }
