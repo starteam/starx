@@ -40,13 +40,19 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
             function callback() {
                 require(['../' + data.StarX + '/main'], function (project) {
                     if (project) {
-                        if (project.configure) {
-                            project.configure(data);
-                        }
-                        else if (project[data.StarX]) {
-                            q = new project[data.StarX]();
-                            q.configure(data);
-                        }
+                        try {
+                            if (project.configure) {
+                                project.configure(data);
+                            }
+                            else if (project[data.StarX]) {
+                                q = new project[data.StarX]();
+                                q.configure(data);
+                            }
+                        } catch (e) {
+                            console.info(e);
+                            var config = data;
+                            document.getElementById(config.element_id).innerHTML = data.StarX + " has an issue. (" + e + ")" ;
+                            }
                     }
                     else {
                         console.info("Has other");
@@ -146,7 +152,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     function init() {
         if (window.STARX_SELECTOR) {
-            $(window.STARX_SELECTOR).each( function(){
+            $(window.STARX_SELECTOR).each(function () {
                 var e = this;
                 var q = $(e);
                 var text = q.text();

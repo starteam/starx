@@ -54,7 +54,11 @@
         require(['StarX/main'], function (StarX) {
             if( StarX.init )
             {
-                StarX.init();
+                try {
+                    StarX.init();
+                } catch(e) {
+                    console.info( "Exception " + e );
+                }
             }
             console.info("StarX/main loaded");
         });
