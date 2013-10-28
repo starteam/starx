@@ -146,6 +146,7 @@ export class StarSimpleText {
             return decodeURI(ret.attr('value'));
         }
         catch (e) {
+            console.debug("value can not be decoded, failing back on raw");
             return ret ? ret.attr('value') : '';
         }
     }
@@ -160,11 +161,16 @@ export class StarSimpleText {
         var self:StarSimpleText = this;
         console.info("Hello from here!");
         var top = $('#' + config.element_id);
-        var text = this.get_from_jshidden();
+        var text = '';
+        try {
+            text = this.get_from_jshidden();
+        }
+        catch (e) {
+            console.info(e);
+        }
         self.textarea_id = config.element_id + "_textarea";
         config.cols = config.cols ? parseInt(config.cols) : 80;
         config.rows = config.rows ? parseInt(config.rows) : 25;
-
         var textarea = '<textarea id="' + self.textarea_id + '" cols="' + config.cols + '" rows="' + config.rows + '">' + text + '</textarea>';
         top.html(textarea);
         $('#' + self.textarea_id).off('keyup').off('change').off('blur').on('keyup',function (e) {
