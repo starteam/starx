@@ -32,7 +32,14 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         try {
             str = str.replace(new RegExp(del, "g"), '"');
             var json = "{" + str.substr(2, str.length - 4) + "}";
-            var data = JSON.parse(json);
+            var data = {};
+            try {
+                data = JSON.parse(json);
+            } 
+            catch(e)
+            {
+                return { "html" :"STARX: ERROR PARSING: " + str.substr(2, str.length - 4) + ":ERROR PARSING :STARX" , callback:function(){} }
+            }
             var id = "STARX_" + Math.round(1000000 * Math.random());
             widget_ids[id] = 1;
 
@@ -49,10 +56,9 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                                 q.configure(data);
                             }
                         } catch (e) {
-                            console.info(e);
                             var config = data;
-                            document.getElementById(config.element_id).innerHTML = data.StarX + " has an issue. (" + e + ")" ;
-                            }
+                            document.getElementById(config.element_id).innerHTML = data.StarX + " has an issue. (" + e + ")";
+                        }
                     }
                     else {
                         console.info("Has other");
@@ -118,7 +124,12 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                 }
                 element.html(new_html).ready(function () {
                     $(callbacks).each(function () {
-                        this();
+                        if (this instanceof Function) {
+                            this();
+                        }
+                        else {
+                            console.info("Failed to operate on callback:" + this);
+                        }
                     });
                 })
             }
