@@ -146,7 +146,8 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
     function init() {
         if (window.STARX_SELECTOR) {
-            _.each($(window.STARX_SELECTOR), function (e) {
+            $(window.STARX_SELECTOR).each( function(){
+                var e = this;
                 var q = $(e);
                 var text = q.text();
                 if (q.hasClass('starx_handled')) {
