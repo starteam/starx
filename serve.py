@@ -61,7 +61,7 @@ if __name__ == '__main__':
     PORT = 8002
     h = MyHandler
     h.mapping = mapping
-    httpd = SocketServer.TCPServer(("", PORT), h)
+    httpd = SocketServer.TCPServer(("127.0.0.1", PORT), h)
     print "serving at port", PORT
     while True:
         httpd.handle_request()
