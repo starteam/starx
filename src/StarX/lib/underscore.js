@@ -1,3 +1,6 @@
+/// <reference path="underscore.d.ts" />
+/// <reference path="require.d.ts" />
+/// <amd-dependency path="StarX/underscore" />
 define(["require", "exports", "StarX/underscore"], function(require, exports) {
     var _backup = window._;
     var underscore = require('StarX/underscore');
@@ -15,4 +18,4 @@ define(["require", "exports", "StarX/underscore"], function(require, exports) {
     exports.version = version;
     ;
 });
-//@ sourceMappingURL=underscore.js.map
+//# sourceMappingURL=underscore.js.map
