@@ -2,7 +2,10 @@
 
     function get_base_url() {
         var module = "StarX/starx.js";
-        var base_url = 'http://starx.mit.edu/';
+        var base_url = location.protocol + '//starx.mit.edu/';
+        if (location.hostname == 'localhost') {
+            base_url = 'http://localhost:8002/';
+        }
         var main_url;
         var scripts = document.getElementsByTagName('script');
         for (var i = 0; i < scripts.length; i++) {
@@ -13,9 +16,8 @@
                     base_url = src.substring(0, src.length - module.length);
                     break;
                 }
-                if( src.indexOf(module+"?") != -1 )
-                {
-                    base_url = src.substring(0,src.indexOf(module+"?"));
+                if (src.indexOf(module + "?") != -1) {
+                    base_url = src.substring(0, src.indexOf(module + "?"));
                     break;
                 }
             }
@@ -33,10 +35,8 @@
                 "lib/jquery": "StarX/lib/jquery",
                 "lib/underscore": "StarX/lib/underscore",
                 "lib/soyutils": "StarX/lib/soyutils",
-                "lib/google_analytics": "StarX/lib/google_analytics",
                 "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
                 "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui",
-                "google_analytics": (window.document.location.protocol == 'https:' ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga'
             },
             map: {
                 '*': {
@@ -44,7 +44,18 @@
                 }
             }
         });
+        window.STARX_SELECTOR = '.starx_widget';
+        window.STARX_NO_BIND = true;
+
+
         require(['StarX/main'], function (StarX) {
+            if (StarX.init) {
+                try {
+                    StarX.init();
+                } catch (e) {
+                    console.info("Exception " + e);
+                }
+            }
             console.info("StarX/main loaded");
         });
     };
@@ -69,6 +80,29 @@
         head.appendChild(script);
     }
 
+    var load_StarTMI = function () {
+        var scripts = document.getElementsByTagName('script');
+        var found = false;
+        for (var i = 0; i < scripts.length; i++) {
+            var src = scripts[i].src
+            if (src.indexOf('/StarTMI/itmi.js') > 0) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            var head = document.getElementsByTagName('head').item(0);
+            var script = document.createElement('script');
+
+            script.setAttribute('type', 'text/javascript');
+            script.setAttribute('src', get_base_url() + '/StarTMI/itmi.js');
+            //script.onload = wait;
+            head.appendChild(script);
+        }
+
+
+    }
+
     if (!window.require) {
         load_require();
     }
@@ -76,5 +110,8 @@
         define_module();
     }
 
+    load_StarTMI();
 
 })();
+
+console.info("STARXX - loaded!!!");

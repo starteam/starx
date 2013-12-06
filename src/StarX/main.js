@@ -35,10 +35,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
             var data = {};
             try {
                 data = JSON.parse(json);
-            } 
-            catch(e)
-            {
-                return { "html" :"STARX: ERROR PARSING: " + str.substr(2, str.length - 4) + ":ERROR PARSING :STARX" , callback:function(){} }
+            }
+            catch (e) {
+                return { "html": "STARX: ERROR PARSING: " + str.substr(2, str.length - 4) + ":ERROR PARSING :STARX", callback: function () {
+                } }
             }
             var id = "STARX_" + Math.round(1000000 * Math.random());
             widget_ids[id] = 1;
@@ -172,6 +172,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                 }
                 if (text.indexOf("{[") >= 0) {
                     var p = parse(text, '"');
+
                     q.html(p.html).addClass('starx_handled').ready(function () {
                         p.callback();
                     });
