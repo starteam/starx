@@ -1,5 +1,5 @@
 /StarORF/ /../../starorf_html/src/StarORF/
-/StarDistanceMap/ /../../stardistancemap_html/src/StarDistanceMap/
+#/StarDistanceMap/ /../../stardistancemap_html/src/StarDistanceMap/
 /StarBiochem/ /../../starbiochem_html/src/StarBiochem/
 /StarGenetics/ /../../stargenetics_html/src/StarGenetics/
 /StarGeneticsYeast/ /../../stargenetics_yeast_html/src/StarGeneticsYeast/

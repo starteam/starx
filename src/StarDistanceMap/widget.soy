@@ -1,0 +1,147 @@
+{namespace widget}
+
+/**
+* @param state
+*/
+{template .widget}
+<div class='swg_widget' style='position: relative;left:0px;top:0px;border-radius:8px;width:820px; height:{$state.height}px;background-color:white'>
+    {call .gene_groups}
+        {param gene_groups:$state.gene_groups/}
+    {/call}
+    {call .genes}
+        {param genes:$state.genes/}
+    {/call}
+    {call .chromosomes}
+        {param chromosomes:$state.chromosomes/}
+        {param state: $state /}
+    {/call}
+</div>
+{/template}
+
+/**
+* @param gene_groups
+*/
+{template .gene_groups}
+{foreach $group in $gene_groups}
+<div class="sgw_group_title" style='top:{$group.top}px;left:{$group.left}px'>{$group.title}</div>
+{/foreach}
+
+{/template}
+/**
+* @param genes
+*/
+{template .genes}
+    <div class="sgw_help_genes sgw_help">Genes</div>
+    <div class="sgw_help_text sgw_help">&#8659; Drag genes down &#8659;</div>
+    {foreach $gene in $genes}
+        {call .gene}
+            {param gene: $gene/}
+        {/call}
+        {call .gene_dropper}
+            {param gene: $gene/}
+        {/call}
+        {call .gene_distance_dropper}
+            {param gene: $gene/}
+        {/call}
+
+    {/foreach}
+{/template}
+
+/**
+* @param gene
+*/
+{template .gene}
+    <div class='sgw_gene' data-id='{$gene.id}' style='top:{$gene.top}px; left:{$gene.left}px;border-color:{$gene.color}'>
+        {$gene.name}
+    </div>
+{/template}
+
+/**
+* @param gene
+*/
+{template .gene_dropper}
+<div class='sgw_dropper' data-id='{$gene.id}' style='top:{$gene.dropper_top}px;left:{$gene.dropper_left}px;height:{$gene.dropper_height}px; background-color:{$gene.color};'>&nbsp;</div>
+{/template}
+
+/**
+* @param gene
+*/
+{template .gene_distance_dropper}
+<div class='sgw_distance_dropper' data-id='{$gene.id}' style='top:{$gene.distance_dropper_top}px;left:{$gene.distance_dropper_left}px; background-color:{$gene.color};'>&nbsp;</div>
+{/template}
+
+/**
+* @param chromosomes
+* @param state
+*/
+{template .chromosomes}
+    {if $chromosomes.length > 0}
+    {if $state.sex_linked_show}
+    <span class='swg_sex_linked_label'>X-Chromosome?</span>
+    {else}
+        {if $state.chromosomes_sex_linked}
+            <span class='swg_sex_linked_label'>X-Chromosome?</span>
+        {/if}
+    {/if}
+    {/if}
+    {foreach $chromosome in $chromosomes}
+        {call .chromosome}
+            {param chromosome: $chromosome /}
+            {param state: $state /}
+        {/call}
+    {/foreach}
+    {if $state.edit_chromosome_count}
+        <button class='sgw_add_chromosome'>Add Chromosome</button>
+    {/if}
+    <div class='sgw_distance_measurement'>Distances are expressed in centimorgans (cM)</div>
+{/template}
+
+/**
+* @param chromosome 
+* @param state
+*/
+{template .chromosome}
+    <div class="sgw_help_chromosome sgw_help" style="top:{$chromosome.top}px"><br>Chromosome {if $chromosome.sex_linked}(Sex-Linked){/if}</div>
+    <div class='sgw_chromosome' data-id='{$chromosome.id}' style='top:{$chromosome.top}px; left:{$chromosome.left}px;border-color:{$chromosome.color}'>
+        {if $state.sex_linked_show}
+        <input class='sgw_sexlinked_checkbox' type='checkbox' data-id='{$chromosome.id}' {if $chromosome.sex_linked}checked='checked'{/if} data-action='sexlinked'>
+        {else}
+          {if $chromosome.sex_linked}
+        <input class='sgw_sexlinked_checkbox' type='checkbox' data-id='{$chromosome.id}' {if $chromosome.sex_linked}checked='checked'{/if} data-action='sexlinked' disabled='disabled'>
+          {/if}
+        {/if}
+        <div class='sgw_axis' ></div>
+        {if $state.edit_chromosome_count}
+        <span class="sgw_trash sgw_delete_chromosome" data-id='{$chromosome.id}' data-action='delete'></span>
+<!--
+        <input class='sgw_delete_chromosome' type='button' data-id='{$chromosome.id}' data-action='delete' value='Delete'>
+        -->
+        {/if}
+    </div>
+    <div class='sgw_distance_holder' data-id='{$chromosome.id}'></div>
+{/template}
+
+/**
+*   @param left_down_line
+*   @param right_down_line
+*   @param across_line
+*   @param distance_input
+*/
+{template .gene_distance}
+<div class='sgw_distance_element sgw_line_down' data-id='{$left_down_line.gene_id}' style='position:absolute;top:{$left_down_line.top}px;left:{$left_down_line.left}px;width:1px;height:{$left_down_line.height}px;'> </div>
+<div class='sgw_distance_element sgw_line_down' data-id='{$right_down_line.gene_id}' style='position:absolute;top:{$right_down_line.top}px;left:{$right_down_line.left}px;width:1px;height:{$right_down_line.height}px;'> </div>
+<div class='sgw_distance_element sgw_line_across' data-id='{$across_line.line_id}' style='position:absolute;top:{$across_line.top}px;left:{$across_line.left}px;width:{$across_line.width}px;height:20px;'>
+{if $distance_input.input_down_steps == 0}
+<div class='sgw_line_across_arrow' style='float:left'>&#8592;</div><div class='sgw_line_across_arrow' style='float:right'>&#8594;</div>
+{else}
+<div class='sgw_line_across_internal_solid'></div>
+{/if}
+<div class='sgw_line_across_internal'>
+</div>
+</div>
+
+<div class='sgw_distance_element sgw_distance_input' data-id='{$distance_input.line_id}' style='position:absolute;top:{$distance_input.top}px;left:{$distance_input.left}px;width:{$distance_input.width}px;height:30px;'>
+<input class='sgw_cm_input' type='text' data-id='{$distance_input.input_id}' data-id-1='{$distance_input.gene_1.id}'  data-id-2='{$distance_input.gene_2.id}' data-chromosome-id='{$distance_input.chromosome_id}' size=6 value='{$distance_input.distance}'/>
+<!-- <span class='sgw_cm_unit'>{$distance_input.unit}</span> -->
+</div>
+{/template}
