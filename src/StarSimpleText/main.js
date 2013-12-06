@@ -1,8 +1,9 @@
-define(["require", "exports", "jquery", "lib/google_analytics"], function(require, exports) {
-    var $ = require("jquery");
+/// <reference path="../StarX/lib/require.d.ts" />
+/// <reference path="../StarX/lib/jquery.d.ts" />
+define(["require", "exports", 'jquery', '../StarTMI/tmi'], function(require, exports, $, StarTMI) {
+    
 
-    var ga = require("lib/google_analytics");
-    var q = new ga.GoogleAnalytics('UA-1048253-23');
+    var tmi = new StarTMI.TMI();
 
     var StarSimpleText = (function () {
         function StarSimpleText() {
@@ -144,9 +145,9 @@ define(["require", "exports", "jquery", "lib/google_analytics"], function(requir
         };
 
         StarSimpleText.prototype.configure = function (config) {
+            tmi.event('StarSimpleText', 'Start');
             this.config = config;
             var self = this;
-            console.info("Hello from here!");
             var top = $('#' + config.element_id);
             var text = '';
             try  {
@@ -162,10 +163,8 @@ define(["require", "exports", "jquery", "lib/google_analytics"], function(requir
             $('#' + self.textarea_id).off('keyup').off('change').off('blur').on('keyup', function (e) {
                 self.keyup(this, e);
             }).on('change', function (e) {
-                console.info("Change");
                 self.change(this, e);
             }).on('blur', function (e) {
-                console.info("Blur");
                 self.change(this, e);
             }).ready(function () {
                 self.apply_css();
@@ -175,4 +174,4 @@ define(["require", "exports", "jquery", "lib/google_analytics"], function(requir
     })();
     exports.StarSimpleText = StarSimpleText;
 });
-//@ sourceMappingURL=main.js.map
+//# sourceMappingURL=main.js.map
