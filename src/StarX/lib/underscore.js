@@ -1,14 +1,16 @@
 /// <reference path="underscore.d.ts" />
-/// <reference path="require.d.ts" />
-/// <amd-dependency path="StarX/underscore" />
-define(["require", "exports", "StarX/underscore"], function(require, exports) {
-    var _backup = window._;
-    var underscore = require('StarX/underscore');
+define(["require", "exports", 'StarX/underscore'], function(require, exports, underscore) {
+    
 
-    exports._ = _;
-    window._ = _backup;
-    _.noConflict();
+    var _backup = window;
 
+    if (underscore) {
+        console.info("StarX underscore");
+    }
+    exports._ = window['_'];
+    exports._.noConflict();
+
+    //window._ = _backup;
     var version = (function () {
         function version() {
             console.info(jQuery['fn'].jquery);
