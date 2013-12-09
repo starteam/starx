@@ -1,0 +1,123 @@
+.sg_workspace {
+    background: white;
+    top: 20px;
+    left: 20px;
+    min-height: 800px;
+    min-width: 600px;
+    resize: both;
+    overflow: auto;
+}
+
+.sg_workspace_title {
+    display: block;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    background: #e0e0e0;
+    border: black 1px;
+    font-size: 15pt;
+}
+
+.sg_strains_box {
+    display: block;
+    background: #e0e0e0;
+    border: 1px solid darkslategray;
+    margin-bottom: 8px;
+    border-radius: 9px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+}
+
+.sg_strains_title {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background-color: darkgreen;
+    color: white;
+    font-weight: 900;
+    font-size: 15pt;
+}
+
+.sg_s_strain_box {
+    display: inline-block;
+    margin: 10px;
+}
+
+.sg_strain_title {
+    display: block;
+    vertical-align: top;
+    width: 100%;
+    height: 25px;
+}
+
+.sg_strain_visual {
+    display: block;
+    vertical-align: top;
+    text-align:center;
+    vertical-align: text-bottom;
+    cursor: move;
+}
+
+.sg_experiment_box {
+    display: block;
+    vertical-align: top;
+    width: 100%;
+}
+
+.sg_experiment_heading {
+    display: block;
+    vertical-align: top;
+    width: 100%;
+    background-color: yellow;
+}
+
+.sg_experiment_title_group {
+    vertical-align: top;
+    display: inline-block;
+    background-color: orange;
+}
+
+.sg_experiment_title {
+    display: block;
+    background-color: orange;
+}
+
+.sg_experiment_commands {
+    display: block;
+    background-color: orangered;
+}
+
+.sg_experiment_parents {
+    vertical-align: top;
+    display: inline-block;
+}
+
+.sg_experiment_parent {
+    vertical-align: top;
+    display: inline-block;
+    margin: 5px;
+    width: 100px;
+    height: 90px;
+    background-color: #cccccc;
+}
+
+.sg_s_col_head {
+    border-right: solid black 1px;
+}
+
+.sg_s_row_head {
+    border-bottom: solid black 1px;
+}
+
+.sg_title_box {
+    width: 100%;
+    font-size: 14pt;
+    font-weight: 800;
+    background-color: lightslategray;
+    border-radius: 9px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding-left:8px;
+}
