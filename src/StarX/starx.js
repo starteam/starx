@@ -6,6 +6,9 @@
         if (location.hostname == 'localhost') {
             base_url = 'http://localhost:8002/';
         }
+        if (location.hostname == 'icstar.mit.edu') {
+            base_url = 'http://icstar.mit.edu/';
+        }
         var main_url;
         var scripts = document.getElementsByTagName('script');
         for (var i = 0; i < scripts.length; i++) {
