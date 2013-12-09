@@ -4,7 +4,7 @@
 /// <reference path="visualizers/smiley.ts" />
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
-/// <reference path="../../../starx/src/StarX/lib/jquery-ui-1.8.x.d.ts" />
+/// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
 
 /// <amd-reference path="StarGenetics/sg_client_mainframe.soy" />
 /// <amd-dependency path="jquery" />

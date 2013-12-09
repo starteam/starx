@@ -1,9 +1,9 @@
-/// <reference path="../StarX/lib/require.d.ts" />
+/// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
-/// <amd-dependency path="lib/underscore" />
+/// <amd-dependency path="jquery-ui" />
 
 import underscore = require("StarX/lib/underscore");
-var _ = underscore._;
+var _ = underscore['_'];
 
 export class Base {
     __data__:any;
@@ -133,9 +133,9 @@ Base.readOnlyField(Strain, "sex", null);
  * Collapsable defines core UI element
  */
 export class Collapsable extends Base {
-    expanded:bool = true;
-    visualsVisible:bool = true;
-    propertiesVisible:bool;
+    expanded:boolean = true;
+    visualsVisible:boolean = true;
+    propertiesVisible:boolean;
     name:string;
     list:Strain[];
 
@@ -283,7 +283,7 @@ export class Experiment extends Collapsable {
 
     get parent():{[s:string]:Strain} {
         var parents = this.parents;
-        var ret = {};
+        var ret:{[s:string]:Strain} = {};
         _.each( parents, function(p) {
             ret[ p.sex == 'MALE' ? 'male' : 'female' ] = p ;
         });

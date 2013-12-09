@@ -1,7 +1,7 @@
 /// <reference path="jsappmodel.ts" />
-/// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
-/// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
-/// <reference path="../../../starx/src/StarX/lib/jquery-ui-1.8.x.d.ts" />
+/// <reference path="../StarX/lib/require.d.ts" />
+/// <reference path="../StarX/lib/jquery.d.ts" />
+/// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="state.ts" />
 /// <reference path="config.d.ts" />
 /// <amd-dependency path="StarGenetics/stargeneticsws.soy" />
@@ -14,10 +14,7 @@
 /// <amd-dependency path="StarGenetics/selectexperiment" />
 /// <amd-dependency path="jquery" />
 /// <amd-dependency path="jquery-ui" />
-define(["require", "exports", "StarGenetics/stargeneticsws.soy", "StarGenetics/sg_client_mainframe.soy", "css!StarGenetics/sg_client_mainframe.css", "StarGenetics/state", "StarGenetics/javaappwidget", "StarGenetics/jsappwidget", "StarGenetics/jsappmodel", "StarGenetics/selectexperiment", "jquery", "jquery-ui"], function(require, exports) {
-    var $ = require("jquery");
-
-    var GlobalState = require("StarGenetics/state");
+define(["require", "exports", "jquery", "StarGenetics/state", "StarGenetics/stargeneticsws.soy", "StarGenetics/sg_client_mainframe.soy", "css!StarGenetics/sg_client_mainframe.css", "StarGenetics/state", "StarGenetics/javaappwidget", "StarGenetics/jsappwidget", "StarGenetics/jsappmodel", "StarGenetics/selectexperiment", "jquery", "jquery-ui"], function(require, exports, $, GlobalState) {
     var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
 
     var StarGenetics = (function () {

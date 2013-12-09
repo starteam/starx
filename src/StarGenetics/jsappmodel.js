@@ -1,14 +1,14 @@
-/// <reference path="../StarX/lib/require.d.ts" />
+/// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
-/// <amd-dependency path="lib/underscore" />
+/// <amd-dependency path="jquery-ui" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "StarX/lib/underscore", "lib/underscore"], function(require, exports, underscore) {
-    var _ = underscore._;
+define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(require, exports, underscore) {
+    var _ = underscore['_'];
 
     var Base = (function () {
         function Base(jsonmodel) {
