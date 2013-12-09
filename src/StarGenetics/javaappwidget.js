@@ -4,9 +4,7 @@
 /// <reference path="config.d.ts" />
 /// <amd-dependency path="StarGenetics/state" />
 /// <amd-dependency path="StarGenetics/stargeneticsws.soy" />
-define(["require", "exports", "StarGenetics/state", "StarGenetics/stargeneticsws.soy"], function(require, exports) {
-    var SGUI = require("StarGenetics/stargeneticsws.soy");
-    var GlobalState = require("StarGenetics/state");
+define(["require", "exports", "StarGenetics/stargeneticsws.soy", "StarGenetics/state", "StarGenetics/state", "StarGenetics/stargeneticsws.soy"], function(require, exports, SGUI, GlobalState) {
     var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
 
     var StarGeneticsJavaAppWidget = (function () {
