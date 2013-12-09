@@ -1,4 +1,5 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
+/// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
 /// <amd-dependency path="jquery-ui" />
 
