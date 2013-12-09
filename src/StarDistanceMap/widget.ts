@@ -1,4 +1,5 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
+/// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
 
@@ -7,10 +8,6 @@
 
 import underscore = require("StarX/lib/underscore");
 var _ = underscore['_'];
-
-console.info("Underscore is " );
-console.info( _ );
-
 import $ = require("jquery");
 import ui = require("StarDistanceMap/widget.soy");
 
