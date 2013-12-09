@@ -8,7 +8,10 @@ define(["require", "exports", 'StarX/underscore'], function(require, exports, un
         console.info("StarX underscore");
     }
     exports._ = window['_'];
-    exports._.noConflict();
+    _.each([1, 2, 3], function (e) {
+        console.info(e);
+    });
+    _.noConflict();
 
     //window._ = _backup;
     var version = (function () {
