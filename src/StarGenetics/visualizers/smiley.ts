@@ -1,4 +1,3 @@
-/// <reference path="../../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="base.ts" />
 
 import base = require("StarGenetics/visualizers/base");

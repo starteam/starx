@@ -1,4 +1,3 @@
-/// <reference path="../../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="base.ts" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
