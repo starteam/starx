@@ -5,8 +5,8 @@
 /// <amd-dependency path="StarGenetics/state" />
 /// <amd-dependency path="StarGenetics/stargeneticsws.soy" />
 
-import SGUI = require("StarGenetics/stargeneticsws.soy");
-import GlobalState = require("StarGenetics/state");
+import SGUI = require("stargeneticsws.soy");
+import GlobalState = require("state");
 var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
 
 

@@ -1,4 +1,4 @@
-/// <reference path="../StarGenetics/config.d.ts" />
+/// <reference path="config.d.ts" />
 
 export class ConfigElement {
     constructor(name:string){}

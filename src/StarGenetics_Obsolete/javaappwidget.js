@@ -1,10 +1,10 @@
-/// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
+/// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="state.ts" />
 /// <reference path="config.d.ts" />
 /// <amd-dependency path="StarGenetics/state" />
 /// <amd-dependency path="StarGenetics/stargeneticsws.soy" />
-define(["require", "exports", "StarGenetics/stargeneticsws.soy", "StarGenetics/state", "StarGenetics/state", "StarGenetics/stargeneticsws.soy"], function(require, exports, SGUI, GlobalState) {
+define(["require", "exports", "stargeneticsws.soy", "state", "StarGenetics/state", "StarGenetics/stargeneticsws.soy"], function(require, exports, SGUI, GlobalState) {
     var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
 
     var StarGeneticsJavaAppWidget = (function () {

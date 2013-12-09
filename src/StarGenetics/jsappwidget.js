@@ -1,11 +1,11 @@
-/// <reference path="state.ts" />
-/// <reference path="config.d.ts" />
+/// <reference path="../StarGenetics_Obsolete/state.ts" />
+/// <reference path="../StarGenetics_Obsolete/config.d.ts" />
 /// <reference path="jsappmodel.ts" />
 /// <reference path="visualizers/smiley.ts" />
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/json_sample_model", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "jquery", "jquery-ui", "StarGenetics/json_sample_model"], function(require, exports, SGUIMAIN, json_sample_model, SGModel, SGSmiley, SGFly, SGTests) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/json_sample_model", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "jquery", "jquery-ui", "StarGenetics/json_sample_model", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, json_sample_model, SGModel, SGSmiley, SGFly, SGTests) {
     var $ = jQuery;
 
     var StarGeneticsJSAppWidget = (function () {

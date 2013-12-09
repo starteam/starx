@@ -1,4 +1,4 @@
-/// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
+/// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="config.d.ts" />
 define(["require", "exports"], function(require, exports) {
     var StudentIDWidgetState = (function () {

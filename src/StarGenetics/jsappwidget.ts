@@ -1,5 +1,5 @@
-/// <reference path="state.ts" />
-/// <reference path="config.d.ts" />
+/// <reference path="../StarGenetics_Obsolete/state.ts" />
+/// <reference path="../StarGenetics_Obsolete/config.d.ts" />
 /// <reference path="jsappmodel.ts" />
 /// <reference path="visualizers/smiley.ts" />
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
@@ -11,11 +11,12 @@
 /// <amd-dependency path="jquery-ui" />
 /// <amd-dependency path="StarGenetics/json_sample_model" />
 
+/// <amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
 
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
 import json_sample_model = require("StarGenetics/json_sample_model");
 import SGModel = require("StarGenetics/jsappmodel");
-import SGState = require("state");
+import SGState = require("../StarGenetics_Obsolete/state");
 import VisualizerBase = require("StarGenetics/visualizers/base");
 import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
