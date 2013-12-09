@@ -22,6 +22,8 @@ import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
 import SGTests = require( "StarGenetics/tests/qunit");
 
+import TEST = require("StarGenetics/tests/suite");
+
 declare var jQuery;
 var $ = jQuery;
 
@@ -106,9 +108,11 @@ export class StarGeneticsJSAppWidget {
         var self = this;
         if (SGTests.isTesting()) {
             SGTests.load(function (qunit) {
-                require(["StarGenetics/tests/suite"], function (suite) {
-                    suite.testSuite(qunit, self);
-                });
+//                import TEST = require("StarGenetics/tests/suite");
+                TEST.testSuite(qunit,self);
+//                require(["StarGenetics/tests/suite"], function (suite) {
+//                    suite.testSuite(qunit, self);
+//                });
             });
         }
     }

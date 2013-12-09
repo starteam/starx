@@ -5,7 +5,7 @@
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/json_sample_model", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "jquery", "jquery-ui", "StarGenetics/json_sample_model", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, json_sample_model, SGModel, SGSmiley, SGFly, SGTests) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/json_sample_model", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "jquery", "jquery-ui", "StarGenetics/json_sample_model", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, json_sample_model, SGModel, SGSmiley, SGFly, SGTests, TEST) {
     var $ = jQuery;
 
     var StarGeneticsJSAppWidget = (function () {
@@ -78,9 +78,11 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
             var self = this;
             if (SGTests.isTesting()) {
                 SGTests.load(function (qunit) {
-                    require(["StarGenetics/tests/suite"], function (suite) {
-                        suite.testSuite(qunit, self);
-                    });
+                    //                import TEST = require("StarGenetics/tests/suite");
+                    TEST.testSuite(qunit, self);
+                    //                require(["StarGenetics/tests/suite"], function (suite) {
+                    //                    suite.testSuite(qunit, self);
+                    //                });
                 });
             }
         };
