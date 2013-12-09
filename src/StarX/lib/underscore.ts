@@ -1,23 +1,27 @@
 /// <reference path="underscore.d.ts" />
+/// <reference path="require.d.ts" />
+/// <amd-dependency path="StarX/underscore" />
 
 declare var exports;
-declare var window;
-
 var _backup = window;
-
-import underscore = require('StarX/underscore');
-if(underscore)
-{
-    console.info( "StarX underscore");
+//
+var underscore = require(['StarX/underscore']);
+console.info("underscore is" + underscore);
+console.info(underscore);
+if (underscore) {
+    console.info("StarX underscore");
 }
 exports._ = window['_'];
-_.each( [1,2,3],function(e){ console.info(e)});
+var _ = exports._;
+_.each([1, 2, 3], function (e) {
+    console.info(e)
+});
 _.noConflict();
-//window._ = _backup;
 
-
-export class version {
-    constructor() {
-        console.info(jQuery['fn'].jquery);
+export module __ {
+    export class version {
+        to():any {
+        }
     }
-};
+}
+
