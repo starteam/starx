@@ -95,10 +95,30 @@ export class StarGeneticsJSAppWidget {
         var self:StarGeneticsJSAppWidget = this;
         var main = $('#' + this.config.element_id);
         main.html(SGUIMAIN.main({config: this.config}));
-        $('.sg_open_ps', main).off('click').on('click', function () {
-            console.info("Click on open");
-            self.open();
+
+        self.open({
+            onsuccess: function () {
+                self.list_strains({
+                    onsuccess: function () {
+                        console.info("liststrains on open");
+                    }
+                });
+            }
         });
+
+//        $('.sg_open_ps', main).off('click').on('click', function () {
+//            console.info("Click on open");
+//            self.open({
+//                onsuccess: function () {
+//                    self.list_strains({
+//                        onsuccess: function () {
+//                            console.info("liststrains on open");
+//                        }
+//                    });
+//                }
+//            });
+//
+//        });
     }
 
     /**
@@ -109,7 +129,7 @@ export class StarGeneticsJSAppWidget {
         if (SGTests.isTesting()) {
             SGTests.load(function (qunit) {
 //                import TEST = require("StarGenetics/tests/suite");
-                TEST.testSuite(qunit,self);
+                TEST.testSuite(qunit, self);
 //                require(["StarGenetics/tests/suite"], function (suite) {
 //                    suite.testSuite(qunit, self);
 //                });
@@ -290,6 +310,19 @@ export class StarGeneticsJSAppWidget {
             }});
             self.show();
         });
+        $('.sg_experiment_mate').off('click').on('click', function () {
+            var c:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get($(this).data('kind'));
+            console.info( "sg_experiment_mate");
+            console.info(c);
+            self.mate(c, {onsuccess: function () {
+                console.info("Mate success!");
+
+            }, onerror: function () {
+                console.info("Mate error!");
+            }});
+            self.show();
+        });
+
 
         $('.sg_strain_box').draggable({revert: true});
         $('.sg_experiment_parent').droppable({/*accept: '.sg_strain_box',*/
@@ -310,29 +343,28 @@ export class StarGeneticsJSAppWidget {
                 self.show();
             }});
 
-        console.error( "Visualizer config" ) ;
-        var visualizer_name:string = (((((this.config['config']||{})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
+        console.error("Visualizer config");
+        var visualizer_name:string = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
         var visualizer:VisualizerBase.Visualizer = new SGSmiley.Smiley();
-        console.error( this.config ) ;
-        console.error( visualizer_name );
-        if( visualizer_name == 'fly')
-        {
+        console.error(this.config);
+        console.error(visualizer_name);
+        if (visualizer_name == 'fly') {
             visualizer = new SGFly.Fly();
         }
         $('.sg_strain_visual canvas').each(function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
             var organism = c.get($(this).data('id'));
-            console.error( "RENDER");
-            console.error( organism);
+            console.error("RENDER");
+            console.error(organism);
             visualizer.render($(this)[0], organism.properties, organism);
             window['c'] = this;
             window['v'] = visualizer;
             var qq = this;
-            window['rr'] = function() {
-                console.info( "Hello World!");
-                console.info( qq ) ;
-                console.info( visualizer);
-                console.info( organism);
+            window['rr'] = function () {
+                console.info("Hello World!");
+                console.info(qq);
+                console.info(visualizer);
+                console.info(organism);
                 visualizer.render($(qq)[0], organism.properties, organism);
             };
         });

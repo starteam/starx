@@ -65,10 +65,29 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
             var self = this;
             var main = $('#' + this.config.element_id);
             main.html(SGUIMAIN.main({ config: this.config }));
-            $('.sg_open_ps', main).off('click').on('click', function () {
-                console.info("Click on open");
-                self.open();
+
+            self.open({
+                onsuccess: function () {
+                    self.list_strains({
+                        onsuccess: function () {
+                            console.info("liststrains on open");
+                        }
+                    });
+                }
             });
+            //        $('.sg_open_ps', main).off('click').on('click', function () {
+            //            console.info("Click on open");
+            //            self.open({
+            //                onsuccess: function () {
+            //                    self.list_strains({
+            //                        onsuccess: function () {
+            //                            console.info("liststrains on open");
+            //                        }
+            //                    });
+            //                }
+            //            });
+            //
+            //        });
         };
 
         /**
@@ -248,6 +267,18 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
 
             $('.sg_new_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
+                self.mate(c, {
+                    onsuccess: function () {
+                        console.info("Mate success!");
+                    }, onerror: function () {
+                        console.info("Mate error!");
+                    } });
+                self.show();
+            });
+            $('.sg_experiment_mate').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                console.info("sg_experiment_mate");
+                console.info(c);
                 self.mate(c, {
                     onsuccess: function () {
                         console.info("Mate success!");
