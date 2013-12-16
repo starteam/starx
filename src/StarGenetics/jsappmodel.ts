@@ -143,8 +143,8 @@ Base.readOnlyField(Strain, "sex", null);
  * Collapsable defines core UI element
  */
 export class Collapsable extends Base {
-    expanded:boolean = true;
-    visualsVisible:boolean = true;
+    expanded:boolean;
+    visualsVisible:boolean;
     propertiesVisible:boolean;
     name:string;
     list:Strain[];
@@ -176,8 +176,8 @@ export class Collapsable extends Base {
         });
     }
 }
-Base.defineStaticRWField(Collapsable, "expanded", false);
-Base.defineStaticRWField(Collapsable, "visualsVisible", false);
+Base.defineStaticRWField(Collapsable, "expanded", true);
+Base.defineStaticRWField(Collapsable, "visualsVisible", true);
 Base.defineStaticRWField(Collapsable, "propertiesVisible", false);
 Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
 Base.readOnlyWrappedList(Collapsable, "list", Strain);
