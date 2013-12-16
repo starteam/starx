@@ -5,12 +5,14 @@
  @param config
 */
 {template .main}
+<!--
     <div class='sg_main'>
         <button class='sg_open_ps'>Open</button>
     </div>
     <div class='sg_main'>
         <button class='sg_open_ps'>Close</button>
     </div>
+-->
     <div class='sg_workspace' id='{$config.element_id+'_workspace'}'>Workspace</div>
 
 {/template}
@@ -37,15 +39,21 @@
 /**
 * @param strain
 * @param visuals
+* @param count
 * @param kind
 */
 {template .strain}
+{if $count != 0}
 <div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}">
                     <div class='sg_strain_title'>{$strain['name']}</div>
                     {if $visuals}
                     <div class='sg_strain_visual'><canvas data-kind='{$kind}' data-id='{$strain['id']}'></canvas></div>
                     {/if}
                 </div>
+{else}
+<div class='sg_s_strain_box'>
+</div>
+{/if}
 {/template}
 /**
 *   Strains
@@ -209,7 +217,7 @@
         {/if}
 
         {if $experiment.canmate}
-            <button class='sg_experiment_mate'>Add progenies</button>
+            <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progenies</button>
         {/if}
     </div>
     {if $experiment.expanded}
@@ -224,7 +232,7 @@
                 <th>{$experiment.parent.female.name}</th>
                 <th>{$experiment.parent.male.name}</th>
                 {foreach $phenotype in keys($experiment.phenotypes)}
-                <th>{$phenotype}</th>
+                <th>{$phenotype.short_description}</th>
                 {/foreach}
                 </tr>
                 {if $experiment.visualsVisible}
@@ -247,11 +255,13 @@
                     <td>
                     {call .strain}
                         {param strain:$experiment.phenotypes[$phenotype].top_male /}
+                        {param count:$experiment.phenotypes[$phenotype].males/}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
                     {/call}
                     {call .strain}
                         {param strain:$experiment.phenotypes[$phenotype].top_female /}
+                        {param count:$experiment.phenotypes[$phenotype].females/}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
                     {/call}
