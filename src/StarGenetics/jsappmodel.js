@@ -101,6 +101,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         __extends(Strain, _super);
         function Strain() {
             _super.apply(this, arguments);
+            this.properties_cached = null;
         }
         Object.defineProperty(Strain.prototype, "properties", {
             get: function () {
@@ -110,19 +111,24 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 console.info(phenotypes);
 
                 if (phenotypes) {
-                    _.each(phenotypes, function (v, k) {
-                        if (typeof (v) === 'string' && v.charAt(0) == '{') {
-                            try  {
-                                var q = JSON.parse(v);
-                                if (typeof (q['text'] === 'string')) {
-                                    ret[k] = q;
-                                    return;
+                    if (this.properties_cached == null) {
+                        _.each(phenotypes, function (v, k) {
+                            if (typeof (v) === 'string' && v.charAt(0) == '{') {
+                                try  {
+                                    var q = JSON.parse(v);
+                                    if (typeof (q['text'] === 'string')) {
+                                        ret[k] = q;
+                                        return;
+                                    }
+                                } finally {
                                 }
-                            } finally {
                             }
-                        }
-                        ret[k] = { text: v };
-                    });
+                            ret[k] = { text: v };
+                        });
+                        this.properties_cached = ret;
+                    } else {
+                        ret = this.properties_cached;
+                    }
                 }
                 return ret;
             },
@@ -143,8 +149,6 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         __extends(Collapsable, _super);
         function Collapsable() {
             _super.apply(this, arguments);
-            this.expanded = true;
-            this.visualsVisible = true;
         }
         Collapsable.prototype.update_properties = function (list) {
             var properties = {};
@@ -179,8 +183,8 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         return Collapsable;
     })(Base);
     exports.Collapsable = Collapsable;
-    Base.defineStaticRWField(Collapsable, "expanded", false);
-    Base.defineStaticRWField(Collapsable, "visualsVisible", false);
+    Base.defineStaticRWField(Collapsable, "expanded", true);
+    Base.defineStaticRWField(Collapsable, "visualsVisible", true);
     Base.defineStaticRWField(Collapsable, "propertiesVisible", false);
     Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
     Base.readOnlyWrappedList(Collapsable, "list", Strain);

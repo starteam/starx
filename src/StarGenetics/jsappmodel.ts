@@ -99,6 +99,7 @@ export class Base {
 export class Strain extends Base {
     name:string;
     sex:string;
+    properties_cached:any = null;
 
     get properties() {
         var ret = {};
@@ -107,20 +108,28 @@ export class Strain extends Base {
         console.info(phenotypes);
 
         if (phenotypes) {
-            _.each(phenotypes, function (v, k) {
-                if (typeof(v) === 'string' && v.charAt(0) == '{') {
-                    try {
-                        var q = JSON.parse(v);
-                        if (typeof( q['text'] === 'string')) {
-                            ret[k] = q;
-                            return;
+            if(this.properties_cached == null )
+            {
+                _.each(phenotypes, function (v, k) {
+                    if (typeof(v) === 'string' && v.charAt(0) == '{') {
+                        try {
+                            var q = JSON.parse(v);
+                            if (typeof( q['text'] === 'string')) {
+                                ret[k] = q;
+                                return;
+                            }
+                        } finally {
                         }
-                    } finally {
-                    }
 
-                }
-                ret[k] = {text: v};
-            });
+                    }
+                    ret[k] = {text: v};
+                });
+               this.properties_cached = ret;
+            }
+            else
+            {
+                ret = this.properties_cached;
+            }
         }
         return ret;
     }
