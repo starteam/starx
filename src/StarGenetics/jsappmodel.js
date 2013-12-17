@@ -107,8 +107,6 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
             get: function () {
                 var ret = {};
                 var phenotypes = this.__data__['phenotype'];
-                console.info("properties");
-                console.info(phenotypes);
 
                 if (phenotypes) {
                     if (this.properties_cached == null) {
