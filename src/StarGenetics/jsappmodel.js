@@ -288,6 +288,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
             this.stats_cache = undefined;
             this.update_properties([this.list, this.parents]);
         };
+
         Object.defineProperty(Experiment.prototype, "stats", {
             get: function () {
                 if (!this.stats_cache) {
@@ -352,6 +353,11 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         function Strains() {
             _super.apply(this, arguments);
         }
+        Strains.prototype.add_strain = function (s) {
+            if (!this.get(s.id)) {
+                this.__data__.list.push(s.__data__);
+            }
+        };
         return Strains;
     })(Collapsable);
     exports.Strains = Strains;

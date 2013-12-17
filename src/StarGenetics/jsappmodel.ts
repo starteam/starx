@@ -99,6 +99,7 @@ export class Base {
 export class Strain extends Base {
     name:string;
     sex:string;
+    id:string;
     properties_cached:any = null;
 
     get properties() {
@@ -108,8 +109,7 @@ export class Strain extends Base {
         console.info(phenotypes);
 
         if (phenotypes) {
-            if(this.properties_cached == null )
-            {
+            if (this.properties_cached == null) {
                 _.each(phenotypes, function (v, k) {
                     if (typeof(v) === 'string' && v.charAt(0) == '{') {
                         try {
@@ -124,10 +124,9 @@ export class Strain extends Base {
                     }
                     ret[k] = {text: v};
                 });
-               this.properties_cached = ret;
+                this.properties_cached = ret;
             }
-            else
-            {
+            else {
                 ret = this.properties_cached;
             }
         }
@@ -187,23 +186,19 @@ export class ExperimentStatistics extends Base {
 
     sex_obj:any;
 
-    constructor(e:Experiment)
-    {
+    constructor(e:Experiment) {
         this.experiment = e;
         super({});
     }
 
-    public static sex_generate_internal(list)
-    {
+    public static sex_generate_internal(list) {
         var males = 0;
         var females = 0;
-        _.each(list,function(e){
-            if( e.sex == 'MALE' )
-            {
+        _.each(list, function (e) {
+            if (e.sex == 'MALE') {
                 males++;
             }
-            else
-            {
+            else {
                 females++;
             }
         });
@@ -213,10 +208,8 @@ export class ExperimentStatistics extends Base {
         };
     }
 
-    get sex()
-    {
-        if(! this.sex_obj)
-        {
+    get sex() {
+        if (!this.sex_obj) {
             this.sex_obj = ExperimentStatistics.sex_generate_internal(this.experiment.list);
         }
         return this.sex_obj;
@@ -231,6 +224,7 @@ export class Experiment extends Collapsable {
     id:string;
     parents:Strain[];
     stats_cache:ExperimentStatistics;
+
     constructor(q:{}) {
         if (typeof(q['parents']) === 'undefined') {
             q['parents'] = [];
@@ -242,13 +236,12 @@ export class Experiment extends Collapsable {
         if (this.parents.length < 2) {
             if (this.parents.length == 1) {
                 //TODO: Depending on the model, it is possible that sex needs to be different...
-                if( this.parents[0].sex == s.sex )
-                {
-                    alert( "There is already " + s.sex.toLowerCase() + " parent.");
+                if (this.parents[0].sex == s.sex) {
+                    alert("There is already " + s.sex.toLowerCase() + " parent.");
                     return;
                 }
             }
-            console.info( "Added here!" ) ;
+            console.info("Added here!");
             this.__data__.parents.push(s.__data__);
         }
     }
@@ -283,9 +276,9 @@ export class Experiment extends Collapsable {
         this.stats_cache = undefined;
         this.update_properties([this.list, this.parents]);
     }
+
     get stats():ExperimentStatistics {
-        if(! this.stats_cache )
-        {
+        if (!this.stats_cache) {
             this.stats_cache = new ExperimentStatistics(this);
         }
         return this.stats_cache;
@@ -294,24 +287,30 @@ export class Experiment extends Collapsable {
     get parent():{[s:string]:Strain} {
         var parents = this.parents;
         var ret:{[s:string]:Strain} = {};
-        _.each( parents, function(p) {
-            ret[ p.sex == 'MALE' ? 'male' : 'female' ] = p ;
+        _.each(parents, function (p) {
+            ret[ p.sex == 'MALE' ? 'male' : 'female' ] = p;
         });
         return ret;
     }
 
     get phenotypes():any {
-        var group = _.groupBy(this.list , function(q) { return JSON.stringify(q.properties)});
+        var group = _.groupBy(this.list, function (q) {
+            return JSON.stringify(q.properties)
+        });
         var ret = {};
-        _.map(group, function(value,key){
-            var sex_obj = ExperimentStatistics.sex_generate_internal( value );
+        _.map(group, function (value, key) {
+            var sex_obj = ExperimentStatistics.sex_generate_internal(value);
             ret[key] = {
                 list: value,
-                males:sex_obj.males,
-                females:sex_obj.females,
+                males: sex_obj.males,
+                females: sex_obj.females,
                 properties: value[0].properties,
-                top_male: _.find(value, function(e) { return e.sex == 'MALE'}),
-                top_female:_.find(value, function(e) { return e.sex == 'FEMALE'})
+                top_male: _.find(value, function (e) {
+                    return e.sex == 'MALE'
+                }),
+                top_female: _.find(value, function (e) {
+                    return e.sex == 'FEMALE'
+                })
             }
         });
         return ret;
@@ -327,6 +326,13 @@ Base.readOnlyField(Experiment, "id", null);
  */
 export class Strains extends Collapsable {
 
+    add_strain(s:Strain) {
+        if(! this.get(s.id) )
+        {
+            this.__data__.list.push(s.__data__);
+        }
+    }
+
 }
 
 export class NewExperiment extends Experiment {
@@ -339,12 +345,12 @@ export class Experiments extends Base {
         var exp = _.find(this.list, function (e) {
             return(e.id == experiment.id);
         });
-        console.info( "Experiments::update_experiment:" + exp );
+        console.info("Experiments::update_experiment:" + exp);
         if (!exp) {
-            console.info( "Experiments::update_experiment push!" );
+            console.info("Experiments::update_experiment push!");
             this.__data__.list.unshift(experiment.toJSON());
-            console.info( this.__data__.list );
-            console.info( this.list );
+            console.info(this.__data__.list);
+            console.info(this.list);
         }
     }
 }
@@ -370,12 +376,10 @@ export class UIModel extends Base {
             var experiment = _.find(this.experiments.list, function (e) {
                 return e.id == str
             });
-            if( experiment )
-            {
+            if (experiment) {
                 return experiment;
             }
-            else
-            {
+            else {
                 throw "Error " + str;
             }
         }

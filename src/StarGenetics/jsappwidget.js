@@ -290,11 +290,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
 
             $('.sg_strain_box').draggable({ revert: true });
             $('.sg_experiment_parent').droppable({ drop: function (e, ui) {
-                    console.info("Hello World");
-                    console.info(this);
-                    console.info(e);
-                    console.info(ui);
-
                     var target = $(this);
                     var source = ui.draggable;
 
@@ -302,6 +297,20 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
                     var src_strain = src_collection.get(source.data('id'));
                     var target_collection = self.model.ui.get(target.data('kind'));
                     self.add_parent(target_collection, src_strain);
+                    self.show();
+                } });
+
+            $('.sg_add_strain_box').droppable({ drop: function (e, ui) {
+                    var target = $(this);
+                    var source = ui.draggable;
+                    var src_collection = self.model.ui.get(source.data('kind'));
+                    var src_strain = src_collection.get(source.data('id'));
+                    var target_collection = self.model.ui.get(target.data('kind'));
+                    console.info("Drop");
+                    console.info(source);
+                    console.info(src_strain);
+                    console.info(target_collection);
+                    target_collection.add_strain(src_strain);
                     self.show();
                 } });
 

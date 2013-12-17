@@ -51,10 +51,24 @@
                     {/if}
                 </div>
 {else}
-<div class='sg_s_strain_box'>
-</div>
+<div class='sg_strain_box'></div>
 {/if}
 {/template}
+
+/**
+* @param visuals
+* @param kind
+*/
+{template .strain_place_holder}
+<div class='sg_add_strain_box sg_s_strain_box' data-kind='{$kind}' >
+                    <div class='sg_strain_title'>Add strain</div>
+                    {if $visuals}
+                    <div class='sg_strain_visual'>Drop your strain here...</div>
+                    {/if}
+                </div>
+{/template}
+
+
 /**
 *   Strains
 * @param strains
@@ -114,6 +128,10 @@
                     {param kind: 'strains' /}
                 {/call}
             {/foreach}
+            {call .strain_place_holder }
+                    {param kind: 'strains' /}
+                    {param visuals: $strains.visualsVisible/}
+            {/call}
         {/if}
     {else}
     {/if}

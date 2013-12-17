@@ -327,12 +327,6 @@ export class StarGeneticsJSAppWidget {
         $('.sg_strain_box').draggable({revert: true});
         $('.sg_experiment_parent').droppable({/*accept: '.sg_strain_box',*/
             drop: function (e, ui) {
-                console.info("Hello World");
-                console.info(this);
-                console.info(e);
-                console.info(ui);
-
-
                 var target = $(this);
                 var source = ui.draggable;
 
@@ -340,6 +334,21 @@ export class StarGeneticsJSAppWidget {
                 var src_strain:SGModel.Strain = src_collection.get(source.data('id'));
                 var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
                 self.add_parent(target_collection, src_strain);
+                self.show();
+            }});
+
+        $('.sg_add_strain_box').droppable({/*accept: '.sg_strain_box',*/
+            drop: function (e, ui) {
+                var target = $(this);
+                var source = ui.draggable;
+                var src_collection:SGModel.Collapsable = self.model.ui.get(source.data('kind'));
+                var src_strain:SGModel.Strain = src_collection.get(source.data('id'));
+                var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
+                console.info( "Drop" );
+                console.info( source );
+                console.info( src_strain );
+                console.info( target_collection );
+                target_collection.add_strain(src_strain);
                 self.show();
             }});
 
