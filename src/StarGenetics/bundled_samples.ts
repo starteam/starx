@@ -161,3 +161,123 @@ export var tutorial = {
         }
     }
 }
+
+//## Fruit Fly Exercise 5
+//## https://starwiki.mit.edu/media_files/uploads/genetics/excel_workbooks/fruit_fly_exercise_5_ver2.xls
+
+
+    export var fruit_fly_exercise_5 = {
+        "genetics": {
+            "visualizer": {"name": "fly"},
+            "genome": {
+                "chromosomes": {
+                    "C_1": {
+                        "name": "Chromosome X",
+                        "genes": [
+                            { "name": "Brown body - dominant",
+                                "position": 0,
+                                "alleles": [
+                                    {"name": "B"},
+                                    {"name": "b"}
+                                ]
+                            },
+                            { "name": "Long artisae - dominant",
+                                "position": 75,
+                                "alleles": [
+                                    {"name": "A"},
+                                    {"name": "a"}
+                                ]
+                            },
+                            { "name": "Wingless - recessive",
+                                "position": 150,
+                                "alleles": [
+                                    {"name": "W"},
+                                    {"name": "w"}
+                                ]
+                            }
+
+
+                        ]
+                    }
+                }
+            },
+            "engine": {
+                "sex_type": "XY",
+                "male_recombination_rate": 1,
+                "female_recombination_rate": 1,
+                "female_sex_ratio": .50,
+                "twinning": 0,
+                "identical_twins_frequency": 0,
+                "avg_offspring_count": 100
+            },
+            "experiments": {},
+            "phenotype_rules": [
+                {   name: 'default',
+                    matches: '*',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'wildtype',
+                            value: 'rgb(152,118,84)'
+                        },
+                        aristae: {
+                            text: 'wildtype',
+                            value: '1'
+                        },
+                        wingsize: {
+                            text: 'wildtype',
+                            value: '1'
+                        }
+                    }
+                },
+                {
+                    name: 'Aristae',
+                    matches: 'a,a',
+                    phenotype: {
+                        aristae: {
+                            text: 'missing',
+                            value: '0'
+                        }
+                    }
+                },
+                {
+                    name: 'Wingless',
+                    matches: 'w,w',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'wingless',
+                            value: '0'
+                        }
+                    }
+                },
+                {
+                    name: 'Body color',
+                    matches: 'b,b',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'gray',
+                            value: 'gray'
+                        }
+                    }
+                }
+
+            ],
+            "gel_rules": {},
+            "model_metadata": {},
+            "strains": {
+                "initial": {
+                    "name": "Initial Strains",
+                    "list": [
+                        {"name": "Fly 1", "sex": "M", "alleles": [ "B,B","A,A","w,w" ]},
+                        {"name": "Fly 2", "sex": "F", "alleles": [ "b,b","A,A","W,W" ]},
+                        {"name": "Fly 3", "sex": "M", "alleles": [ "B,B","a,a","W,W" ]},
+                        {"name": "Fly 4", "sex": "F", "alleles": [ "B,B","A,A","w,w" ]},
+                        {"name": "Fly 5", "sex": "M", "alleles": [ "B,B","a,a","W,W" ]},
+                        {"name": "Fly 6", "sex": "F", "alleles": [ "b,b","A,A","W,W" ]},
+                        {"name": "Fly 7", "sex": "F", "alleles": [ "b,b","A,A","w,w" ]},
+                        {"name": "Fly 8", "sex": "F", "alleles": [ "B,B","a,a","w,w" ]},
+                        {"name": "Fly 9", "sex": "F", "alleles": [ "b,b","a,a","W,W" ]}
+                    ]
+                }
+            }
+        }
+    }

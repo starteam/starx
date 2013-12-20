@@ -29,6 +29,10 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         return this._get(properties,'bodycolor',this.bodyColor);
     }
 
+    aristae(properties:any) {
+        return parseFloat(this._get(properties,'aristae',''+this.aristaeLength));
+
+    }
     constructor() {
         super();
     }
@@ -221,7 +225,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.lineCap = "round";
         context.lineJoin = "mitter";
         context.fillStyle = this.legsColor;
-        var length = (properties['aristae'] || this.aristaeLength) * .2;
+        var length = this.aristae(properties) * .2;
         this.drawLine(context, -.10, -.95, -.10 - length, -.95 - length);
         this.drawLine(context, +.10, -.95, +.10 + length, -.95 - length);
         context.stroke();
