@@ -88,5 +88,82 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
+
+    exports.tutorial = {
+        "genetics": {
+            "visualizer": { "name": "fly" },
+            "genome": {
+                "chromosomes": {
+                    "C_1": {
+                        "name": "Chromosome X",
+                        "genes": [
+                            {
+                                "name": "Body Color",
+                                "position": 40,
+                                "alleles": [
+                                    { "name": "B" },
+                                    { "name": "b" }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "engine": {
+                "sex_type": "XY",
+                "male_recombination_rate": 1,
+                "female_recombination_rate": 1,
+                "female_sex_ratio": .51,
+                "twinning": 0,
+                "identical_twins_frequency": 0,
+                "avg_offspring_count": 50
+            },
+            "experiments": {},
+            "phenotype_rules": [
+                {
+                    name: 'default',
+                    matches: '*',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'wildtype',
+                            value: 'rgb(152,118,84)'
+                        }
+                    }
+                },
+                {
+                    name: 'Gray body (F)',
+                    matches: 'Sex:FEMALE;b,b',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'gray',
+                            value: 'gray'
+                        }
+                    }
+                },
+                {
+                    name: 'Gray body (M)',
+                    matches: 'Sex:MALE;b',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'gray',
+                            value: 'gray'
+                        }
+                    }
+                }
+            ],
+            "gel_rules": {},
+            "model_metadata": {},
+            "strains": {
+                "initial": {
+                    "name": "Initial Strains",
+                    "list": [
+                        { "name": "Mutant 1", "sex": "M", "alleles": ["b"] },
+                        { "name": "Wildtype M", "sex": "M", "alleles": ["B,B"] },
+                        { "name": "Wildtype F", "sex": "F", "alleles": ["B"] }
+                    ]
+                }
+            }
+        }
+    };
 });
-//# sourceMappingURL=json_sample_model.js.map
+//# sourceMappingURL=bundled_samples.js.map
