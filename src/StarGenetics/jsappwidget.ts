@@ -9,12 +9,12 @@
 /// <amd-reference path="StarGenetics/sg_client_mainframe.soy" />
 /// <amd-dependency path="jquery" />
 /// <amd-dependency path="jquery-ui" />
-/// <amd-dependency path="StarGenetics/json_sample_model" />
+/// <amd-dependency path="StarGenetics/bundled_samples" />
 
 /// <amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
 
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
-import json_sample_model = require("StarGenetics/json_sample_model");
+import bundled_samples = require("StarGenetics/bundled_samples");
 import SGModel = require("StarGenetics/jsappmodel");
 import SGState = require("../StarGenetics_Obsolete/state");
 import VisualizerBase = require("StarGenetics/visualizers/base");
@@ -37,7 +37,20 @@ export class StarGeneticsJSAppWidget {
         var self:StarGeneticsJSAppWidget = this;
         this.state = state;
         this.config = config;
-        this.initModel();
+
+        var backend_model = undefined;
+        if( config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples'])
+        {
+            backend_model = bundled_samples[config['config']['bundled_samples']];
+            config['config']['model'] = backend_model;
+        }
+        else
+        {
+            backend_model = bundled_samples.model1;
+            config['config']['model'] = backend_model;
+        }
+
+        this.initModel(config);
         this.init();
 
 
@@ -145,9 +158,11 @@ export class StarGeneticsJSAppWidget {
      * This sets up model,
      * TODO: in the future it will decide on model to load from StarX configuration
      */
-        initModel() {
+        initModel(config) {
+        console.info( config['config']);
         var model = new SGModel.Top({
-            backend: json_sample_model.model1,
+            //backend: json_sample_model.model1,
+            backend: config['config']['model'],
             ui: {
                 strains: {
                     list: []
@@ -162,9 +177,6 @@ export class StarGeneticsJSAppWidget {
         });
         this.model = model;
         window['model'] = model;
-        console.info(model);
-        console.info("backend:");
-        console.info(json_sample_model.model1);
     }
 
     /**
