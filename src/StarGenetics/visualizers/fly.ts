@@ -11,6 +11,23 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
     wingColor = 'rgba(200,200,200,.8)';
     aristaeLength = 1;
 
+    _get(properties:any, key:string, default_value:string):any {
+        if (properties) {
+            var c = properties[key]
+            if (c && c['value']) {
+                return c['value'];
+            }
+        }
+        return default_value;
+    }
+
+    eyecolor(properties:any) {
+        return this._get(properties,'eyecolor',this.eyeColor);
+    }
+
+    bodycolor(properties:any) {
+        return this._get(properties,'bodycolor',this.bodyColor);
+    }
 
     constructor() {
         super();
@@ -22,13 +39,13 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         console.info(organism);
         var context = this.prepare(canvas);
         this.clearImage(context);
-        context.translate(0,.2);
+        context.translate(0, .2);
         this.drawLegs(context, properties, organism['sex']);
         this.drawAristae(context, properties, organism['sex']);
         this.drawHead(context, properties, organism['sex']);
         this.drawEyes(context, properties, organism['sex']);
         this.drawBody(context, properties, organism['sex']);
-        this.drawWings(context,properties, organism['sex']);
+        this.drawWings(context, properties, organism['sex']);
         this.commit(context);
     }
 
@@ -52,12 +69,13 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         var scaler = 1;
         var radius = .4;
 
+        var bodycolor = this.bodycolor(properties);
         context.save();
         context.beginPath();
         context.translate(0, -radius);
         context.scale(1, 1.1);
         context.arc(0, 0, scaler * radius, 1 * Math.PI, 2 * Math.PI, false);
-        context.fillStyle = properties['bodycolor'].value;
+        context.fillStyle = bodycolor;
         context.fill();
         context.closePath();
         context.restore();
@@ -67,7 +85,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.translate(-radius, -radius);
         context.scale(1, 1.1);
         context.rect(0, 0 - .01, radius * 2, radius + 2 * .01)
-        context.fillStyle = properties['bodycolor'].value;
+        context.fillStyle = bodycolor;
         context.fill();
         context.closePath();
         context.restore();
@@ -76,7 +94,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.beginPath();
         context.scale(1, 2.27);
         context.arc(0, 0, scaler * radius, 0 * Math.PI, 1 * Math.PI, false);
-        context.fillStyle = properties['bodycolor'].value;
+        context.fillStyle = bodycolor;
         context.fill();
         context.closePath();
         context.restore();
@@ -86,12 +104,14 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         var scaler = 1;
         var radius = .4;
         var scale_down = 1.30;
+                var bodycolor = this.bodycolor(properties);
+
         context.save();
         context.beginPath();
         context.translate(0, -radius);
         context.scale(1, 1.1);
         context.arc(0, 0, scaler * radius, 1 * Math.PI, 2 * Math.PI, false);
-        context.fillStyle = properties['bodycolor'].value || this.bodyColor;
+        context.fillStyle = bodycolor;
         context.fill();
         context.closePath();
         context.restore();
@@ -104,7 +124,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.lineTo(radius * scale_down, 0.01);
         context.lineTo(radius, -radius);
         context.lineTo(-radius, -radius - .01);
-        context.fillStyle = properties['bodycolor'].value || this.bodyColor;
+        context.fillStyle = bodycolor;
         context.fill();
         context.closePath();
         context.restore();
@@ -113,7 +133,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.beginPath();
         context.scale(scale_down, 3.5);
         context.arc(0, 0, scaler * radius, 0 * Math.PI, 1.01 * Math.PI, false);
-        context.fillStyle = properties['bodycolor'].value || this.bodyColor;
+        context.fillStyle = bodycolor;
         context.fill();
         context.closePath();
         context.restore();
@@ -173,6 +193,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.restore();
     }
 
+
     drawEyes(context:CanvasRenderingContext2D, properties:any, sex:string) {
         context.save();
         context.beginPath();
@@ -182,7 +203,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.fill();
         context.closePath();
         context.beginPath();
-        context.fillStyle = this.eyeColor;
+        context.fillStyle = this.eyecolor(properties);
         var ang = 40. / 180 * Math.PI;
         context.arc(.20 - .01, -.775 + .01, .20 - 0.02, ang, ang + Math.PI, true);
         context.fill();
@@ -199,32 +220,32 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         context.lineWidth = 0.022;
         context.lineCap = "round";
         context.lineJoin = "mitter";
-        context.fillStyle=this.legsColor;
-        var length = (properties['aristae'] || this.aristaeLength)*.2;
-        this.drawLine(context, -.10, -.95, -.10 - length, -.95 - length );
-        this.drawLine(context, +.10, -.95, +.10 + length, -.95 - length );
+        context.fillStyle = this.legsColor;
+        var length = (properties['aristae'] || this.aristaeLength) * .2;
+        this.drawLine(context, -.10, -.95, -.10 - length, -.95 - length);
+        this.drawLine(context, +.10, -.95, +.10 + length, -.95 - length);
         context.stroke();
-        context.strokeStyle=undefined;
+        context.strokeStyle = undefined;
         context.restore();
     }
 
-    drawWings(context:CanvasRenderingContext2D, properties:any,sex:string) {
+    drawWings(context:CanvasRenderingContext2D, properties:any, sex:string) {
         // need to implement wing sizing
         context.save();
-        context.translate(-.22,.58);
-        context.scale(.3,1.3);
+        context.translate(-.22, .58);
+        context.scale(.3, 1.3);
         context.beginPath();
         context.fillStyle = this.wingColor;
-        context.arc(0,0,1,0*Math.PI,1.5*Math.PI,false);
+        context.arc(0, 0, 1, 0 * Math.PI, 1.5 * Math.PI, false);
         context.fill();
         context.closePath();
         context.restore();
         context.save();
-        context.translate(+.22,.58);
-        context.scale(.3,1.3);
+        context.translate(+.22, .58);
+        context.scale(.3, 1.3);
         context.beginPath();
         context.fillStyle = this.wingColor;
-        context.arc(0,0,1,1*Math.PI,1.5*Math.PI,true);
+        context.arc(0, 0, 1, 1 * Math.PI, 1.5 * Math.PI, true);
         context.fill();
         context.closePath();
         context.restore();

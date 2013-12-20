@@ -17,6 +17,24 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             this.wingColor = 'rgba(200,200,200,.8)';
             this.aristaeLength = 1;
         }
+        Fly.prototype._get = function (properties, key, default_value) {
+            if (properties) {
+                var c = properties[key];
+                if (c && c['value']) {
+                    return c['value'];
+                }
+            }
+            return default_value;
+        };
+
+        Fly.prototype.eyecolor = function (properties) {
+            return this._get(properties, 'eyecolor', this.eyeColor);
+        };
+
+        Fly.prototype.bodycolor = function (properties) {
+            return this._get(properties, 'bodycolor', this.bodyColor);
+        };
+
         Fly.prototype.render = function (canvas, properties, organism) {
             console.info("Fly render");
             console.info(properties);
@@ -52,12 +70,13 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             var scaler = 1;
             var radius = .4;
 
+            var bodycolor = this.bodycolor(properties);
             context.save();
             context.beginPath();
             context.translate(0, -radius);
             context.scale(1, 1.1);
             context.arc(0, 0, scaler * radius, 1 * Math.PI, 2 * Math.PI, false);
-            context.fillStyle = properties['bodycolor'].value;
+            context.fillStyle = bodycolor;
             context.fill();
             context.closePath();
             context.restore();
@@ -67,7 +86,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.translate(-radius, -radius);
             context.scale(1, 1.1);
             context.rect(0, 0 - .01, radius * 2, radius + 2 * .01);
-            context.fillStyle = properties['bodycolor'].value;
+            context.fillStyle = bodycolor;
             context.fill();
             context.closePath();
             context.restore();
@@ -76,7 +95,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.beginPath();
             context.scale(1, 2.27);
             context.arc(0, 0, scaler * radius, 0 * Math.PI, 1 * Math.PI, false);
-            context.fillStyle = properties['bodycolor'].value;
+            context.fillStyle = bodycolor;
             context.fill();
             context.closePath();
             context.restore();
@@ -86,12 +105,14 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             var scaler = 1;
             var radius = .4;
             var scale_down = 1.30;
+            var bodycolor = this.bodycolor(properties);
+
             context.save();
             context.beginPath();
             context.translate(0, -radius);
             context.scale(1, 1.1);
             context.arc(0, 0, scaler * radius, 1 * Math.PI, 2 * Math.PI, false);
-            context.fillStyle = properties['bodycolor'].value || this.bodyColor;
+            context.fillStyle = bodycolor;
             context.fill();
             context.closePath();
             context.restore();
@@ -104,7 +125,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.lineTo(radius * scale_down, 0.01);
             context.lineTo(radius, -radius);
             context.lineTo(-radius, -radius - .01);
-            context.fillStyle = properties['bodycolor'].value || this.bodyColor;
+            context.fillStyle = bodycolor;
             context.fill();
             context.closePath();
             context.restore();
@@ -113,7 +134,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.beginPath();
             context.scale(scale_down, 3.5);
             context.arc(0, 0, scaler * radius, 0 * Math.PI, 1.01 * Math.PI, false);
-            context.fillStyle = properties['bodycolor'].value || this.bodyColor;
+            context.fillStyle = bodycolor;
             context.fill();
             context.closePath();
             context.restore();
@@ -180,7 +201,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
             context.beginPath();
-            context.fillStyle = this.eyeColor;
+            context.fillStyle = this.eyecolor(properties);
             var ang = 40. / 180 * Math.PI;
             context.arc(.20 - .01, -.775 + .01, .20 - 0.02, ang, ang + Math.PI, true);
             context.fill();

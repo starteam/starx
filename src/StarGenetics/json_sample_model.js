@@ -46,13 +46,9 @@ define(["require", "exports"], function(require, exports) {
                             text: 'yellow',
                             value: 'yellow'
                         },
-                        mouth: {
-                            text: 'Happy',
-                            value: 'happy'
-                        },
-                        eyes: {
-                            text: 'Circle Eyes',
-                            value: 'circle'
+                        eyecolor: {
+                            text: 'Red',
+                            value: 'red'
                         }
                     }
                 },
@@ -70,13 +66,9 @@ define(["require", "exports"], function(require, exports) {
                     name: 'wingless',
                     matches: 'b,b',
                     phenotype: {
-                        mouth: {
-                            text: 'Sad',
-                            value: 'sad'
-                        },
-                        eyes: {
-                            text: 'Cross Eyes',
-                            value: 'cross'
+                        eyecolor: {
+                            text: 'White',
+                            value: 'white'
                         }
                     }
                 }
