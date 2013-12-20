@@ -99,8 +99,8 @@
     display: inline-block;
     margin: 5px;
     width: 100px;
-    height: 90px;
-    background-color: #cccccc;
+    height: 120px;
+    background-color: aliceblue;
 }
 
 .sg_s_col_head {
@@ -120,4 +120,11 @@
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
     padding-left:8px;
+}
+
+.sg_add_strain_box {
+    vertical-align: top;
+    width: 70px;
+    heigth: 80px;
+    background-color: aliceblue;
 }
