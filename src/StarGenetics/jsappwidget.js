@@ -276,14 +276,16 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
 
             $('.sg_new_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
-                self.mate(c, {
-                    onsuccess: function () {
-                        console.info("Mate success!");
-                    }, onerror: function () {
-                        console.info("Mate error!");
-                    } });
-                self.show();
-                $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).height(0).animate({ 'height': 160 }, 2000);
+                $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
+                    self.mate(c, {
+                        onsuccess: function () {
+                            console.info("Mate success!");
+                        }, onerror: function () {
+                            console.info("Mate error!");
+                        } });
+                    self.show();
+                    $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).height(0).animate({ 'height': 160 }, 2000);
+                });
             });
             $('.sg_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));

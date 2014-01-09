@@ -39,13 +39,11 @@ export class StarGeneticsJSAppWidget {
         this.config = config;
 
         var backend_model = undefined;
-        if( config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples'])
-        {
+        if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
             backend_model = bundled_samples[config['config']['bundled_samples']];
             config['config']['model'] = backend_model;
         }
-        else
-        {
+        else {
             backend_model = bundled_samples.model1;
             config['config']['model'] = backend_model;
         }
@@ -159,7 +157,7 @@ export class StarGeneticsJSAppWidget {
      * TODO: in the future it will decide on model to load from StarX configuration
      */
         initModel(config) {
-        console.info( config['config']);
+        console.info(config['config']);
         var model = new SGModel.Top({
             //backend: json_sample_model.model1,
             backend: config['config']['model'],
@@ -314,18 +312,21 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_new_experiment_mate').off('click').on('click', function () {
             var c:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get($(this).data('kind'));
-            self.mate(c, {onsuccess: function () {
-                console.info("Mate success!");
+            $('.sg_new_experiment_box').css({'overflow': 'hidden'}).animate({ 'height': 25}, 750, function () {
+                self.mate(c, {onsuccess: function () {
+                    console.info("Mate success!");
 
-            }, onerror: function () {
-                console.info("Mate error!");
-            }});
-            self.show();
-            $('.sg_new_experiment_box').css({'overflow':'hidden'}).height(0).animate( { 'height': 160}, 2000 );
+                }, onerror: function () {
+                    console.info("Mate error!");
+                }});
+                self.show();
+                $('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
+
+            });
         });
         $('.sg_experiment_mate').off('click').on('click', function () {
             var c:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get($(this).data('kind'));
-            console.info( "sg_experiment_mate");
+            console.info("sg_experiment_mate");
             console.info(c);
             self.mate(c, {onsuccess: function () {
                 console.info("Mate success!");
@@ -357,10 +358,10 @@ export class StarGeneticsJSAppWidget {
                 var src_collection:SGModel.Collapsable = self.model.ui.get(source.data('kind'));
                 var src_strain:SGModel.Strain = src_collection.get(source.data('id'));
                 var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
-                console.info( "Drop" );
-                console.info( source );
-                console.info( src_strain );
-                console.info( target_collection );
+                console.info("Drop");
+                console.info(source);
+                console.info(src_strain);
+                console.info(target_collection);
                 target_collection.add_strain(src_strain);
                 self.show();
             }});
