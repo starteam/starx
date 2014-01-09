@@ -1,6 +1,6 @@
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/jquery.d.ts" />
-define(["require", "exports", 'jquery', '../StarTMI/tmi'], function(require, exports, $, StarTMI) {
+define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, exports, $, StarTMI) {
     
 
     var tmi = new StarTMI.TMI();
