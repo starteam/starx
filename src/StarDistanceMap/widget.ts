@@ -793,7 +793,7 @@ export class GeneDistanceWidget {
      */
         set_gene_position(event, ui, element) {
         var e:JQuery = $(element);
-        var position:any = e.position();
+        var position:any = e.position({});
         var x = position.left;
         var y = position.top;
         var gene_id = e.attr('data-id');
