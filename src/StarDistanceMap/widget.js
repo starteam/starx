@@ -2,6 +2,8 @@
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarX/lib/underscore.ts" />
+/// <reference path="../StarDistanceMap/widget.soy.d.ts" />
 define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap/widget.soy", "css!StarDistanceMap/widget.css", "jquery-ui"], function(require, exports, underscore, $, ui) {
     var _ = underscore['_'];
 

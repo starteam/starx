@@ -2,6 +2,8 @@
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarX/lib/underscore.ts" />
+/// <reference path="../StarDistanceMap/widget.soy.d.ts" />
 
 /// <amd-dependency path="css!StarDistanceMap/widget.css" />
 /// <amd-dependency path="jquery-ui" />
@@ -630,7 +632,7 @@ export class State {
                 group.top = ui_config.group_top;
                 group.left = left + index * ui_config.step_x;
                 _.each(group.genes, function (gene_id) {
-                    var gene = _.find(self.genes, function (gene) {
+                    var gene:Gene = _.find(self.genes, function (gene) {
                         return gene.id == gene_id;
                     });
                     gene.initial_position = {
@@ -650,7 +652,7 @@ export class State {
                 group.top = ui_config.group_top;
                 group.left = left + index / 2 * ui_config.step_x;
                 _.each(group.genes, function (gene_id) {
-                    var gene = _.find(self.genes, function (gene) {
+                    var gene:Gene = _.find(self.genes, function (gene) {
                         return gene.id == gene_id;
                     });
                     gene.initial_position = {
@@ -791,7 +793,7 @@ export class GeneDistanceWidget {
      */
         set_gene_position(event, ui, element) {
         var e:JQuery = $(element);
-        var position = e.position();
+        var position:any = e.position();
         var x = position.left;
         var y = position.top;
         var gene_id = e.attr('data-id');

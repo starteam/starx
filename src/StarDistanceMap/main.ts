@@ -2,7 +2,6 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarTMI/tmi.ts" />
 
-
 declare var window;
 
 import $ = require("jquery");

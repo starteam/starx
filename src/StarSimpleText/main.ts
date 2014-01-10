@@ -4,7 +4,7 @@
 declare var window;
 
 import $ = require('jquery');
-import StarTMI = require('../StarTMI/tmi');
+import StarTMI = require('StarTMI/tmi');
 var tmi = new StarTMI.TMI();
 
 export class StarSimpleText {

@@ -5,7 +5,7 @@
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/json_sample_model", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "jquery", "jquery-ui", "StarGenetics/json_sample_model", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, json_sample_model, SGModel, SGSmiley, SGFly, SGTests, TEST) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "jquery", "jquery-ui", "StarGenetics/bundled_samples", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST) {
     var $ = jQuery;
 
     var StarGeneticsJSAppWidget = (function () {
@@ -13,7 +13,17 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
             var self = this;
             this.state = state;
             this.config = config;
-            this.initModel();
+
+            var backend_model = undefined;
+            if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
+                backend_model = bundled_samples[config['config']['bundled_samples']];
+                config['config']['model'] = backend_model;
+            } else {
+                backend_model = bundled_samples.model1;
+                config['config']['model'] = backend_model;
+            }
+
+            this.initModel(config);
             this.init();
         }
         /**
@@ -113,9 +123,11 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
         * This sets up model,
         * TODO: in the future it will decide on model to load from StarX configuration
         */
-        StarGeneticsJSAppWidget.prototype.initModel = function () {
+        StarGeneticsJSAppWidget.prototype.initModel = function (config) {
+            console.info(config['config']);
             var model = new SGModel.Top({
-                backend: json_sample_model.model1,
+                //backend: json_sample_model.model1,
+                backend: config['config']['model'],
                 ui: {
                     strains: {
                         list: []
@@ -130,9 +142,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
             });
             this.model = model;
             window['model'] = model;
-            console.info(model);
-            console.info("backend:");
-            console.info(json_sample_model.model1);
         };
 
         /**
@@ -267,14 +276,16 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
 
             $('.sg_new_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
-                self.mate(c, {
-                    onsuccess: function () {
-                        console.info("Mate success!");
-                    }, onerror: function () {
-                        console.info("Mate error!");
-                    } });
-                self.show();
-                $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).height(0).animate({ 'height': 160 }, 2000);
+                $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
+                    self.mate(c, {
+                        onsuccess: function () {
+                            console.info("Mate success!");
+                        }, onerror: function () {
+                            console.info("Mate error!");
+                        } });
+                    self.show();
+                    $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).height(0).animate({ 'height': 160 }, 2000);
+                });
             });
             $('.sg_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
