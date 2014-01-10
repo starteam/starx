@@ -1,7 +1,10 @@
 define(['require', 'exports', 'jquery'], function (require, exports, $) {
     // restore window.$ version
     $.noConflict();
-
+    if(! window.$ )
+    {
+        window.$ = $ ;
+    }
     var widget_ids = {};
 
     function get_base_url() {
