@@ -7,7 +7,8 @@
 	//	{ name: "StarGenetics/main" },
 	//	{ name: "StarSimpleText/main" },
 	//	{ name: "StarTMI/main" },
-		{ name: "StarDistanceMap/main" },
+	//	{ name: "StarDistanceMap/main" },
+		{ name: "demo" },
 	] ,
 	paths: {
 	        'jquery': 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
