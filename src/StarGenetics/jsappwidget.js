@@ -5,6 +5,7 @@
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
+/// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
 define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "jquery", "jquery-ui", "StarGenetics/bundled_samples", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST) {
     var $ = jQuery;
 
@@ -350,6 +351,13 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
                     console.info(organism);
                     visualizer.render($(qq)[0], organism.properties, organism);
                 };
+            });
+
+            console.info("Save handler");
+            $('.sg_workspace_save', main).off('click').on('click', function () {
+                var data = JSON.stringify(self.model.__data__);
+                console.info("Save len:" + data.length);
+                console.info(data);
             });
         };
         return StarGeneticsJSAppWidget;
