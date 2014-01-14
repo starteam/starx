@@ -5,6 +5,8 @@
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
+/// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
+/// <reference path="../StarCommons/easy_deflate.d.ts" />
 
 /// <amd-reference path="StarGenetics/sg_client_mainframe.soy" />
 /// <amd-dependency path="jquery" />
@@ -23,6 +25,7 @@ import SGFly = require("StarGenetics/visualizers/fly");
 import SGTests = require( "StarGenetics/tests/qunit");
 
 import TEST = require("StarGenetics/tests/suite");
+import compress = require("StarCommons/easy_deflate");
 
 declare var jQuery;
 var $ = jQuery;
@@ -116,7 +119,6 @@ export class StarGeneticsJSAppWidget {
                 });
             }
         });
-
 //        $('.sg_open_ps', main).off('click').on('click', function () {
 //            console.info("Click on open");
 //            self.open({
@@ -136,7 +138,7 @@ export class StarGeneticsJSAppWidget {
      * Test Hook load QTest & if URL warrants it loads test suite
      */
         testHook() {
-        var self = this;
+        var self:any = this;
         if (SGTests.isTesting()) {
             SGTests.load(function (qunit) {
 //                import TEST = require("StarGenetics/tests/suite");
@@ -357,7 +359,7 @@ export class StarGeneticsJSAppWidget {
                 var source = ui.draggable;
                 var src_collection:SGModel.Collapsable = self.model.ui.get(source.data('kind'));
                 var src_strain:SGModel.Strain = src_collection.get(source.data('id'));
-                var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
+                var target_collection:SGModel.Strains = <SGModel.Strains>self.model.ui.get(target.data('kind'));
                 console.info("Drop");
                 console.info(source);
                 console.info(src_strain);
@@ -376,7 +378,7 @@ export class StarGeneticsJSAppWidget {
         }
         $('.sg_strain_visual canvas').each(function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-            var organism = c.get($(this).data('id'));
+            var organism:SGModel.Strain = c.get($(this).data('id'));
             console.error("RENDER");
             console.error(organism);
             visualizer.render($(this)[0], organism.properties, organism);
@@ -391,6 +393,17 @@ export class StarGeneticsJSAppWidget {
                 visualizer.render($(qq)[0], organism.properties, organism);
             };
         });
+
+        console.info("Save handler");
+        $('.sg_workspace_save', main).off('click').on('click', function () {
+            console.info("Save" );
+            var data = JSON.stringify(self.model.__data__ );
+            console.info("Raw len:" + data.length );
+            var compressed = compress.deflate(data);
+            console.info("Compress len" + compressed.length);
+            console.info(compressed);
+        });
+
     }
 
 }
