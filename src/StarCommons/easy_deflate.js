@@ -552,7 +552,6 @@ null)throw new TypeError("can't convert "+this+" to object");return String(this)
 		};
 
 })();
- exports['deflate'] = deflate;
- exports['inflate'] = inflate;
-
+exports['deflate'] = deflate;
+exports['inflate'] = inflate;
 });
