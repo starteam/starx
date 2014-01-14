@@ -6,6 +6,7 @@
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
+/// <reference path="../StarCommons/easy_deflate.d.ts" />
 
 /// <amd-reference path="StarGenetics/sg_client_mainframe.soy" />
 /// <amd-dependency path="jquery" />
@@ -24,6 +25,7 @@ import SGFly = require("StarGenetics/visualizers/fly");
 import SGTests = require( "StarGenetics/tests/qunit");
 
 import TEST = require("StarGenetics/tests/suite");
+import compress = require("StarCommons/easy_deflate");
 
 declare var jQuery;
 var $ = jQuery;
@@ -394,9 +396,12 @@ export class StarGeneticsJSAppWidget {
 
         console.info("Save handler");
         $('.sg_workspace_save', main).off('click').on('click', function () {
-            var data =JSON.stringify(self.model.__data__ );
-            console.info("Save len:" + data.length );
-            console.info(data);
+            console.info("Save" );
+            var data = JSON.stringify(self.model.__data__ );
+            console.info("Raw len:" + data.length );
+            var compressed = compress.deflate(data);
+            console.info("Compress len" + compressed.length);
+            console.info(compressed);
         });
 
     }
