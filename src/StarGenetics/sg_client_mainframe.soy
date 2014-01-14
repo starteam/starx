@@ -33,7 +33,17 @@
         {call .all_experiments}
             {param experiments:$model.ui.experiments /}
         {/call}
+
+        {call .io}
+        {/call}
     </div>
+{/template}
+
+/**
+*
+*/
+{template .io}
+    <button class='sg_workspace_save'>Save</button>
 {/template}
 
 /**

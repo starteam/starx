@@ -2955,3 +2955,7 @@ declare var _: UnderscoreStatic;
 declare module "underscore" {
 	export = _;
 }
+
+declare module "StarX/lib/underscore" {
+	export = _;
+}
