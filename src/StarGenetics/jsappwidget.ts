@@ -399,6 +399,8 @@ export class StarGeneticsJSAppWidget {
             console.info("Save" );
             var data = JSON.stringify(self.model.__data__ );
             console.info("Raw len:" + data.length );
+            console.info( self.stargenetics_interface ) ;
+            self.stargenetics_interface({token:'1',command:'save',data:{protocol:'Version_1'},callbacks:{onsuccess:function(a,b){ console.info("onsuccess:"); console.info(a)},onerror:function(a,b){console.info("error" +a );}}})
             var compressed = compress.deflate(data);
             console.info("Compress len" + compressed.length);
             console.info(compressed);
