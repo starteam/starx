@@ -854,7 +854,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap
         */
         GeneDistanceWidget.prototype.set_gene_position = function (event, ui, element) {
             var e = $(element);
-            var position = e.position();
+            var position = e.position({});
             var x = position.left;
             var y = position.top;
             var gene_id = e.attr('data-id');

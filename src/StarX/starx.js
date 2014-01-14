@@ -41,6 +41,7 @@
                 "lib/soyutils": "StarX/lib/soyutils",
                 "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
                 "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui",
+                "normalize": base_url + "StarX/normalize"
             },
             map: {
                 '*': {
