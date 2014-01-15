@@ -7,7 +7,7 @@
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
 /// <reference path="../StarCommons/easy_deflate.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST, compress) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST, compress) {
     var $ = jQuery;
 
     var StarGeneticsJSAppWidget = (function () {
@@ -357,18 +357,28 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
             console.info("Save handler");
             $('.sg_workspace_save', main).off('click').on('click', function () {
                 console.info("Save");
-                var data = JSON.stringify(self.model.__data__);
-                console.info("Raw len:" + data.length);
-                console.info(self.stargenetics_interface);
-                self.stargenetics_interface({ token: '1', command: 'save', data: { protocol: 'Version_1' }, callbacks: { onsuccess: function (a, b) {
-                            console.info("onsuccess:");
-                            console.info(a);
+                self.stargenetics_interface({
+                    token: '1', command: 'save', data: { protocol: 'Version_1' },
+                    callbacks: {
+                        onsuccess: function (ret, b) {
+                            var gwt_model = ret['payload']['model'];
+                            var ts_model = self.model.__data__;
+                            var data = {
+                                gwt_model: gwt_model,
+                                ts_model: ts_model
+                            };
+                            var str_data = JSON.stringify(data);
+                            console.info("Raw len:" + str_data.length);
+                            console.info(data);
+                            var compressed = compress.deflate(str_data);
+                            console.info("Compress len" + compressed.length);
+                            console.info(compressed);
                         }, onerror: function (a, b) {
-                            console.info("error" + a);
+                            console.info("error:");
+                            console.info(a);
+                            window['stargenetics_save'] = a;
+                            console.info(a['payload']['error']);
                         } } });
-                var compressed = compress.deflate(data);
-                console.info("Compress len" + compressed.length);
-                console.info(compressed);
             });
         };
         return StarGeneticsJSAppWidget;

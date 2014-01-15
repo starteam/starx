@@ -13,7 +13,7 @@
 /// <amd-dependency path="jquery-ui" />
 /// <amd-dependency path="StarGenetics/bundled_samples" />
 
-/// <amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
+/// <skip-amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
 
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
 import bundled_samples = require("StarGenetics/bundled_samples");
@@ -396,14 +396,28 @@ export class StarGeneticsJSAppWidget {
 
         console.info("Save handler");
         $('.sg_workspace_save', main).off('click').on('click', function () {
-            console.info("Save" );
-            var data = JSON.stringify(self.model.__data__ );
-            console.info("Raw len:" + data.length );
-            console.info( self.stargenetics_interface ) ;
-            self.stargenetics_interface({token:'1',command:'save',data:{protocol:'Version_1'},callbacks:{onsuccess:function(a,b){ console.info("onsuccess:"); console.info(a)},onerror:function(a,b){console.info("error" +a );}}})
-            var compressed = compress.deflate(data);
-            console.info("Compress len" + compressed.length);
-            console.info(compressed);
+            console.info("Save");
+            self.stargenetics_interface({token: '1', command: 'save', data: {protocol: 'Version_1'},
+                callbacks: {onsuccess: function (ret, b) {
+                    var gwt_model = ret['payload']['model'];
+                    var ts_model = self.model.__data__;
+                    var data = {
+                        gwt_model: gwt_model,
+                        ts_model: ts_model
+                    };
+                    var str_data = JSON.stringify(data);
+                    console.info("Raw len:" + str_data.length);
+                    console.info(data);
+                    var compressed = compress.deflate(str_data);
+                    console.info("Compress len" + compressed.length);
+                    console.info(compressed);
+
+                }, onerror: function (a, b) {
+                    console.info("error:");
+                    console.info(a);
+                    window['stargenetics_save'] = a;
+                    console.info(a['payload']['error']);
+                }}})
         });
 
     }
