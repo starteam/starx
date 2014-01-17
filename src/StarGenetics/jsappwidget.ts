@@ -31,14 +31,14 @@ declare var jQuery;
 var $ = jQuery;
 
 export class StarGeneticsJSAppWidget {
-    state:SGState.StarGeneticsState;
+    context:any;
     config:StarGeneticsConfig;
     stargenetics_interface:any;
     model:SGModel.Top;
 
-    constructor(state:SGState.StarGeneticsState, config:StarGeneticsConfig) {
+    constructor(context:any, config:StarGeneticsConfig) {
         var self:StarGeneticsJSAppWidget = this;
-        this.state = state;
+        this.context = context;
         this.config = config;
 
         var backend_model = undefined;
@@ -53,8 +53,6 @@ export class StarGeneticsJSAppWidget {
 
         this.initModel(config);
         this.init();
-
-
     }
 
     /**
@@ -407,13 +405,14 @@ export class StarGeneticsJSAppWidget {
                         ts_model: ts_model
                     };
                     var str_data = JSON.stringify(data);
-                    console.info("Raw len:" + str_data.length);
-                    console.info(data);
                     var compressed = compress.deflate(str_data);
-                    console.info("Compress len" + compressed.length);
-                    console.info(compressed);
                     window['localStorage']['sg_save']  = compressed;
-                    window['gwt_model'] = gwt_model;
+                    console.info( self );
+                    console.info( self.context );
+                    console.info( self.context['io'] );
+                    console.info( compressed );
+
+                    self.context['io']['save'](compressed);
                 }, onerror: function (a, b) {
                     console.info("error:");
                     console.info(a);
@@ -427,15 +426,14 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_workspace_load', main).off('click').on('click', function () {
             console.info("Load");
-            if( window['localStorage']['sg_save']) {
+            var data = self.context['io']['load']();
+            if(data) {
                 console.info("In Load");
-
-                var compressed = window['localStorage']['sg_save'];
+                var compressed = data;
                 var str_data = compress.inflate(compressed);
                 var data = JSON.parse(str_data);
                 var ts_model = data['ts_model'];
                 var gwt_model = data['gwt_model'];
-                console.info("gwt_model is equal: " + (window['gwt_model'] == gwt_model))
                 console.info("In Load 2");
                 console.info(data);
 
