@@ -273,7 +273,8 @@ export class StarGeneticsJSAppWidget {
                     SGTests.onsuccess(callbacks);
                     self.show();
                 },
-                onerror: function () {
+                onerror: function (data) {
+                    console.info(data);
                     SGTests.onsuccess(callbacks);
                     console.info("update_experiments Got error!");
                 }
@@ -411,13 +412,47 @@ export class StarGeneticsJSAppWidget {
                     var compressed = compress.deflate(str_data);
                     console.info("Compress len" + compressed.length);
                     console.info(compressed);
-
+                    window['localStorage']['sg_save']  = compressed;
+                    window['gwt_model'] = gwt_model;
                 }, onerror: function (a, b) {
                     console.info("error:");
                     console.info(a);
-                    window['stargenetics_save'] = a;
+                    console.info(window['localStorage']);
+                    console.info(window['localStorage']['sg_save']);
+                    window['localStorage']['sg_save'] = a;
+                    console.info(window['localStorage']['sg_save']);
                     console.info(a['payload']['error']);
                 }}})
+        });
+
+        $('.sg_workspace_load', main).off('click').on('click', function () {
+            console.info("Load");
+            if( window['localStorage']['sg_save']) {
+                console.info("In Load");
+
+                var compressed = window['localStorage']['sg_save'];
+                var str_data = compress.inflate(compressed);
+                var data = JSON.parse(str_data);
+                var ts_model = data['ts_model'];
+                var gwt_model = data['gwt_model'];
+                console.info("gwt_model is equal: " + (window['gwt_model'] == gwt_model))
+                console.info("In Load 2");
+                console.info(data);
+
+                self.stargenetics_interface({token: '1', command: 'open', data: {protocol: 'Serialized_1', model: gwt_model },
+                    callbacks: {onsuccess: function (ret, b) {
+                        self.model = new SGModel.Top(ts_model);
+
+                        console.info("Loaded");
+                        self.show();
+
+                    }, onerror: function (a, b) {
+                        console.info("error:");
+                        console.info(a);
+                        window['stargenetics_save'] = a;
+                        console.info(a['payload']['error']);
+                    }}})
+            }
         });
 
     }
