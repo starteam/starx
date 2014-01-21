@@ -2,7 +2,6 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="jsappmodel.ts" />
-/// <amd-dependency path="lib/soyutils" />
 
 import $ = require("jquery");
 
