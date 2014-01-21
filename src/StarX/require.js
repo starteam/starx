@@ -2037,6 +2037,12 @@ var requirejs, require, define;
                 context = contexts[node.getAttribute('data-requirecontext')];
             }
         }
+        if(!name && document && document.currentScript)
+        {
+            var node = document.currentScript;
+            name = node.getAttribute('data-requiremodule');
+            context = contexts[node.getAttribute('data-requirecontext')];
+        }
 
         //Always save off evaluating the def call until the script onload handler.
         //This allows multiple modules to be in a file without prematurely
