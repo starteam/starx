@@ -2,7 +2,8 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="jsappmodel.ts" />
-define(["require", "exports", "jquery", 'StarGenetics/jsappwidget', "StarGenetics/state"], function(require, exports, $, JSStarGenetics, GlobalState) {
+/// <amd-dependency path="lib/soyutils" />
+define(["require", "exports", "jquery", 'StarGenetics/jsappwidget', "StarGenetics/state", "lib/soyutils"], function(require, exports, $, JSStarGenetics, GlobalState) {
     var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
 
     var StarGenetics = (function () {
