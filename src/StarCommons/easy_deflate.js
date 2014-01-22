@@ -1,4 +1,5 @@
 define( ['require','exports'] , function(require,exports) {
+var define = undefined;
     this.addEventListener = function(a,b) {
         console.info( "addEventListner");
         console.info(a);
