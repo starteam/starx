@@ -10,6 +10,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
     eyeColor = 'red';
     wingColor = 'rgba(200,200,200,.8)';
     aristaeLength = 1;
+    wingSize = 1;
 
     _get(properties:any, key:string, default_value:string):any {
         if (properties) {
@@ -22,17 +23,21 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
     }
 
     eyecolor(properties:any) {
-        return this._get(properties,'eyecolor',this.eyeColor);
+        return this._get(properties, 'eyecolor', this.eyeColor);
     }
 
     bodycolor(properties:any) {
-        return this._get(properties,'bodycolor',this.bodyColor);
+        return this._get(properties, 'bodycolor', this.bodyColor);
     }
 
     aristae(properties:any) {
-        return parseFloat(this._get(properties,'aristae',''+this.aristaeLength));
-
+        return parseFloat(this._get(properties, 'aristae', '' + this.aristaeLength));
     }
+
+    wingsize(properties:any) {
+        return parseFloat(this._get(properties, 'wingsize', '' + this.wingSize))
+    }
+
     constructor() {
         super();
     }
@@ -108,7 +113,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         var scaler = 1;
         var radius = .4;
         var scale_down = 1.30;
-                var bodycolor = this.bodycolor(properties);
+        var bodycolor = this.bodycolor(properties);
 
         context.save();
         context.beginPath();
@@ -235,6 +240,11 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
 
     drawWings(context:CanvasRenderingContext2D, properties:any, sex:string) {
         // need to implement wing sizing
+        var wingsize = this.wingsize(properties);
+        if( wingsize < .1 )
+        {
+            return;
+        }
         context.save();
         context.translate(-.22, .58);
         context.scale(.3, 1.3);

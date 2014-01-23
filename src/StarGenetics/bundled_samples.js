@@ -247,7 +247,7 @@ define(["require", "exports"], function(require, exports) {
                     name: 'Wingless',
                     matches: 'w,w',
                     phenotype: {
-                        bodycolor: {
+                        wingsize: {
                             text: 'wingless',
                             value: '0'
                         }

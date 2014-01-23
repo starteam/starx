@@ -243,7 +243,7 @@ export var tutorial = {
                     name: 'Wingless',
                     matches: 'w,w',
                     phenotype: {
-                        bodycolor: {
+                        wingsize: {
                             text: 'wingless',
                             value: '0'
                         }
