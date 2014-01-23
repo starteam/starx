@@ -44,6 +44,12 @@
         {
             paths["jquery"]= "StarX/lib/jquery-1.10.1.min"  ;
         }
+        else
+        {
+            define( 'jquery' , ['exports'] , function(exports) {
+                return window.jQuery;
+            });
+        }
         requirejs.config({
             baseUrl: base_url,
             paths: paths,
