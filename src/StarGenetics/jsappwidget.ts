@@ -13,7 +13,7 @@
 /// <amd-dependency path="jquery-ui" />
 /// <amd-dependency path="StarGenetics/bundled_samples" />
 
-/// <skip-amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
+/// <amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
 
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
 import bundled_samples = require("StarGenetics/bundled_samples");

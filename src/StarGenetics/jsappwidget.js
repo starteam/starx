@@ -7,7 +7,7 @@
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
 /// <reference path="../StarCommons/easy_deflate.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST, compress) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples", "css!StarGenetics/sg_client_mainframe.css"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST, compress) {
     var $ = jQuery;
 
     var StarGeneticsJSAppWidget = (function () {
