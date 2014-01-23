@@ -33,7 +33,8 @@ var $ = jQuery;
 export class StarGeneticsJSAppWidget {
     context:any;
     config:StarGeneticsConfig;
-    stargenetics_interface:any;
+    stargenetics_interface:any = null;
+    eventlistener_setup = false;
     model:SGModel.Top;
 
     constructor(context:any, config:StarGeneticsConfig) {
@@ -60,32 +61,113 @@ export class StarGeneticsJSAppWidget {
      */
         init() {
         var config = this.config;
+        config.base_url = "http://localhost:8002/";
         var url = config.base_url + '/StarGenetics/gwtframe.html';
         $('#' + config.element_id).html("StarGenetics: ClientApp starting");
-        $('<iframe id="' + config.element_id + '_gwt" src="'+url+'"/>').appendTo($('#' + config.element_id).parent()).hide();
+        $('<iframe id="' + config.element_id + '_gwt" src="' + url + '"/>').appendTo($('#' + config.element_id).parent()).hide();
         this.wait_for_sg_interface('#' + config.element_id + '_gwt', config, this);
     }
 
     /**
      * This method loads GWT frame & waits for it to finish loading
      */
+
         wait_for_sg_interface(id, config, self) {
+        var target = 'StarGenetics';
         console.info("wait_for_sg_interface");
         console.info(self.model.ui);
+        if (!self.eventlistener_setup) {
+            self.eventlistener_setup = {};
+            window.addEventListener('message', function (event:any) {
+                console.info("StarGenetics Message");
+                console.info(event);
+                if (event && event['data']) {
+                    var data = event.data;
+                    if (data['command'] == 'it_is_up') {
+                        self.stargenetics_interface = function (data) {
+                            var uid = Math.random();
+                            data.uid = 'CB' + uid;
+                            var callbacks = {};
+                            if( data['callbacks']['onsuccess'])
+                            {
+                                callbacks['onsuccess'] = data['callbacks']['onsuccess'];
+                                data['callbacks']['onsuccess'] = true;
+                            }
+                            if( data['callbacks']['onerror'])
+                            {
+                                callbacks['onerror'] = data['callbacks']['onerror'];
+                                data['callbacks']['onerror'] = true;
+                            }
+                            self.eventlistener_setup[ data.uid ] = callbacks;
+                            console.info( "post message");
+                            console.info( data ) ;
+                            data.starx = target;
+                            $(id)[0]['contentWindow'].postMessage(data, config.base_url);
+                        };
+                        console.info("Got it!... the interface");
+                        $('#' + config.element_id).html("StarGenetics: ClientApp running");
+                        window['stargenetics_interface'] = self.stargenetics_interface;
+                        self.postInit();
+                    }
+                    else if (data['uid'] && data['command'] == 'callback') {
+                        if (self.eventlistener_setup[ data.uid ]) {
+                            var callbacks = self.eventlistener_setup[data.uid];
+                            var kind = data['kind'];
+                            var callback_data = data.data;
+                            if( callbacks[kind])
+                            {
+                                console.info("calling back " + data.uid + " " + kind );
+                                callbacks[kind](callback_data);
+                            }
+                            else
+                            {
+                                console.info("processing ISSUE " + data.uid);
+                                console.info(data);
+                            }
+                        }
 
+                    } else {
+                        console.info("skipping");
+                        console.info(event);
+                    }
+                }
+            }, false);
+        }
         var iframe = $(id)[0];
         var w = iframe['contentWindow'];
+        if (w && w.postMessage) {
+            w.postMessage({
+                token: '1',
+                command: 'is_up',
+                starx: target
+            }, config.base_url);
+        }
 
-        if (w.__sg_bg_exec) {
-
-            self.stargenetics_interface = w.__sg_bg_exec;
+        var success = false;
+        if (self.stargenetics_interface) {
             console.info("Got it!... the interface");
             $('#' + config.element_id).html("StarGenetics: ClientApp running");
             window['stargenetics_interface'] = self.stargenetics_interface;
             self.postInit();
-
+            success = true;
         }
-        else {
+        try {
+            if (!success && w.__sg_bg_exec) {
+
+                self.stargenetics_interface = w.__sg_bg_exec;
+                console.info("Got it!... the interface");
+                $('#' + config.element_id).html("StarGenetics: ClientApp running");
+                window['stargenetics_interface'] = self.stargenetics_interface;
+                self.postInit();
+                success = true;
+            }
+        } catch (e) {
+            console.info("Error");
+            console.info(e);
+        } finally {
+        }
+
+        if (!success) {
             setTimeout(function () {
                 self.wait_for_sg_interface(id, config, self)
             }, 250);
@@ -181,7 +263,7 @@ export class StarGeneticsJSAppWidget {
     /**
      * Opens StarGenetics backend with selected model
      */
-        open(callbacks?) {
+        open(callbacks ?) {
         var self:StarGeneticsJSAppWidget = this;
         this.stargenetics_interface({
             token: '1',
@@ -206,7 +288,7 @@ export class StarGeneticsJSAppWidget {
     /**
      * Lists strains & relaods UI
      */
-        list_strains(callbacks?) {
+        list_strains(callbacks ?) {
         console.info("Running liststrain");
         var self:StarGeneticsJSAppWidget = this;
         this.stargenetics_interface({
@@ -240,7 +322,7 @@ export class StarGeneticsJSAppWidget {
      * Run mating experiment
      * @param experiments
      */
-        mate(experiment:SGModel.Experiment, callbacks?) {
+        mate(experiment:SGModel.Experiment, callbacks ?) {
         this.update_experiments(experiment, 'mate', callbacks);
     }
 
@@ -248,7 +330,7 @@ export class StarGeneticsJSAppWidget {
      * Run update experiment
      * @param experiments
      */
-        update_experiments(experiment:SGModel.Experiment, command:string, callbacks?) {
+        update_experiments(experiment:SGModel.Experiment, command:string, callbacks ?) {
         console.info("Running update_experiments");
         console.info(experiment.toJSON());
         var self:StarGeneticsJSAppWidget = this;
@@ -407,11 +489,11 @@ export class StarGeneticsJSAppWidget {
                     };
                     var str_data = JSON.stringify(data);
                     var compressed = compress.deflate(str_data);
-                    window['localStorage']['sg_save']  = compressed;
-                    console.info( self );
-                    console.info( self.context );
-                    console.info( self.context['io'] );
-                    console.info( compressed );
+                    window['localStorage']['sg_save'] = compressed;
+                    console.info(self);
+                    console.info(self.context);
+                    console.info(self.context['io']);
+                    console.info(compressed);
 
                     self.context['io']['save'](compressed);
                 }, onerror: function (a, b) {
@@ -428,7 +510,7 @@ export class StarGeneticsJSAppWidget {
         $('.sg_workspace_load', main).off('click').on('click', function () {
             console.info("Load");
             var data = self.context['io']['load']();
-            if(data) {
+            if (data) {
                 console.info("In Load");
                 var compressed = data;
                 var str_data = compress.inflate(compressed);
