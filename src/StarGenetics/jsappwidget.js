@@ -35,7 +35,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
         */
         StarGeneticsJSAppWidget.prototype.init = function () {
             var config = this.config;
-            config.base_url = "http://localhost:8002/";
             var url = config.base_url + '/StarGenetics/gwtframe.html';
             $('#' + config.element_id).html("StarGenetics: ClientApp starting");
             $('<iframe id="' + config.element_id + '_gwt" src="' + url + '"/>').appendTo($('#' + config.element_id).parent()).hide();
