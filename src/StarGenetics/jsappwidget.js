@@ -33,8 +33,9 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
         */
         StarGeneticsJSAppWidget.prototype.init = function () {
             var config = this.config;
+            var url = config.base_url + '/StarGenetics/gwtframe.html';
             $('#' + config.element_id).html("StarGenetics: ClientApp starting");
-            $('<iframe id="' + config.element_id + '_gwt" src="/StarGenetics/gwtframe.html"/>').appendTo($('#' + config.element_id).parent()).hide();
+            $('<iframe id="' + config.element_id + '_gwt" src="' + url + '"/>').appendTo($('#' + config.element_id).parent()).hide();
             this.wait_for_sg_interface('#' + config.element_id + '_gwt', config, this);
         };
 

@@ -47,6 +47,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
             widget_ids[id] = 1;
 
             data.element_id = id;
+            data.base_url = get_base_url();
             function callback() {
                 require(['../' + data.StarX + '/main'], function (project) {
                     if (project) {
