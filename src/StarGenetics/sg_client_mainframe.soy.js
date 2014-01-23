@@ -30,7 +30,7 @@ sg_client_mainframe.workspace = function(opt_data, opt_sb) {
   sg_client_mainframe.strains({strains: opt_data.model.ui.strains}, output);
   sg_client_mainframe.new_experiment({experiment: opt_data.model.ui.new_experiment}, output);
   sg_client_mainframe.all_experiments({experiments: opt_data.model.ui.experiments}, output);
-  output.append('<button class=\'sg_workspace_save\'>Save</button></div>');
+  output.append('<button class=\'sg_workspace_save\'>Save</button><button class=\'sg_workspace_load\'>Load</button></div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -43,7 +43,7 @@ sg_client_mainframe.workspace = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.io = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<button class=\'sg_workspace_save\'>Save</button>');
+  output.append('<button class=\'sg_workspace_save\'>Save</button><button class=\'sg_workspace_load\'>Load</button>');
   return opt_sb ? '' : output.toString();
 };
 
