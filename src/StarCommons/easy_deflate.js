@@ -1,4 +1,5 @@
 define( ['require','exports'] , function(require,exports) {
+var define = undefined;
     this.addEventListener = function(a,b) {
         console.info( "addEventListner");
         console.info(a);
@@ -157,8 +158,6 @@ function deflate(str){
 	var resulta=[]
 	var results=""
 	var b,d
-    console.info( "zip:") ;
-    console.info( zip ) ;
 	var zipper=new zip.Deflater(9)
 	for(a=0;a<str.length;a+=readlen){
 		d=UTF8encode(str.substr(a,readlen))
