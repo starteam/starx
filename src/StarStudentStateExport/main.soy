@@ -7,15 +7,41 @@
 {template .main}
     {$config}
 
-    <form action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
+    <form action="#" method="POST" enctype="multipart/form-data">
          <span class="fileinput-button">
-                <span>Add files...</span>
-                <input type="file" name="files[]" multiple>
-         </span>
-         <button type="submit" class="start">Start upload</button>
-         <button type="reset" class="cancel">Cancel upload</button>
+                <span>Add student_state files...</span>
+                <input type="file" class="student_files" name="student_files" multiple>
+         </span><br>
+         <span class="fileinput-button">
+                <span>Add mapping file...</span>
+                <input type="file" class="mapping_file" name="mapping_file">
+         </span><br>
+                <input type="text" class="mapping_prefix" name="mapping_prefix">
+         <button type="submit" class="start">Start coversion</button>
+         <button type="reset" class="cancel">Reset</button>
+         <button type="button" class="select_table">Select Table</button>
 
-            <span class="fileupload-process"></span>
+         <span class="status"></span>
+         <span class="out"></span>
 
     </form>
+{/template}
+
+/**
+*
+    @param rows
+*/
+{template .table}
+    <table id="csv_table">
+    {foreach $row in $rows}
+        <tr>
+            <td>{$row[0]}
+            </td>
+            <td>{$row[1]}
+            </td>
+            <td>{$row[2]}
+            </td>
+        </tr>
+    {/foreach}
+    </table>
 {/template}
