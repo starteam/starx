@@ -1,0 +1,21 @@
+{namespace ssse}
+
+/**
+ * Says hello to the world.
+ @param config
+*/
+{template .main}
+    {$config}
+
+    <form action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
+         <span class="fileinput-button">
+                <span>Add files...</span>
+                <input type="file" name="files[]" multiple>
+         </span>
+         <button type="submit" class="start">Start upload</button>
+         <button type="reset" class="cancel">Cancel upload</button>
+
+            <span class="fileupload-process"></span>
+
+    </form>
+{/template}
