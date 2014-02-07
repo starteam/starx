@@ -30,7 +30,7 @@
         }
         if( event['data'] && event['data']['command'] == 'event')
         {
-            window[ga]('send',event.data.command , event.data.category, event.data.action, event.category.label );
+            window[ga]('send',event.data.command , event.data.category, event.data.action, event.data.label );
         }
     };
 
