@@ -61,8 +61,8 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi', 'StarStudentStateExport/m
         StarStudentStateExport.prototype.process_csv = function (student_files) {
             var self = this;
             if (student_files.length > 0) {
-                var fr = new FileReader();
                 for (var i in student_files) {
+                    var fr = new FileReader();
                     var file = student_files[i];
                     fr.onloadend = function (e) {
                         var text = e['target']['result'];

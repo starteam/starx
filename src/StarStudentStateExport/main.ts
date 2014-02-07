@@ -67,8 +67,8 @@ export class StarStudentStateExport {
     process_csv(student_files:any[]) {
         var self:StarStudentStateExport = this;
         if (student_files.length > 0) {
-            var fr:FileReader = new FileReader();
             for (var i in student_files) {
+                var fr:FileReader = new FileReader();
                 var file = student_files[i];
                 fr.onloadend = function (e) {
                     var text = e['target']['result'];
