@@ -48,6 +48,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
             data.element_id = id;
             data.base_url = get_base_url();
+	    if( data.base_url == '' ) { data.base_url = document.location.origin; }
             function callback() {
                 require(['../' + data.StarX + '/main'], function (project) {
                     if (project) {

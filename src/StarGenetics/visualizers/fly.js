@@ -16,6 +16,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             this.eyeColor = 'red';
             this.wingColor = 'rgba(200,200,200,.8)';
             this.aristaeLength = 1;
+            this.wingSize = 1;
         }
         Fly.prototype._get = function (properties, key, default_value) {
             if (properties) {
@@ -37,6 +38,10 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
 
         Fly.prototype.aristae = function (properties) {
             return parseFloat(this._get(properties, 'aristae', '' + this.aristaeLength));
+        };
+
+        Fly.prototype.wingsize = function (properties) {
+            return parseFloat(this._get(properties, 'wingsize', '' + this.wingSize));
         };
 
         Fly.prototype.render = function (canvas, properties, organism) {
@@ -233,6 +238,10 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
 
         Fly.prototype.drawWings = function (context, properties, sex) {
             // need to implement wing sizing
+            var wingsize = this.wingsize(properties);
+            if (wingsize < .1) {
+                return;
+            }
             context.save();
             context.translate(-.22, .58);
             context.scale(.3, 1.3);

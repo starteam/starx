@@ -1,0 +1,56 @@
+{namespace ssse}
+
+/**
+ * Says hello to the world.
+*/
+{template .main}
+
+    <form action="#" method="POST" enctype="multipart/form-data">
+         <span class="fileinput-button">
+                <span>Add student_state files...</span>
+                <input type="file" class="btn btn-default student_files active " name="student_files" multiple>
+         </span><br>
+         <span class="fileinput-button">
+                <span>Add mapping file...</span>
+                <input type="file" class="btn btn-default mapping_file active" name="mapping_file">
+         </span><br>
+         <span class="fileinput-button">
+                <span>Prefix:</span>
+                <input type="text"class="mapping_prefix" name="mapping_prefix">
+         </span>
+         <br>
+         <p class="fileinput-button">
+            <button type="submit" class="btn btn-primary start">Start coversion</button>
+            <button type="reset" class="btn btn-danger cancel">Reset</button>
+            <button type="button" class="btn btn-info select_table">Select Table</button>
+         </p>
+
+         <span class="status"></span>
+         <span class="out"></span>
+
+    </form>
+{/template}
+
+/**
+*
+    @param rows
+*/
+{template .table}
+    <h2>
+    Converted data
+    </h2>
+    <table id="csv_table" class="table table-striped">
+    <tbody>
+    {foreach $row in $rows}
+        <tr>
+            <td>{$row[0]}
+            </td>
+            <td>{$row[1]}
+            </td>
+            <td>{$row[2]}
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+    </table>
+{/template}
