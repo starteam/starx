@@ -37,8 +37,8 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi', 'StarStudentStateExport/m
         };
 
         StarStudentStateExport.prototype.update_ui = function () {
-            console.info(this.out);
             $('.out').html(ssse.table({ rows: this.out }));
+            tmi.event('StarStudentStateExport', 'Converted', this.out['length']);
         };
 
         StarStudentStateExport.prototype.convert = function (text) {

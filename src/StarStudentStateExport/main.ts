@@ -43,8 +43,8 @@ export class StarStudentStateExport {
     }
 
     update_ui() {
-        console.info(this.out);
         $('.out').html(ssse.table({rows: this.out}));
+        tmi.event('StarStudentStateExport','Converted',this.out['length'])  ;
     }
 
     convert(text:string) {

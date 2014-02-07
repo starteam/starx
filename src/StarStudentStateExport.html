@@ -11,18 +11,16 @@
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
-    <script async src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script async src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-    button {
-        margin-left:0px;
-        margin-right:4px;
-        margin-top:5px;
-    }
+        button {
+            margin-left: 0px;
+            margin-right: 4px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 
@@ -40,28 +38,47 @@
 </div>
 <div style='border:1px solid #e0e0e0; padding:8px; border-radius:5px;'>
     <div class="container">
-    <div class="starx_widget">{["StarX":"StarStudentStateExport","state":"jshidden"]}</div>
+        <div class="starx_widget">{["StarX":"StarStudentStateExport","state":"jshidden"]}</div>
     </div>
 
     <div class="container">
         <h2>Introduction</h2>
-       <p>This tool converts edX student_state_*.csv to a format that is useful for manually analyzing data.</p>
+
+        <p>This tool converts edX student_state_*.csv to a format that is useful for manually analyzing data.</p>
+
         <h3>How to use?</h3>
+
         <p>Select multiple student_state_ files on <em>'Add student_state files...'</em> Choose file dialog</p>
+
         <p>Select mapping file if you want to use one.</p>
+
         <p>Enter prefix used that prefixes mapping file keys to match csv file format.</p>
+
         <p>Run <em>Start conversion</em> to get results right in the browser, and generate table below the form.</p>
-        <p>When you are happy with the form, press <em>Select Table</em>, copy and paste the table in Excel or Google Docs.</p>
+
+        <p>When you are happy with the form, press <em>Select Table</em>, copy and paste the table in Excel or Google
+            Docs.</p>
+
         <h3>File format and prefix</h3>
+
         <p>Mapping file should be CSV file with two columns: question_id, text_to_map_to, for example:</p>
         <code><pre>
             f8d12bf3717f4a9484f200ea1e3d9f14_2_1,My 1st question
             f8d12bf3717f4a9484f200ea1e3d9f14_3_1,My 2nd question</pre>
         </code>
+
         <p>Prefix should be rest value that prefixes this key, for example: i4x-MITx-MyCOURSE-problem-</p>
     </div>
 
 </body>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src='StarTMI/itmi.js'></script>
 <script src='StarX/starx.js'></script>
-<script async src='StarTMI/itmi.js'></script>
+<script src="//cdn.ravenjs.com/1.1.9/jquery,native/raven.min.js"></script>
+<script>
+    Raven.config('https://b59437b381614d719bef3eeb7fe91e3b@app.getsentry.com/16929', {
+        whitelistUrls: ['starx.mit.edu']
+    }).install();
+</script>
 </html>
