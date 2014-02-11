@@ -44,8 +44,8 @@ export class StarStudentStateExport {
 
     update_ui() {
         $('.out').html(ssse.table({rows: this.out}));
+        $('.select_table').show();
         $('.download').html(ssse.download({data:"data:application/octet-stream," + encodeURI($.csv.fromArrays(this.out))}));
-        window['test'] = this.out;
         tmi.event('StarStudentStateExport','Converted',this.out['length'])  ;
     }
 
@@ -145,7 +145,7 @@ export class StarStudentStateExport {
                 self.process(self, top);
             }
         );
-        $('.select_table', top).click(function (e) {
+        $('.select_table', top).hide().click(function (e) {
             self.select()
         });
     }
