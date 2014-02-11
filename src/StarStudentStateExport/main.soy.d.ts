@@ -2,6 +2,8 @@
 declare module "StarStudentStateExport/main.soy" {
 	function main(state:any):any;
 	function table(state:any):any;
+	function download(state:any):any;
 }
 declare function main(state:any):any;
 declare function table(state:any):any;
+declare function download(state:any):any;

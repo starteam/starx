@@ -44,6 +44,8 @@ export class StarStudentStateExport {
 
     update_ui() {
         $('.out').html(ssse.table({rows: this.out}));
+        $('.download').html(ssse.download({data:"data:application/octet-stream," + encodeURI($.csv.fromArrays(this.out))}));
+        window['test'] = this.out;
         tmi.event('StarStudentStateExport','Converted',this.out['length'])  ;
     }
 
