@@ -1,8 +1,6 @@
-define( ['require','exports','jquery'] , function(require,exports,jQuery) {
-
 /**
  * jQuery-csv (jQuery Plugin)
- * version: 0.71 (2012-11-19)
+ * version: 0.70 (2012-11-04)
  *
  * This document is licensed as free software under the terms of the
  * MIT License: http://www.opensource.org/licenses/mit-license.php
@@ -33,8 +31,19 @@ RegExp.escape= function(s) {
     return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 };
 
-(function( $ ) {
+(function (undefined) {
   'use strict'
+
+  var $;
+
+  // to keep backwards compatibility
+  if (typeof jQuery !== 'undefined' && jQuery) {
+    $ = jQuery;
+  } else {
+    $ = {};
+  }
+
+
   /**
    * jQuery.csv.defaults
    * Encapsulates the method paramater defaults for the CSV plugin module.
@@ -44,7 +53,8 @@ RegExp.escape= function(s) {
     defaults: {
       separator:',',
       delimiter:'"',
-      headers:true
+      headers:true,
+      forceDelimiter:false
     },
 
     hooks: {
@@ -85,7 +95,7 @@ RegExp.escape= function(s) {
         var data = [];
         var entry = [];
         var state = 0;
-        var value = ''
+        var value = '';
         var exit = false;
 
         function endOfEntry() {
@@ -151,7 +161,7 @@ RegExp.escape= function(s) {
         var escDelimiter = RegExp.escape(delimiter);
 
         // compile the regEx str using the custom delimiter/separator
-        var match = /(D|S|\n|\r|[^DS\r\n]+)/;
+        var match = /(D|S|\r\n|\n|\r|[^DS\r\n]+)/;
         var matchSrc = match.source;
         matchSrc = matchSrc.replace(/S/g, escSeparator);
         matchSrc = matchSrc.replace(/D/g, escDelimiter);
@@ -178,13 +188,9 @@ RegExp.escape= function(s) {
                 break;
               }
               // null last value
-              if (m0 === '\n') {
+              if (/^(\r\n|\n|\r)$/.test(m0)) {
                 endOfValue();
                 endOfEntry();
-                break;
-              }
-              // phantom carriage return
-              if (/^\r$/.test(m0)) {
                 break;
               }
               // un-delimited value
@@ -218,13 +224,9 @@ RegExp.escape= function(s) {
                 break;
               }
               // end of entry
-              if (m0 === '\n') {
+              if (/^(\r\n|\n|\r)$/.test(m0)) {
                 endOfValue();
                 endOfEntry();
-                break;
-              }
-              // phantom carriage return
-              if (/^\r$/.test(m0)) {
                 break;
               }
               // broken paser?
@@ -238,13 +240,9 @@ RegExp.escape= function(s) {
                 break;
               }
               // end of entry
-              if (m0 === '\n') {
+              if (/^(\r\n|\n|\r)$/.test(m0)) {
                 endOfValue();
                 endOfEntry();
-                break;
-              }
-              // phantom carriage return
-              if (/^\r$/.test(m0)) {
                 break;
               }
               if (m0 === delimiter) {
@@ -587,6 +585,34 @@ RegExp.escape= function(s) {
       }
     },
 
+    helpers: {
+
+      /**
+       * $.csv.helpers.collectPropertyNames(objectsArray)
+       * Collects all unique property names from all passed objects.
+       *
+       * @param {Array} objects Objects to collect properties from.
+       *
+       * Returns an array of property names (array will be empty,
+       * if objects have no own properties).
+       */
+      collectPropertyNames: function (objects) {
+
+        var o, propName, props = [];
+        for (o in objects) {
+          for (propName in objects[o]) {
+            if ((objects[o].hasOwnProperty(propName))
+                && (props.indexOf(propName) < 0)
+                && (typeof objects[o][propName] !== 'function')) {
+
+              props.push(propName);
+            }
+          }
+        }
+        return props;
+      }
+    },
+
     /**
      * $.csv.toArray(csv)
      * Converts a CSV entry string to a javascript array.
@@ -652,8 +678,10 @@ RegExp.escape= function(s) {
       var options = {
         delimiter: config.delimiter,
         separator: config.separator,
+        onPreParse: options.onPreParse,
         onParseEntry: options.onParseEntry,
         onParseValue: options.onParseValue,
+        onPostParse: options.onPostParse,
         start: options.start,
         end: options.end,
         state: {
@@ -662,8 +690,18 @@ RegExp.escape= function(s) {
         }
       };
 
-      // break the data down to lines
+      // onPreParse hook
+      if(options.onPreParse !== undefined) {
+        options.onPreParse(csv, options.state);
+      }
+
+      // parse the data
       data = $.csv.parsers.parse(csv, options);
+
+      // onPostParse hook
+      if(options.onPostParse !== undefined) {
+        options.onPostParse(data, options.state);
+      }
 
       // push the value to a callback if one is defined
       if(!config.callback) {
@@ -709,15 +747,18 @@ RegExp.escape= function(s) {
       var options = {
         delimiter: config.delimiter,
         separator: config.separator,
+        onPreParse: options.onPreParse,
         onParseEntry: options.onParseEntry,
         onParseValue: options.onParseValue,
+        onPostParse: options.onPostParse,
         start: options.start,
         end: options.end,
         state: {
           rowNum: 1,
           colNum: 1
         },
-        match: false
+        match: false,
+        transform: options.transform
       };
 
       // fetch the headers
@@ -731,6 +772,13 @@ RegExp.escape= function(s) {
           colNum:1
         }
       }
+
+      // onPreParse hook
+      if(options.onPreParse !== undefined) {
+        options.onPreParse(csv, options.state);
+      }
+
+      // parse the csv
       var headerLine = $.csv.parsers.splitLines(csv, headerOptions);
       var headers = $.csv.toArray(headerLine[0], options);
 
@@ -752,10 +800,19 @@ RegExp.escape= function(s) {
         for(var j in headers) {
           object[headers[j]] = entry[j];
         }
-        data.push(object);
+        if (options.transform !== undefined) {
+          data.push(options.transform.call(undefined, object));
+        } else {
+          data.push(object);
+        }
         
         // update row state
         options.state.rowNum++;
+      }
+
+      // onPostParse hook
+      if(options.onPostParse !== undefined) {
+        options.onPostParse(data, options.state);
       }
 
       // push the value to a callback if one is defined
@@ -770,10 +827,11 @@ RegExp.escape= function(s) {
      * $.csv.fromArrays(arrays)
      * Converts a javascript array to a CSV String.
      *
-     * @param {Array} array An array containing an array of CSV entries.
+     * @param {Array} arrays An array containing an array of CSV entries.
      * @param {Object} [options] An object containing user-defined options.
      * @param {Character} [separator] An override for the separator character. Defaults to a comma(,).
      * @param {Character} [delimiter] An override for the delimiter character. Defaults to a double-quote(").
+     * @param {Character} [forceDelimiter] Force values to be quoted.
      *
      * This method generates a CSV file from an array of arrays (representing entries).
      */
@@ -783,16 +841,34 @@ RegExp.escape= function(s) {
       config.callback = ((callback !== undefined && typeof(callback) === 'function') ? callback : false);
       config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator;
       config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter;
-      config.escaper = 'escaper' in options ? options.escaper : $.csv.defaults.escaper;
-      config.experimental = 'experimental' in options ? options.experimental : false;
+      config.forceDelimiter = 'forceDelimiter' in options ? options.forceDelimiter : $.csv.defaults.delimiter;
 
-      if(!config.experimental) {
-        throw new Error('not implemented');
-      }
+      var output = '',
+          line,
+          lineValues,
+          i, j;
 
-      var output = [];
-      for(var i in arrays) {
-        output.push(arrays[i]);
+      for (i = 0; i < arrays.length; i++) {
+        line = arrays[i];
+        lineValues = [];
+        for (j = 0; j < line.length; j++) {
+          var strValue = (line[j] === undefined || line[j] === null)
+                       ? ''
+                       : line[j].toString();
+          if (strValue.indexOf(config.delimiter) > -1) {
+            strValue = strValue.replace(config.delimiter, config.delimiter + config.delimiter);
+          }
+
+          var escMatcher = '\n|\r|S|D';
+          escMatcher = escMatcher.replace('S', config.separator);
+          escMatcher = escMatcher.replace('D', config.delimiter);
+
+          if (strValue.search(escMatcher) > -1 || config.forceDelimiter) {
+            strValue = config.delimiter + strValue + config.delimiter;
+          }
+          lineValues.push(strValue);
+        }
+        output += lineValues.join(config.separator) + '\r\n';
       }
 
       // push the value to a callback if one is defined
@@ -806,38 +882,88 @@ RegExp.escape= function(s) {
     /**
      * $.csv.fromObjects(objects)
      * Converts a javascript dictionary to a CSV string.
+     *
      * @param {Object} objects An array of objects containing the data.
      * @param {Object} [options] An object containing user-defined options.
      * @param {Character} [separator] An override for the separator character. Defaults to a comma(,).
      * @param {Character} [delimiter] An override for the delimiter character. Defaults to a double-quote(").
+     * @param {Character} [sortOrder] Sort order of columns (named after
+     *   object properties). Use 'alpha' for alphabetic. Default is 'declare',
+     *   which means, that properties will _probably_ appear in order they were
+     *   declared for the object. But without any guarantee.
+     * @param {Character or Array} [manualOrder] Manually order columns. May be
+     * a strin in a same csv format as an output or an array of header names
+     * (array items won't be parsed). All the properties, not present in
+     * `manualOrder` will be appended to the end in accordance with `sortOrder`
+     * option. So the `manualOrder` always takes preference, if present.
      *
      * This method generates a CSV file from an array of objects (name:value pairs).
      * It starts by detecting the headers and adding them as the first line of
      * the CSV file, followed by a structured dump of the data.
      */
-    fromObjects2CSV: function(objects, options, callback) {
+    fromObjects: function(objects, options, callback) {
       var options = (options !== undefined ? options : {});
       var config = {};
       config.callback = ((callback !== undefined && typeof(callback) === 'function') ? callback : false);
       config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator;
       config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter;
-      config.experimental = 'experimental' in options ? options.experimental : false;
+      config.headers = 'headers' in options ? options.headers : $.csv.defaults.headers;
+      config.sortOrder = 'sortOrder' in options ? options.sortOrder : 'declare';
+      config.manualOrder = 'manualOrder' in options ? options.manualOrder : [];
+      config.transform = options.transform;
 
-      if(!config.experimental) {
-        throw new Error('not implemented');
+      if (typeof config.manualOrder === 'string') {
+        config.manualOrder = $.csv.toArray(config.manualOrder, config);
       }
 
-      var output = [];
-      for(var i in objects) {
-        output.push(arrays[i]);
+      if (config.transform !== undefined) {
+        var origObjects = objects;
+        objects = [];
+
+        var i;
+        for (i = 0; i < origObjects.length; i++) {
+          objects.push(config.transform.call(undefined, origObjects[i]));
+        }
+      }
+
+      var props = $.csv.helpers.collectPropertyNames(objects);
+
+      if (config.sortOrder === 'alpha') {
+        props.sort();
+      } // else {} - nothing to do for 'declare' order
+
+      if (config.manualOrder.length > 0) {
+
+        var propsManual = [].concat(config.manualOrder);
+        var p;
+        for (p = 0; p < props.length; p++) {
+          if (propsManual.indexOf( props[p] ) < 0) {
+            propsManual.push( props[p] );
+          }
+        }
+        props = propsManual;
+      }
+
+      var o, p, line, output = [], propName;
+      if (config.headers) {
+        output.push(props);
+      }
+
+      for (o = 0; o < objects.length; o++) {
+        line = [];
+        for (p = 0; p < props.length; p++) {
+          propName = props[p];
+          if (propName in objects[o] && typeof objects[o][propName] !== 'function') {
+            line.push(objects[o][propName]);
+          } else {
+            line.push('');
+          }
+        }
+        output.push(line);
       }
 
       // push the value to a callback if one is defined
-      if(!config.callback) {
-        return output;
-      } else {
-        config.callback('', output);
-      }
+      return $.csv.fromArrays(output, options, config.callback);
     }
   };
 
@@ -847,5 +973,9 @@ RegExp.escape= function(s) {
   $.csv2Array = $.csv.toArrays;
   $.csv2Dictionary = $.csv.toObjects;
 
-})( jQuery );
-});
+  // CommonJS module is defined
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = $.csv;
+  }
+
+}).call( this );
