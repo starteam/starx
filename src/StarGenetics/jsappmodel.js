@@ -183,7 +183,8 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
     exports.Collapsable = Collapsable;
     Base.defineStaticRWField(Collapsable, "expanded", true);
     Base.defineStaticRWField(Collapsable, "visualsVisible", true);
-    Base.defineStaticRWField(Collapsable, "propertiesVisible", false);
+    Base.defineStaticRWField(Collapsable, "propertiesVisible", true);
+    Base.defineStaticRWField(Collapsable, "showIndividuals", false);
     Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
     Base.readOnlyWrappedList(Collapsable, "list", Strain);
 

@@ -342,6 +342,13 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
                 c.visualsVisible = $(this).data('expanded-visuals');
                 self.show();
             });
+            $('.sg_strain_show_individuals').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                c.showIndividuals = $(this).data('show-individuals');
+                window['experiment'] = c;
+                self.show();
+            });
+
             $('.sg_strain_expand_properties').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.propertiesVisible = $(this).data('expanded-properties');

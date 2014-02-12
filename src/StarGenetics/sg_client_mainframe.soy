@@ -66,6 +66,18 @@
 {/if}
 {/template}
 
+
+/**
+* @param strain
+* @param kind
+*/
+{template .strain_short}
+<div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}">
+    <div class='sg_strain_title'>{$strain['name']} {if $strain['sex'] == 'FEMALE'}F{else}M{/if}</div>
+</div>
+{/template}
+
+
 /**
 * @param visuals
 * @param kind
@@ -90,11 +102,13 @@
         Strains
         {if $strains.expanded}
             <button class='sg_expand' data-kind='strains' data-expanded='false'>Collaps</button>
+/*
             {if $strains.visualsVisible}
             <button class='sg_strain_expand_visuals' data-kind='strains' data-expanded-visuals='false'>Hide Visuals</button>
             {else}
             <button class='sg_strain_expand_visuals' data-kind='strains' data-expanded-visuals='true'>Show Visuals</button>
             {/if}
+*/
             {if $strains.propertiesVisible}
                 <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide Properties</button>
             {else}
@@ -119,6 +133,19 @@
                     {foreach $strain in $strains.list}
                         <td class='sg_strain_box' data-kind='strains' data-id="{$strain['id']}"><div class='sg_strain_visual'><canvas data-kind='strains' data-id='{$strain['id']}'></canvas></div></td>
                     {/foreach}
+                    <td class='sg_place_holder'>
+                    {call .strain_place_holder }
+                        {param kind: 'strains' /}
+                        {param visuals: $strains.visualsVisible/}
+                    {/call}
+                    </td>
+                </tr>
+                <tr>
+                <td  class='sg_s_col_head'>Sex</td>
+                    {foreach $strain in $strains.list}
+                        <td class='sg_strain_box sg_s_row_head'>{$strain['sex']}</td>
+                    {/foreach}
+
                 </tr>
                 {/if}
                 {foreach $property in $strains.propertiesList}
@@ -227,16 +254,24 @@
         {$experiment.name}
                 {if $experiment.expanded}
             <button class='sg_expand' data-kind='{$experiment.id}' data-expanded='false'>Collaps</button>
+            /*
             {if $experiment.visualsVisible}
             <button class='sg_strain_expand_visuals' data-kind='{$experiment.id}'  data-expanded-visuals='false'>Hide Visuals</button>
             {else}
             <button class='sg_strain_expand_visuals' data-kind='{$experiment.id}' data-expanded-visuals='true'>Show Visuals</button>
             {/if}
+            */
             {if $experiment.propertiesVisible}
                 <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide Properties</button>
             {else}
                 <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show Properties</button>
             {/if}
+            {if $experiment.showIndividuals}
+            <button class='sg_strain_show_individuals' data-kind='{$experiment.id}'  data-show-individuals='false'>Group flies</button>
+            {else}
+            <button class='sg_strain_show_individuals' data-kind='{$experiment.id}' data-show-individuals='true'>Ungroup flies</button>
+            {/if}
+
         {else}
             <button class='sg_expand' data-kind='{$experiment.id}'  data-expanded='true'>Expand</button>
         {/if}
@@ -295,6 +330,23 @@
                         {param kind:$experiment.id/}
                     {/call}
                     </td>
+                {/foreach}
+                </tr>
+                {/if}
+                {if $experiment.showIndividuals}
+                <tr>
+                    <td><!-- individual --></td>
+                    <td><!-- parent 1 --></td>
+                    <td><!-- parent 2 --></td>
+                {foreach $phenotype in keys($experiment.phenotypes)}
+                <td>
+                {foreach $strain in $experiment.phenotypes[$phenotype].list}
+                    {call .strain_short}
+                        {param strain:$strain /}
+                        {param kind:$experiment.id/}
+                    {/call}
+                {/foreach}
+                </td>
                 {/foreach}
                 </tr>
                 {/if}

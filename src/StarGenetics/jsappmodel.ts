@@ -143,6 +143,7 @@ export class Collapsable extends Base {
     expanded:boolean;
     visualsVisible:boolean;
     propertiesVisible:boolean;
+    showIndividuals :boolean;
     name:string;
     list:Strain[];
 
@@ -175,7 +176,8 @@ export class Collapsable extends Base {
 }
 Base.defineStaticRWField(Collapsable, "expanded", true);
 Base.defineStaticRWField(Collapsable, "visualsVisible", true);
-Base.defineStaticRWField(Collapsable, "propertiesVisible", false);
+Base.defineStaticRWField(Collapsable, "propertiesVisible", true);
+Base.defineStaticRWField(Collapsable, "showIndividuals", false);
 Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
 Base.readOnlyWrappedList(Collapsable, "list", Strain);
 
