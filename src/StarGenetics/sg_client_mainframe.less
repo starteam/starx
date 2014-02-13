@@ -1,3 +1,7 @@
+@title-color: #f0f4f8;
+@strains-bg: white;
+@button-bg: #e2e2e2;
+
 .sg_workspace {
   background: white;
   top: 20px;
@@ -8,6 +12,7 @@
   resize: both;
   overflow: auto;
 }
+
 .sg_workspace_title {
   display: block;
   top: 0px;
@@ -18,12 +23,14 @@
   border: black 1px;
   font-size: 15pt;
 }
+
 .sg_strains_box {
   display: block;
-  background: #ffffff;
-  border: 1px solid #f0f4f8;
+  background: @strains-bg;
+  border: 1px solid @title-color;
   margin-bottom: 8px;
 }
+
 .sg_strains_title {
   float: left;
   width: 100px;
@@ -33,16 +40,19 @@
   font-weight: 900;
   font-size: 15pt;
 }
+
 .sg_s_strain_box {
   display: inline-block;
   margin: 10px;
 }
+
 .sg_strain_title {
   display: block;
   vertical-align: top;
   width: 100%;
   height: 25px;
 }
+
 .sg_strain_visual {
   display: block;
   vertical-align: top;
@@ -50,34 +60,41 @@
   vertical-align: text-bottom;
   cursor: move;
 }
+
 .sg_experiment_box {
   display: block;
   vertical-align: top;
   width: 100%;
 }
+
 .sg_experiment_heading {
   display: block;
   vertical-align: top;
   width: 100%;
   background-color: yellow;
 }
+
 .sg_experiment_title_group {
   vertical-align: top;
   display: inline-block;
   background-color: orange;
 }
+
 .sg_experiment_title {
   display: block;
   background-color: orange;
 }
+
 .sg_experiment_commands {
   display: block;
   background-color: orangered;
 }
+
 .sg_experiment_parents {
   vertical-align: top;
   display: inline-block;
 }
+
 .sg_experiment_parent {
   vertical-align: top;
   display: inline-block;
@@ -86,46 +103,53 @@
   height: 120px;
   background-color: aliceblue;
 }
+
 .sg_s_col_head {
   border-right: solid black 1px;
 }
+
 .sg_s_row_head {
   border-bottom: solid black 1px;
 }
+
 .sg_title_box {
   font-size: 14pt;
   font-weight: 800;
-  background-color: #f0f4f8;
+  background-color: @title-color;
   padding-left: 8px;
 }
+
 .sg_add_strain_box {
   vertical-align: top;
   width: 70px;
   heigth: 80px;
   background-color: aliceblue;
 }
+
 .sg_expand {
   border: none;
   border-radius: 9px;
-  float: right;
-  margin-right: 10px;
-  background: #e2e2e2;
+  float:right;
+  margin-right:10px;
+  background: @button-bg;
 }
+
 .sg_strain_expand_properties {
   border: none;
   border-radius: 9px;
-  float: right;
-  margin-right: 10px;
-  background: #e2e2e2;
+  float:right;
+  margin-right:10px;
+  background: @button-bg;
 }
+
 .sg_new_experiment_box {
   margin-bottom: 5px;
-  border: 1px solid #f0f4f8;
+  border: 1px solid @title-color;
   position: static;
 }
-.sg_s_clear_parents,
-.sg_s_new_experiment_mate {
-  border: none;
+
+.sg_s_clear_parents, .sg_s_new_experiment_mate {
+  border:none;
   border-radius: 9px;
-  background: #e2e2e2;
+  background: @button-bg;
 }

@@ -13,7 +13,7 @@
 /// <amd-dependency path="jquery-ui" />
 /// <amd-dependency path="StarGenetics/bundled_samples" />
 
-/// <amd-dependency path="css!StarGenetics/sg_client_mainframe.css" />
+/// <amd-dependency path="css!StarGenetics/sg_client_mainframe.sass" />
 
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
 import bundled_samples = require("StarGenetics/bundled_samples");
@@ -367,10 +367,13 @@ export class StarGeneticsJSAppWidget {
      * Redraws UI
      */
         show() {
+
         var self:StarGeneticsJSAppWidget = this;
         var main = $('.sg_workspace', '#' + this.config.element_id);
         main.html(SGUIMAIN.workspace({model: this.model}));
 
+        console.info( "ClientRect");
+        console.info( main[0].getBoundingClientRect());
         $('.sg_expand').off('click').on('click', function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
             c.expanded = $(this).data('expanded');

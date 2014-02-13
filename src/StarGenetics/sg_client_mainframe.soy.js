@@ -163,7 +163,7 @@ sg_client_mainframe.strains = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.new_experiment = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class=\'sg_new_experiment_box\'><div class=\'sg_title_box\'>New Experiment', (opt_data.experiment.expanded) ? '<button class=\'sg_expand\' data-kind=\'new_experiment\' data-expanded=\'false\'>Collaps</button>' + ((opt_data.experiment.visualsVisible) ? '<button class=\'sg_strain_expand_visuals\' data-kind=\'new_experiment\'  data-expanded-visuals=\'false\'>Hide Visuals</button>' : '<button class=\'sg_strain_expand_visuals\' data-kind=\'new_experiment\' data-expanded-visuals=\'true\'>Show Visuals</button>') + ((opt_data.experiment.propertiesVisible) ? '<button class=\'sg_strain_expand_properties\' data-kind=\'new_experiment\' data-expanded-properties=\'false\'>Hide Properties</button>' : '<button class=\'sg_strain_expand_properties\' data-kind=\'new_experiment\' data-expanded-properties=\'true\'>Show Properties</button>') : '<button class=\'sg_expand\' data-kind=\'new_experiment\'  data-expanded=\'true\'>Expand</button>', '&nbsp;', (opt_data.experiment.canclearparents) ? '<button class=\'sg_clear_parents\' data-kind="new_experiment">Clear</button>' : '', (opt_data.experiment.canmate) ? '<button class=\'sg_new_experiment_mate\' data-kind=\'new_experiment\'>Mate</button>' : '', '</div>');
+  output.append('<div class=\'sg_new_experiment_box\'><div class=\'sg_title_box\'>', (opt_data.experiment.expanded) ? 'Experiment setup<button class=\'sg_expand\' data-kind=\'new_experiment\' data-expanded=\'false\'>Collaps</button>' + ((opt_data.experiment.propertiesVisible) ? '<button class=\'sg_strain_expand_properties\' data-kind=\'new_experiment\' data-expanded-properties=\'false\'>Hide Properties</button>' : '<button class=\'sg_strain_expand_properties\' data-kind=\'new_experiment\' data-expanded-properties=\'true\'>Show Properties</button>') : 'Add another experiment?<button class=\'sg_expand\' data-kind=\'new_experiment\'  data-expanded=\'true\'>Click here to start new mating experiment.</button>', '&nbsp;', (opt_data.experiment.canclearparents) ? '<button class=\'sg_clear_parents sg_s_clear_parents\' data-kind="new_experiment">Clear</button>' : '', (opt_data.experiment.canmate) ? '<button class=\'sg_new_experiment_mate sg_s_new_experiment_mate\' data-kind=\'new_experiment\'>Mate</button>' : '', '</div>');
   if (opt_data.experiment.expanded) {
     output.append('<div class=\'sg_experiment_parents\'>');
     if (opt_data.experiment.parents.length < 1) {
@@ -195,83 +195,83 @@ sg_client_mainframe.new_experiment = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.all_experiments = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  var experimentList184 = opt_data.experiments.list;
-  var experimentListLen184 = experimentList184.length;
-  for (var experimentIndex184 = 0; experimentIndex184 < experimentListLen184; experimentIndex184++) {
-    var experimentData184 = experimentList184[experimentIndex184];
-    output.append('<div class=\'sg_experiment_box\'><!-- header --><div class=\'sg_title_box\'>', soy.$$escapeHtml(experimentData184.name), (experimentData184.expanded) ? '<button class=\'sg_expand\' data-kind=\'' + soy.$$escapeHtml(experimentData184.id) + '\' data-expanded=\'false\'>Collaps</button>' + ((experimentData184.propertiesVisible) ? '<button class=\'sg_strain_expand_properties\' data-kind=\'' + soy.$$escapeHtml(experimentData184.id) + '\' data-expanded-properties=\'false\'>Hide Properties</button>' : '<button class=\'sg_strain_expand_properties\' data-kind=\'' + soy.$$escapeHtml(experimentData184.id) + '\' data-expanded-properties=\'true\'>Show Properties</button>') + ((experimentData184.showIndividuals) ? '<button class=\'sg_strain_show_individuals\' data-kind=\'' + soy.$$escapeHtml(experimentData184.id) + '\'  data-show-individuals=\'false\'>Group flies</button>' : '<button class=\'sg_strain_show_individuals\' data-kind=\'' + soy.$$escapeHtml(experimentData184.id) + '\' data-show-individuals=\'true\'>Ungroup flies</button>') : '<button class=\'sg_expand\' data-kind=\'' + soy.$$escapeHtml(experimentData184.id) + '\'  data-expanded=\'true\'>Expand</button>', '&nbsp;', (experimentData184.canclearparents) ? '<button class=\'sg_rename\' data-kind="' + soy.$$escapeHtml(experimentData184.id) + '">Rename</button>' : '', (experimentData184.canmate) ? '<button class=\'sg_experiment_mate\' data-kind="' + soy.$$escapeHtml(experimentData184.id) + '">Add progenies</button>' : '', '</div>');
-    if (experimentData184.expanded) {
+  var experimentList179 = opt_data.experiments.list;
+  var experimentListLen179 = experimentList179.length;
+  for (var experimentIndex179 = 0; experimentIndex179 < experimentListLen179; experimentIndex179++) {
+    var experimentData179 = experimentList179[experimentIndex179];
+    output.append('<div class=\'sg_experiment_box\'><!-- header --><div class=\'sg_title_box\'>', soy.$$escapeHtml(experimentData179.name), (experimentData179.expanded) ? '<button class=\'sg_expand\' data-kind=\'' + soy.$$escapeHtml(experimentData179.id) + '\' data-expanded=\'false\'>Collaps</button>' + ((experimentData179.propertiesVisible) ? '<button class=\'sg_strain_expand_properties\' data-kind=\'' + soy.$$escapeHtml(experimentData179.id) + '\' data-expanded-properties=\'false\'>Hide Properties</button>' : '<button class=\'sg_strain_expand_properties\' data-kind=\'' + soy.$$escapeHtml(experimentData179.id) + '\' data-expanded-properties=\'true\'>Show Properties</button>') + ((experimentData179.showIndividuals) ? '<button class=\'sg_strain_show_individuals\' data-kind=\'' + soy.$$escapeHtml(experimentData179.id) + '\'  data-show-individuals=\'false\'>Group flies</button>' : '<button class=\'sg_strain_show_individuals\' data-kind=\'' + soy.$$escapeHtml(experimentData179.id) + '\' data-show-individuals=\'true\'>Ungroup flies</button>') : '<button class=\'sg_expand\' data-kind=\'' + soy.$$escapeHtml(experimentData179.id) + '\'  data-expanded=\'true\'>Expand</button>', '&nbsp;', (experimentData179.canclearparents) ? '<button class=\'sg_rename\' data-kind="' + soy.$$escapeHtml(experimentData179.id) + '">Rename</button>' : '', (experimentData179.canmate) ? '<button class=\'sg_experiment_mate\' data-kind="' + soy.$$escapeHtml(experimentData179.id) + '">Add progenies</button>' : '', '</div>');
+    if (experimentData179.expanded) {
       output.append('<!-- expanded body -->');
-      if (experimentData184.propertiesVisible) {
-        output.append('<table><tr><th>Name</th><th>', soy.$$escapeHtml(experimentData184.parent.female.name), '</th><th>', soy.$$escapeHtml(experimentData184.parent.male.name), '</th>');
-        var phenotypeList236 = soy.$$getMapKeys(experimentData184.phenotypes);
-        var phenotypeListLen236 = phenotypeList236.length;
-        for (var phenotypeIndex236 = 0; phenotypeIndex236 < phenotypeListLen236; phenotypeIndex236++) {
-          var phenotypeData236 = phenotypeList236[phenotypeIndex236];
-          output.append('<th>', soy.$$escapeHtml(phenotypeData236.short_description), '</th>');
+      if (experimentData179.propertiesVisible) {
+        output.append('<table><tr><th>Name</th><th>', soy.$$escapeHtml(experimentData179.parent.female.name), '</th><th>', soy.$$escapeHtml(experimentData179.parent.male.name), '</th>');
+        var phenotypeList231 = soy.$$getMapKeys(experimentData179.phenotypes);
+        var phenotypeListLen231 = phenotypeList231.length;
+        for (var phenotypeIndex231 = 0; phenotypeIndex231 < phenotypeListLen231; phenotypeIndex231++) {
+          var phenotypeData231 = phenotypeList231[phenotypeIndex231];
+          output.append('<th>', soy.$$escapeHtml(phenotypeData231.short_description), '</th>');
         }
         output.append('</tr>');
-        if (experimentData184.visualsVisible) {
+        if (experimentData179.visualsVisible) {
           output.append('<tr><td>Visual</td><td>');
-          sg_client_mainframe.strain({strain: experimentData184.parent.female, visuals: experimentData184.visualsVisible, kind: experimentData184.id}, output);
+          sg_client_mainframe.strain({strain: experimentData179.parent.female, visuals: experimentData179.visualsVisible, kind: experimentData179.id}, output);
           output.append('</td><td>');
-          sg_client_mainframe.strain({strain: experimentData184.parent.male, visuals: experimentData184.visualsVisible, kind: experimentData184.id}, output);
+          sg_client_mainframe.strain({strain: experimentData179.parent.male, visuals: experimentData179.visualsVisible, kind: experimentData179.id}, output);
           output.append('</td>');
-          var phenotypeList255 = soy.$$getMapKeys(experimentData184.phenotypes);
-          var phenotypeListLen255 = phenotypeList255.length;
-          for (var phenotypeIndex255 = 0; phenotypeIndex255 < phenotypeListLen255; phenotypeIndex255++) {
-            var phenotypeData255 = phenotypeList255[phenotypeIndex255];
+          var phenotypeList250 = soy.$$getMapKeys(experimentData179.phenotypes);
+          var phenotypeListLen250 = phenotypeList250.length;
+          for (var phenotypeIndex250 = 0; phenotypeIndex250 < phenotypeListLen250; phenotypeIndex250++) {
+            var phenotypeData250 = phenotypeList250[phenotypeIndex250];
             output.append('<td>');
-            sg_client_mainframe.strain({strain: experimentData184.phenotypes[phenotypeData255].top_male, count: experimentData184.phenotypes[phenotypeData255].males, visuals: experimentData184.visualsVisible, kind: experimentData184.id}, output);
-            sg_client_mainframe.strain({strain: experimentData184.phenotypes[phenotypeData255].top_female, count: experimentData184.phenotypes[phenotypeData255].females, visuals: experimentData184.visualsVisible, kind: experimentData184.id}, output);
+            sg_client_mainframe.strain({strain: experimentData179.phenotypes[phenotypeData250].top_male, count: experimentData179.phenotypes[phenotypeData250].males, visuals: experimentData179.visualsVisible, kind: experimentData179.id}, output);
+            sg_client_mainframe.strain({strain: experimentData179.phenotypes[phenotypeData250].top_female, count: experimentData179.phenotypes[phenotypeData250].females, visuals: experimentData179.visualsVisible, kind: experimentData179.id}, output);
             output.append('</td>');
           }
           output.append('</tr>');
         }
-        if (experimentData184.showIndividuals) {
+        if (experimentData179.showIndividuals) {
           output.append('<tr><td><!-- individual --></td><td><!-- parent 1 --></td><td><!-- parent 2 --></td>');
-          var phenotypeList273 = soy.$$getMapKeys(experimentData184.phenotypes);
-          var phenotypeListLen273 = phenotypeList273.length;
-          for (var phenotypeIndex273 = 0; phenotypeIndex273 < phenotypeListLen273; phenotypeIndex273++) {
-            var phenotypeData273 = phenotypeList273[phenotypeIndex273];
+          var phenotypeList268 = soy.$$getMapKeys(experimentData179.phenotypes);
+          var phenotypeListLen268 = phenotypeList268.length;
+          for (var phenotypeIndex268 = 0; phenotypeIndex268 < phenotypeListLen268; phenotypeIndex268++) {
+            var phenotypeData268 = phenotypeList268[phenotypeIndex268];
             output.append('<td>');
-            var strainList275 = experimentData184.phenotypes[phenotypeData273].list;
-            var strainListLen275 = strainList275.length;
-            for (var strainIndex275 = 0; strainIndex275 < strainListLen275; strainIndex275++) {
-              var strainData275 = strainList275[strainIndex275];
-              sg_client_mainframe.strain_short({strain: strainData275, kind: experimentData184.id}, output);
+            var strainList270 = experimentData179.phenotypes[phenotypeData268].list;
+            var strainListLen270 = strainList270.length;
+            for (var strainIndex270 = 0; strainIndex270 < strainListLen270; strainIndex270++) {
+              var strainData270 = strainList270[strainIndex270];
+              sg_client_mainframe.strain_short({strain: strainData270, kind: experimentData179.id}, output);
             }
             output.append('</td>');
           }
           output.append('</tr>');
         }
         output.append('<tr><td>Sex (M/F)</td><td>0/1</td><td>1/0</td>');
-        var phenotypeList284 = soy.$$getMapKeys(experimentData184.phenotypes);
-        var phenotypeListLen284 = phenotypeList284.length;
-        for (var phenotypeIndex284 = 0; phenotypeIndex284 < phenotypeListLen284; phenotypeIndex284++) {
-          var phenotypeData284 = phenotypeList284[phenotypeIndex284];
-          output.append('<td>    ', soy.$$escapeHtml(experimentData184.phenotypes[phenotypeData284].males), '/', soy.$$escapeHtml(experimentData184.phenotypes[phenotypeData284].females), '</td>');
+        var phenotypeList279 = soy.$$getMapKeys(experimentData179.phenotypes);
+        var phenotypeListLen279 = phenotypeList279.length;
+        for (var phenotypeIndex279 = 0; phenotypeIndex279 < phenotypeListLen279; phenotypeIndex279++) {
+          var phenotypeData279 = phenotypeList279[phenotypeIndex279];
+          output.append('<td>    ', soy.$$escapeHtml(experimentData179.phenotypes[phenotypeData279].males), '/', soy.$$escapeHtml(experimentData179.phenotypes[phenotypeData279].females), '</td>');
         }
-        var propertyList291 = experimentData184.propertiesList;
-        var propertyListLen291 = propertyList291.length;
-        for (var propertyIndex291 = 0; propertyIndex291 < propertyListLen291; propertyIndex291++) {
-          var propertyData291 = propertyList291[propertyIndex291];
-          output.append('<tr><td>', soy.$$escapeHtml(propertyData291), '</td><td>', soy.$$escapeHtml(experimentData184.parent.female.properties[propertyData291].text), '</td><td>', soy.$$escapeHtml(experimentData184.parent.male.properties[propertyData291].text), '</td>');
-          var phenotypeList299 = soy.$$getMapKeys(experimentData184.phenotypes);
-          var phenotypeListLen299 = phenotypeList299.length;
-          for (var phenotypeIndex299 = 0; phenotypeIndex299 < phenotypeListLen299; phenotypeIndex299++) {
-            var phenotypeData299 = phenotypeList299[phenotypeIndex299];
-            output.append('<td>', soy.$$escapeHtml(experimentData184.phenotypes[phenotypeData299].properties[propertyData291].text), '</td>');
+        var propertyList286 = experimentData179.propertiesList;
+        var propertyListLen286 = propertyList286.length;
+        for (var propertyIndex286 = 0; propertyIndex286 < propertyListLen286; propertyIndex286++) {
+          var propertyData286 = propertyList286[propertyIndex286];
+          output.append('<tr><td>', soy.$$escapeHtml(propertyData286), '</td><td>', soy.$$escapeHtml(experimentData179.parent.female.properties[propertyData286].text), '</td><td>', soy.$$escapeHtml(experimentData179.parent.male.properties[propertyData286].text), '</td>');
+          var phenotypeList294 = soy.$$getMapKeys(experimentData179.phenotypes);
+          var phenotypeListLen294 = phenotypeList294.length;
+          for (var phenotypeIndex294 = 0; phenotypeIndex294 < phenotypeListLen294; phenotypeIndex294++) {
+            var phenotypeData294 = phenotypeList294[phenotypeIndex294];
+            output.append('<td>', soy.$$escapeHtml(experimentData179.phenotypes[phenotypeData294].properties[propertyData286].text), '</td>');
           }
           output.append('</tr>');
         }
         output.append('</table>');
       } else {
         output.append('<table><tr><th>Sex</th><th>Parents</th><th>Offsprings</th></tr><tr><td>Female</td><td>');
-        sg_client_mainframe.strain({strain: experimentData184.parent.female, visuals: experimentData184.visualsVisible, kind: experimentData184.id}, output);
-        output.append('</td><td>', soy.$$escapeHtml(experimentData184.stats.sex.females), '</td></tr><tr><td>Male</td><td>');
-        sg_client_mainframe.strain({strain: experimentData184.parent.male, visuals: experimentData184.visualsVisible, kind: experimentData184.id}, output);
-        output.append('</td><td>', soy.$$escapeHtml(experimentData184.stats.sex.males), '</td></tr></table>');
+        sg_client_mainframe.strain({strain: experimentData179.parent.female, visuals: experimentData179.visualsVisible, kind: experimentData179.id}, output);
+        output.append('</td><td>', soy.$$escapeHtml(experimentData179.stats.sex.females), '</td></tr><tr><td>Male</td><td>');
+        sg_client_mainframe.strain({strain: experimentData179.parent.male, visuals: experimentData179.visualsVisible, kind: experimentData179.id}, output);
+        output.append('</td><td>', soy.$$escapeHtml(experimentData179.stats.sex.males), '</td></tr></table>');
       }
     }
     output.append('</div>');

@@ -419,7 +419,8 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
 
         UIModel.prototype.clearNewExperiment = function () {
             this.__data__.new_experiment = {
-                list: []
+                list: [],
+                expanded: false
             };
         };
         return UIModel;

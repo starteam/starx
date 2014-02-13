@@ -184,29 +184,35 @@
 {template .new_experiment}
 <div class='sg_new_experiment_box'>
     <div class='sg_title_box'>
-        New Experiment
         {if $experiment.expanded}
+        Experiment setup
             <button class='sg_expand' data-kind='new_experiment' data-expanded='false'>Collaps</button>
+            /*
             {if $experiment.visualsVisible}
             <button class='sg_strain_expand_visuals' data-kind='new_experiment'  data-expanded-visuals='false'>Hide Visuals</button>
             {else}
             <button class='sg_strain_expand_visuals' data-kind='new_experiment' data-expanded-visuals='true'>Show Visuals</button>
             {/if}
+            */
             {if $experiment.propertiesVisible}
                 <button class='sg_strain_expand_properties' data-kind='new_experiment' data-expanded-properties='false'>Hide Properties</button>
             {else}
                 <button class='sg_strain_expand_properties' data-kind='new_experiment' data-expanded-properties='true'>Show Properties</button>
             {/if}
         {else}
+        Add another experiment?
+            <button class='sg_expand' data-kind='new_experiment'  data-expanded='true'>Click here to start new mating experiment.</button>
+            /*
             <button class='sg_expand' data-kind='new_experiment'  data-expanded='true'>Expand</button>
+            */
         {/if}
         &nbsp;
         {if $experiment.canclearparents}
-        <button class='sg_clear_parents' data-kind="new_experiment">Clear</button>
+        <button class='sg_clear_parents sg_s_clear_parents' data-kind="new_experiment">Clear</button>
         {/if}
 
         {if $experiment.canmate}
-            <button class='sg_new_experiment_mate' data-kind='new_experiment'>Mate</button>
+            <button class='sg_new_experiment_mate sg_s_new_experiment_mate' data-kind='new_experiment'>Mate</button>
         {/if}
     </div>
     {if $experiment.expanded}
