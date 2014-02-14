@@ -197,16 +197,22 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         ExperimentStatistics.sex_generate_internal = function (list) {
             var males = 0;
             var females = 0;
+            var males_list = [];
+            var females_list = [];
             _.each(list, function (e) {
                 if (e.sex == 'MALE') {
                     males++;
+                    males_list.push(e);
                 } else {
                     females++;
+                    females_list.push(e);
                 }
             });
             return {
                 males: males,
-                females: females
+                females: females,
+                males_list: males_list,
+                females_list: females_list
             };
         };
 
@@ -314,23 +320,63 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
 
         Object.defineProperty(Experiment.prototype, "phenotypes", {
             get: function () {
+                var self = this;
                 var group = _.groupBy(this.list, function (q) {
                     return JSON.stringify(q.properties);
                 });
                 var ret = {};
                 _.map(group, function (value, key) {
                     var sex_obj = ExperimentStatistics.sex_generate_internal(value);
+                    if (!self.phenotypes_map[key]) {
+                        self.phenotypes_map[key] = {
+                            start_index_male: 0,
+                            show_more_males: false,
+                            start_index_female: 0,
+                            show_more_females: false
+                        };
+                    }
                     ret[key] = {
                         list: value,
                         males: sex_obj.males,
+                        males_list: sex_obj.males_list,
                         females: sex_obj.females,
+                        females_list: sex_obj.females_list,
                         properties: value[0].properties,
                         top_male: _.find(value, function (e) {
                             return e.sex == 'MALE';
                         }),
                         top_female: _.find(value, function (e) {
                             return e.sex == 'FEMALE';
-                        })
+                        }),
+                        get start_index_male() {
+                            return self.phenotypes_map[key].start_index_male;
+                        },
+                        set start_index_male(q) {
+                            if (q < 0) {
+                                q = 0;
+                            } else if (q > sex_obj.males_list.length - 5) {
+                                q = sex_obj.males_list.length - 5;
+                            }
+                            self.phenotypes_map[key].start_index_male = q;
+                        },
+                        get show_more_males() {
+                            return self.phenotypes_map[key].show_more_males;
+                        },
+                        set show_more_males(q) {
+                            self.phenotypes_map[key].show_more_males = q;
+                        },
+                        get start_index_female() {
+                            return self.phenotypes_map[key].start_index_female;
+                        },
+                        set start_index_female(q) {
+                            self.phenotypes_map[key].start_index_female = q;
+                        },
+                        get show_more_females() {
+                            return self.phenotypes_map[key].show_more_females;
+                        },
+                        set show_more_females(q) {
+                            self.phenotypes_map[key].show_more_females = q;
+                        }
                     };
                 });
                 return ret;
@@ -341,6 +387,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         return Experiment;
     })(Collapsable);
     exports.Experiment = Experiment;
+    Base.defineStaticRWField(Experiment, "phenotypes_map", {});
     Base.readOnlyWrappedList(Experiment, "parents", Strain);
     Base.readOnlyField(Experiment, "id", null);
 
@@ -387,10 +434,21 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 console.info(this.list);
             }
         };
+
+        Experiments.prototype.show_more = function (count) {
+            this.show_experiments += count;
+            if (this.show_experiments < 1) {
+                this.show_experiments = 1;
+            }
+            if (this.show_experiments > this.list.length) {
+                this.show_experiments == this.list.length;
+            }
+        };
         return Experiments;
     })(Base);
     exports.Experiments = Experiments;
     Base.readOnlyWrappedList(Experiments, "list", Experiment);
+    Base.defineStaticRWField(Experiments, "show_experiments", 1);
 
     /**
     * UIModel

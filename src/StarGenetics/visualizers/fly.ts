@@ -43,9 +43,6 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
     }
 
     render(canvas:HTMLCanvasElement, properties:any, organism:any) {
-        console.info("Fly render");
-        console.info(properties);
-        console.info(organism);
         var context = this.prepare(canvas);
         this.clearImage(context);
         context.translate(.5, .2);

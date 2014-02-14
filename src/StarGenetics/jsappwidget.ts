@@ -87,19 +87,17 @@ export class StarGeneticsJSAppWidget {
                             var uid = Math.random();
                             data.uid = 'CB' + uid;
                             var callbacks = {};
-                            if( data['callbacks']['onsuccess'])
-                            {
+                            if (data['callbacks']['onsuccess']) {
                                 callbacks['onsuccess'] = data['callbacks']['onsuccess'];
                                 data['callbacks']['onsuccess'] = true;
                             }
-                            if( data['callbacks']['onerror'])
-                            {
+                            if (data['callbacks']['onerror']) {
                                 callbacks['onerror'] = data['callbacks']['onerror'];
                                 data['callbacks']['onerror'] = true;
                             }
                             self.eventlistener_setup[ data.uid ] = callbacks;
-                            console.info( "post message");
-                            console.info( data ) ;
+                            console.info("post message");
+                            console.info(data);
                             data.starx = target;
                             $(id)[0]['contentWindow'].postMessage(data, config.base_url);
                         };
@@ -113,13 +111,11 @@ export class StarGeneticsJSAppWidget {
                             var callbacks = self.eventlistener_setup[data.uid];
                             var kind = data['kind'];
                             var callback_data = data.data;
-                            if( callbacks[kind])
-                            {
-                                console.info("calling back " + data.uid + " " + kind );
+                            if (callbacks[kind]) {
+                                console.info("calling back " + data.uid + " " + kind);
                                 callbacks[kind](callback_data);
                             }
-                            else
-                            {
+                            else {
                                 console.info("processing ISSUE " + data.uid);
                                 console.info(data);
                             }
@@ -372,8 +368,50 @@ export class StarGeneticsJSAppWidget {
         var main = $('.sg_workspace', '#' + this.config.element_id);
         main.html(SGUIMAIN.workspace({model: this.model}));
 
-        console.info( "ClientRect");
-        console.info( main[0].getBoundingClientRect());
+        console.info("ClientRect");
+        console.info(main[0].getBoundingClientRect());
+
+        $('.sg_expand_males').off('click').on('click', function () {
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var phenotype_id = $(this).data('phenotype-id');
+            var phenotype = JSON.stringify(phenotype_id);
+            c['phenotypes'][phenotype].show_more_males = $(this).data('state');
+            self.show();
+        });
+        $('.sg_move_start_males').off('click').on('click', function () {
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var phenotype_id = $(this).data('phenotype-id');
+            var phenotype = JSON.stringify(phenotype_id);
+            c['phenotypes'][phenotype].start_index_male = c['phenotypes'][phenotype].start_index_male + ($(this).data('state') == '+' ? 5 : -5);
+            self.show();
+        });
+
+                $('.sg_expand_females').off('click').on('click', function () {
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var phenotype_id = $(this).data('phenotype-id');
+            var phenotype = JSON.stringify(phenotype_id);
+            c['phenotypes'][phenotype].show_more_females = $(this).data('state');
+            self.show();
+        });
+        $('.sg_move_start_females').off('click').on('click', function () {
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var phenotype_id = $(this).data('phenotype-id');
+            var phenotype = JSON.stringify(phenotype_id);
+            c['phenotypes'][phenotype].start_index_female = c['phenotypes'][phenotype].start_index_female + ($(this).data('state') == '+' ? 5 : -5);
+            self.show();
+        });
+
+
+        $('.sg_show_more').off('click').on('click', function () {
+            var more = $(this).data('increment');
+            if (more == '+') {
+                self.model.ui.experiments.show_more(5);
+            } else if (more == '-') {
+                self.model.ui.experiments.show_more(-5);
+            }
+            self.show();
+        });
+
         $('.sg_expand').off('click').on('click', function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
             c.expanded = $(this).data('expanded');
@@ -459,19 +497,14 @@ export class StarGeneticsJSAppWidget {
                 self.show();
             }});
 
-        console.error("Visualizer config");
         var visualizer_name:string = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
         var visualizer:VisualizerBase.Visualizer = new SGSmiley.Smiley();
-        console.error(this.config);
-        console.error(visualizer_name);
         if (visualizer_name == 'fly') {
             visualizer = new SGFly.Fly();
         }
         $('.sg_strain_visual canvas').each(function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
             var organism:SGModel.Strain = c.get($(this).data('id'));
-            console.error("RENDER");
-            console.error(organism);
             visualizer.render($(this)[0], organism.properties, organism);
             window['c'] = this;
             window['v'] = visualizer;

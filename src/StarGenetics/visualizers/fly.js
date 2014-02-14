@@ -45,9 +45,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
         };
 
         Fly.prototype.render = function (canvas, properties, organism) {
-            console.info("Fly render");
-            console.info(properties);
-            console.info(organism);
             var context = this.prepare(canvas);
             this.clearImage(context);
             context.translate(.5, .2);

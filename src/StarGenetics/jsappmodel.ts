@@ -143,7 +143,7 @@ export class Collapsable extends Base {
     expanded:boolean;
     visualsVisible:boolean;
     propertiesVisible:boolean;
-    showIndividuals :boolean;
+    showIndividuals:boolean;
     name:string;
     list:Strain[];
 
@@ -194,17 +194,23 @@ export class ExperimentStatistics extends Base {
     public static sex_generate_internal(list) {
         var males = 0;
         var females = 0;
+        var males_list = [];
+        var females_list = [];
         _.each(list, function (e) {
             if (e.sex == 'MALE') {
                 males++;
+                males_list.push(e);
             }
             else {
                 females++;
+                females_list.push(e);
             }
         });
         return {
             males: males,
-            females: females
+            females: females,
+            males_list: males_list,
+            females_list: females_list
         };
     }
 
@@ -224,8 +230,10 @@ export class Experiment extends Collapsable {
     id:string;
     parents:Strain[];
     stats_cache:ExperimentStatistics;
+    phenotypes_map:any;
 
-    constructor(q:{}) {
+    constructor(q:{
+    }) {
         if (typeof(q['parents']) === 'undefined') {
             q['parents'] = [];
         }
@@ -284,9 +292,11 @@ export class Experiment extends Collapsable {
         return this.stats_cache;
     }
 
-    get parent():{[s:string]:Strain} {
+    get parent():{[s:string]:Strain
+    } {
         var parents = this.parents;
-        var ret:{[s:string]:Strain} = {};
+        var ret:{[s:string]:Strain
+        } = {};
         _.each(parents, function (p) {
             ret[ p.sex == 'MALE' ? 'male' : 'female' ] = p;
         });
@@ -294,23 +304,64 @@ export class Experiment extends Collapsable {
     }
 
     get phenotypes():any {
+        var self = this;
         var group = _.groupBy(this.list, function (q) {
             return JSON.stringify(q.properties)
         });
         var ret = {};
         _.map(group, function (value, key) {
             var sex_obj = ExperimentStatistics.sex_generate_internal(value);
+            if (!self.phenotypes_map[key]) {
+                self.phenotypes_map[key] = {
+                    start_index_male: 0,
+                    show_more_males: false,
+                    start_index_female: 0,
+                    show_more_females: false
+                }
+            }
             ret[key] = {
                 list: value,
                 males: sex_obj.males,
+                males_list: sex_obj.males_list,
                 females: sex_obj.females,
+                females_list: sex_obj.females_list,
                 properties: value[0].properties,
                 top_male: _.find(value, function (e) {
                     return e.sex == 'MALE'
                 }),
                 top_female: _.find(value, function (e) {
                     return e.sex == 'FEMALE'
-                })
+                }),
+                get start_index_male():number {
+                    return self.phenotypes_map[key].start_index_male;
+                },
+                set start_index_male(q:number) {
+                    if (q < 0) {
+                        q = 0
+                    }
+                    else if (q > sex_obj.males_list.length - 5) {
+                        q = sex_obj.males_list.length - 5;
+                    }
+                    self.phenotypes_map[key].start_index_male = q;
+                },
+                get show_more_males():boolean {
+                    return self.phenotypes_map[key].show_more_males;
+                },
+                set show_more_males(q:boolean) {
+                    self.phenotypes_map[key].show_more_males = q;
+                },
+                get start_index_female():number {
+                    return self.phenotypes_map[key].start_index_female;
+                },
+                set start_index_female(q:number) {
+                    self.phenotypes_map[key].start_index_female = q;
+                },
+                get show_more_females():boolean {
+                    return self.phenotypes_map[key].show_more_females;
+                },
+                set show_more_females(q:boolean) {
+                    self.phenotypes_map[key].show_more_females = q;
+                }
             }
         });
         return ret;
@@ -318,6 +369,7 @@ export class Experiment extends Collapsable {
 
 
 }
+Base.defineStaticRWField(Experiment, "phenotypes_map", {});
 Base.readOnlyWrappedList(Experiment, "parents", Strain);
 Base.readOnlyField(Experiment, "id", null);
 
@@ -327,8 +379,7 @@ Base.readOnlyField(Experiment, "id", null);
 export class Strains extends Collapsable {
 
     add_strain(s:Strain) {
-        if(! this.get(s.id) )
-        {
+        if (!this.get(s.id)) {
             this.__data__.list.push(s.__data__);
         }
     }
@@ -340,6 +391,7 @@ export class NewExperiment extends Experiment {
 
 export class Experiments extends Base {
     list:Experiment[];
+    show_experiments:number;
 
     update_experiment(experiment:Experiment) {
         var exp = _.find(this.list, function (e) {
@@ -353,8 +405,20 @@ export class Experiments extends Base {
             console.info(this.list);
         }
     }
+
+    show_more(count:number) {
+        this.show_experiments += count;
+        if (this.show_experiments < 1) {
+            this.show_experiments = 1;
+        }
+        if (this.show_experiments > this.list.length) {
+            this.show_experiments == this.list.length;
+        }
+    }
 }
 Base.readOnlyWrappedList(Experiments, "list", Experiment);
+Base.defineStaticRWField(Experiments, "show_experiments", 1);
+
 
 /**
  * UIModel
@@ -388,7 +452,7 @@ export class UIModel extends Base {
     clearNewExperiment() {
         this.__data__.new_experiment = {
             list: [],
-            expanded:false
+            expanded: false
         }
     }
 }

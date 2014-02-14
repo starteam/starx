@@ -334,6 +334,47 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
 
             console.info("ClientRect");
             console.info(main[0].getBoundingClientRect());
+
+            $('.sg_expand_males').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                var phenotype_id = $(this).data('phenotype-id');
+                var phenotype = JSON.stringify(phenotype_id);
+                c['phenotypes'][phenotype].show_more_males = $(this).data('state');
+                self.show();
+            });
+            $('.sg_move_start_males').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                var phenotype_id = $(this).data('phenotype-id');
+                var phenotype = JSON.stringify(phenotype_id);
+                c['phenotypes'][phenotype].start_index_male = c['phenotypes'][phenotype].start_index_male + ($(this).data('state') == '+' ? 5 : -5);
+                self.show();
+            });
+
+            $('.sg_expand_females').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                var phenotype_id = $(this).data('phenotype-id');
+                var phenotype = JSON.stringify(phenotype_id);
+                c['phenotypes'][phenotype].show_more_females = $(this).data('state');
+                self.show();
+            });
+            $('.sg_move_start_females').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                var phenotype_id = $(this).data('phenotype-id');
+                var phenotype = JSON.stringify(phenotype_id);
+                c['phenotypes'][phenotype].start_index_female = c['phenotypes'][phenotype].start_index_female + ($(this).data('state') == '+' ? 5 : -5);
+                self.show();
+            });
+
+            $('.sg_show_more').off('click').on('click', function () {
+                var more = $(this).data('increment');
+                if (more == '+') {
+                    self.model.ui.experiments.show_more(5);
+                } else if (more == '-') {
+                    self.model.ui.experiments.show_more(-5);
+                }
+                self.show();
+            });
+
             $('.sg_expand').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.expanded = $(this).data('expanded');
@@ -415,19 +456,14 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
                     self.show();
                 } });
 
-            console.error("Visualizer config");
             var visualizer_name = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
             var visualizer = new SGSmiley.Smiley();
-            console.error(this.config);
-            console.error(visualizer_name);
             if (visualizer_name == 'fly') {
                 visualizer = new SGFly.Fly();
             }
             $('.sg_strain_visual canvas').each(function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 var organism = c.get($(this).data('id'));
-                console.error("RENDER");
-                console.error(organism);
                 visualizer.render($(this)[0], organism.properties, organism);
                 window['c'] = this;
                 window['v'] = visualizer;
