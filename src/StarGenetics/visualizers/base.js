@@ -1,15 +1,15 @@
 define(["require", "exports"], function(require, exports) {
     var BaseVisualizer = (function () {
         function BaseVisualizer() {
-            this.width = 75;
-            this.height = 75;
+            this.width = 50;
+            this.height = 50;
         }
         BaseVisualizer.prototype.prepare = function (canvas) {
             canvas.setAttribute('width', '' + this.width);
             canvas.setAttribute('height', '' + this.height);
             var context = canvas.getContext("2d");
             context.save();
-            context.scale(this.width / 4, this.height / 4);
+            context.scale(this.width / 3, this.height / 3);
             context.translate(1, 1);
             return context;
         };

@@ -43,7 +43,7 @@
 
 .sg_s_strain_box {
   display: inline-block;
-  margin: 10px;
+  margin: 0px;
 }
 
 .sg_strain_title {
@@ -65,6 +65,8 @@
   display: block;
   vertical-align: top;
   width: 100%;
+  border: 1px solid @title-color;
+
 }
 
 .sg_experiment_heading {
@@ -99,9 +101,10 @@
   vertical-align: top;
   display: inline-block;
   margin: 5px;
-  width: 100px;
-  height: 120px;
+  width: 70px;
+  height: 80px;
   background-color: aliceblue;
+  text-align:center;
 }
 
 .sg_s_col_head {
@@ -152,4 +155,22 @@
   border:none;
   border-radius: 9px;
   background: @button-bg;
+}
+
+table {
+  border-collapse:collapse;
+
+}
+
+table tbody tr td {
+  border: 1px solid @title-color;
+}
+
+.sg_s_row_head {
+  border: 1px solid @title-color;
+  background: white;
+}
+
+.sg_strain_box {
+  text-align: center;
 }

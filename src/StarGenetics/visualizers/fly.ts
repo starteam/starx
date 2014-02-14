@@ -48,7 +48,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
         console.info(organism);
         var context = this.prepare(canvas);
         this.clearImage(context);
-        context.translate(0, .2);
+        context.translate(.5, .2);
         this.drawLegs(context, properties, organism['sex']);
         this.drawAristae(context, properties, organism['sex']);
         this.drawHead(context, properties, organism['sex']);

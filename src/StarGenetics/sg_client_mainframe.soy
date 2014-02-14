@@ -73,7 +73,7 @@
 */
 {template .strain_short}
 <div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}">
-    <div class='sg_strain_title'>{$strain['name']} {if $strain['sex'] == 'FEMALE'}F{else}M{/if}</div>
+    <div class='sg_strain_title'>{$strain['name']} {if $strain['sex'] == 'FEMALE'}{call .female_icon/}{else}{call .male_icon/}{/if}</div>
 </div>
 {/template}
 
@@ -143,7 +143,9 @@
                 <tr>
                 <td  class='sg_s_col_head'>Sex</td>
                     {foreach $strain in $strains.list}
-                        <td class='sg_strain_box sg_s_row_head'>{$strain['sex']}</td>
+                        <td class='sg_strain_box'>
+                        {call .sex_icon}{param sex:$strain['sex']/}{/call}
+                        </td>
                     {/foreach}
 
                 </tr>
@@ -329,6 +331,7 @@
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
                     {/call}
+                    </td><td>
                     {call .strain}
                         {param strain:$experiment.phenotypes[$phenotype].top_female /}
                         {param count:$experiment.phenotypes[$phenotype].females/}
@@ -345,7 +348,7 @@
                     <td><!-- parent 1 --></td>
                     <td><!-- parent 2 --></td>
                 {foreach $phenotype in keys($experiment.phenotypes)}
-                <td>
+                <td colspan='2'>
                 {foreach $strain in $experiment.phenotypes[$phenotype].list}
                     {call .strain_short}
                         {param strain:$strain /}
@@ -357,9 +360,14 @@
                 </tr>
                 {/if}
                 <tr><td>Sex (M/F)</td>
-                <td>0/1</td><td>1/0</td>
+                <td>{call .female_icon/}</td><td>{call .male_icon/}</td>
                 {foreach $phenotype in keys($experiment.phenotypes)}
-                <td>    {$experiment.phenotypes[$phenotype].males}/{$experiment.phenotypes[$phenotype].females}
+                <td>    {$experiment.phenotypes[$phenotype].males}
+                        {call .male_icon/}
+                </td>
+                <td>
+                        {$experiment.phenotypes[$phenotype].females}
+                        {call .female_icon/}
                 </td>
                 {/foreach}
                 {foreach $property in $experiment.propertiesList}
@@ -367,7 +375,7 @@
                     <td>{$experiment.parent.female.properties[$property].text}</td>
                     <td>{$experiment.parent.male.properties[$property].text}</td>
                     {foreach $phenotype in keys($experiment.phenotypes)}
-                    <td>{$experiment.phenotypes[$phenotype].properties[$property].text}
+                    <td colspan='2'>{$experiment.phenotypes[$phenotype].properties[$property].text}
                     </td>
                     {/foreach}
                     </tr>
@@ -396,5 +404,30 @@
     {/if}
 </div>
 {/foreach}
-
 {/template}
+
+/**
+* Sex icon
+*   @param sex
+*/
+{template .sex_icon}
+    {if $sex == 'MALE'}
+        {call .male_icon/}
+    {else}
+        {call .female_icon/}
+    {/if}
+{/template}
+/**
+* Male icon
+*/
+{template .male_icon}
+<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDklEQVR42mNkIB40AbEqEp8FiM8ykmAAMpAF4nlA/IEcA2Cak4C4i1QDkDU/BuLl6AbYAnECEPMD8X8g/gXEq4F4AxbNDMgGMAPxRCD+AsR9QPwKKs4LxClAbAPEfGiawQELM6AXiI8B8VocTjcB4kogDkaXABmgCcT5QJxBwP+FQHwf6h0UA0Dxuw6ILxAwAOSdGUAcjW7ACqjgXyJiARSgoegGLIOG/C8iDFgDxCHoBpRDA/AwAc1iQNwOxMnoBkgzQKIunIABHUC8Fd0iWDSCYoELagM2AIo+RyDOQZdATokgQ6yAeAoQn4QGqi4DJHq/AnEZtoBGT8og78QAsT4QMwHxLSBeDsTXcfkLAHmSM6tHQ6tHAAAAAElFTkSuQmCC'>
+{/template}
+
+/**
+* Female icon
+*/
+{template .female_icon}
+<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHElEQVR42mNkIB5EAvFyJL4sEMszkmBAKhDrAHE+VPM8IE4ixQCYIWZArADSDMSPSTUAZPNmID4NNYwB3QBbIE4AYn4g/g/Ev4B4NRBvQHY2EHvAvAMzgBmIJwLxFyDuA+JXUHFeIE4BYhsg5oM5G8k7X2AG9ALxMSBei8PpJkBcCcTB6BIgAzShIZtBwP+FQHwf6h0UA5qAeB0QXyBgAMg7M4A4Gt2AFVDBv0TEAihAQ9ENWAYN+V9EGLAGiEPQDSiHBuBhAprFgLgdiJPRDZBmgERdOAEDOoB4K7pFsGgExQIX1AZsABR9jkCcgy6BnBJBhlgB8RQgPgkNVF0GSPR+BeIybAGNnpRB3okBYn0gZgLiWwyQLHwdl78Auzgzw8mO3K0AAAAASUVORK5CYII='>
+{/template}
+

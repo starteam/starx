@@ -3,8 +3,8 @@ export interface Visualizer {
 }
 
 export class BaseVisualizer {
-    width:number = 75;
-    height:number = 75;
+    width:number = 50;
+    height:number = 50;
 
     prepare(canvas:HTMLCanvasElement):CanvasRenderingContext2D {
 
@@ -12,7 +12,7 @@ export class BaseVisualizer {
         canvas.setAttribute('height', '' + this.height);
         var context = canvas.getContext("2d");
         context.save();
-        context.scale(this.width / 4, this.height / 4);
+        context.scale(this.width / 3, this.height / 3);
         context.translate(1, 1);
         return context;
     }
