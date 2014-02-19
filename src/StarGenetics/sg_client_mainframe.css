@@ -144,3 +144,64 @@ table tbody tr td {
 .sg_strain_box {
   text-align: center;
 }
+.sg_mini_experiment_box {
+  zoom: 50%;
+  display: inline-block;
+  width: auto;
+  position: relative;
+}
+.sg_experiment_phenotype_detail_left {
+  text-align: center;
+  text-transform: capitalize;
+  border-left: 1px solid #d0d4d8;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.sg_experiment_phenotype_detail_right {
+  text-align: center;
+  text-transform: capitalize;
+  border-right: 1px solid #d0d4d8;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.sg_experiment_p_count {
+  text-align: center;
+}
+.sg_experiment_p_visual {
+  text-align: center;
+}
+.sg_slider {
+  width: 100%;
+}
+.sg_slider_thumb {
+  width: 100%;
+  height: 1em;
+  background-color: #e2e2e2;
+  text-align: center;
+}
+.sg_slider_table {
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+.sg_experiment_holder {
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+.sg_experiment_box_floaty {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  float: right;
+  background: #4D4C49;
+  opacity: .01;
+  z-index: 99;
+}
+.sg_experiment_selected {
+  border: 1px solid black;
+}
+.sg_experiment_history {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
