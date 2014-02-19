@@ -433,6 +433,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 console.info(this.__data__.list);
                 console.info(this.list);
             }
+            this.show_experiment = experiment.id;
         };
 
         Experiments.prototype.show_more = function (count) {
@@ -448,7 +449,8 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
     })(Base);
     exports.Experiments = Experiments;
     Base.readOnlyWrappedList(Experiments, "list", Experiment);
-    Base.defineStaticRWField(Experiments, "show_experiments", 1);
+    Base.defineStaticRWField(Experiments, "show_experiments", 0);
+    Base.defineStaticRWField(Experiments, "show_experiment", undefined);
 
     /**
     * UIModel

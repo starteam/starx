@@ -392,6 +392,7 @@ export class NewExperiment extends Experiment {
 export class Experiments extends Base {
     list:Experiment[];
     show_experiments:number;
+    show_experiment:string;
 
     update_experiment(experiment:Experiment) {
         var exp = _.find(this.list, function (e) {
@@ -404,6 +405,7 @@ export class Experiments extends Base {
             console.info(this.__data__.list);
             console.info(this.list);
         }
+        this.show_experiment = experiment.id;
     }
 
     show_more(count:number) {
@@ -417,7 +419,9 @@ export class Experiments extends Base {
     }
 }
 Base.readOnlyWrappedList(Experiments, "list", Experiment);
-Base.defineStaticRWField(Experiments, "show_experiments", 1);
+Base.defineStaticRWField(Experiments, "show_experiments", 0);
+Base.defineStaticRWField(Experiments, "show_experiment", undefined);
+
 
 
 /**

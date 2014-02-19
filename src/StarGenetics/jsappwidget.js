@@ -331,9 +331,70 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
             var self = this;
             var main = $('.sg_workspace', '#' + this.config.element_id);
             main.html(SGUIMAIN.workspace({ model: this.model }));
+            setTimeout(function () {
+                $('.sg_experiment_holder').each(function (index, holder) {
+                    var width = 0;
+                    var jq = $(this);
+                    var parent = jq.parent();
+                    var parent_width = parent.width();
+                    jq.children().each(function (i, c) {
+                        width += c.getBoundingClientRect().width;
+                    });
+                    width = width / 2; // ZOOM BUG
+                    jq.css({ 'width': width + 'px' });
+                });
 
-            console.info("ClientRect");
-            console.info(main[0].getBoundingClientRect());
+                var sliders = $('div.sg_slider', main);
+                sliders.each(function (index, slider) {
+                    var id = $(slider).data('kind');
+                    var table = $('[data-kind="' + id + '"][data-widget="slider-table"]');
+                    var thumb = $('.sg_slider_thumb', slider);
+                    var parent = table.parent();
+                    var parent_width = parent.width();
+                    var table_width = table.width();
+                    if (parent_width == 0) {
+                        $(slider).hide();
+                    } else if (table_width < parent_width) {
+                        $(slider).hide();
+                    } else {
+                        console.info("table is");
+                        console.info(table);
+
+                        thumb.css({ 'width': Math.round(parent_width / table_width * 100) + '%' });
+                        thumb.draggable({
+                            containment: 'parent',
+                            axis: "x",
+                            drag: function (event) {
+                                console.info("slider");
+                                console.info(event);
+                                var jq = $(this);
+                                var parent = $(this).parent();
+                                var this_offset = jq.offset();
+                                var parent_offset = parent.offset();
+                                var left_offset = this_offset.left - parent_offset.left;
+                                var this_width = jq.width();
+                                var parent_width = parent.width();
+                                var scale = 1;
+                                console.info(this_width);
+                                if (this_width != 0) {
+                                    scale = (parent_width / this_width);
+                                }
+                                var table_offset = -left_offset * scale;
+                                console.info(table);
+                                table.css({ 'left': table_offset + 'px' });
+                            }
+                        });
+                    }
+                });
+            }, 10);
+
+            $('.sg_experiment_box_floaty').off('click').on('click', function (e) {
+                var id = $(this).data('kind');
+                self.model.ui.experiments.show_experiment = id;
+                console.info("Clicked here");
+                e.stopPropagation();
+                self.show();
+            });
 
             $('.sg_expand_males').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
@@ -385,25 +446,16 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
                 c.visualsVisible = $(this).data('expanded-visuals');
                 self.show();
             });
-            $('.sg_strain_show_individuals').off('click').on('click', function () {
-                var c = self.model.ui.get($(this).data('kind'));
-                c.showIndividuals = $(this).data('show-individuals');
-                window['experiment'] = c;
-                self.show();
-            });
-
             $('.sg_strain_expand_properties').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.propertiesVisible = $(this).data('expanded-properties');
                 self.show();
             });
-
             $('.sg_clear_parents').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.clearParents();
                 self.show();
             });
-
             $('.sg_new_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
@@ -429,7 +481,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
                     } });
                 self.show();
             });
-
             $('.sg_strain_box').draggable({ revert: true });
             $('.sg_experiment_parent').droppable({ drop: function (e, ui) {
                     var target = $(this);
