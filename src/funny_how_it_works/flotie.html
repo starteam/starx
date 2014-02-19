@@ -1,0 +1,48 @@
+<html>
+<head>
+    <script src='http://code.jquery.com/jquery-1.9.1.js'></script>
+    <script>
+        function info( str ) {
+            console.info(str);
+            $('#log').html( $('#log').html() + "<br>" + str ) ;
+        }
+        $(function(){
+            $('#flotie').click( function(e) { info( "Flotie clicked!"); e.stopPropagation(); });
+            $('#child_button').click( function() { info( "Child clicked!"); });
+            $('#parent').click( function() { info( "Parent clicked!") });
+        });
+    </script>
+    <style>
+        #parent {
+            position: relative;
+            width:200px;
+            height:200px;
+        }
+
+        #flotie {
+            position: absolute;
+            display:float;
+            float: left;
+            width:100%;
+            height:100%;
+            background-color:#dddddd;
+            filter:alpha(opacity=60);
+            opacity:0.6;
+        }
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <div id="flotie">
+
+        </div>
+        <div id="child">
+            <button id="child_button">Hello</button>
+        </div>
+    </div>
+    <div id="log">
+
+    </div>
+
+</body>
+</html>
