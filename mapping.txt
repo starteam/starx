@@ -1,3 +1,4 @@
+/StarCompiled/ /StarCompiled/
 /StarORF/ /../../starorf_html/src/StarORF/
 #/StarDistanceMap/ /../../stardistancemap_html/src/StarDistanceMap/
 /StarBiochem/ /../../starbiochem_html/src/StarBiochem/
