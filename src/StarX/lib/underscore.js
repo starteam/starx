@@ -4,7 +4,9 @@
 define(["require", "exports", "StarX/underscore"], function(require, exports) {
     
     exports._ = window['_'];
-    window['_'].noConflict();
+    if (window['_'] && window['_'].noConflict) {
+        window['_'].noConflict();
+    }
     if (!window['_']) {
         window['_'] = exports._;
     }

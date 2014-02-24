@@ -1,6 +1,9 @@
 define(['require', 'exports', 'jquery'], function (require, exports, $) {
     // restore window.$ version
-    $.noConflict();
+    if( $ )
+    {
+        $.noConflict();
+    }
     if(! window.$ )
     {
         window.$ = $ ;

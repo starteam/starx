@@ -2,7 +2,10 @@ define(["require", "exports", "jquery"], function(require, exports, __jQuery__) 
     var jQuery = __jQuery__;
 
     exports.$ = jQuery;
-    jQuery['noConflict'](true);
+    if(jQuery && jQuery['noConflict'])
+    {
+        jQuery['noConflict'](true);
+    }
 
     var version = (function () {
         function version() {

@@ -6,6 +6,7 @@
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
+/// <reference path="../StarGenetics/sg_client_mainframe.css.soy.d.ts" />
 /// <reference path="../StarCommons/easy_deflate.d.ts" />
 
 /// <amd-reference path="StarGenetics/sg_client_mainframe.soy" />
@@ -13,8 +14,7 @@
 /// <amd-dependency path="jquery-ui" />
 /// <amd-dependency path="StarGenetics/bundled_samples" />
 
-/// <amd-dependency path="css!StarGenetics/sg_client_mainframe.sass" />
-
+import SGCSS = require("StarGenetics/sg_client_mainframe.css.soy");
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
 import bundled_samples = require("StarGenetics/bundled_samples");
 import SGModel = require("StarGenetics/jsappmodel");
@@ -61,9 +61,18 @@ export class StarGeneticsJSAppWidget {
      */
         init() {
         var config = this.config;
-        var url = config.base_url + '/StarGenetics/gwtframe.html';
+        var url = (config['base_url']?config['base_url']:'') + '/StarGenetics/gwtframe.html';
         $('#' + config.element_id).html("StarGenetics: ClientApp starting");
-        $('<iframe id="' + config.element_id + '_gwt" src="' + url + '"/>').appendTo($('#' + config.element_id).parent()).hide();
+        var jq = $('<iframe id="' + config.element_id + '_gwt"/>').appendTo($('#' + config.element_id).parent()).hide();
+        var q = jq[0];
+        if( config['gwt_path'])
+        {
+            jq.attr( 'src', config['base_url']+config['gwt_path']);
+        } else
+        {
+            jq.attr('src',url);
+        }
+        $('<style>'+SGCSS.css_text({})+'</style>').appendTo($('#' + config.element_id).parent());
         this.wait_for_sg_interface('#' + config.element_id + '_gwt', config, this);
     }
 

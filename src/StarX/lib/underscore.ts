@@ -4,8 +4,9 @@
 
 declare var exports;
 export var _ = window['_'];
-window['_'].noConflict();
-if(! window['_'] )
-{
+if (window['_'] && window['_'].noConflict) {
+    window['_'].noConflict();
+}
+if (!window['_']) {
     window['_'] = _;
 }

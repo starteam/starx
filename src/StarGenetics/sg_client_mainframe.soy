@@ -1,6 +1,18 @@
 {namespace sg_client_mainframe}
 
 /**
+    @param url
+*/
+{template .gwt_content}
+<html>
+        <script src='{if $url}{$url}{else}/StarGeneticsGWT/stargenetics_gwt_java.nocache.js{/if}'></script>
+    <body>
+        StarGenetics GWT Frame
+    </body>
+</html>
+
+{/template}
+/**
  * Says hello to the world.
  @param config
 */

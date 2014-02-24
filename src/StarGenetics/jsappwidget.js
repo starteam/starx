@@ -6,8 +6,9 @@
 /// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
 /// <reference path="../../../starx/src/StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
+/// <reference path="../StarGenetics/sg_client_mainframe.css.soy.d.ts" />
 /// <reference path="../StarCommons/easy_deflate.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples", "css!StarGenetics/sg_client_mainframe.sass"], function(require, exports, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST, compress) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/tests/qunit", "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function(require, exports, SGCSS, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGTests, TEST, compress) {
     var $ = jQuery;
 
     var StarGeneticsJSAppWidget = (function () {
@@ -35,9 +36,16 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.soy", "StarGenet
         */
         StarGeneticsJSAppWidget.prototype.init = function () {
             var config = this.config;
-            var url = config.base_url + '/StarGenetics/gwtframe.html';
+            var url = (config['base_url'] ? config['base_url'] : '') + '/StarGenetics/gwtframe.html';
             $('#' + config.element_id).html("StarGenetics: ClientApp starting");
-            $('<iframe id="' + config.element_id + '_gwt" src="' + url + '"/>').appendTo($('#' + config.element_id).parent()).hide();
+            var jq = $('<iframe id="' + config.element_id + '_gwt"/>').appendTo($('#' + config.element_id).parent()).hide();
+            var q = jq[0];
+            if (config['gwt_path']) {
+                jq.attr('src', config['base_url'] + config['gwt_path']);
+            } else {
+                jq.attr('src', url);
+            }
+            $('<style>' + SGCSS.css_text({}) + '</style>').appendTo($('#' + config.element_id).parent());
             this.wait_for_sg_interface('#' + config.element_id + '_gwt', config, this);
         };
 
