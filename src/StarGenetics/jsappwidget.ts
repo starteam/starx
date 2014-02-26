@@ -372,7 +372,7 @@ export class StarGeneticsJSAppWidget {
      * Redraws UI
      */
         show() {
-
+        var zoom_bugs_factor = 2;
         var self:StarGeneticsJSAppWidget = this;
         var main = $('.sg_workspace', '#' + this.config.element_id);
         main.html(SGUIMAIN.workspace({model: this.model}));
@@ -384,15 +384,17 @@ export class StarGeneticsJSAppWidget {
                 var parent_width = parent.width();
                 jq.children().each( function(i,c) {
                     console.info( "width pre: " , width ) ;
-                    width += c.getBoundingClientRect().width;
+                    width += c.getBoundingClientRect().width+2;
                     console.info( "width post: " , width ) ;
 
                 });
                 console.info( "width calc:" , width);
-                if( /Chrome/.test(navigator.appVersion ))
-                {
-                    width = width / 2; // ZOOM BUG
-                }
+//                if( /Chrome/.test(navigator.appVersion ))
+//                {
+//                   width = width / 2; // ZOOM BUG
+//                }
+                width *= zoom_bugs_factor;
+//                width = Math.round( width+1);
                 console.info( "width set: " , width);
                 jq.css({'width':width+'px'});
             });
@@ -417,7 +419,7 @@ export class StarGeneticsJSAppWidget {
                     console.info( "table is" );
                     console.info(table);
 
-                    thumb.css({'width': Math.round( parent_width / table_width * 100 ) + '%'});
+                    thumb.css({'width': Math.round( parent_width / table_width * 100) + '%'});
                     thumb.draggable({
                         containment: 'parent',
                         axis: "x",
