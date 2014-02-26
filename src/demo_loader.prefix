@@ -16,7 +16,7 @@ var require = function(deps, creator) {
         else if( modules[m])
         {
             args.push(modules[m]);
-        } else if(m.indexOf( "../") == 0 )
+        } else if(m.indexOf( '../') == 0 )
         {
             var mm = m.substr(3);
             if( modules[mm])
@@ -27,7 +27,7 @@ var require = function(deps, creator) {
     }
     console.info( args );
     creator.apply( global , args );
-}
+};
     modules['require'] = require;
 
 var define = function(what, deps, creator) {
@@ -45,13 +45,13 @@ var define = function(what, deps, creator) {
         }
         else
         {
-            console.info( "modules" + modules ) ;
+            console.info( 'modules' + modules ) ;
             args.push(modules[m]);
         }
     }
-    console.info( "define start " + what);
+    console.info( 'define start ' + what);
     var module = creator.apply( creator_this , args );
     modules[what] = exports;
-    console.info( "defined end  " + what);
-}
-    // here goes content
+    console.info( 'defined end  ' + what);
+};
+
