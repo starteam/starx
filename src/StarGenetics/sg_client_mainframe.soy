@@ -404,16 +404,16 @@
                     {foreach $phenotype in keys($experiment.phenotypes)}
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_left'>
                         {call .strain}
-                            {param strain:$experiment.phenotypes[$phenotype].top_male /}
-                            {param count:$experiment.phenotypes[$phenotype].males/}
+                            {param strain:$experiment.phenotypes[$phenotype].top_female /}
+                            {param count:$experiment.phenotypes[$phenotype].females/}
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_right'>
                         {call .strain}
-                            {param strain:$experiment.phenotypes[$phenotype].top_female /}
-                            {param count:$experiment.phenotypes[$phenotype].females/}
+                            {param strain:$experiment.phenotypes[$phenotype].top_male /}
+                            {param count:$experiment.phenotypes[$phenotype].males/}
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                         {/call}
@@ -427,12 +427,10 @@
                     <td rowspan='2' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right'>{call .male_icon/}</td>
 
                     {foreach $phenotype in keys($experiment.phenotypes)}
-                    <td class='sg_experiment_p_count sg_experiment_phenotype_detail_left'>    {call .male_icon/} {$experiment.phenotypes[$phenotype].males}
-
-                    </td>
-                    <td class='sg_experiment_p_count sg_experiment_phenotype_detail_right'>
+                    <td class='sg_experiment_p_count sg_experiment_phenotype_detail_left'>
                             {call .female_icon/} {$experiment.phenotypes[$phenotype].females}
-
+                    </td>
+                    <td class='sg_experiment_p_count sg_experiment_phenotype_detail_right'>    {call .male_icon/} {$experiment.phenotypes[$phenotype].males}
                     </td>
                     {/foreach}
                 </tr>

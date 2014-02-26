@@ -251,9 +251,9 @@ sg_client_mainframe.one_experiment = function(opt_data, opt_sb) {
       for (var phenotypeIndex267 = 0; phenotypeIndex267 < phenotypeListLen267; phenotypeIndex267++) {
         var phenotypeData267 = phenotypeList267[phenotypeIndex267];
         output.append('<td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_left\'>');
-        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData267].top_male, count: opt_data.experiment.phenotypes[phenotypeData267].males, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
-        output.append('</td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_right\'>');
         sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData267].top_female, count: opt_data.experiment.phenotypes[phenotypeData267].females, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
+        output.append('</td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_right\'>');
+        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData267].top_male, count: opt_data.experiment.phenotypes[phenotypeData267].males, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
         output.append('</td>');
       }
       output.append('</tr><tr><td rowspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right\'>Sex (M/F)</td><td rowspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right\'>');
@@ -265,11 +265,11 @@ sg_client_mainframe.one_experiment = function(opt_data, opt_sb) {
       var phenotypeListLen287 = phenotypeList287.length;
       for (var phenotypeIndex287 = 0; phenotypeIndex287 < phenotypeListLen287; phenotypeIndex287++) {
         var phenotypeData287 = phenotypeList287[phenotypeIndex287];
-        output.append('<td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_left\'>    ');
-        sg_client_mainframe.male_icon(null, output);
-        output.append(' ', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData287].males), '</td><td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_right\'>');
+        output.append('<td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_left\'>');
         sg_client_mainframe.female_icon(null, output);
-        output.append(' ', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData287].females), '</td>');
+        output.append(' ', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData287].females), '</td><td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_right\'>    ');
+        sg_client_mainframe.male_icon(null, output);
+        output.append(' ', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData287].males), '</td>');
       }
       output.append('</tr>');
       if (opt_data.experiment.propertiesVisible && ! opt_data.compact_view) {

@@ -382,8 +382,18 @@ export class StarGeneticsJSAppWidget {
                 var jq = $(this);
                 var parent = jq.parent();
                 var parent_width = parent.width();
-                jq.children().each( function(i,c) { width += c.getBoundingClientRect().width;});
-                width = width / 2; // ZOOM BUG
+                jq.children().each( function(i,c) {
+                    console.info( "width pre: " , width ) ;
+                    width += c.getBoundingClientRect().width;
+                    console.info( "width post: " , width ) ;
+
+                });
+                console.info( "width calc:" , width);
+                if( /Chrome/.test(navigator.appVersion ))
+                {
+                    width = width / 2; // ZOOM BUG
+                }
+                console.info( "width set: " , width);
                 jq.css({'width':width+'px'});
             });
 
