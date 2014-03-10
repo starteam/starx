@@ -206,3 +206,12 @@ table tbody tr td {
 .sg_slider_widget_wrapper {
   overflow-x: scroll;
 }
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(192, 192, 192, 0.3);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
