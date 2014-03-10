@@ -23,7 +23,6 @@
   background: #ffffff;
   border: 1px solid #f0f4f8;
   margin-bottom: 8px;
-  overflow-x: scroll;
 }
 .sg_strains_title {
   float: left;
@@ -56,7 +55,6 @@
   vertical-align: top;
   width: 100%;
   border: 1px solid #f0f4f8;
-  overflow-x: scroll;
 }
 .sg_experiment_heading {
   display: block;
@@ -204,4 +202,7 @@ table tbody tr td {
 }
 .sg_experiment_selected {
   border: 1px solid black;
+}
+.sg_slider_widget_wrapper {
+  overflow-x: scroll;
 }

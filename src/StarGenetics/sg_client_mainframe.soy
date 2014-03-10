@@ -131,6 +131,7 @@
         {/if}
     </div>
     {if $strains.expanded}
+        <div class='sg_slider_widget_wrapper'>
             <table data-kind='strains' data-widget="slider-table" class='sg_slider_table'>
 /*
                 <thead>
@@ -165,7 +166,7 @@
                 <tr>
                 <td  class='sg_s_col_head sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>Sex</td>
                     {foreach $strain in $strains.list}
-                        <td class='sg_strain_box sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>
+                        <td class='sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>
                         {call .sex_icon}{param sex:$strain['sex']/}{/call}
                         </td>
                     {/foreach}
@@ -185,9 +186,10 @@
                 {/foreach}
 {/if}
             </table>
-            <div data-kind="strains" data-widget="slider" class='sg_slider'>
-                <div data-kind="strains" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
-            </div>
+    </div>
+//            <div data-kind="strains" data-widget="slider" class='sg_slider'>
+//                <div data-kind="strains" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
+//            </div>
 
 //        {else}
 //            {foreach $strain in $strains.list}
@@ -371,6 +373,7 @@
         /**
           * Properties are visible (long summary)
         */
+        <div class='sg_slider_widget_wrapper'>
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>
             // HEAD ROW
                 <tr>
@@ -508,11 +511,12 @@
 
         {/if}
         </table>
-        {if not $compact_view}
-        <div data-kind="{$experiment.id}" data-widget="slider" class='sg_slider'>
-            <div data-kind="{$experiment.id}" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
         </div>
-        {/if}
+//        {if not $compact_view}
+//        <div data-kind="{$experiment.id}" data-widget="slider" class='sg_slider'>
+//            <div data-kind="{$experiment.id}" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
+//        </div>
+//        {/if}
     {/if}
 </div>
 {/template}
