@@ -501,7 +501,19 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     } });
                 self.show();
             });
-            $('.sg_strain_box').draggable({ revert: true });
+            $('.sg_strain_box').draggable({
+                revert: true,
+                start: function (e) {
+                    $(e.target).parents('.sg_experiment_box').css({ 'overflow-x': 'visible' });
+                    $(e.target).parents('.sg_strains_box').css({ 'overflow-x': 'visible' });
+                    console.info("Start", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
+                },
+                stop: function (e) {
+                    $(e.target).parents('.sg_experiment_box').css({ 'overflow-x': 'scroll' });
+                    $(e.target).parents('.sg_strains_box').css({ 'overflow-x': 'scroll' });
+                    console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
+                }
+            });
             $('.sg_experiment_parent').droppable({ drop: function (e, ui) {
                     var target = $(this);
                     var source = ui.draggable;
