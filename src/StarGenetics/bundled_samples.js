@@ -694,5 +694,76 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
+
+    exports.fruit_fly_exercise_1 = {
+        "genetics": {
+            "visualizer": { "name": "fly" },
+            "engine": {
+                "sex_type": "XY",
+                "male_recombination_rate": 0,
+                "female_recombination_rate": 1,
+                "female_sex_ratio": .50,
+                "twinning": 0,
+                "identical_twins_frequency": 0,
+                "avg_offspring_count": 100
+            },
+            "genome": {
+                "chromosomes": {
+                    "C_1": {
+                        "name": "Chromosome 3",
+                        "genes": [
+                            {
+                                "name": "Wingless - dominant",
+                                "position": 0,
+                                "alleles": [
+                                    { "name": "G" },
+                                    { "name": "g" }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "experiments": {},
+            "phenotype_rules": [
+                {
+                    name: 'default',
+                    matches: '*',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'wildtype',
+                            value: 'rgb(152,118,84)'
+                        },
+                        wingsize: {
+                            text: 'wildtype',
+                            value: '1'
+                        }
+                    }
+                },
+                {
+                    name: 'Winged',
+                    matches: 'G',
+                    phenotype: {
+                        wingsize: {
+                            text: 'grounded',
+                            value: '0'
+                        }
+                    }
+                }
+            ],
+            "gel_rules": {},
+            "model_metadata": {},
+            "strains": {
+                "initial": {
+                    "name": "Initial Strains",
+                    "list": [
+                        { "name": "Wildtype M", "sex": "M", "alleles": ["g,g"] },
+                        { "name": "Wildtype F", "sex": "F", "alleles": ["g,g"] },
+                        { "name": "Grounded", "sex": "F", "alleles": ["G,g"] }
+                    ]
+                }
+            }
+        }
+    };
 });
 //# sourceMappingURL=bundled_samples.js.map
