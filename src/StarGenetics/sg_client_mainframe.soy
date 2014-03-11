@@ -70,7 +70,11 @@
 <div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}">
                     <div class='sg_strain_title'>{$strain['name']}</div>
                     {if $visuals}
-                    <div class='sg_strain_visual'><canvas data-kind='{$kind}' data-id='{$strain['id']}'></canvas></div>
+                    <div class='sg_strain_visual' title='Sex:{$strain['sex']}{\n}
+{foreach $property in keys($strain.capitalized_properties)}
+{$property}:{$strain.capitalized_properties[$property].text}{\n}
+{/foreach}
+'><canvas data-kind='{$kind}' data-id='{$strain['id']}'></canvas></div>
                     {/if}
                 </div>
 {else}
@@ -113,7 +117,7 @@
     <div class='sg_title_box'>
         Strains
         {if $strains.expanded}
-            <button class='sg_expand' data-kind='strains' data-expanded='false'>Collaps</button>
+            <button class='sg_expand' data-kind='strains' data-expanded='false'>Collapse</button>
 /*
             {if $strains.visualsVisible}
             <button class='sg_strain_expand_visuals' data-kind='strains' data-expanded-visuals='false'>Hide Visuals</button>
@@ -220,7 +224,7 @@
         {if $experiment.expanded}
         Experiment setup
             /*
-            <button class='sg_expand' data-kind='new_experiment' data-expanded='false'>Collaps</button>
+            <button class='sg_expand' data-kind='new_experiment' data-expanded='false'>Collapse</button>
             {if $experiment.visualsVisible}
             <button class='sg_strain_expand_visuals' data-kind='new_experiment'  data-expanded-visuals='false'>Hide Visuals</button>
             {else}
@@ -299,8 +303,11 @@
     {/foreach}
     <div class='sg_experiment_history'>
         <div class='sg_title_box'>Experiment Selector</div>
+                <div class='sg_slider_widget_wrapper'>
+
             <div data-kind="history" data-widget="slider-table" class='sg_experiment_holder'>
     {foreach $experiment in $experiments.list}
+            {if not $experiment.discarded}
                 {call .one_experiment}
                     {param experiment:$experiment /}
                     {param index:index($experiment) /}
@@ -308,10 +315,13 @@
                     {param css_class:'sg_mini_experiment_box '/}
                     {param selected: $experiments.show_experiment == $experiment.id/}
                 {/call}
+            {/if}
     {/foreach}
             </div>
-            <div data-kind="history" data-widget="slider" class='sg_slider'>
-            <div data-kind="history" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
+                    </div>
+
+//            <div data-kind="history" data-widget="slider" class='sg_slider'>
+//            <div data-kind="history" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
         </div>
         </div>
     <br>
@@ -342,7 +352,7 @@
         {if $compact_view}
         {else}
             {if $experiment.expanded}
-                <button class='sg_expand' data-kind='{$experiment.id}' data-expanded='false'>Collaps</button>
+                <button class='sg_expand' data-kind='{$experiment.id}' data-expanded='false'>Collapse</button>
                 /*
                 {if $experiment.visualsVisible}
                 <button class='sg_strain_expand_visuals' data-kind='{$experiment.id}'  data-expanded-visuals='false'>Hide Visuals</button>
@@ -361,6 +371,7 @@
             &nbsp;
             {if $experiment.canclearparents}
             <button class='sg_rename' data-kind="{$experiment.id}">Rename</button>
+            <button class='sg_discard' data-kind="{$experiment.id}">Discard</button>
             {/if}
 
             {if $experiment.canmate}
@@ -373,7 +384,9 @@
         /**
           * Properties are visible (long summary)
         */
+        {if not $compact_view}
         <div class='sg_slider_widget_wrapper'>
+        {/if}
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>
             // HEAD ROW
                 <tr>
@@ -511,7 +524,9 @@
 
         {/if}
         </table>
+        {if not $compact_view}
         </div>
+        {/if}
 //        {if not $compact_view}
 //        <div data-kind="{$experiment.id}" data-widget="slider" class='sg_slider'>
 //            <div data-kind="{$experiment.id}" data-widget="slider-thumb" class='sg_slider_thumb'>||</div>
@@ -536,13 +551,15 @@
 * Male icon
 */
 {template .male_icon}
-<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDklEQVR42mNkIB40AbEqEp8FiM8ykmAAMpAF4nlA/IEcA2Cak4C4i1QDkDU/BuLl6AbYAnECEPMD8X8g/gXEq4F4AxbNDMgGMAPxRCD+AsR9QPwKKs4LxClAbAPEfGiawQELM6AXiI8B8VocTjcB4kogDkaXABmgCcT5QJxBwP+FQHwf6h0UA0Dxuw6ILxAwAOSdGUAcjW7ACqjgXyJiARSgoegGLIOG/C8iDFgDxCHoBpRDA/AwAc1iQNwOxMnoBkgzQKIunIABHUC8Fd0iWDSCYoELagM2AIo+RyDOQZdATokgQ6yAeAoQn4QGqi4DJHq/AnEZtoBGT8og78QAsT4QMwHxLSBeDsTXcfkLAHmSM6tHQ6tHAAAAAElFTkSuQmCC'>
+<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAB0klEQVRYhe3WP2sUURQF8J9Ro6AmBoxaWFgIFiaiKMRAQAyCWGhvoR/AjyDYiaWllXZaiOIHSMDKIkVEMSgKgiL4L8G/EUVNWIu5y6zjmt03k0WRPTC8x+w995x9c+feoYsu/jJWdChvP3qa3K/hQ4c0f8GzECte74qBzVz+F+jHAMbw3hIn0EkM4U0Iv15OA1tl/+ww9mFNk5hhzIbofRyqamA1TkeyYmF9x02MR+zugvhgGCptYAfuFURf4I7slWq8fxVzsZ8J8XqOadxKFd8ZYjVZMZ3BtkLMMC5hscHIDDanihWxDg8i4cMmwkUcwZeIv1hVHM7KK3hLm5zjwVnESBXxXvmzPJnIvRa8K1UMjEWSt1iVyD0o7/ktZ82fWvHeWKewkGhgCj9k3XB7WQMbY51LFIdvmI/9hrIGPsY6UMJAL9bH/msJPjgqe46vpE/MA8H9jJVlDazFp0h0LJF7OXg3yorXcSESPUZfm5xReUccbxHbEoN4GckmZFW9FIbkY/d6VfE6RuXt9SlO+H38bsI5WcHVcFf7J9YW9uO5fNDM4zYmZVNyoeG3iTC07OjDefkRF69HOKXEN2bqZ3kP9mCX7E2ZlU3MJ6nCXfwz+Am4doaE9WjC2gAAAABJRU5ErkJggg=='>
+//<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDklEQVR42mNkIB40AbEqEp8FiM8ykmAAMpAF4nlA/IEcA2Cak4C4i1QDkDU/BuLl6AbYAnECEPMD8X8g/gXEq4F4AxbNDMgGMAPxRCD+AsR9QPwKKs4LxClAbAPEfGiawQELM6AXiI8B8VocTjcB4kogDkaXABmgCcT5QJxBwP+FQHwf6h0UA0Dxuw6ILxAwAOSdGUAcjW7ACqjgXyJiARSgoegGLIOG/C8iDFgDxCHoBpRDA/AwAc1iQNwOxMnoBkgzQKIunIABHUC8Fd0iWDSCYoELagM2AIo+RyDOQZdATokgQ6yAeAoQn4QGqi4DJHq/AnEZtoBGT8og78QAsT4QMwHxLSBeDsTXcfkLAHmSM6tHQ6tHAAAAAElFTkSuQmCC'>
 {/template}
 
 /**
 * Female icon
 */
 {template .female_icon}
-<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHElEQVR42mNkIB5EAvFyJL4sEMszkmBAKhDrAHE+VPM8IE4ixQCYIWZArADSDMSPSTUAZPNmID4NNYwB3QBbIE4AYn4g/g/Ev4B4NRBvQHY2EHvAvAMzgBmIJwLxFyDuA+JXUHFeIE4BYhsg5oM5G8k7X2AG9ALxMSBei8PpJkBcCcTB6BIgAzShIZtBwP+FQHwf6h0UA5qAeB0QXyBgAMg7M4A4Gt2AFVDBv0TEAihAQ9ENWAYN+V9EGLAGiEPQDSiHBuBhAprFgLgdiJPRDZBmgERdOAEDOoB4K7pFsGgExQIX1AZsABR9jkCcgy6BnBJBhlgB8RQgPgkNVF0GSPR+BeIybAGNnpRB3okBYn0gZgLiWwyQLHwdl78Auzgzw8mO3K0AAAAASUVORK5CYII='>
+<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAABuUlEQVRYhe3WzYtOYRgG8N8rGimaMYpeSVlgIR+RZrDyB0iThQWRjT9DWVB28jdY+EgRssFaFlYkiwkzQxYkHyP5OBbP/ebtNLznPOd9ieaqp/s5dd/XdfV83Yd5/IMYw1k8xGu8wSOcw+5BCq/CVRQ9xk2s67f4ZkyFwDdcwhGMSytyGBfwNXJeYXu/xNuYDuLH2NrD6JPIfYk1/TBwPggnMVohf7TLxOWm4hulJS+wp0bdTnyPsaWJgRMhfjej9lbUnv5d0oIeJGMRb2QYuB5xvImBdsSnGQYmI65uYuBLxIUZBhaVOLIMzERcn2FgQ8TnTQzcjjiBVk0DB0ocWWjjk3SaD9aom4iaz1jbxACcCbK32FYhf5PUoAqpaTXGEO4F4TupB8y1dS0cCqMFHmBJL/Kq+7oSV7ArvqdwTeoNhXTg9vm53PexHy8q8lfCEE7ig1+34lmcwuJ+CpexHEel9tsRvohjWDFI4TJGugyM5JL0egcGjr9uoO7rthTPumqHY965eqSb8L4qYd0m0zL3fg+XciqjroGP2BHzZbgT873SI9XJ+SP4P25Bzo9GB7M43jWfRxZ+APNIaWijaXbOAAAAAElFTkSuQmCC'>
+//<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHElEQVR42mNkIB5EAvFyJL4sEMszkmBAKhDrAHE+VPM8IE4ixQCYIWZArADSDMSPSTUAZPNmID4NNYwB3QBbIE4AYn4g/g/Ev4B4NRBvQHY2EHvAvAMzgBmIJwLxFyDuA+JXUHFeIE4BYhsg5oM5G8k7X2AG9ALxMSBei8PpJkBcCcTB6BIgAzShIZtBwP+FQHwf6h0UA5qAeB0QXyBgAMg7M4A4Gt2AFVDBv0TEAihAQ9ENWAYN+V9EGLAGiEPQDSiHBuBhAprFgLgdiJPRDZBmgERdOAEDOoB4K7pFsGgExQIX1AZsABR9jkCcgy6BnBJBhlgB8RQgPgkNVF0GSPR+BeIybAGNnpRB3okBYn0gZgLiWwyQLHwdl78Auzgzw8mO3K0AAAAASUVORK5CYII='>
 {/template}
 

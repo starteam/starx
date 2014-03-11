@@ -102,6 +102,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         function Strain() {
             _super.apply(this, arguments);
             this.properties_cached = null;
+            this.properties_cached_capitalized = null;
         }
         Object.defineProperty(Strain.prototype, "properties", {
             get: function () {
@@ -129,6 +130,25 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                     }
                 }
                 return ret;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Strain.prototype, "capitalized_properties", {
+            get: function () {
+                if (!this.properties_cached_capitalized) {
+                    function capitalize(str) {
+                        return str[0].toUpperCase() + str.substr(1);
+                    }
+                    var properties = this.properties;
+                    var ret = {};
+                    _.each(properties, function (q, v) {
+                        ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value'] };
+                    });
+                    this.properties_cached_capitalized = ret;
+                }
+                return this.properties_cached_capitalized;
             },
             enumerable: true,
             configurable: true
@@ -390,6 +410,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
     Base.defineStaticRWField(Experiment, "phenotypes_map", {});
     Base.readOnlyWrappedList(Experiment, "parents", Strain);
     Base.readOnlyField(Experiment, "id", null);
+    Base.defineStaticRWField(Experiment, "discarded", false);
 
     /**
     * Strains box
@@ -443,6 +464,22 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
             }
             if (this.show_experiments > this.list.length) {
                 this.show_experiments == this.list.length;
+            }
+        };
+
+        Experiments.prototype.remove = function (exp) {
+            var exp_list = this.__data__.list;
+            var data_exp = _.find(exp_list, function (e) {
+                return e.id == exp.id;
+            });
+            var index = exp_list.indexOf(data_exp);
+            exp_list.splice(index, 1);
+            if (exp.id == this.show_experiment) {
+                if (exp_list.length > 0) {
+                    this.show_experiment = exp_list[0].id;
+                } else {
+                    this.show_experiment = null;
+                }
             }
         };
         return Experiments;

@@ -340,73 +340,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             var self = this;
             var main = $('.sg_workspace', '#' + this.config.element_id);
             main.html(SGUIMAIN.workspace({ model: this.model }));
-            setTimeout(function () {
-                $('.sg_experiment_holder').each(function (index, holder) {
-                    var width = 0;
-                    var jq = $(this);
-                    var parent = jq.parent();
-                    var parent_width = parent.width();
-                    jq.children().each(function (i, c) {
-                        console.info("width pre: ", width);
-                        width += c.getBoundingClientRect().width + 2;
-                        console.info("width post: ", width);
-                    });
-                    console.info("width calc:", width);
-
-                    //                if( /Chrome/.test(navigator.appVersion ))
-                    //                {
-                    //                   width = width / 2; // ZOOM BUG
-                    //                }
-                    width *= zoom_bugs_factor;
-
-                    //                width = Math.round( width+1);
-                    console.info("width set: ", width);
-                    jq.css({ 'width': width + 'px' });
-                });
-
-                var sliders = $('div.sg_slider', main);
-                sliders.each(function (index, slider) {
-                    var id = $(slider).data('kind');
-                    var table = $('[data-kind="' + id + '"][data-widget="slider-table"]');
-                    var thumb = $('.sg_slider_thumb', slider);
-                    var parent = table.parent();
-                    var parent_width = parent.width();
-                    var table_width = table.width();
-                    if (parent_width == 0) {
-                        $(slider).hide();
-                    } else if (table_width < parent_width) {
-                        $(slider).hide();
-                    } else {
-                        console.info("table is");
-                        console.info(table);
-
-                        thumb.css({ 'width': Math.round(parent_width / table_width * 100) + '%' });
-                        thumb.draggable({
-                            containment: 'parent',
-                            axis: "x",
-                            drag: function (event) {
-                                console.info("slider");
-                                console.info(event);
-                                var jq = $(this);
-                                var parent = $(this).parent();
-                                var this_offset = jq.offset();
-                                var parent_offset = parent.offset();
-                                var left_offset = this_offset.left - parent_offset.left;
-                                var this_width = jq.width();
-                                var parent_width = parent.width();
-                                var scale = 1;
-                                console.info(this_width);
-                                if (this_width != 0) {
-                                    scale = (parent_width / this_width);
-                                }
-                                var table_offset = -left_offset * scale;
-                                console.info(table);
-                                table.css({ 'left': table_offset + 'px' });
-                            }
-                        });
-                    }
-                });
-            }, 10);
 
             $('.sg_experiment_box_floaty').off('click').on('click', function (e) {
                 var id = $(this).data('kind');
@@ -461,6 +394,26 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 c.expanded = $(this).data('expanded');
                 self.show();
             });
+
+            $('.sg_rename').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                console.info("RENAME", c.name);
+                self.show();
+            });
+
+            $('.sg_discard').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                if (c instanceof SGModel.Experiment) {
+                    var exp = c;
+                    console.info("DISCARD", c.name);
+                    exp.discarded = true;
+                    console.info("DISCARD PRE:", self.model.ui.experiments.list);
+                    self.model.ui.experiments.remove(exp);
+                    console.info("DISCARD DONE:", self.model.ui.experiments.list);
+                }
+                self.show();
+            });
+
             $('.sg_strain_expand_visuals').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.visualsVisible = $(this).data('expanded-visuals');
@@ -476,6 +429,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 c.clearParents();
                 self.show();
             });
+
             $('.sg_new_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
@@ -517,7 +471,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         $('[data-widget="slider-table"]', this).css({
                             'position': 'relative',
                             'left': -left_scroll + 'px',
-                            'margin-bottom': '14px'
+                            'margin-bottom': '16px'
                         });
                     });
                     console.info("Start", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));

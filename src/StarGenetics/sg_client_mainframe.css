@@ -190,6 +190,7 @@ table tbody tr td {
   position: relative;
   left: 0px;
   top: 0px;
+  white-space: nowrap;
 }
 .sg_experiment_box_floaty {
   position: absolute;
