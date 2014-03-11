@@ -38,7 +38,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             var config = this.config;
             var url = (config['base_url'] ? config['base_url'] : '') + '/StarGenetics/gwtframe.html';
             $('#' + config.element_id).html("StarGenetics: ClientApp starting");
-            var jq = $('<iframe id="' + config.element_id + '_gwt"/>').appendTo($('#' + config.element_id).parent()).hide();
+            var jq = $('<iframe id="' + config.element_id + '_gwt"/>').appendTo($('#' + config.element_id).parent()).hide({});
             var q = jq[0];
             if (config['gwt_path']) {
                 jq.attr('src', config['base_url'] + config['gwt_path']);
