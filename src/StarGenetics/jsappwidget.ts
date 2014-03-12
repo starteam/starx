@@ -63,7 +63,7 @@ export class StarGeneticsJSAppWidget {
         var config = this.config;
         var url = (config['base_url'] ? config['base_url'] : '') + '/StarGenetics/gwtframe.html';
         $('#' + config.element_id).html("StarGenetics: ClientApp starting");
-        var jq = $('<iframe id="' + config.element_id + '_gwt"/>').appendTo($('#' + config.element_id).parent()).hide({});
+        var jq = $('<iframe id="' + config.element_id + '_gwt" style="width:0px;height:0px"/>').appendTo($('#' + config.element_id).parent()).hide({});
         var q = jq[0];
         if (config['gwt_path']) {
             jq.attr('src', config['base_url'] + config['gwt_path']);
@@ -81,7 +81,6 @@ export class StarGeneticsJSAppWidget {
         wait_for_sg_interface(id, config, self) {
         var target = 'StarGenetics';
         console.info("wait_for_sg_interface");
-        console.info(self.model.ui);
         if (!self.eventlistener_setup) {
             self.eventlistener_setup = {};
             window.addEventListener('message', function (event:any) {
@@ -106,9 +105,8 @@ export class StarGeneticsJSAppWidget {
                             console.info("post message");
                             console.info(data);
                             data.starx = target;
-                            $(id)[0]['contentWindow'].postMessage(data, config.base_url);
+                            $(id)[0]['contentWindow'].postMessage(data, '*' /* config.base_url */);
                         };
-                        console.info("Got it!... the interface");
                         $('#' + config.element_id).html("StarGenetics: ClientApp running");
                         window['stargenetics_interface'] = self.stargenetics_interface;
                         self.postInit();
@@ -142,7 +140,7 @@ export class StarGeneticsJSAppWidget {
                 token: '1',
                 command: 'is_up',
                 starx: target
-            }, config.base_url);
+            }, '*' /*config.base_url*/);
         }
 
         var success = false;
@@ -242,7 +240,6 @@ export class StarGeneticsJSAppWidget {
      * TODO: in the future it will decide on model to load from StarX configuration
      */
         initModel(config) {
-        console.info(config['config']);
         var model = new SGModel.Top({
             //backend: json_sample_model.model1,
             backend: config['config']['model'],
@@ -433,8 +430,20 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_rename').off('click').on('click', function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-            console.info( "RENAME" , c.name );
-            self.show();
+            if( c )
+            {
+                var old_name = c.name;
+                var new_name = prompt( "Please enter new experiment name:" , old_name);
+                c.name = new_name || c.name;
+                _.each(c.list,function(s){
+                    if(s.name.indexOf(old_name) == 0 )
+                    {
+                        s.name = new_name + s.name.substr(old_name.length);
+                    }
+                });
+
+                self.show();
+            }
         });
 
         $('.sg_discard').off('click').on('click', function () {
@@ -510,7 +519,7 @@ export class StarGeneticsJSAppWidget {
                     $('[data-widget="slider-table"]',this).css({
                         'position':'relative',
                         'left':-left_scroll+'px',
-                        'margin-bottom':'16px'
+                        'padding-bottom':'16px'
                     });
                 });
                 console.info("Start", e, $(e.target).parents('.sg_experiment_box'),$(e.target).parents('.sg_strains_box') );
@@ -526,7 +535,7 @@ export class StarGeneticsJSAppWidget {
                     $table.css({
                         'position':'relative',
                         'left':'0px',
-                        'margin-bottom':'0px'
+                        'padding-bottom':'0px'
                     });
                     $(this).css({'overflow-x':'scroll'}).scrollLeft(-left_scroll);
                 });
@@ -554,10 +563,6 @@ export class StarGeneticsJSAppWidget {
                 var src_collection:SGModel.Collapsable = self.model.ui.get(source.data('kind'));
                 var src_strain:SGModel.Strain = src_collection.get(source.data('id'));
                 var target_collection:SGModel.Strains = <SGModel.Strains>self.model.ui.get(target.data('kind'));
-                console.info("Drop");
-                console.info(source);
-                console.info(src_strain);
-                console.info(target_collection);
                 target_collection.add_strain(src_strain);
                 self.show();
             }});
@@ -575,10 +580,6 @@ export class StarGeneticsJSAppWidget {
             window['v'] = visualizer;
             var qq = this;
             window['rr'] = function () {
-                console.info("Hello World!");
-                console.info(qq);
-                console.info(visualizer);
-                console.info(organism);
                 visualizer.render($(qq)[0], organism.properties, organism);
             };
         });
