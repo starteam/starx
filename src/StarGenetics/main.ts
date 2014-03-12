@@ -62,7 +62,6 @@ export class StarGenetics {
         }
 
         console.info("StarGenetics/main.ts");
-        console.info(config);
 
         var cls = new JSStarGenetics.StarGeneticsJSAppWidget(this.context, config);
         cls.run();

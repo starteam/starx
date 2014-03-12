@@ -55,7 +55,6 @@ define(["require", "exports", "jquery", 'StarGenetics/jsappwidget', "StarGenetic
             }
 
             console.info("StarGenetics/main.ts");
-            console.info(config);
 
             var cls = new JSStarGenetics.StarGeneticsJSAppWidget(this.context, config);
             cls.run();
