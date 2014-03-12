@@ -1,0 +1,1 @@
+$('.sg_strains_box').draggable({'handle':'.sg_title_box'}).css({'z-index':12,'resizable':'both','position':'absolute'})

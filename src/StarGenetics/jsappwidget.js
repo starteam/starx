@@ -289,14 +289,37 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         * @param experiments
         */
         StarGeneticsJSAppWidget.prototype.mate = function (experiment, callbacks) {
-            this.update_experiments(experiment, 'mate', callbacks);
+            var avg_count = 50;
+            try  {
+                avg_count = parseInt(this.model.backend.genetics.engine.avg_offspring_count);
+            } catch (e) {
+            }
+            var how_many_progenies = prompt("How many progenies (up to 500)?", "" + avg_count);
+            if (how_many_progenies && parseInt(how_many_progenies) != 0) {
+                var c = parseInt(how_many_progenies);
+                if (c > 500) {
+                    c = 500;
+                }
+                if (c > 0) {
+                    this.update_experiments(experiment, { command: 'mate', avg_offspring_count: c }, callbacks);
+                } else {
+                    if (callbacks && callbacks.onerror) {
+                        try  {
+                            callbacks.onerror({
+                                'message': 'Avg number of progenies is less than 0'
+                            });
+                        } catch (e) {
+                        }
+                    }
+                }
+            }
         };
 
         /**
         * Run update experiment
         * @param experiments
         */
-        StarGeneticsJSAppWidget.prototype.update_experiments = function (experiment, command, callbacks) {
+        StarGeneticsJSAppWidget.prototype.update_experiments = function (experiment, opts, callbacks) {
             console.info("Running update_experiments");
             console.info(experiment.toJSON());
             var self = this;
@@ -305,7 +328,8 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 command: 'updateexperiment',
                 data: {
                     experiment: experiment.toJSON(),
-                    command: command
+                    command: opts.command,
+                    avg_offspring_count: opts.avg_offspring_count
                 },
                 callbacks: {
                     onsuccess: function (data, b) {
