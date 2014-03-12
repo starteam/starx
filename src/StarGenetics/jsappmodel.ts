@@ -178,7 +178,7 @@ export class Collapsable extends Base {
     }
 
     get propertiesList() {
-        return this.__data__.propertiesList;
+        return this.__data__.propertiesList || [] ;
     }
 
     set_list(strains:any[]):void {

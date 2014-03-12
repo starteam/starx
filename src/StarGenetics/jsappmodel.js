@@ -182,7 +182,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
 
         Object.defineProperty(Collapsable.prototype, "propertiesList", {
             get: function () {
-                return this.__data__.propertiesList;
+                return this.__data__.propertiesList || [];
             },
             enumerable: true,
             configurable: true
