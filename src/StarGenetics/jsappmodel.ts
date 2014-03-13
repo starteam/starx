@@ -277,6 +277,13 @@ export class Experiment extends Collapsable {
         this.__data__.parents = [];
     }
 
+    clearParent(id:string) {
+        var new_parents = _.filter( this.__data__.parents , function(elem) {
+           return elem.id != id;
+        });
+        this.__data__.parents = new_parents;
+    }
+
     get(id:string):Strain {
         var ret = super.get(id);
         if (ret == null) {

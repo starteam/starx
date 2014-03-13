@@ -8,6 +8,7 @@ declare module "StarGenetics/sg_client_mainframe.soy" {
 	function strain_short(state:any):any;
 	function strain_place_holder(state:any):any;
 	function strains(state:any):any;
+	function new_experiment_expanded(state:any):any;
 	function new_experiment(state:any):any;
 	function all_experiments(state:any):any;
 	function one_experiment(state:any):any;
@@ -23,6 +24,7 @@ declare function strain(state:any):any;
 declare function strain_short(state:any):any;
 declare function strain_place_holder(state:any):any;
 declare function strains(state:any):any;
+declare function new_experiment_expanded(state:any):any;
 declare function new_experiment(state:any):any;
 declare function all_experiments(state:any):any;
 declare function one_experiment(state:any):any;

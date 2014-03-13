@@ -55,7 +55,7 @@ export class StarGeneticsJSAppWidget {
         this.initModel(config);
         this.init();
     }
- 
+
     /**
      * This method loads GWT frame & waits for it to finish loading
      */
@@ -322,35 +322,36 @@ export class StarGeneticsJSAppWidget {
      * @param experiments
      */
         mate(experiment:SGModel.Experiment, callbacks ?) {
-        var avg_count = 50 ;
-        try
-        {
-            avg_count = parseInt(this.model.backend.genetics.engine.avg_offspring_count);
-        } catch(e){
-        }
-        var how_many_progenies = prompt( "How many progenies (up to 500)?" , "" + avg_count );
-        if( how_many_progenies && parseInt(how_many_progenies) != 0)
-        {
-            var c = parseInt(how_many_progenies);
-            if( c > 500 )
-            {
-                c = 500;
+        var avg_count;
+        if (!callbacks['avg_offspring_count']) {
+            avg_count = 50;
+            try {
+                avg_count = parseInt(this.model.backend.genetics.engine.avg_offspring_count);
+            } catch (e) {
             }
-            if( c > 0 )
-            {
-                this.update_experiments(experiment, {command:'mate', avg_offspring_count:c}, callbacks);
-            }
-            else
-            {
-                if( callbacks && callbacks.onerror )
-                {
-                    try {
-                        callbacks.onerror({
-                            'message': 'Avg number of progenies is less than 0'
-                        });
-                    } catch(e) {}
+            var how_many_progenies = prompt("How many progenies (up to 500)?", "" + avg_count);
+            if (how_many_progenies && parseInt(how_many_progenies) != 0) {
+                var c = parseInt(how_many_progenies);
+                if (c > 500) {
+                    c = 500;
+                }
+                if (c > 0) {
+                    this.update_experiments(experiment, {command: 'mate', avg_offspring_count: c}, callbacks);
+                }
+                else {
+                    if (callbacks && callbacks.onerror) {
+                        try {
+                            callbacks.onerror({
+                                'message': 'Avg number of progenies is less than 0'
+                            });
+                        } catch (e) {
+                        }
+                    }
                 }
             }
+        }
+        else {
+            this.update_experiments(experiment, {command: 'mate', avg_offspring_count: callbacks['avg_offspring_count']}, callbacks);
         }
     }
 
@@ -460,14 +461,12 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_rename').off('click').on('click', function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-            if( c )
-            {
+            if (c) {
                 var old_name = c.name;
-                var new_name = prompt( "Please enter new experiment name:" , old_name);
+                var new_name = prompt("Please enter new experiment name:", old_name);
                 c.name = new_name || c.name;
-                _.each(c.list,function(s){
-                    if(s.name.indexOf(old_name) == 0 )
-                    {
+                _.each(c.list, function (s) {
+                    if (s.name.indexOf(old_name) == 0) {
                         s.name = new_name + s.name.substr(old_name.length);
                     }
                 });
@@ -478,16 +477,24 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_discard').off('click').on('click', function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-            if( c instanceof SGModel.Experiment )
-            {
+            if (c instanceof SGModel.Experiment) {
                 var exp:any = c;
-                console.info( "DISCARD" , c.name );
+                console.info("DISCARD", c.name);
                 exp.discarded = true;
-                console.info( "DISCARD PRE:" , self.model.ui.experiments.list)
+                console.info("DISCARD PRE:", self.model.ui.experiments.list)
                 self.model.ui.experiments.remove(exp);
-                console.info( "DISCARD DONE:" , self.model.ui.experiments.list)
+                console.info("DISCARD DONE:", self.model.ui.experiments.list)
             }
             self.show();
+        });
+
+        $('.sg_experiment_parent_remove').off('click').on('click', function () {
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            if (c instanceof SGModel.NewExperiment) {
+                var newexp:any = c;
+                newexp.clearParent($(this).data('id'));
+                self.show();
+            }
         });
 
 
@@ -509,17 +516,28 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_new_experiment_mate').off('click').on('click', function () {
             var c:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get($(this).data('kind'));
+            var count = parseInt($('.sg_new_experiment_mate_count').val());
+            if (!(count > 0 )) {
+                console.info( "count is " , count );
+                $('.sg_new_experiment_mate').attr('disabled', true);
+                return;
+            }
             $('.sg_new_experiment_box').css({'overflow': 'hidden'}).animate({ 'height': 25}, 750, function () {
                 self.mate(c, {onsuccess: function () {
                     console.info("Mate success!");
 
                 }, onerror: function () {
                     console.info("Mate error!");
-                }});
+                }, avg_offspring_count: count
+                });
                 self.show();
                 $('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
 
             });
+        });
+        $('.sg_new_experiment_mate_count').off('keyup').on('keyup', function (e) {
+            console.info($(this).val());
+            $('.sg_new_experiment_mate').attr('disabled', !(parseInt($(this).val()) > 0));
         });
         $('.sg_experiment_mate').off('click').on('click', function () {
             var c:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get($(this).data('kind'));
@@ -537,39 +555,39 @@ export class StarGeneticsJSAppWidget {
             revert: true,
             start: function (e) {
                 var parent = [];
-                $(e.target).parents('.sg_slider_widget_wrapper').each(function(){
+                $(e.target).parents('.sg_slider_widget_wrapper').each(function () {
                     parent.push(this);
                 })
-                console.info( parent );
-                $(parent).each( function() {
-                    console.info( "Start" , this );
+                console.info(parent);
+                $(parent).each(function () {
+                    console.info("Start", this);
                     window['box'] = this;
                     var left_scroll = this.scrollLeft;
-                    $(this).css({'overflow-x':'visible'});
-                    $('[data-widget="slider-table"]',this).css({
-                        'position':'relative',
-                        'left':-left_scroll+'px',
-                        'padding-bottom':'16px'
+                    $(this).css({'overflow-x': 'visible'});
+                    $('[data-widget="slider-table"]', this).css({
+                        'position': 'relative',
+                        'left': -left_scroll + 'px',
+                        'padding-bottom': '16px'
                     });
                 });
-                console.info("Start", e, $(e.target).parents('.sg_experiment_box'),$(e.target).parents('.sg_strains_box') );
+                console.info("Start", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
             },
             stop: function (e) {
                 var parent = [];
-                $(e.target).parents('.sg_slider_widget_wrapper').each(function(){
+                $(e.target).parents('.sg_slider_widget_wrapper').each(function () {
                     parent.push(this);
                 })
-                $(parent).each( function() {
-                    var $table = $('[data-widget="slider-table"]',this)
-                    var left_scroll = parseInt($table.css('left')) ;
+                $(parent).each(function () {
+                    var $table = $('[data-widget="slider-table"]', this)
+                    var left_scroll = parseInt($table.css('left'));
                     $table.css({
-                        'position':'relative',
-                        'left':'0px',
-                        'padding-bottom':'0px'
+                        'position': 'relative',
+                        'left': '0px',
+                        'padding-bottom': '0px'
                     });
-                    $(this).css({'overflow-x':'scroll'}).scrollLeft(-left_scroll);
+                    $(this).css({'overflow-x': 'scroll'}).scrollLeft(-left_scroll);
                 });
-                console.info("Stop", e, $(e.target).parents('.sg_experiment_box'),$(e.target).parents('.sg_strains_box') );
+                console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
             }
 
 

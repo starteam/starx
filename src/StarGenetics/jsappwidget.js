@@ -289,29 +289,34 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         * @param experiments
         */
         StarGeneticsJSAppWidget.prototype.mate = function (experiment, callbacks) {
-            var avg_count = 50;
-            try  {
-                avg_count = parseInt(this.model.backend.genetics.engine.avg_offspring_count);
-            } catch (e) {
-            }
-            var how_many_progenies = prompt("How many progenies (up to 500)?", "" + avg_count);
-            if (how_many_progenies && parseInt(how_many_progenies) != 0) {
-                var c = parseInt(how_many_progenies);
-                if (c > 500) {
-                    c = 500;
+            var avg_count;
+            if (!callbacks['avg_offspring_count']) {
+                avg_count = 50;
+                try  {
+                    avg_count = parseInt(this.model.backend.genetics.engine.avg_offspring_count);
+                } catch (e) {
                 }
-                if (c > 0) {
-                    this.update_experiments(experiment, { command: 'mate', avg_offspring_count: c }, callbacks);
-                } else {
-                    if (callbacks && callbacks.onerror) {
-                        try  {
-                            callbacks.onerror({
-                                'message': 'Avg number of progenies is less than 0'
-                            });
-                        } catch (e) {
+                var how_many_progenies = prompt("How many progenies (up to 500)?", "" + avg_count);
+                if (how_many_progenies && parseInt(how_many_progenies) != 0) {
+                    var c = parseInt(how_many_progenies);
+                    if (c > 500) {
+                        c = 500;
+                    }
+                    if (c > 0) {
+                        this.update_experiments(experiment, { command: 'mate', avg_offspring_count: c }, callbacks);
+                    } else {
+                        if (callbacks && callbacks.onerror) {
+                            try  {
+                                callbacks.onerror({
+                                    'message': 'Avg number of progenies is less than 0'
+                                });
+                            } catch (e) {
+                            }
                         }
                     }
                 }
+            } else {
+                this.update_experiments(experiment, { command: 'mate', avg_offspring_count: callbacks['avg_offspring_count'] }, callbacks);
             }
         };
 
@@ -445,6 +450,15 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 self.show();
             });
 
+            $('.sg_experiment_parent_remove').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                if (c instanceof SGModel.NewExperiment) {
+                    var newexp = c;
+                    newexp.clearParent($(this).data('id'));
+                    self.show();
+                }
+            });
+
             $('.sg_strain_expand_visuals').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.visualsVisible = $(this).data('expanded-visuals');
@@ -463,16 +477,27 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
 
             $('.sg_new_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
+                var count = parseInt($('.sg_new_experiment_mate_count').val());
+                if (!(count > 0)) {
+                    console.info("count is ", count);
+                    $('.sg_new_experiment_mate').attr('disabled', true);
+                    return;
+                }
                 $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
                     self.mate(c, {
                         onsuccess: function () {
                             console.info("Mate success!");
                         }, onerror: function () {
                             console.info("Mate error!");
-                        } });
+                        }, avg_offspring_count: count
+                    });
                     self.show();
                     $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).height(0).animate({ 'height': 160 }, 2000);
                 });
+            });
+            $('.sg_new_experiment_mate_count').off('keyup').on('keyup', function (e) {
+                console.info($(this).val());
+                $('.sg_new_experiment_mate').attr('disabled', !(parseInt($(this).val()) > 0));
             });
             $('.sg_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));

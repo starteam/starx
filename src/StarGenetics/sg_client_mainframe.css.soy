@@ -40,7 +40,13 @@ css file
 {rb}
 .sg_s_strain_box {lb}
   display: inline-block;
+  margin: 1px;
+  padding: 4px;
+{rb}
+.sg_s_strain_box:hover {lb}
   margin: 0px;
+  border: 1px solid #add8e6;
+  border-radius: 9px;
 {rb}
 .sg_strain_title {lb}
   display: block;
@@ -54,6 +60,21 @@ css file
   text-align: center;
   vertical-align: text-bottom;
   cursor: move;
+  position: relative;
+{rb}
+.sg_strain_visual_canvas {lb}
+  position: static;
+  top: 0px;
+  left: 0px;
+{rb}
+.sg_strain_visual_canvas_sex {lb}
+  position: absolute;
+  top: 24px;
+  left: 18px;
+  zoom: 75%;
+  float: left;
+  opacity: .4;
+  z-index: 2;
 {rb}
 .sg_experiment_box {lb}
   display: block;
@@ -83,6 +104,7 @@ css file
 .sg_experiment_parents {lb}
   vertical-align: top;
   display: inline-block;
+  text-align: center;
 {rb}
 .sg_experiment_parent {lb}
   vertical-align: top;
@@ -92,6 +114,19 @@ css file
   height: 80px;
   background-color: aliceblue;
   text-align: center;
+  position: relative;
+{rb}
+.sg_experiment_parent_remove {lb}
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  border: 0px;
+{rb}
+.sg_experiment_parent_x {lb}
+  display: inline-block;
+  vertical-align: center;
 {rb}
 .sg_s_col_head {lb}
   border-right: solid black 1px;
@@ -136,11 +171,14 @@ css file
   border-radius: 9px;
   background: #e3e3e3;
 {rb}
+.sg_s_new_experiment_mate_large {lb}
+  border: green 1px solid;
+  border-radius: 9px;
+  background: lightgreen;
+  font-size: 14px;
+{rb}
 table {lb}
   border-collapse: collapse;
-{rb}
-table tbody tr td {lb}
-  border: 1px solid #f0f4f8;
 {rb}
 .sg_s_row_head {lb}
   border: 1px solid #f0f4f8;
@@ -211,6 +249,13 @@ table tbody tr td {lb}
 {rb}
 .sg_slider_widget_wrapper {lb}
   overflow-x: scroll;
+{rb}
+.sg_strain_add_strain {lb}
+  border: 2px dashed #808080;
+  border-radius: 8px;
+  font-size: 50px;
+  padding: 10px;
+  padding-bottom: 20px;
 {rb}
 ::-webkit-scrollbar {lb}
   -webkit-appearance: none;

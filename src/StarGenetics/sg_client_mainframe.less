@@ -2,6 +2,7 @@
 @group-border: #d0d4d8;
 @strains-bg: white;
 @button-bg: #e3e3e3;
+@drag-color: lightblue;
 
 .sg_workspace {
   background: white;
@@ -44,7 +45,15 @@
 
 .sg_s_strain_box {
   display: inline-block; 
+  margin: 1px;
+  padding: 4px;
+
+}
+
+.sg_s_strain_box:hover {
   margin: 0px;
+  border: 1px solid @drag-color;
+  border-radius: 9px;
 }
 
 .sg_strain_title {
@@ -60,6 +69,23 @@
   text-align: center;
   vertical-align: text-bottom;
   cursor: move;
+  position:relative;
+}
+
+.sg_strain_visual_canvas {
+  position: static;
+  top:0px;
+  left:0px;
+}
+
+.sg_strain_visual_canvas_sex {
+  position: absolute;
+  top: 24px;
+  left: 18px;
+  zoom: 75%;
+  float: left;
+  opacity: .4;
+  z-index: 2;
 }
 
 .sg_experiment_box {
@@ -96,6 +122,7 @@
 .sg_experiment_parents {
   vertical-align: top;
   display: inline-block;
+  text-align: center;
 }
 
 .sg_experiment_parent {
@@ -106,6 +133,21 @@
   height: 80px;
   background-color: aliceblue;
   text-align:center;
+  position: relative;
+}
+
+.sg_experiment_parent_remove {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  -webkit-appearance: none;
+  background-color: rgba(255,255,255,1);
+  border: 0px;
+}
+
+.sg_experiment_parent_x {
+  display: inline-block;
+  vertical-align: center;
 }
 
 .sg_s_col_head {
@@ -158,13 +200,20 @@
   background: @button-bg;
 }
 
+.sg_s_new_experiment_mate_large {
+  border: green 1px solid;
+  border-radius: 9px;
+  background: lightgreen;
+  font-size: 14px;
+}
+
 table {
   border-collapse:collapse;
 }
 
-table tbody tr td {
-  border: 1px solid @title-color;
-}
+//table tbody tr td {
+//  border: 1px solid @title-color;
+//}
 
 .sg_s_row_head {
   border: 1px solid @title-color;
@@ -256,6 +305,13 @@ table tbody tr td {
 .sg_slider_widget_wrapper table.sg_slider_table  {
 }
 
+.sg_strain_add_strain {
+  border: 2px dashed rgb(128,128,128);
+  border-radius: 8px;
+  font-size: 50px;
+  padding: 10px;
+  padding-bottom:20px;
+}
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;

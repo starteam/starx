@@ -279,6 +279,13 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
             this.__data__.parents = [];
         };
 
+        Experiment.prototype.clearParent = function (id) {
+            var new_parents = _.filter(this.__data__.parents, function (elem) {
+                return elem.id != id;
+            });
+            this.__data__.parents = new_parents;
+        };
+
         Experiment.prototype.get = function (id) {
             var ret = _super.prototype.get.call(this, id);
             if (ret == null) {
