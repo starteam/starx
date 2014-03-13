@@ -111,7 +111,7 @@ export var yeast = {
                                 {"name": "LEU2-112"},
                                 {"name": "leu2-112"}
                             ]
-                        },
+                        }
                     ]
                 },
                 "C2": {
@@ -504,7 +504,7 @@ export var tutorial = {
         "visualizer": {"name": "fly"},
         "genome": {
             "chromosomes": {
-                "C_1": {
+                "X": {
                     "name": "Chromosome X",
                     "genes": [
                         { "name": "Body Color",
@@ -536,7 +536,7 @@ export var tutorial = {
                     bodycolor: {
                         text: 'wildtype',
                         value: 'rgb(152,118,84)'
-                    },
+                    }
                 }
             },
             {
@@ -567,8 +567,8 @@ export var tutorial = {
                 "name": "Initial Strains",
                 "list": [
                     {"name": "Mutant 1", "sex": "M", "alleles": [ "b" ]},
-                    {"name": "Wildtype M", "sex": "M", "alleles": [ "B,B" ]},
-                    {"name": "Wildtype F", "sex": "F", "alleles": [ "B" ]}
+                    {"name": "Wildtype M", "sex": "M", "alleles": [ "B" ]},
+                    {"name": "Wildtype F", "sex": "F", "alleles": [ "B,B" ]}
                 ]
             }
         }

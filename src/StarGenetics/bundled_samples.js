@@ -504,7 +504,7 @@ define(["require", "exports"], function(require, exports) {
             "visualizer": { "name": "fly" },
             "genome": {
                 "chromosomes": {
-                    "C_1": {
+                    "X": {
                         "name": "Chromosome X",
                         "genes": [
                             {
@@ -568,8 +568,8 @@ define(["require", "exports"], function(require, exports) {
                     "name": "Initial Strains",
                     "list": [
                         { "name": "Mutant 1", "sex": "M", "alleles": ["b"] },
-                        { "name": "Wildtype M", "sex": "M", "alleles": ["B,B"] },
-                        { "name": "Wildtype F", "sex": "F", "alleles": ["B"] }
+                        { "name": "Wildtype M", "sex": "M", "alleles": ["B"] },
+                        { "name": "Wildtype F", "sex": "F", "alleles": ["B,B"] }
                     ]
                 }
             }
