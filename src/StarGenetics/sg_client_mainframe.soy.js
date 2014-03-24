@@ -247,7 +247,7 @@ sg_client_mainframe.all_experiments = function(opt_data, opt_sb) {
     }
   }
   if (opt_data.experiments.list.length != 0) {
-    output.append('<div class=\'sg_experiment_history\'><div class=\'sg_title_box\'>Experiment Selector</div><div class=\'sg_slider_widget_wrapper\'><div data-kind="history" data-widget="slider-table" class=\'sg_experiment_holder\'>');
+    output.append('<div class=\'sg_experiment_history\'><div class=\'sg_title_box\'>All Experiments</div><div class=\'sg_slider_widget_wrapper\'><div data-kind="history" data-widget="slider-table" class=\'sg_experiment_holder\'>');
     var experimentList213 = opt_data.experiments.list;
     var experimentListLen213 = experimentList213.length;
     for (var experimentIndex213 = 0; experimentIndex213 < experimentListLen213; experimentIndex213++) {

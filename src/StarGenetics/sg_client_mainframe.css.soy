@@ -186,11 +186,17 @@ table {lb}
 {rb}
 .sg_strain_box {lb}
   text-align: center;
+  z-index: 99;
 {rb}
 .sg_mini_experiment_box {lb}
   display: inline-block;
   width: auto;
   position: relative;
+  margin: 1px;
+{rb}
+.sg_mini_experiment_box:hover {lb}
+  border: 1px solid #add8e6;
+  border-radius: 9px;
 {rb}
 .sg_experiment_phenotype_detail_left {lb}
   text-align: center;
@@ -245,6 +251,9 @@ table {lb}
   z-index: 99;
 {rb}
 .sg_experiment_selected {lb}
+  border: 1px solid black;
+{rb}
+.sg_experiment_selected:hover {lb}
   border: 1px solid black;
 {rb}
 .sg_slider_widget_wrapper {lb}

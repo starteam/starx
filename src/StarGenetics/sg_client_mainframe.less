@@ -221,12 +221,21 @@ table {
 }
 .sg_strain_box {
   text-align: center;
+  z-index:99;
 }
 
 .sg_mini_experiment_box {
   display: inline-block;
   width: auto;
   position: relative;
+  margin: 1px;
+}
+
+.sg_mini_experiment_box:hover {
+  border: 1px solid @drag-color;
+  border-radius: 9px;
+
+
 }
 
 .sg_experiment_phenotype_detail_left {
@@ -292,6 +301,10 @@ table {
 }
 
 .sg_experiment_selected {
+  border: 1px solid black;
+}
+
+.sg_experiment_selected:hover {
   border: 1px solid black;
 }
 
