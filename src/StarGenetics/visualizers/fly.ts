@@ -8,7 +8,7 @@ export class Fly extends base.BaseVisualizer implements base.Visualizer {
     bodyColor = 'rgb(152,118,84)';
     headColor = 'black';
     eyeColor = 'red';
-    wingColor = 'rgba(200,200,200,.8)';
+    wingColor = 'rgba(64,64,64,.2)';
     aristaeLength = 1;
     wingSize = 1;
 

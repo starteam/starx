@@ -1,6 +1,7 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarGenetics/visualizers/property_name_remap.ts" />
 /// <amd-dependency path="jquery-ui" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -8,7 +9,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(require, exports, underscore) {
+define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "StarX/lib/underscore", "jquery-ui"], function(require, exports, remapper, underscore) {
     var _ = underscore['_'];
 
     var Base = (function () {
@@ -139,12 +140,14 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
             get: function () {
                 if (!this.properties_cached_capitalized) {
                     function capitalize(str) {
-                        return str[0].toUpperCase() + str.substr(1);
+                        return remapper.Remapper.transform(str);
                     }
                     var properties = this.properties;
                     var ret = {};
                     _.each(properties, function (q, v) {
+                        console.info("capitalized_properties", q, v);
                         ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value'] };
+                        console.info("capitalized_properties", capitalize(q['text']), capitalize(v));
                     });
                     this.properties_cached_capitalized = ret;
                 }
@@ -178,11 +181,20 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 });
             });
             this.__data__.propertiesList = _.keys(properties);
+            this.__data__.capitalized_properties = _.map(_.keys(properties), remapper.Remapper.transform);
         };
 
         Object.defineProperty(Collapsable.prototype, "propertiesList", {
             get: function () {
                 return this.__data__.propertiesList || [];
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Collapsable.prototype, "capitalized_properties", {
+            get: function () {
+                return this.__data__.capitalized_properties || [];
             },
             enumerable: true,
             configurable: true

@@ -500,6 +500,9 @@ define(["require", "exports"], function(require, exports) {
     };
 
     exports.tutorial = {
+        "ui": {
+            "title": "Tutorial Exercise"
+        },
         "genetics": {
             "visualizer": { "name": "fly" },
             "genome": {
@@ -534,8 +537,8 @@ define(["require", "exports"], function(require, exports) {
                     name: 'default',
                     matches: '*',
                     phenotype: {
-                        bodycolor: {
-                            text: 'wildtype',
+                        "bodycolor": {
+                            text: 'Wild type',
                             value: 'rgb(152,118,84)'
                         }
                     }
@@ -544,8 +547,8 @@ define(["require", "exports"], function(require, exports) {
                     name: 'Gray body (F)',
                     matches: 'Sex:FEMALE;b,b',
                     phenotype: {
-                        bodycolor: {
-                            text: 'gray',
+                        "bodycolor": {
+                            text: 'Gray',
                             value: 'gray'
                         }
                     }
@@ -555,7 +558,7 @@ define(["require", "exports"], function(require, exports) {
                     matches: 'Sex:MALE;b',
                     phenotype: {
                         bodycolor: {
-                            text: 'gray',
+                            text: 'Gray',
                             value: 'gray'
                         }
                     }

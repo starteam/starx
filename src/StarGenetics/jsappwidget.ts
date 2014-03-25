@@ -588,10 +588,28 @@ export class StarGeneticsJSAppWidget {
                     $(this).css({'overflow-x': 'scroll'}).scrollLeft(-left_scroll);
                 });
                 console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
+            },
+            helper: function(event) {
+                console.info( "HELPER" , event, this );
+                var copy = $(this).clone().removeAttr("id");
+                copy.append( SGUIMAIN.plus_floaty({})  );
+                var canvas0 = $('canvas',this)[0];
+                if( canvas0 )
+                {
+                   var canvas = $('canvas',copy)[0];
+                   canvas.width = canvas0.width;
+                   canvas.height = canvas0.height;
+                   var context = canvas.getContext('2d');
+                   context.drawImage(canvas0,0,0);
+                }
+                return copy;
             }
 
 
-        });
+        }).addClass('sg_strain_box_hover');
+
+        $('.sg_strain_box','.sg_mini_experiment_box').draggable({'disabled':true}).addClass('sg_strain_box_nohover');
+
         $('.sg_experiment_parent').droppable({/*accept: '.sg_strain_box',*/
             drop: function (e, ui) {
                 var target = $(this);

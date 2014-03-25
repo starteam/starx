@@ -1,8 +1,10 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarGenetics/visualizers/property_name_remap.ts" />
 /// <amd-dependency path="jquery-ui" />
 
+import remapper = require("StarGenetics/visualizers/property_name_remap");
 import underscore = require("StarX/lib/underscore");
 var _ = underscore['_'];
 
@@ -136,12 +138,14 @@ export class Strain extends Base {
         if (!this.properties_cached_capitalized) {
             function capitalize( str )
             {
-               return str[0].toUpperCase() + str.substr(1);
+               return remapper.Remapper.transform(str);
             }
             var properties = this.properties;
             var ret = {};
             _.each(properties, function (q, v) {
+                console.info( "capitalized_properties" , q, v);
                 ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value']};
+                console.info( "capitalized_properties" , capitalize(q['text']), capitalize(v));
             });
             this.properties_cached_capitalized = ret;
         }
@@ -175,10 +179,15 @@ export class Collapsable extends Base {
             });
         });
         this.__data__.propertiesList = _.keys(properties);
+        this.__data__.capitalized_properties = _.map(_.keys(properties) , remapper.Remapper.transform);
     }
 
     get propertiesList() {
         return this.__data__.propertiesList || [] ;
+    }
+
+    get capitalized_properties() {
+        return this.__data__.capitalized_properties || [] ;
     }
 
     set_list(strains:any[]):void {

@@ -500,6 +500,9 @@ export var yeast = {
 }
 
 export var tutorial = {
+    "ui":{
+        "title":"Tutorial Exercise"
+    },
     "genetics": {
         "visualizer": {"name": "fly"},
         "genome": {
@@ -533,8 +536,8 @@ export var tutorial = {
             {   name: 'default',
                 matches: '*',
                 phenotype: {
-                    bodycolor: {
-                        text: 'wildtype',
+                    "bodycolor": {
+                        text: 'Wild type',
                         value: 'rgb(152,118,84)'
                     }
                 }
@@ -543,8 +546,8 @@ export var tutorial = {
                 name: 'Gray body (F)',
                 matches: 'Sex:FEMALE;b,b',
                 phenotype: {
-                    bodycolor: {
-                        text: 'gray',
+                    "bodycolor": {
+                        text: 'Gray',
                         value: 'gray'
                     }
                 }
@@ -554,7 +557,7 @@ export var tutorial = {
                 matches: 'Sex:MALE;b',
                 phenotype: {
                     bodycolor: {
-                        text: 'gray',
+                        text: 'Gray',
                         value: 'gray'
                     }
                 }
