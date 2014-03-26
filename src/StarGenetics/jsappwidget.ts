@@ -563,11 +563,11 @@ export class StarGeneticsJSAppWidget {
                     console.info("Start", this);
                     window['box'] = this;
                     var left_scroll = this.scrollLeft;
-                    $(this).css({'overflow-x': 'visible'});
+                    $(this).css({'overflow-x': 'visible','margin-bottom':'15px'});
                     $('[data-widget="slider-table"]', this).css({
                         'position': 'relative',
-                        'left': -left_scroll + 'px',
-                        'padding-bottom': '16px'
+                        'left': -left_scroll + 'px'
+                        //'padding-bottom': '16px'
                     });
                 });
                 console.info("Start", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
@@ -582,10 +582,10 @@ export class StarGeneticsJSAppWidget {
                     var left_scroll = parseInt($table.css('left'));
                     $table.css({
                         'position': 'relative',
-                        'left': '0px',
-                        'padding-bottom': '0px'
+                        'left': '0px'
+                        //'padding-bottom': '0px'
                     });
-                    $(this).css({'overflow-x': 'scroll'}).scrollLeft(-left_scroll);
+                    $(this).css({'overflow-x': 'scroll','margin-bottom':'0px'}).scrollLeft(-left_scroll);
                 });
                 console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
             },

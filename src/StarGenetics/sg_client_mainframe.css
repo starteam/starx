@@ -103,6 +103,10 @@
   display: block;
   background-color: orangered;
 }
+.sg_experiment_parents_wrapper {
+  position: relative;
+  left: 110px;
+}
 .sg_experiment_parents {
   vertical-align: top;
   display: inline-block;
@@ -120,6 +124,25 @@
   border-radius: 8px;
   padding: 2px;
 }
+.sg_s_experiment_parent_table {
+  vertical-align: top;
+  display: inline-block;
+  margin: 5px;
+  min-width: 70px;
+  height: 80px;
+  text-align: center;
+  position: relative;
+  border: 2px dashed #808080;
+  border-radius: 8px;
+  padding: 2px;
+}
+td.sg_s_experiment_parent_table_1 {
+  padding-right: 30px;
+}
+td.sg_s_experiment_parent_table_2 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
 .sg_experiment_parent_remove {
   position: absolute;
   top: 0px;
@@ -131,6 +154,30 @@
 .sg_experiment_parent_x {
   display: inline-block;
   vertical-align: center;
+  position: relative;
+  top: 25px;
+  font-size: 30pt;
+}
+.sg_s_experiment_parent_x_floaty {
+  float: left;
+  position: relative;
+  left: 110px;
+  width: 0px;
+}
+.sg_s_experiment_parent_to_floaty {
+  display: inline-block;
+  vertical-align: center;
+  font-size: 30pt;
+  padding-right: 20px;
+}
+.sg_experiment_parents_can_mate {
+  display: inline-block;
+  max-width: 300px;
+  margin-left: 10pt;
+}
+.sg_experiment_parents_can_mate_info {
+  padding-top: 10pt;
+  padding-bottom: 5pt;
 }
 .sg_s_col_head {
   border-right: solid black 1px;
@@ -167,8 +214,6 @@
 .sg_strain_expand_properties {
   border: none;
   border-radius: 9px;
-  float: right;
-  margin-right: 10px;
   background: #e3e3e3;
 }
 .sg_new_experiment_box {
@@ -209,6 +254,16 @@ table {
   border: 1px solid #add8e6;
   border-radius: 9px;
 }
+.sg_experiment_phenotype_detail_parent_m {
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.sg_experiment_phenotype_detail_parent_f {
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
 .sg_experiment_phenotype_detail_left {
   text-align: center;
   border-left: 1px solid #d0d4d8;
@@ -220,6 +275,12 @@ table {
   border-right: 1px solid #d0d4d8;
   padding-left: 5px;
   padding-right: 5px;
+}
+.sg_experiment_phenotype_detail_double {
+  padding-left: 15px;
+}
+.sg_experiment_phenotype_detail_header {
+  width: 5.5em;
 }
 .sg_experiment_p_count {
   text-align: center;

@@ -181,7 +181,11 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 });
             });
             this.__data__.propertiesList = _.keys(properties);
-            this.__data__.capitalized_properties = _.map(_.keys(properties), remapper.Remapper.transform);
+            var cp = {};
+            this.__data__.capitalized_properties = cp;
+            _.each(_.keys(properties), function (e) {
+                cp[e] = remapper.Remapper.transform(e);
+            });
         };
 
         Object.defineProperty(Collapsable.prototype, "propertiesList", {
