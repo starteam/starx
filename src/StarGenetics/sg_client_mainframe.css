@@ -195,7 +195,6 @@ td.sg_s_experiment_parent_table_2 {
   vertical-align: top;
   width: 70px;
   heigth: 80px;
-  background-color: aliceblue;
 }
 .sg_s_expand {
   border: none;
@@ -355,4 +354,7 @@ table {
   background-color: #add8e6;
   padding: 1px;
   font-size: 12pt;
+}
+.sg_s_rename {
+  border-bottom: 2px dotted #add8e6;
 }

@@ -162,7 +162,7 @@
                         </td>
                     {/foreach}
                     {if $add_strain}
-                    <td rowspan='{2+($strains.propertiesVisible?length($strains.propertiesList):0)}' class='sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>
+                    <td rowspan='2' class='sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>
 
                     {call .strain_place_holder }
                         {param kind: 'strains' /}
@@ -186,7 +186,7 @@
     <tr>
         <td class='sg_s_col_head sg_experiment_phenotype_detail_right ' >
         <b>Phenotypes</b>
-        </td><td colspan='{$strains.list.length-1}'>
+        </td><td class='sg_experiment_phenotype_detail_right' colspan='{$strains.list.length}'>
                 <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Less</button>
         </td>
     </tr>
@@ -199,11 +199,15 @@
 
                 </tr>
                 {/foreach}
+                {if $add_strain}
+                <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>
+                </td>
+                {/if}
 {else}
     <tr>
         <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
         <b>Phenotypes</b>
-        </td><td colspan='{$strains.list.length-1}'>
+        </td><td class='sg_experiment_phenotype_detail_right' colspan='{$strains.list.length}'>
                 <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>More</button>
         </td>
     </tr>
@@ -393,7 +397,7 @@
         {if $compact_view}
             {$experiment.name}
         {else}
-            Current experiment: {$experiment.name}
+            Current experiment: <span class='sg_rename sg_s_rename' data-kind="{$experiment.id}"> {$experiment.name}</span>
             {if $experiment.expanded}
                 <button class='sg_s_expand sg_expand' data-kind='{$experiment.id}' data-expanded='false'>Collapse</button>
                 /*
@@ -403,11 +407,13 @@
                 <button class='sg_strain_expand_visuals' data-kind='{$experiment.id}' data-expanded-visuals='true'>Show Visuals</button>
                 {/if}
                 */
+                /*
                 {if $experiment.propertiesVisible}
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide Properties</button>
                 {else}
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show Properties</button>
                 {/if}
+                */
             {else}
                 <button class='sg_s_expand sg_expand' data-kind='{$experiment.id}'  data-expanded='true'>Expand</button>
             {/if}
