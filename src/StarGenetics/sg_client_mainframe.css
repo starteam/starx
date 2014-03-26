@@ -81,7 +81,6 @@
 .sg_experiment_box {
   display: block;
   vertical-align: top;
-  width: 100%;
   border: 1px solid #a0a4a8;
 }
 .sg_experiment_heading {
@@ -190,6 +189,7 @@ td.sg_s_experiment_parent_table_2 {
   font-weight: 400;
   padding-left: 8px;
   text-transform: uppercase;
+  padding-top: 8px;
 }
 .sg_add_strain_box {
   vertical-align: top;
