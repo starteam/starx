@@ -37,6 +37,7 @@
             "lib/jquery": "StarX/lib/jquery",
             "lib/underscore": "StarX/lib/underscore",
             "lib/soyutils": "StarX/lib/soyutils",
+            "lib/raven": "StarX/lib/raven.min",
             "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
             "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui",
         };

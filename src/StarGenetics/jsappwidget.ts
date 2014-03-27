@@ -23,6 +23,9 @@ import VisualizerBase = require("StarGenetics/visualizers/base");
 import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
 import SGTests = require( "StarGenetics/tests/qunit");
+import StarTMI = require('StarTMI/tmi');
+var tmi = new StarTMI.TMI();
+
 
 import TEST = require("StarGenetics/tests/suite");
 import compress = require("StarCommons/easy_deflate");
@@ -45,10 +48,12 @@ export class StarGeneticsJSAppWidget {
 
         var backend_model = undefined;
         if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
+            tmi.event("StarGenetics", "Start", config['config']['bundled_samples']);
             backend_model = bundled_samples[config['config']['bundled_samples']];
             config['config']['model'] = backend_model;
         }
         else {
+            tmi.event("StarGenetics", "Start", "Model1");
             backend_model = bundled_samples.model1;
             config['config']['model'] = backend_model;
         }
@@ -144,7 +149,7 @@ export class StarGeneticsJSAppWidget {
 
         var success = false;
         if (self.stargenetics_interface) {
-            self.postInit( self.stargenetics_interface);
+            self.postInit(self.stargenetics_interface);
             success = true;
         }
         try {
@@ -171,15 +176,14 @@ export class StarGeneticsJSAppWidget {
      * Post init executes when GWT is loaded
      */
         postInit(sg_interface:any) {
-        if(! this.postInitExecuted )
-        {
+        if (!this.postInitExecuted) {
             window['stargenetics_interface'] = sg_interface;
 
             $('#' + this.config.element_id).html("StarGenetics: ClientApp running");
             this.postInitExecuted = true;
             this.start_client_app();
             this.testHook();
-            console.info( "postInit");
+            console.info("postInit");
             this.edx_hook();
         }
     }
@@ -286,7 +290,8 @@ export class StarGeneticsJSAppWidget {
                     self.show();
 
                 },
-                onerror: function () {
+                onerror: function (a, b) {
+                    self.context['io']['log']("StarGenetics - Load");
                     SGTests.onerror(callbacks);
                 }
             }
@@ -312,6 +317,7 @@ export class StarGeneticsJSAppWidget {
                     self.show();
                 },
                 onerror: function (q) {
+                    self.context['io']['log']("StarGenetics - ListStrains");
                     SGTests.onerror(callbacks);
                 }
             }
@@ -353,6 +359,7 @@ export class StarGeneticsJSAppWidget {
                             callbacks.onerror({
                                 'message': 'Avg number of progenies is less than 0'
                             });
+                            this.context['io']['log']("StarGenetics - Avg number of progenies is less than 0");
                         } catch (e) {
                         }
                     }
@@ -397,6 +404,8 @@ export class StarGeneticsJSAppWidget {
                     console.info(data);
                     SGTests.onsuccess(callbacks);
                     console.info("update_experiments Got error!");
+                    self.context['io']['log']("StarGenetics - update_experiments");
+
                 }
             }
         });
@@ -489,13 +498,12 @@ export class StarGeneticsJSAppWidget {
             if (c instanceof SGModel.Experiment) {
                 var exp:any = c;
                 console.info("DISCARD", c.name);
-                var to_discard = confirm( "Are you sure you want to discard " + exp.name + "?");
-                if( to_discard )
-                {
-                exp.discarded = true;
-                console.info("DISCARD PRE:", self.model.ui.experiments.list)
-                self.model.ui.experiments.remove(exp);
-                console.info("DISCARD DONE:", self.model.ui.experiments.list)
+                var to_discard = confirm("Are you sure you want to discard " + exp.name + "?");
+                if (to_discard) {
+                    exp.discarded = true;
+                    console.info("DISCARD PRE:", self.model.ui.experiments.list)
+                    self.model.ui.experiments.remove(exp);
+                    console.info("DISCARD DONE:", self.model.ui.experiments.list)
                 }
             }
             self.show();
@@ -541,6 +549,8 @@ export class StarGeneticsJSAppWidget {
 
                 }, onerror: function () {
                     console.info("Mate error!");
+                    self.context['io']['log']("StarGenetics - Mate Error");
+
                 }, avg_offspring_count: count
                 });
                 self.show();
@@ -561,6 +571,7 @@ export class StarGeneticsJSAppWidget {
 
             }, onerror: function () {
                 console.info("Mate error!");
+                    self.context['io']['log']("StarGenetics - Mate Error");
             }});
             self.show();
         });
@@ -681,6 +692,7 @@ export class StarGeneticsJSAppWidget {
 
     reset() {
         var self = this;
+        tmi.event("StarGenetics", "Reset");
         var data = self.context['io']['reset']();
     }
 
@@ -697,20 +709,13 @@ export class StarGeneticsJSAppWidget {
                 var str_data = JSON.stringify(data);
                 var compressed = compress.deflate(str_data);
                 window['localStorage']['sg_save'] = compressed;
-                console.info(self);
-                console.info(self.context);
-                console.info(self.context['io']);
-                console.info(compressed);
+                tmi.event("StarGenetics", "Save", "" + (compressed ? compressed.length : 0));
 
                 self.context['io']['save'](compressed);
             }, onerror: function (a, b) {
-                console.info("error:");
-                console.info(a);
-                console.info(window['localStorage']);
-                console.info(window['localStorage']['sg_save']);
                 window['localStorage']['sg_save'] = a;
-                console.info(window['localStorage']['sg_save']);
-                console.info(a['payload']['error']);
+                self.context['io']['log']("StarGenetics - Save Error");
+
             }}})
 
     }
@@ -731,8 +736,8 @@ export class StarGeneticsJSAppWidget {
             self.stargenetics_interface({token: '1', command: 'open', data: {protocol: 'Serialized_1', model: gwt_model },
                 callbacks: {onsuccess: function (ret, b) {
                     self.model = new SGModel.Top(ts_model);
+                    tmi.event("StarGenetics", "Load", "" + (str_data ? str_data.length : 0));
 
-                    console.info("Loaded");
                     self.show();
 
                 }, onerror: function (a, b) {
@@ -740,6 +745,7 @@ export class StarGeneticsJSAppWidget {
                     console.info(a);
                     window['stargenetics_save'] = a;
                     console.info(a['payload']['error']);
+                    self.context['io']['log']("StarGenetics - Load Error");
                 }}})
         }
 
