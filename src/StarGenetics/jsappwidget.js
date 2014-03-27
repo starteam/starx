@@ -15,6 +15,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         function StarGeneticsJSAppWidget(context, config) {
             this.stargenetics_interface = null;
             this.eventlistener_setup = false;
+            this.postInitExecuted = false;
             var self = this;
             this.context = context;
             this.config = config;
@@ -81,9 +82,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                                 data.starx = target;
                                 $(id)[0]['contentWindow'].postMessage(data, '*');
                             };
-                            $('#' + config.element_id).html("StarGenetics: ClientApp running");
-                            window['stargenetics_interface'] = self.stargenetics_interface;
-                            self.postInit();
+                            self.postInit(self.stargenetics_interface);
                         } else if (data['uid'] && data['command'] == 'callback') {
                             if (self.eventlistener_setup[data.uid]) {
                                 var callbacks = self.eventlistener_setup[data.uid];
@@ -116,19 +115,13 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
 
             var success = false;
             if (self.stargenetics_interface) {
-                console.info("Got it!... the interface");
-                $('#' + config.element_id).html("StarGenetics: ClientApp running");
-                window['stargenetics_interface'] = self.stargenetics_interface;
-                self.postInit();
+                self.postInit(self.stargenetics_interface);
                 success = true;
             }
             try  {
                 if (!success && w.__sg_bg_exec) {
                     self.stargenetics_interface = w.__sg_bg_exec;
-                    console.info("Got it!... the interface");
-                    $('#' + config.element_id).html("StarGenetics: ClientApp running");
-                    window['stargenetics_interface'] = self.stargenetics_interface;
-                    self.postInit();
+                    self.postInit(self.stargenetics_interface);
                     success = true;
                 }
             } catch (e) {
@@ -148,9 +141,24 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         /**
         * Post init executes when GWT is loaded
         */
-        StarGeneticsJSAppWidget.prototype.postInit = function () {
-            this.start_client_app();
-            this.testHook();
+        StarGeneticsJSAppWidget.prototype.postInit = function (sg_interface) {
+            if (!this.postInitExecuted) {
+                window['stargenetics_interface'] = sg_interface;
+
+                $('#' + this.config.element_id).html("StarGenetics: ClientApp running");
+                this.postInitExecuted = true;
+                this.start_client_app();
+                this.testHook();
+                console.info("postInit");
+                this.edx_hook();
+            }
+        };
+
+        /**
+        * edX hooks
+        */
+        StarGeneticsJSAppWidget.prototype.edx_hook = function () {
+            this.context['io']['edx_postinit']();
         };
 
         /**
@@ -442,10 +450,13 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 if (c instanceof SGModel.Experiment) {
                     var exp = c;
                     console.info("DISCARD", c.name);
-                    exp.discarded = true;
-                    console.info("DISCARD PRE:", self.model.ui.experiments.list);
-                    self.model.ui.experiments.remove(exp);
-                    console.info("DISCARD DONE:", self.model.ui.experiments.list);
+                    var to_discard = confirm("Are you sure you want to discard " + exp.name + "?");
+                    if (to_discard) {
+                        exp.discarded = true;
+                        console.info("DISCARD PRE:", self.model.ui.experiments.list);
+                        self.model.ui.experiments.remove(exp);
+                        console.info("DISCARD DONE:", self.model.ui.experiments.list);
+                    }
                 }
                 self.show();
             });
@@ -606,65 +617,85 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             console.info("Save handler");
             $('.sg_workspace_save', main).off('click').on('click', function () {
                 console.info("Save");
-                self.stargenetics_interface({
-                    token: '1', command: 'save', data: { protocol: 'Version_1' },
-                    callbacks: {
-                        onsuccess: function (ret, b) {
-                            var gwt_model = ret['payload']['model'];
-                            var ts_model = self.model.__data__;
-                            var data = {
-                                gwt_model: gwt_model,
-                                ts_model: ts_model
-                            };
-                            var str_data = JSON.stringify(data);
-                            var compressed = compress.deflate(str_data);
-                            window['localStorage']['sg_save'] = compressed;
-                            console.info(self);
-                            console.info(self.context);
-                            console.info(self.context['io']);
-                            console.info(compressed);
-
-                            self.context['io']['save'](compressed);
-                        }, onerror: function (a, b) {
-                            console.info("error:");
-                            console.info(a);
-                            console.info(window['localStorage']);
-                            console.info(window['localStorage']['sg_save']);
-                            window['localStorage']['sg_save'] = a;
-                            console.info(window['localStorage']['sg_save']);
-                            console.info(a['payload']['error']);
-                        } } });
+                self.save();
             });
 
             $('.sg_workspace_load', main).off('click').on('click', function () {
                 console.info("Load");
-                var data = self.context['io']['load']();
-                if (data) {
-                    console.info("In Load");
-                    var compressed = data;
-                    var str_data = compress.inflate(compressed);
-                    var data = JSON.parse(str_data);
-                    var ts_model = data['ts_model'];
-                    var gwt_model = data['gwt_model'];
-                    console.info("In Load 2");
-                    console.info(data);
-
-                    self.stargenetics_interface({
-                        token: '1', command: 'open', data: { protocol: 'Serialized_1', model: gwt_model },
-                        callbacks: {
-                            onsuccess: function (ret, b) {
-                                self.model = new SGModel.Top(ts_model);
-
-                                console.info("Loaded");
-                                self.show();
-                            }, onerror: function (a, b) {
-                                console.info("error:");
-                                console.info(a);
-                                window['stargenetics_save'] = a;
-                                console.info(a['payload']['error']);
-                            } } });
-                }
+                self.load();
             });
+
+            $('.sg_workspace_reset', main).off('click').on('click', function () {
+                console.info("Reset");
+                self.reset();
+            });
+        };
+
+        StarGeneticsJSAppWidget.prototype.reset = function () {
+            var self = this;
+            var data = self.context['io']['reset']();
+        };
+
+        StarGeneticsJSAppWidget.prototype.save = function () {
+            var self = this;
+            self.stargenetics_interface({
+                token: '1', command: 'save', data: { protocol: 'Version_1' },
+                callbacks: {
+                    onsuccess: function (ret, b) {
+                        var gwt_model = ret['payload']['model'];
+                        var ts_model = self.model.__data__;
+                        var data = {
+                            gwt_model: gwt_model,
+                            ts_model: ts_model
+                        };
+                        var str_data = JSON.stringify(data);
+                        var compressed = compress.deflate(str_data);
+                        window['localStorage']['sg_save'] = compressed;
+                        console.info(self);
+                        console.info(self.context);
+                        console.info(self.context['io']);
+                        console.info(compressed);
+
+                        self.context['io']['save'](compressed);
+                    }, onerror: function (a, b) {
+                        console.info("error:");
+                        console.info(a);
+                        console.info(window['localStorage']);
+                        console.info(window['localStorage']['sg_save']);
+                        window['localStorage']['sg_save'] = a;
+                        console.info(window['localStorage']['sg_save']);
+                        console.info(a['payload']['error']);
+                    } } });
+        };
+
+        StarGeneticsJSAppWidget.prototype.load = function () {
+            var self = this;
+            var data = self.context['io']['load']();
+            if (data) {
+                console.info("In Load");
+                var compressed = data;
+                var str_data = compress.inflate(compressed);
+                var data = JSON.parse(str_data);
+                var ts_model = data['ts_model'];
+                var gwt_model = data['gwt_model'];
+                console.info("In Load 2");
+                console.info(data);
+
+                self.stargenetics_interface({
+                    token: '1', command: 'open', data: { protocol: 'Serialized_1', model: gwt_model },
+                    callbacks: {
+                        onsuccess: function (ret, b) {
+                            self.model = new SGModel.Top(ts_model);
+
+                            console.info("Loaded");
+                            self.show();
+                        }, onerror: function (a, b) {
+                            console.info("error:");
+                            console.info(a);
+                            window['stargenetics_save'] = a;
+                            console.info(a['payload']['error']);
+                        } } });
+            }
         };
         return StarGeneticsJSAppWidget;
     })();

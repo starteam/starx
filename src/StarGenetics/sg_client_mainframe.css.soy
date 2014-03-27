@@ -9,7 +9,6 @@ css file
   left: 20px;
   min-height: 800px;
   min-width: 650px;
-  max-width: 820px;
   resize: none;
   overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
@@ -48,7 +47,7 @@ css file
 .sg_s_strain_box {lb}
   display: inline-block;
   margin: 1px;
-  padding: 4px;
+  padding: 0px;
 {rb}
 .sg_strain_box_hover:hover {lb}
   margin: 0px;
@@ -61,6 +60,10 @@ css file
   vertical-align: top;
   width: 100%;
   height: 25px;
+  white-space: nowrap;
+{rb}
+.sg_strain_title > img {lb}
+  float: right;
 {rb}
 .sg_strain_visual {lb}
   display: block;
@@ -76,16 +79,17 @@ css file
 {rb}
 .sg_strain_visual_canvas_sex {lb}
   position: absolute;
-  top: 24px;
-  left: 18px;
+  right: 5px;
+  bottom: 0px;
   zoom: 75%;
   float: left;
-  opacity: .4;
+  opacity: .65;
   z-index: 2;
 {rb}
 .sg_experiment_box {lb}
   display: block;
   vertical-align: top;
+  margin-bottom: 8px;
   border: 1px solid #a0a4a8;
 {rb}
 .sg_experiment_heading {lb}
@@ -140,12 +144,8 @@ css file
   border-radius: 8px;
   padding: 2px;
 {rb}
-td.sg_s_experiment_parent_table_1 {lb}
-  padding-right: 30px;
-{rb}
-td.sg_s_experiment_parent_table_2 {lb}
-  padding-left: 30px;
-  padding-right: 30px;
+td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {lb}
+  top: 0px;
 {rb}
 .sg_experiment_parent_remove {lb}
   position: absolute;
@@ -154,6 +154,7 @@ td.sg_s_experiment_parent_table_2 {lb}
   -webkit-appearance: none;
   background-color: #ffffff;
   border: 0px;
+  padding: 3px;
 {rb}
 .sg_experiment_parent_x {lb}
   display: inline-block;
@@ -192,9 +193,9 @@ td.sg_s_experiment_parent_table_2 {lb}
 .sg_title_box {lb}
   font-size: 13.5pt;
   font-weight: 400;
-  padding-left: 8px;
+  padding-left: 6px;
   text-transform: uppercase;
-  padding-top: 8px;
+  padding-top: 6px;
 {rb}
 .sg_add_strain_box {lb}
   vertical-align: top;
@@ -216,12 +217,11 @@ td.sg_s_experiment_parent_table_2 {lb}
   background: #e3e3e3;
 {rb}
 .sg_strain_expand_properties {lb}
-  border: none;
-  border-radius: 9px;
-  background: #e3e3e3;
+  padding-left: 10px;
+  padding-right: 10px;
 {rb}
 .sg_new_experiment_box {lb}
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   border: 1px solid #a0a4a8;
   position: static;
 {rb}
@@ -253,6 +253,7 @@ table {lb}
   width: auto;
   position: relative;
   margin: 1px;
+  border: 1px solid white;
 {rb}
 .sg_mini_experiment_box:hover {lb}
   border: 1px solid #add8e6;
@@ -281,7 +282,8 @@ table {lb}
   padding-right: 5px;
 {rb}
 .sg_experiment_phenotype_detail_double {lb}
-  padding-left: 15px;
+  padding-left: 15px !important;
+  text-align: center !important;
 {rb}
 .sg_experiment_phenotype_detail_header {lb}
   width: 5.5em;
@@ -289,8 +291,14 @@ table {lb}
 .sg_experiment_p_count {lb}
   text-align: center;
 {rb}
+.sg_strains_p_visual {lb}
+  text-align: center !important;
+{rb}
 .sg_experiment_p_visual {lb}
-  text-align: center;
+  text-align: center !important;
+{rb}
+.sg_experiment_phenotype_detail_align_top {lb}
+  vertical-align: top !important;
 {rb}
 .sg_slider {lb}
   width: 100%;
@@ -330,6 +338,9 @@ table {lb}
 .sg_experiment_selected:hover {lb}
   border: 1px solid black;
 {rb}
+.sg_experiment_history {lb}
+  border: 1px solid #a0a4a8;
+{rb}
 .sg_slider_widget_wrapper {lb}
   overflow-x: scroll;
   resize: none;
@@ -362,5 +373,12 @@ table {lb}
 {rb}
 .sg_s_rename {lb}
   border-bottom: 2px dotted #add8e6;
+{rb}
+.sg_s_discard {lb}
+  float: right;
+  margin-right: 6px;
+{rb}
+.sg_slider_widget_wrapper table tbody tr td {lb}
+  text-align: center !important;
 {rb}
 {/template}

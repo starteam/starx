@@ -10,7 +10,7 @@
   left: 20px;
   min-height: 800px;
   min-width: 650px;
-  max-width: 820px;
+  //  max-width: 820px;
   resize: none;
   overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
@@ -25,11 +25,11 @@
   background: white;
   border: black 1px;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-  font-size:15pt;
+  font-size: 15pt;
 }
 
 .sg_logo {
-  width:200px;
+  width: 200px;
   vertical-align: middle;
   position: relative;
   top: -3px;
@@ -53,9 +53,9 @@
 }
 
 .sg_s_strain_box {
-  display: inline-block; 
+  display: inline-block;
   margin: 1px;
-  padding: 4px;
+  padding: 0px;
 }
 
 .sg_strain_box_hover:hover {
@@ -65,12 +65,16 @@
   cursor: move;
 }
 
-
 .sg_strain_title {
   display: block;
   vertical-align: top;
   width: 100%;
   height: 25px;
+  white-space: nowrap;
+}
+
+.sg_strain_title > img {
+  float: right;
 }
 
 .sg_strain_visual {
@@ -78,29 +82,30 @@
   vertical-align: top;
   text-align: center;
   vertical-align: text-bottom;
-  position:relative;
+  position: relative;
 }
 
 .sg_strain_visual_canvas {
   position: static;
-  top:0px;
-  left:0px;
+  top: 0px;
+  left: 0px;
 }
 
 .sg_strain_visual_canvas_sex {
   position: absolute;
-  top: 24px;
-  left: 18px;
+  right: 5px;
+  bottom: 0px;
   zoom: 75%;
   float: left;
-  opacity: .4;
+  opacity: .65;
   z-index: 2;
 }
 
 .sg_experiment_box {
   display: block;
   vertical-align: top;
-//  width: 100%;
+  //  width: 100%;
+  margin-bottom: 8px;
   border: 1px solid @title-color;
 
 }
@@ -130,8 +135,9 @@
 
 .sg_experiment_parents_wrapper {
   position: relative;
-  left:110px;
+  left: 110px;
 }
+
 .sg_experiment_parents {
   vertical-align: top;
   display: inline-block;
@@ -144,9 +150,9 @@
   margin: 5px;
   min-width: 70px;
   height: 80px;
-  text-align:center;
+  text-align: center;
   position: relative;
-  border: 2px dashed rgb(128,128,128);
+  border: 2px dashed rgb(128, 128, 128);
   border-radius: 8px;
   padding: 2px;
 }
@@ -157,30 +163,31 @@
   margin: 5px;
   min-width: 70px;
   height: 80px;
-  text-align:center;
+  text-align: center;
   position: relative;
-  border: 2px dashed rgb(128,128,128);
+  border: 2px dashed rgb(128, 128, 128);
   border-radius: 8px;
   padding: 2px;
 }
 
 td.sg_s_experiment_parent_table_1 {
-  padding-right: 30px;
 }
 
 td.sg_s_experiment_parent_table_2 {
-  padding-left:30px;
-  padding-right:30px;
 }
 
+td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {
+  top: 0px;
+}
 
 .sg_experiment_parent_remove {
   position: absolute;
   top: 0px;
   right: 0px;
   -webkit-appearance: none;
-  background-color: rgba(255,255,255,1);
+  background-color: rgba(255, 255, 255, 1);
   border: 0px;
+  padding: 3px;
 }
 
 .sg_experiment_parent_x {
@@ -192,17 +199,17 @@ td.sg_s_experiment_parent_table_2 {
 }
 
 .sg_s_experiment_parent_x_floaty {
-  float:left;
+  float: left;
   position: relative;
-  left:110px;
-  width:0px;
+  left: 110px;
+  width: 0px;
 }
 
 .sg_s_experiment_parent_to_floaty {
   display: inline-block;
   vertical-align: center;
   font-size: 30pt;
-  padding-right:20px;
+  padding-right: 20px;
 }
 
 .sg_experiment_parents_can_mate {
@@ -219,7 +226,6 @@ td.sg_s_experiment_parent_table_2 {
 .sg_experiment_parents_can_mate_input {
 }
 
-
 .sg_s_col_head {
   border-right: solid black 1px;
 }
@@ -231,24 +237,24 @@ td.sg_s_experiment_parent_table_2 {
 .sg_title_box {
   font-size: 13.5pt;
   font-weight: 400;
-//  background-color: @title-color;
-  padding-left: 8px;
+  //  background-color: @title-color;
+  padding-left: 6px;
   text-transform: uppercase;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .sg_add_strain_box {
   vertical-align: top;
   width: 70px;
   heigth: 80px;
-//  background-color: aliceblue;
+  //  background-color: aliceblue;
 }
 
 .sg_s_expand {
   border: none;
   border-radius: 9px;
-  float:right;
-  margin-right:10px;
+  float: right;
+  margin-right: 10px;
   background: @button-bg;
 }
 
@@ -261,19 +267,18 @@ td.sg_s_experiment_parent_table_2 {
 }
 
 .sg_strain_expand_properties {
-  border: none;
-  border-radius: 9px;
-  background: @button-bg;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .sg_new_experiment_box {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   border: 1px solid @title-color;
   position: static;
 }
 
 .sg_s_clear_parents, .sg_s_new_experiment_mate {
-  border:none;
+  border: none;
   border-radius: 9px;
   background: @button-bg;
 }
@@ -286,7 +291,7 @@ td.sg_s_experiment_parent_table_2 {
 }
 
 table {
-  border-collapse:collapse;
+  border-collapse: collapse;
 }
 
 //table tbody tr td {
@@ -297,9 +302,10 @@ table {
   border: 1px solid @title-color;
   background: white;
 }
+
 .sg_strain_box {
   text-align: center;
-  z-index:99;
+  z-index: 99;
 }
 
 .sg_mini_experiment_box {
@@ -307,6 +313,7 @@ table {
   width: auto;
   position: relative;
   margin: 1px;
+  border: 1px solid white;
 }
 
 .sg_mini_experiment_box:hover {
@@ -314,35 +321,35 @@ table {
   border-radius: 9px;
 }
 
-.sg_experiment_phenotype_detail_parent_m
-{
+.sg_experiment_phenotype_detail_parent_m {
   text-align: center;
   padding-left: 5px;
-  padding-right:5px;
+  padding-right: 5px;
 }
 
 .sg_experiment_phenotype_detail_parent_f {
   text-align: center;
   padding-left: 5px;
-  padding-right:5px;
+  padding-right: 5px;
 }
 
 .sg_experiment_phenotype_detail_left {
   text-align: center;
   border-left: 1px solid @group-border;
   padding-left: 5px;
-  padding-right:5px;
+  padding-right: 5px;
 }
 
 .sg_experiment_phenotype_detail_right {
   text-align: center;
   border-right: 1px solid @group-border;
   padding-left: 5px;
-  padding-right:5px;
+  padding-right: 5px;
 }
 
 .sg_experiment_phenotype_detail_double {
-  padding-left: 15px;
+  padding-left: 15px !important;
+  text-align: center !important;
 }
 
 .sg_experiment_phenotype_detail_header {
@@ -353,8 +360,16 @@ table {
   text-align: center;
 }
 
+.sg_strains_p_visual {
+  text-align: center !important;
+}
+
 .sg_experiment_p_visual {
-  text-align: center;
+  text-align: center !important;
+}
+
+.sg_experiment_phenotype_detail_align_top {
+  vertical-align: top !important;
 }
 
 .sg_slider {
@@ -362,37 +377,37 @@ table {
 }
 
 .sg_slider_thumb {
-  width:100%;
-  height:1em;
+  width: 100%;
+  height: 1em;
   background-color: @button-bg;
   text-align: center;
 }
 
 .sg_slider_table {
   position: relative;
-  left:0px;
-  top:0px;
+  left: 0px;
+  top: 0px;
 }
 
 .sg_experiment_holder {
-    zoom: 50%;
+  zoom: 50%;
   -moz-transform-origin: 0 0;
   -moz-transform: scale(.5);
 
   position: relative;
-  left:0px;
-  top:0px;
+  left: 0px;
+  top: 0px;
   white-space: nowrap;
 }
 
 .sg_experiment_box_floaty {
   position: absolute;
-  width:100%;
-  height:100%;
-  float:right;
+  width: 100%;
+  height: 100%;
+  float: right;
   background: #4D4C49;
   opacity: .01;
-  z-index:99;
+  z-index: 99;
 }
 
 .sg_experiment_selected {
@@ -404,44 +419,56 @@ table {
 }
 
 .sg_experiment_history {
+  border: 1px solid @title-color;
 }
 
 .sg_slider_widget_wrapper {
-  overflow-x:scroll;
+  overflow-x: scroll;
   resize: none;
   padding: 8px;
 }
 
-.sg_slider_widget_wrapper table.sg_slider_table  {
+.sg_slider_widget_wrapper table.sg_slider_table {
 }
 
 .sg_strain_add_strain {
-  border: 2px dashed rgb(128,128,128);
+  border: 2px dashed rgb(128, 128, 128);
   border-radius: 8px;
   font-size: 50px;
   padding: 10px;
-  padding-bottom:20px;
+  padding-bottom: 20px;
 }
+
 ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 7px;
+  -webkit-appearance: none;
+  width: 7px;
 }
+
 ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(192,192,192,.3);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  border-radius: 4px;
+  background-color: rgba(192, 192, 192, .3);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
 .sg_plus_floaty {
-  float:right;
-  position:absolute;
-  top:0px;
-  right:0px;
+  float: right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
   background-color: @drag-color;
-  padding:1px;
+  padding: 1px;
   font-size: 12pt;
 }
 
 .sg_s_rename {
   border-bottom: 2px dotted @drag-color;
+}
+
+.sg_s_discard {
+  float: right;
+  margin-right: 6px;
+}
+
+.sg_slider_widget_wrapper table tbody tr td {
+  text-align: center !important;
 }

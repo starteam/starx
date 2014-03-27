@@ -145,9 +145,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                     var properties = this.properties;
                     var ret = {};
                     _.each(properties, function (q, v) {
-                        console.info("capitalized_properties", q, v);
                         ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value'] };
-                        console.info("capitalized_properties", capitalize(q['text']), capitalize(v));
                     });
                     this.properties_cached_capitalized = ret;
                 }
@@ -282,7 +280,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 if (this.parents.length == 1) {
                     //TODO: Depending on the model, it is possible that sex needs to be different...
                     if (this.parents[0].sex == s.sex) {
-                        alert("There is already " + s.sex.toLowerCase() + " parent.");
+                        alert("There is already a " + s.sex.toLowerCase() + " parent.");
                         return;
                     }
                 }
