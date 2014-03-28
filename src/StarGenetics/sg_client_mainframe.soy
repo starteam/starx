@@ -120,8 +120,8 @@
     <div class='sg_title_box'>
         Strain Stocks
         {if $strains.expanded}
-            <button class='sg_s_expand sg_expand' data-kind='strains' data-expanded='false'>Collapse</button>
 /*
+            <button class='sg_s_expand sg_expand' data-kind='strains' data-expanded='false'>Collapse</button>
             {if $strains.visualsVisible}
             <button class='sg_strain_expand_visuals' data-kind='strains' data-expanded-visuals='false'>Hide Visuals</button>
             {else}
@@ -249,6 +249,7 @@
     <div class='sg_title_box'>
         Mating Site
         &nbsp;
+<!--
         {if $experiment.canclearparents}
         <button class='sg_clear_parents sg_s_clear_parents' data-kind="new_experiment">Clear</button>
         {/if}
@@ -256,6 +257,7 @@
         {if $experiment.canmate}
             <button class='sg_new_experiment_mate sg_s_new_experiment_mate' data-kind='new_experiment'>Mate</button>
         {/if}
+-->
     </div>
     {if $experiment.expanded}
     <div class='sg_experiment_parents_wrapper'>

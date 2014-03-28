@@ -386,7 +386,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             $('.sg_experiment_box_floaty').off('click').on('click', function (e) {
                 var id = $(this).data('kind');
                 self.model.ui.experiments.show_experiment = id;
-                console.info("Clicked here");
+                tmi.event("StarGenetics", "sg_select_experiment");
                 e.stopPropagation();
                 self.show();
             });
@@ -396,6 +396,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var phenotype_id = $(this).data('phenotype-id');
                 var phenotype = JSON.stringify(phenotype_id);
                 c['phenotypes'][phenotype].show_more_males = $(this).data('state');
+                tmi.event("StarGenetics", "sg_expand_males");
                 self.show();
             });
             $('.sg_move_start_males').off('click').on('click', function () {
@@ -403,6 +404,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var phenotype_id = $(this).data('phenotype-id');
                 var phenotype = JSON.stringify(phenotype_id);
                 c['phenotypes'][phenotype].start_index_male = c['phenotypes'][phenotype].start_index_male + ($(this).data('state') == '+' ? 5 : -5);
+                tmi.event("StarGenetics", "sg_move_start_males");
                 self.show();
             });
 
@@ -411,6 +413,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var phenotype_id = $(this).data('phenotype-id');
                 var phenotype = JSON.stringify(phenotype_id);
                 c['phenotypes'][phenotype].show_more_females = $(this).data('state');
+                tmi.event("StarGenetics", "sg_expand_females");
                 self.show();
             });
             $('.sg_move_start_females').off('click').on('click', function () {
@@ -418,6 +421,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var phenotype_id = $(this).data('phenotype-id');
                 var phenotype = JSON.stringify(phenotype_id);
                 c['phenotypes'][phenotype].start_index_female = c['phenotypes'][phenotype].start_index_female + ($(this).data('state') == '+' ? 5 : -5);
+                tmi.event("StarGenetics", "sg_move_start_females");
                 self.show();
             });
 
@@ -428,12 +432,15 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 } else if (more == '-') {
                     self.model.ui.experiments.show_more(-5);
                 }
+                tmi.event("StarGenetics", "sg_show_more", more);
+
                 self.show();
             });
 
             $('.sg_expand').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.expanded = $(this).data('expanded');
+                tmi.event("StarGenetics", "sg_expand", $(this).data('expanded'));
                 self.show();
             });
 
@@ -442,14 +449,16 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 if (c) {
                     var old_name = c.name;
                     var new_name = prompt("Please enter new experiment name:", old_name);
-                    c.name = new_name || c.name;
-                    _.each(c.list, function (s) {
-                        if (s.name.indexOf(old_name) == 0) {
-                            s.name = new_name + s.name.substr(old_name.length);
-                        }
-                    });
-
-                    self.show();
+                    if (new_name != null) {
+                        c.name = new_name;
+                        _.each(c.list, function (s) {
+                            if (s.name.indexOf(old_name) == 0) {
+                                s.name = new_name + s.name.substr(old_name.length);
+                            }
+                        });
+                        tmi.event("StarGenetics", "sg_rename", old_name + " -> " + new_name);
+                        self.show();
+                    }
                 }
             });
 
@@ -464,6 +473,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         console.info("DISCARD PRE:", self.model.ui.experiments.list);
                         self.model.ui.experiments.remove(exp);
                         console.info("DISCARD DONE:", self.model.ui.experiments.list);
+                        tmi.event("StarGenetics", "sg_discard");
                     }
                 }
                 self.show();
@@ -474,6 +484,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 if (c instanceof SGModel.NewExperiment) {
                     var newexp = c;
                     newexp.clearParent($(this).data('id'));
+                    tmi.event("StarGenetics", "sg_experiment_parent_remove");
                     self.show();
                 }
             });
@@ -486,6 +497,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             $('.sg_strain_expand_properties').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 c.propertiesVisible = $(this).data('expanded-properties');
+                tmi.event("StarGenetics", "sg_strain_expand_properties", "" + c.propertiesVisible);
                 self.show();
             });
             $('.sg_clear_parents').off('click').on('click', function () {
@@ -502,6 +514,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     $('.sg_new_experiment_mate').attr('disabled', true);
                     return;
                 }
+                tmi.event("StarGenetics", "sg_new_experiment_mate");
                 $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
                     self.mate(c, {
                         onsuccess: function () {
@@ -521,8 +534,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             });
             $('.sg_experiment_mate').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
-                console.info("sg_experiment_mate");
-                console.info(c);
+                tmi.event("StarGenetics", "sg_experiment_mate");
                 self.mate(c, {
                     onsuccess: function () {
                         console.info("Mate success!");
@@ -594,6 +606,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     var src_strain = src_collection.get(source.data('id'));
                     var target_collection = self.model.ui.get(target.data('kind'));
                     self.add_parent(target_collection, src_strain);
+                    tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
                     self.show();
                 } });
 
@@ -604,6 +617,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     var src_strain = src_collection.get(source.data('id'));
                     var target_collection = self.model.ui.get(target.data('kind'));
                     target_collection.add_strain(src_strain);
+                    tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
                     self.show();
                 } });
 
@@ -624,7 +638,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 };
             });
 
-            console.info("Save handler");
             $('.sg_workspace_save', main).off('click').on('click', function () {
                 console.info("Save");
                 self.save();
@@ -679,26 +692,24 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var compressed = data;
                 var str_data = compress.inflate(compressed);
                 var data = JSON.parse(str_data);
-                var ts_model = data['ts_model'];
-                var gwt_model = data['gwt_model'];
-                console.info("In Load 2");
-                console.info(data);
+                if (data) {
+                    var ts_model = data['ts_model'];
+                    var gwt_model = data['gwt_model'];
+                    if (ts_model && gwt_model) {
+                        self.stargenetics_interface({
+                            token: '1', command: 'open', data: { protocol: 'Serialized_1', model: gwt_model },
+                            callbacks: {
+                                onsuccess: function (ret, b) {
+                                    self.model = new SGModel.Top(ts_model);
+                                    tmi.event("StarGenetics", "Load", "" + (str_data ? str_data.length : 0));
 
-                self.stargenetics_interface({
-                    token: '1', command: 'open', data: { protocol: 'Serialized_1', model: gwt_model },
-                    callbacks: {
-                        onsuccess: function (ret, b) {
-                            self.model = new SGModel.Top(ts_model);
-                            tmi.event("StarGenetics", "Load", "" + (str_data ? str_data.length : 0));
-
-                            self.show();
-                        }, onerror: function (a, b) {
-                            console.info("error:");
-                            console.info(a);
-                            window['stargenetics_save'] = a;
-                            console.info(a['payload']['error']);
-                            self.context['io']['log']("StarGenetics - Load Error");
-                        } } });
+                                    self.show();
+                                }, onerror: function (a, b) {
+                                    window['stargenetics_save'] = a;
+                                    self.context['io']['log']("StarGenetics - Load Error");
+                                } } });
+                    }
+                }
             }
         };
         return StarGeneticsJSAppWidget;
