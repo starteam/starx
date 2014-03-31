@@ -57,9 +57,9 @@
 *
 */
 {template .io}
-    <button class='sg_workspace_save'>Save</button>
-    <button class='sg_workspace_load'>Load</button>
-    <button class='sg_workspace_reset'>Reset</button>
+    <button class='sg_workapace_button sg_workspace_save'>Save</button>
+    <button class='sg_workapace_button sg_workspace_load'>Load</button>
+    <button class='sg_workapace_button  sg_workspace_reset'>Reset</button>
 {/template}
 
 /**
@@ -188,9 +188,16 @@
         <td class='sg_s_col_head sg_experiment_phenotype_detail_right ' >
         <b>Phenotypes</b>
         </td><td class='sg_experiment_phenotype_detail_right' colspan='{$strains.list.length}'>
-                <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Less</button>
+                <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide</button>
         </td>
     </tr>
+                <tr>
+                <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>Sex</td>
+                    {foreach $strain in $strains.list}
+                        <td data-id="{$strain.id}" class='sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>{if $strain['sex'] == 'FEMALE'}Female{/if}{if $strain['sex'] == 'MALE'}Male{/if}</td>
+                    {/foreach}
+
+                </tr>
                 {foreach $property in keys($strains.capitalized_properties)}
                 <tr>
                     <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>{$strains.capitalized_properties[$property]}</td>
@@ -209,7 +216,7 @@
         <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
         <b>Phenotypes</b>
         </td><td class='sg_experiment_phenotype_detail_right' colspan='{$strains.list.length}'>
-                <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>More</button>
+                <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
         </td>
     </tr>
 {/if}
@@ -427,7 +434,7 @@
             {/if}
 
             {if $experiment.canmate}
-//                <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progenies</button>
+//                <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progeny +</button>
             {/if}
         {/if}
     </div>
@@ -441,6 +448,7 @@
         {/if}
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>
             // HEAD ROW
+            {if not $compact_view}
                 <tr>
                 <th class='sg_experiment_phenotype_detail_header sg_experiment_phenotype_detail_right'><!--Name--></th>
                 <th class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f'><!--Parent F--></th>
@@ -455,6 +463,7 @@
                 </th>
                 {/foreach}
                 </tr>
+            {/if}
             // VISUALS
                 {if $experiment.visualsVisible}
                 <tr>
@@ -515,7 +524,7 @@
             <b>Phenotypes</b>
             </td><td colspan='4' class='sg_experiment_phenotype_detail_align_top'>
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Less</button>&nbsp; &nbsp;
-                    <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progenies</button>
+                    <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progeny +</button>
             </td>
 
 //        </tr>
@@ -574,6 +583,7 @@
                         {else}
                             {if length($experiment.phenotypes[$phenotype].males_list) > 0}
                             <button class='sg_expand_males' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="true">Show Individuals</button>
+                            &nbsp;
                             {/if}
                         {/if}
                     </td>
@@ -584,13 +594,62 @@
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
             <b>Phenotypes</b>
-            </td><td colspan='3'>
-                    <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>More</button>
+            </td><td colspan='4'>
+                    <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>More</button>&nbsp; &nbsp;
+                    <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progeny +</button>
             </td>
             {foreach $phenotype in keys($experiment.phenotypes)}
             <td class='sg_experiment_phenotype_detail_left'>
+            {if $experiment.phenotypes[$phenotype].show_more_females}
+                            <button class='sg_expand_females' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="false">Hide Individuals</button>
+                            {if $experiment.phenotypes[$phenotype].start_index_female > 0}
+                            <br>
+                                <button class='sg_move_start_females' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="-">Previous?</button>
+                            {/if}
+                            {foreach $strain in $experiment.phenotypes[$phenotype].females_list}
+                                {if index($strain) >= $experiment.phenotypes[$phenotype].start_index_female and index($strain) <= $experiment.phenotypes[$phenotype].start_index_female+5}
+                                <br>
+                                {call .strain_short}
+                                    {param strain:$strain /}
+                                    {param kind:$experiment.id/}
+                                {/call}
+                                {/if}
+                            {/foreach}
+                            {if length($experiment.phenotypes[$phenotype].females_list) - $experiment.phenotypes[$phenotype].start_index_female > 0}
+                                <br>
+                                <button class='sg_move_start_females' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="+">Next?</button>
+                            {/if}
+                        {else}
+                            {if length($experiment.phenotypes[$phenotype].females_list) > 0}
+                            <button class='sg_expand_females' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="true">Show Individuals</button>
+                            {/if}
+                        {/if}
             </td>
             <td class='sg_experiment_phenotype_detail_right'>
+            {if $experiment.phenotypes[$phenotype].show_more_males}
+                            <button class='sg_expand_males' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="false">Hide Individuals</button>
+                            {if $experiment.phenotypes[$phenotype].start_index_male > 0}
+                            <br>
+                                <button class='sg_move_start_males' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="-">Previous?</button>
+                            {/if}
+                            {foreach $strain in $experiment.phenotypes[$phenotype].males_list}
+                                {if index($strain) >= $experiment.phenotypes[$phenotype].start_index_male and index($strain) <= $experiment.phenotypes[$phenotype].start_index_male+5}
+                                <br>
+                                {call .strain_short}
+                                    {param strain:$strain /}
+                                    {param kind:$experiment.id/}
+                                {/call}
+                                {/if}
+                            {/foreach}
+                            {if length($experiment.phenotypes[$phenotype].males_list) - $experiment.phenotypes[$phenotype].start_index_male > 0}
+                                <br>
+                                <button class='sg_move_start_males' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="+">Next?</button>
+                            {/if}
+                        {else}
+                            {if length($experiment.phenotypes[$phenotype].males_list) > 0}
+                            <button class='sg_expand_males' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="true">Show Individuals</button>
+                            {/if}
+                        {/if}
             </td>
             {/foreach}
         </tr>

@@ -570,8 +570,8 @@ export var tutorial = {
                 "name": "Initial Strains",
                 "list": [
                     {"name": "Mutant 1", "sex": "M", "alleles": [ "b" ]},
-                    {"name": "Wildtype M", "sex": "M", "alleles": [ "B" ]},
-                    {"name": "Wildtype F", "sex": "F", "alleles": [ "B,B" ]}
+                    {"name": "Wild type M", "sex": "M", "alleles": [ "B" ]},
+                    {"name": "Wild type F", "sex": "F", "alleles": [ "B,B" ]}
                 ]
             }
         }

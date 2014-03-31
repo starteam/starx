@@ -48,7 +48,7 @@
   margin: 0px;
   border: 1px solid #add8e6;
   border-radius: 9px;
-  cursor: move;
+  cursor: copy;
 }
 .sg_strain_title {
   display: block;
@@ -139,7 +139,7 @@
   border-radius: 8px;
   padding: 2px;
 }
-td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {
+td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {
   top: 0px;
 }
 .sg_experiment_parent_remove {
@@ -157,6 +157,9 @@ td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {
   position: relative;
   top: 25px;
   font-size: 30pt;
+}
+td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
+  top: 0px;
 }
 .sg_s_experiment_parent_x_floaty {
   float: left;
@@ -222,6 +225,9 @@ td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {
   border: none;
   border-radius: 9px;
   background: #e3e3e3;
+}
+.sg_s_new_experiment_mate_large {
+  background-image: linear-gradient(#51b151, #8aca8a) !important;
 }
 table {
   border-collapse: collapse;
@@ -333,6 +339,7 @@ table {
   overflow-x: scroll;
   resize: none;
   padding: 8px;
+  width: 100%;
 }
 .sg_strain_add_strain {
   border: 2px dashed #808080;
@@ -361,11 +368,35 @@ table {
 }
 .sg_s_rename {
   border-bottom: 2px dotted #add8e6;
+  cursor: pointer;
 }
 .sg_s_discard {
   float: right;
   margin-right: 6px;
+  cursor: pointer;
 }
 .sg_slider_widget_wrapper table tbody tr td {
   text-align: center !important;
+}
+.sg_new_experiment_mate_count {
+  width: 5em !important;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+.sg_workapace_button {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  margin-bottom: 5px !important;
+}
+table.sg_slider_table tbody tr th {
+  text-align: center;
+}
+div.sg_mini_experiment_box table.sg_slider_table {
+  margin: 0px !important;
+}
+div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
+  max-height: 20px;
+}
+.sg_expand_females {
+  padding-left: 5px;
 }

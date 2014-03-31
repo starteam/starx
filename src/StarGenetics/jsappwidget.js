@@ -650,7 +650,10 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
 
             $('.sg_workspace_reset', main).off('click').on('click', function () {
                 console.info("Reset");
-                self.reset();
+                var really_reset = confirm("Are you sure that you would like to reset your StarGenetics window? This will delete all of your current, unsaved work within StarGenetics.");
+                if (really_reset) {
+                    self.reset();
+                }
             });
         };
 

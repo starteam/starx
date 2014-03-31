@@ -53,7 +53,7 @@ css file
   margin: 0px;
   border: 1px solid #add8e6;
   border-radius: 9px;
-  cursor: move;
+  cursor: copy;
 {rb}
 .sg_strain_title {lb}
   display: block;
@@ -144,7 +144,7 @@ css file
   border-radius: 8px;
   padding: 2px;
 {rb}
-td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {lb}
+td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {lb}
   top: 0px;
 {rb}
 .sg_experiment_parent_remove {lb}
@@ -162,6 +162,9 @@ td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {lb}
   position: relative;
   top: 25px;
   font-size: 30pt;
+{rb}
+td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
+  top: 0px;
 {rb}
 .sg_s_experiment_parent_x_floaty {lb}
   float: left;
@@ -227,6 +230,9 @@ td.sg_s_experiment_parent_table_x sg_s_experiment_parent_x {lb}
   border: none;
   border-radius: 9px;
   background: #e3e3e3;
+{rb}
+.sg_s_new_experiment_mate_large {lb}
+  background-image: linear-gradient(#51b151, #8aca8a) !important;
 {rb}
 table {lb}
   border-collapse: collapse;
@@ -338,6 +344,7 @@ table {lb}
   overflow-x: scroll;
   resize: none;
   padding: 8px;
+  width: 100%;
 {rb}
 .sg_strain_add_strain {lb}
   border: 2px dashed #808080;
@@ -366,12 +373,36 @@ table {lb}
 {rb}
 .sg_s_rename {lb}
   border-bottom: 2px dotted #add8e6;
+  cursor: pointer;
 {rb}
 .sg_s_discard {lb}
   float: right;
   margin-right: 6px;
+  cursor: pointer;
 {rb}
 .sg_slider_widget_wrapper table tbody tr td {lb}
   text-align: center !important;
+{rb}
+.sg_new_experiment_mate_count {lb}
+  width: 5em !important;
+  margin-bottom: 5px;
+  margin-right: 5px;
+{rb}
+.sg_workapace_button {lb}
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  margin-bottom: 5px !important;
+{rb}
+table.sg_slider_table tbody tr th {lb}
+  text-align: center;
+{rb}
+div.sg_mini_experiment_box table.sg_slider_table {lb}
+  margin: 0px !important;
+{rb}
+div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
+  max-height: 20px;
+{rb}
+.sg_expand_females {lb}
+  padding-left: 5px;
 {rb}
 {/template}
