@@ -129,6 +129,12 @@ define(["require", "exports", "jquery", 'StarGenetics/jsappwidget', "StarGenetic
                         self.in_reset = false;
                     },
                     log: function (message, context) {
+                        if (self.Raven && self.Raven.captureMessage) {
+                            try  {
+                                self.Raven.captureMessage(message, context);
+                            } catch (e) {
+                            }
+                        }
                     }
                 };
             }

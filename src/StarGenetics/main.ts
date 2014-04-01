@@ -149,27 +149,24 @@ export class StarGenetics {
                     }
                 }
             }
-
-            console.info("StarGenetics/main.ts", window['Raven'], config);
-
-            this.edx_specific(config);
-            if (this.in_editor) {
-                var config_str = JSON.stringify(config);
-                config_str = config_str.replace(/,/g, ',\n');
-                $('#' + config.element_id).html("<div style='background-color: #a0b0c0; font-size:12pt; font-family: verdana, helvetica, arial, sans-serif'>StarGenetics application: Editor Mode - to be developed.<br><a href='https://starx.mit.edu/'>StarX web site</a><br><div>" + config_str + "</div></div>");
-            }
-            else {
-                this.cls = new JSStarGenetics.StarGeneticsJSAppWidget(this.context, config);
-                this.cls.run();
-            }
         }
 
+        console.info("StarGenetics/main.ts", window['Raven'], config);
+
+        this.edx_specific(config);
+        if (this.in_editor) {
+            var config_str = JSON.stringify(config);
+            config_str = config_str.replace(/,/g, ',\n');
+            $('#' + config.element_id).html("<div style='background-color: #a0b0c0; font-size:12pt; font-family: verdana, helvetica, arial, sans-serif'>StarGenetics application: Editor Mode - to be developed.<br><a href='https://starx.mit.edu/'>StarX web site</a><br><div>" + config_str + "</div></div>");
+        }
+        else {
+            this.cls = new JSStarGenetics.StarGeneticsJSAppWidget(this.context, config);
+            this.cls.run();
+        }
     }
 
-    if(
+}
 
-    false
-) {
-    var
-    x = new StarGenetics();
+if (false) {
+    var x = new StarGenetics();
 }
