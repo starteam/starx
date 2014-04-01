@@ -508,7 +508,7 @@ export class UIModel extends Base {
     clearNewExperiment() {
         this.__data__.new_experiment = {
             list: [],
-            expanded: false
+            expanded: true
         }
     }
 }

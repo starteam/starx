@@ -344,7 +344,7 @@ export class StarGeneticsJSAppWidget {
                 avg_count = parseInt(this.model.backend.genetics.engine.avg_offspring_count);
             } catch (e) {
             }
-            var how_many_progenies = prompt("How many progenies (up to 500)?", "" + avg_count);
+            var how_many_progenies = prompt("How many more progeny would you like to add? Enter a number between 1 and 500.", "" + avg_count);
             if (how_many_progenies && parseInt(how_many_progenies) != 0) {
                 var c = parseInt(how_many_progenies);
                 if (c > 500) {
@@ -525,6 +525,18 @@ export class StarGeneticsJSAppWidget {
                 var newexp:any = c;
                 newexp.clearParent($(this).data('id'));
                 tmi.event("StarGenetics", "sg_experiment_parent_remove");
+                self.show();
+            }
+        });
+
+                $('.sg_s_strain_remove').off('click').on('click', function () {
+                    console.info( "sg_s_strain_remove");
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+                    console.info( "sg_s_strain_remove" , c);
+            if (c instanceof SGModel.NewExperiment) {
+                var newexp:any = c;
+                newexp.clearParent($(this).data('id'));
+                tmi.event("StarGenetics", "sg_experiment_strain_remove");
                 self.show();
             }
         });

@@ -400,3 +400,6 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 .sg_expand_females {
   padding-left: 5px;
 }
+.sg_s_strain_remove {
+  float: right;
+}

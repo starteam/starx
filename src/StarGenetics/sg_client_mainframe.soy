@@ -66,6 +66,7 @@
 * @param strain
 * @param visuals
 * @param count
+* @param percentage
 * @param kind
 * @param name
 */
@@ -82,7 +83,7 @@
 </div>
 {/if}
                 </div>
-                <div class='sg_strain_title'>{if $name}{$name}{else}{$strain['name']}{/if}</div>
+                <div class='sg_strain_title'>{if $name}{$name}{else}{$strain['name']}{/if}{if $percentage} <small>({round($percentage*100,0)}%)</small>{/if}</div>
 {else}
 <div class='sg_strain_box'></div>
 {/if}
@@ -152,6 +153,7 @@
                     <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>Strain</td>
                     {foreach $strain in $strains.list}
                         <td class='sg_experiment_phenotype_detail_right sg_strains_p_visual sg_experiment_phenotype_detail_left' data-kind='strains' data-id="{$strain['id']}">
+//                        <button class='sg_s_strain_remove sg_strain_remove' data-id='{$strain.id}' data-kind='strains' title="Remove Strain">x</button>
                     //   <div class='sg_strain_visual'><canvas data-kind='strains' data-id='{$strain['id']}'></canvas>
                     //    </div>
                     {call .strain}
@@ -256,6 +258,9 @@
     <div class='sg_title_box'>
         Mating Site
         &nbsp;
+        {if $experiment.expanded}
+        <button class="sg_expand sg_s_discard" data-expanded="false" data-kind="new_experiment">_</button>
+        {/if}
 <!--
         {if $experiment.canclearparents}
         <button class='sg_clear_parents sg_s_clear_parents' data-kind="new_experiment">Clear</button>
@@ -451,11 +456,16 @@
             {if not $compact_view}
                 <tr>
                 <th class='sg_experiment_phenotype_detail_header sg_experiment_phenotype_detail_right'><!--Name--></th>
-                <th class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f'><!--Parent F--></th>
-                <th class=''><!-- X --></th>
+                <th colspan='3' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f'>
+                <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
 
-                <th class='sg_experiment_phenotype_detail_parent_m'><!--Parent M--></th>
-                <th class=''><!-- => --></th>
+//                <!--Parent F--></th>
+//                <th class=''><!-- X --></th>
+//
+//                <th class='sg_experiment_phenotype_detail_parent_m'><!--Parent M-->
+                </th>
+                <th class=''><!-- => -->
+                </th>
 
                 {foreach $phenotype in keys($experiment.phenotypes)}
                 <th colspan='2' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right'>
@@ -500,6 +510,7 @@
                         {call .strain}
                             {param strain:$experiment.phenotypes[$phenotype].top_female /}
                             {param count:$experiment.phenotypes[$phenotype].females/}
+                            {param percentage: $experiment.phenotypes[$phenotype].females/$experiment.list.length /}
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
@@ -509,6 +520,7 @@
                         {call .strain}
                             {param strain:$experiment.phenotypes[$phenotype].top_male /}
                             {param count:$experiment.phenotypes[$phenotype].males/}
+                            {param percentage: $experiment.phenotypes[$phenotype].males/$experiment.list.length /}
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
@@ -522,9 +534,8 @@
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top' >
             <b>Phenotypes</b>
-            </td><td colspan='4' class='sg_experiment_phenotype_detail_align_top'>
-                    &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Less</button>&nbsp; &nbsp;
-                    <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progeny +</button>
+            </td><td colspan='3' class='sg_experiment_phenotype_detail_align_top'>
+                    &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide phenotype</button>&nbsp; &nbsp;
             </td>
 
 //        </tr>
@@ -532,7 +543,7 @@
 //                    <td><!-- individual --></td>
 //                    <td><!-- parent 1 --></td>
 //                    <td><!-- parent 2 --></td>
-//                    <td><!-- => --></td>
+                    <td><!-- => --></td>
                     {foreach $phenotype in keys($experiment.phenotypes)}
                     <td class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_align_top'>
                         {if $experiment.phenotypes[$phenotype].show_more_females}
@@ -594,10 +605,11 @@
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
             <b>Phenotypes</b>
-            </td><td colspan='4'>
-                    <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>More</button>&nbsp; &nbsp;
-                    <button class='sg_experiment_mate' data-kind="{$experiment.id}">Add progeny +</button>
+            </td><td colspan='3'>
+                    <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show phenotype</button>&nbsp; &nbsp;
+                   // <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
             </td>
+            <td><!-- => --></td>
             {foreach $phenotype in keys($experiment.phenotypes)}
             <td class='sg_experiment_phenotype_detail_left'>
             {if $experiment.phenotypes[$phenotype].show_more_females}

@@ -538,7 +538,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
         UIModel.prototype.clearNewExperiment = function () {
             this.__data__.new_experiment = {
                 list: [],
-                expanded: false
+                expanded: true
             };
         };
         return UIModel;
