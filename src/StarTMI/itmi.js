@@ -42,10 +42,6 @@
         var toProcess = [];
         var a = document.createElement('script'),
             m = document.getElementsByTagName('script')[0];
-        a.async = 1;
-        a.onload = process;
-        a.src = '//cdn.ravenjs.com/1.1.11/raven.min.js';
-        m.parentNode.insertBefore(a, m);
         function process() {
             while( toProcess.length != 0 && window['Raven'])
             {
@@ -60,6 +56,10 @@
                 }
             }
         }
+        a.async = 1;
+        a.onload = process;
+        a.src = '//cdn.ravenjs.com/1.1.11/raven.min.js';
+        m.parentNode.insertBefore(a, m);
         window.RavenConfig = function (a, b,c) {
             toProcess.push({a:a,b:b,callback:c});
             process();
