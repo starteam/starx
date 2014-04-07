@@ -1,7 +1,10 @@
 (function(window,undefined){
 
 var modules = {} ;
-modules['jquery'] = window.$;
+if( window.$ )
+{
+	modules['jquery'] = window.$;
+}
 var require = function(deps, creator) {
     var args = [];
     var global = { window:window };
@@ -45,13 +48,11 @@ var define = function(what, deps, creator) {
         }
         else
         {
-            console.info( 'modules' + modules ) ;
             args.push(modules[m]);
         }
     }
-    console.info( 'define start ' + what);
     var module = creator.apply( creator_this , args );
-    modules[what] = exports;
-    console.info( 'defined end  ' + what);
+    modules[what] = module || exports;
+    console.info( "Define module " , what , module, exports );
 };
-
+define.amd = true;
