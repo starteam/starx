@@ -38,6 +38,7 @@
 // <!-- End Google Analytics -->
 (function (window, document, undefined) {
     console.info("Window - Raven");
+    try {
     if (!window['Raven']) {
         var toProcess = [];
         var a = document.createElement('script'),
@@ -65,4 +66,10 @@
             process();
         }
     }
+    }catch(e) {
+        if( console && console.info )
+        {
+            console.info( e );
+        }
+    };
 })(window, document);
