@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PKG_DIR=packages/tutorial
+export PKG_DIR=packages/V20140407_TUTORIAL
 export OUT_DIR=dist/StarCompiled/V20140407_TUTORIAL/
 mkdir -p $OUT_DIR/SGGWT
 cp -R ../stargenetics_gwt_java/* $OUT_DIR/SGGWT
