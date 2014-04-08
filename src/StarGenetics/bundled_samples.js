@@ -500,11 +500,14 @@ define(["require", "exports"], function(require, exports) {
     };
 
     exports.tutorial = {
+        "ui": {
+            "title": "Tutorial Exercise"
+        },
         "genetics": {
             "visualizer": { "name": "fly" },
             "genome": {
                 "chromosomes": {
-                    "C_1": {
+                    "X": {
                         "name": "Chromosome X",
                         "genes": [
                             {
@@ -534,8 +537,8 @@ define(["require", "exports"], function(require, exports) {
                     name: 'default',
                     matches: '*',
                     phenotype: {
-                        bodycolor: {
-                            text: 'wildtype',
+                        "bodycolor": {
+                            text: 'Wild type',
                             value: 'rgb(152,118,84)'
                         }
                     }
@@ -544,8 +547,8 @@ define(["require", "exports"], function(require, exports) {
                     name: 'Gray body (F)',
                     matches: 'Sex:FEMALE;b,b',
                     phenotype: {
-                        bodycolor: {
-                            text: 'gray',
+                        "bodycolor": {
+                            text: 'Gray',
                             value: 'gray'
                         }
                     }
@@ -555,7 +558,7 @@ define(["require", "exports"], function(require, exports) {
                     matches: 'Sex:MALE;b',
                     phenotype: {
                         bodycolor: {
-                            text: 'gray',
+                            text: 'Gray',
                             value: 'gray'
                         }
                     }
@@ -568,8 +571,8 @@ define(["require", "exports"], function(require, exports) {
                     "name": "Initial Strains",
                     "list": [
                         { "name": "Mutant 1", "sex": "M", "alleles": ["b"] },
-                        { "name": "Wildtype M", "sex": "M", "alleles": ["B,B"] },
-                        { "name": "Wildtype F", "sex": "F", "alleles": ["B"] }
+                        { "name": "Wild type M", "sex": "M", "alleles": ["B"] },
+                        { "name": "Wild type F", "sex": "F", "alleles": ["B,B"] }
                     ]
                 }
             }
@@ -689,6 +692,77 @@ define(["require", "exports"], function(require, exports) {
                         { "name": "Fly 7", "sex": "F", "alleles": ["b,b", "A,A", "w,w"] },
                         { "name": "Fly 8", "sex": "F", "alleles": ["B,B", "a,a", "w,w"] },
                         { "name": "Fly 9", "sex": "F", "alleles": ["b,b", "a,a", "W,W"] }
+                    ]
+                }
+            }
+        }
+    };
+
+    exports.fruit_fly_exercise_1 = {
+        "genetics": {
+            "visualizer": { "name": "fly" },
+            "engine": {
+                "sex_type": "XY",
+                "male_recombination_rate": 0,
+                "female_recombination_rate": 1,
+                "female_sex_ratio": .50,
+                "twinning": 0,
+                "identical_twins_frequency": 0,
+                "avg_offspring_count": 100
+            },
+            "genome": {
+                "chromosomes": {
+                    "C_1": {
+                        "name": "Chromosome 3",
+                        "genes": [
+                            {
+                                "name": "Wingless - dominant",
+                                "position": 0,
+                                "alleles": [
+                                    { "name": "G" },
+                                    { "name": "g" }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "experiments": {},
+            "phenotype_rules": [
+                {
+                    name: 'default',
+                    matches: '*',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'wildtype',
+                            value: 'rgb(152,118,84)'
+                        },
+                        wingsize: {
+                            text: 'wildtype',
+                            value: '1'
+                        }
+                    }
+                },
+                {
+                    name: 'Winged',
+                    matches: 'G',
+                    phenotype: {
+                        wingsize: {
+                            text: 'grounded',
+                            value: '0'
+                        }
+                    }
+                }
+            ],
+            "gel_rules": {},
+            "model_metadata": {},
+            "strains": {
+                "initial": {
+                    "name": "Initial Strains",
+                    "list": [
+                        { "name": "Wildtype M", "sex": "M", "alleles": ["g,g"] },
+                        { "name": "Wildtype F", "sex": "F", "alleles": ["g,g"] },
+                        { "name": "Grounded", "sex": "F", "alleles": ["G,g"] }
                     ]
                 }
             }

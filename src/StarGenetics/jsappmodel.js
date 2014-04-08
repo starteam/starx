@@ -1,6 +1,7 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarGenetics/visualizers/property_name_remap.ts" />
 /// <amd-dependency path="jquery-ui" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -8,7 +9,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(require, exports, underscore) {
+define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "StarX/lib/underscore", "jquery-ui"], function(require, exports, remapper, underscore) {
     var _ = underscore['_'];
 
     var Base = (function () {
@@ -102,6 +103,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         function Strain() {
             _super.apply(this, arguments);
             this.properties_cached = null;
+            this.properties_cached_capitalized = null;
         }
         Object.defineProperty(Strain.prototype, "properties", {
             get: function () {
@@ -133,6 +135,25 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
             enumerable: true,
             configurable: true
         });
+
+        Object.defineProperty(Strain.prototype, "capitalized_properties", {
+            get: function () {
+                if (!this.properties_cached_capitalized) {
+                    function capitalize(str) {
+                        return remapper.Remapper.transform(str);
+                    }
+                    var properties = this.properties;
+                    var ret = {};
+                    _.each(properties, function (q, v) {
+                        ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value'] };
+                    });
+                    this.properties_cached_capitalized = ret;
+                }
+                return this.properties_cached_capitalized;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Strain;
     })(Base);
     exports.Strain = Strain;
@@ -158,11 +179,24 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 });
             });
             this.__data__.propertiesList = _.keys(properties);
+            var cp = {};
+            this.__data__.capitalized_properties = cp;
+            _.each(_.keys(properties), function (e) {
+                cp[e] = remapper.Remapper.transform(e);
+            });
         };
 
         Object.defineProperty(Collapsable.prototype, "propertiesList", {
             get: function () {
-                return this.__data__.propertiesList;
+                return this.__data__.propertiesList || [];
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Collapsable.prototype, "capitalized_properties", {
+            get: function () {
+                return this.__data__.capitalized_properties || [];
             },
             enumerable: true,
             configurable: true
@@ -246,7 +280,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 if (this.parents.length == 1) {
                     //TODO: Depending on the model, it is possible that sex needs to be different...
                     if (this.parents[0].sex == s.sex) {
-                        alert("There is already " + s.sex.toLowerCase() + " parent.");
+                        alert("There is already a " + s.sex.toLowerCase() + " parent.");
                         return;
                     }
                 }
@@ -257,6 +291,13 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
 
         Experiment.prototype.clearParents = function () {
             this.__data__.parents = [];
+        };
+
+        Experiment.prototype.clearParent = function (id) {
+            var new_parents = _.filter(this.__data__.parents, function (elem) {
+                return elem.id != id;
+            });
+            this.__data__.parents = new_parents;
         };
 
         Experiment.prototype.get = function (id) {
@@ -390,6 +431,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
     Base.defineStaticRWField(Experiment, "phenotypes_map", {});
     Base.readOnlyWrappedList(Experiment, "parents", Strain);
     Base.readOnlyField(Experiment, "id", null);
+    Base.defineStaticRWField(Experiment, "discarded", false);
 
     /**
     * Strains box
@@ -445,6 +487,22 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
                 this.show_experiments == this.list.length;
             }
         };
+
+        Experiments.prototype.remove = function (exp) {
+            var exp_list = this.__data__.list;
+            var data_exp = _.find(exp_list, function (e) {
+                return e.id == exp.id;
+            });
+            var index = exp_list.indexOf(data_exp);
+            exp_list.splice(index, 1);
+            if (exp.id == this.show_experiment) {
+                if (exp_list.length > 0) {
+                    this.show_experiment = exp_list[0].id;
+                } else {
+                    this.show_experiment = null;
+                }
+            }
+        };
         return Experiments;
     })(Base);
     exports.Experiments = Experiments;
@@ -480,7 +538,7 @@ define(["require", "exports", "StarX/lib/underscore", "jquery-ui"], function(req
         UIModel.prototype.clearNewExperiment = function () {
             this.__data__.new_experiment = {
                 list: [],
-                expanded: false
+                expanded: true
             };
         };
         return UIModel;

@@ -111,7 +111,7 @@ export var yeast = {
                                 {"name": "LEU2-112"},
                                 {"name": "leu2-112"}
                             ]
-                        },
+                        }
                     ]
                 },
                 "C2": {
@@ -189,322 +189,325 @@ export var yeast = {
                     ]
                 }
             }},
-            "experiments": {},
-            "phenotype_rules": [
-                {
-                    name: 'leu2-3',
-                    matches: 'leu2-3;haploid',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+        "experiments": {},
+        "phenotype_rules": [
+            {
+                name: 'leu2-3',
+                matches: 'leu2-3;haploid',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'leu2-112',
-                    matches: 'leu2-112;haploid',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'leu2-112',
+                matches: 'leu2-112;haploid',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'leux',
-                    matches: 'leux;haploid',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'leux',
+                matches: 'leux;haploid',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'leu2-3 diploid',
-                    matches: 'leu2-3,leu2-3',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'leu2-3 diploid',
+                matches: 'leu2-3,leu2-3',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'leu2-112 diploid',
-                    matches: 'leu2-112,leu2-112',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'leu2-112 diploid',
+                matches: 'leu2-112,leu2-112',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'leux diploid',
-                    matches: 'leux,leux',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'leux diploid',
+                matches: 'leux,leux',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'leu2 broken',
-                    matches: 'leu2-3 LEU2-112,LEU2-3 leu2-112',
-                    phenotype: {
-                        "-Leu": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'leu2 broken',
+                matches: 'leu2-3 LEU2-112,LEU2-3 leu2-112',
+                phenotype: {
+                    "-Leu": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'trp1',
-                    matches: 'trp1;haploid',
-                    phenotype: {
-                        "-Trp": {
-                            "growth": .1
-                        },
-                        "-Trp -Lys": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'trp1',
+                matches: 'trp1;haploid',
+                phenotype: {
+                    "-Trp": {
+                        "growth": .1
+                    },
+                    "-Trp -Lys": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'trp1 diploid',
-                    matches: 'trp1,trp1',
-                    phenotype: {
-                        "-Trp": {
-                            "growth": .1
-                        },
-                        "-Trp -Lys": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                name: 'trp1 diploid',
+                matches: 'trp1,trp1',
+                phenotype: {
+                    "-Trp": {
+                        "growth": .1
+                    },
+                    "-Trp -Lys": {
+                        "growth": .1
                     }
-                },
-                {
-                    name: 'ade1',
-                    matches: 'ade1;haploid',
-                    phenotype: {
-                        "Complete": {
-                            "color": "red"
-                        },
-                        "YPG": {
-                            "color": "red"
-                        },
-                        "-Leu": {
-                            "color": "red"
-                        },
-                        "-Ade": {
-                            "color": "red",
-                            "growth": .1
-                        },
-                        "-Lys": {
-                            "color": "red"
-                        },
-                        "-Trp": {
-                            "color": "red"
-                        },
-                        "-Trp -Lys": {
-                            "color": "red"
-                        }
+                }
+            },
+            {
+                name: 'ade1',
+                matches: 'ade1;haploid',
+                phenotype: {
+                    "Complete": {
+                        "color": "red"
+                    },
+                    "YPG": {
+                        "color": "red"
+                    },
+                    "-Leu": {
+                        "color": "red"
+                    },
+                    "-Ade": {
+                        "color": "red",
+                        "growth": .1
+                    },
+                    "-Lys": {
+                        "color": "red"
+                    },
+                    "-Trp": {
+                        "color": "red"
+                    },
+                    "-Trp -Lys": {
+                        "color": "red"
                     }
-                },
-                {
-                    name: 'ade1 diploid',
-                    matches: 'ade1,ade1',
-                    phenotype: {
-                        "Complete": {
-                            "color": "red"
-                        },
-                        "YPG": {
-                            "color": "red"
-                        },
-                        "-Leu": {
-                            "color": "red"
-                        },
-                        "-Ade": {
-                            "color": "red",
-                            "growth": .1
-                        },
-                        "-Lys": {
-                            "color": "red"
-                        },
-                        "-Trp": {
-                            "color": "red"
-                        },
-                        "-Trp -Lys": {
-                            "color": "red"
-                        }
+                }
+            },
+            {
+                name: 'ade1 diploid',
+                matches: 'ade1,ade1',
+                phenotype: {
+                    "Complete": {
+                        "color": "red"
+                    },
+                    "YPG": {
+                        "color": "red"
+                    },
+                    "-Leu": {
+                        "color": "red"
+                    },
+                    "-Ade": {
+                        "color": "red",
+                        "growth": .1
+                    },
+                    "-Lys": {
+                        "color": "red"
+                    },
+                    "-Trp": {
+                        "color": "red"
+                    },
+                    "-Trp -Lys": {
+                        "color": "red"
                     }
-                },
-                {
-                    "name": "cox4",
-                    "matches": "cox4;haploid",
-                    "phenotype": {
-                        "Complete": {
-                            "size": .25
-                        },
-                        "YPG": {
-                            "size": .25,
-                            "growth": .1
-                        },
-                        "-Leu": {
-                            "size": .25
-                        },
-                        "-Ade": {
-                            "size": .25
-                        },
-                        "-Lys": {
-                            "size": .25
-                        },
-                        "-Trp": {
-                            "size": .25
-                        },
-                        "-Lys -Trp": {
-                            "size": .25
-                        }
-                    }
-
-                },
-                {
-                    "name": "cox4 diploid",
-                    "matches": "cox4;cox4",
-                    "phenotype": {
-                        "Complete": {
-                            "size": .25
-                        },
-                        "YPG": {
-                            "size": .25,
-                            "growth": .1
-                        },
-                        "-Leu": {
-                            "size": .25
-                        },
-                        "-Ade": {
-                            "size": .25
-                        },
-                        "-Lys": {
-                            "size": .25
-                        },
-                        "-Trp": {
-                            "size": .25
-                        },
-                        "-Lys -Trp": {
-                            "size": .25
-                        }
-                    }
-
-                },
-                {
-                    "name": "pet1",
-                    "matches": "pet1;haploid",
-                    "phenotype": {
-                        "Complete": {
-                            "size": .25
-                        },
-                        "YPG": {
-                            "size": .25,
-                            "growth": .1
-                        },
-                        "-Leu": {
-                            "size": .25
-                        },
-                        "-Ade": {
-                            "size": .25
-                        },
-                        "-Lys": {
-                            "size": .25
-                        },
-                        "-Trp": {
-                            "size": .25
-                        },
-                        "-Lys -Trp": {
-                            "size": .25
-                        }
-                    }
-
-                },
-                {
-                    "name": "pet1 diploid",
-                    "matches": "pet1,pet1",
-                    "phenotype": {
-                        "Complete": {
-                            "size": .25
-                        },
-                        "YPG": {
-                            "size": .25,
-                            "growth": .1
-                        },
-                        "-Leu": {
-                            "size": .25
-                        },
-                        "-Ade": {
-                            "size": .25
-                        },
-                        "-Lys": {
-                            "size": .25
-                        },
-                        "-Trp": {
-                            "size": .25
-                        },
-                        "-Lys -Trp": {
-                            "size": .25
-                        }
-                    }
-
-                },
-                {
-                    name: 'lys9',
-                    matches: 'lys9;haploid',
-                    phenotype: {
-                        "-Lys": {
-                            "growth": .1
-                        },
-                        "-Trp -Lys": {
-                            "growth": .1
-                        }
-                    }
-                },
-                {
-                    name: 'lys9 diploid',
-                    matches: 'lys9',
-                    phenotype: {
-                        "-Lys": {
-                            "growth": .1
-                        },
-                        "-Trp -Lys": {
-                            "growth": .1
-                        }
+                }
+            },
+            {
+                "name": "cox4",
+                "matches": "cox4;haploid",
+                "phenotype": {
+                    "Complete": {
+                        "size": .25
+                    },
+                    "YPG": {
+                        "size": .25,
+                        "growth": .1
+                    },
+                    "-Leu": {
+                        "size": .25
+                    },
+                    "-Ade": {
+                        "size": .25
+                    },
+                    "-Lys": {
+                        "size": .25
+                    },
+                    "-Trp": {
+                        "size": .25
+                    },
+                    "-Lys -Trp": {
+                        "size": .25
                     }
                 }
 
+            },
+            {
+                "name": "cox4 diploid",
+                "matches": "cox4;cox4",
+                "phenotype": {
+                    "Complete": {
+                        "size": .25
+                    },
+                    "YPG": {
+                        "size": .25,
+                        "growth": .1
+                    },
+                    "-Leu": {
+                        "size": .25
+                    },
+                    "-Ade": {
+                        "size": .25
+                    },
+                    "-Lys": {
+                        "size": .25
+                    },
+                    "-Trp": {
+                        "size": .25
+                    },
+                    "-Lys -Trp": {
+                        "size": .25
+                    }
+                }
 
-            ],
-            "gel_rules":{},
-            "model_metadata":{},
-            "strains":{
-                "initial":{
-                    "name":"Initial Strains",
-                    "list":[
-                        {"name":"Strain 1", "sex":"a",      "alleles": ["leu2-3","LEU2-112","LEUX","ADE1","COX4","PET1","LYS9","trp1"]},
-                        {"name":"Strain 2", "sex":"alpha",  "alleles": ["LEU2-3","leu2-112","LEUX","ADE1","COX4","PET1","LYS9","trp1"]},
-                        {"name":"Strain 3", "sex":"alpha",  "alleles": ["LEU2-3","LEU2-112","leux","ADE1","COX4","PET1","LYS9","trp1"]},
-                        {"name":"Strain 4", "sex":"a",      "alleles": ["LEU2-3","LEU2-112","LEUX","ade1","COX4","PET1","LYS9","TRP1"]},
-                        {"name":"Strain 5", "sex":"a",      "alleles": ["LEU2-3","LEU2-112","LEUX","ADE1","cox4","PET1","LYS9","TRP1"]},
-                        {"name":"Strain 6", "sex":"alpha",  "alleles": ["LEU2-3","LEU2-112","LEUX","ADE1","COX4","pet1","LYS9","TRP1"]},
-                        {"name":"MATa tester", "sex":"a",      "alleles": ["LEU2-3","LEU2-112","LEUX","ADE1","COX4","PET1","lys9","TRP1"]},
-                        {"name":"MATalpha tester", "sex":"alpha",  "alleles": ["LEU2-3","LEU2-112","LEUX","ADE1","COX4","PET1","lys9","TRP1"]}
-                    ]
+            },
+            {
+                "name": "pet1",
+                "matches": "pet1;haploid",
+                "phenotype": {
+                    "Complete": {
+                        "size": .25
+                    },
+                    "YPG": {
+                        "size": .25,
+                        "growth": .1
+                    },
+                    "-Leu": {
+                        "size": .25
+                    },
+                    "-Ade": {
+                        "size": .25
+                    },
+                    "-Lys": {
+                        "size": .25
+                    },
+                    "-Trp": {
+                        "size": .25
+                    },
+                    "-Lys -Trp": {
+                        "size": .25
+                    }
+                }
+
+            },
+            {
+                "name": "pet1 diploid",
+                "matches": "pet1,pet1",
+                "phenotype": {
+                    "Complete": {
+                        "size": .25
+                    },
+                    "YPG": {
+                        "size": .25,
+                        "growth": .1
+                    },
+                    "-Leu": {
+                        "size": .25
+                    },
+                    "-Ade": {
+                        "size": .25
+                    },
+                    "-Lys": {
+                        "size": .25
+                    },
+                    "-Trp": {
+                        "size": .25
+                    },
+                    "-Lys -Trp": {
+                        "size": .25
+                    }
+                }
+
+            },
+            {
+                name: 'lys9',
+                matches: 'lys9;haploid',
+                phenotype: {
+                    "-Lys": {
+                        "growth": .1
+                    },
+                    "-Trp -Lys": {
+                        "growth": .1
+                    }
+                }
+            },
+            {
+                name: 'lys9 diploid',
+                matches: 'lys9',
+                phenotype: {
+                    "-Lys": {
+                        "growth": .1
+                    },
+                    "-Trp -Lys": {
+                        "growth": .1
+                    }
                 }
             }
+
+
+        ],
+        "gel_rules": {},
+        "model_metadata": {},
+        "strains": {
+            "initial": {
+                "name": "Initial Strains",
+                "list": [
+                    {"name": "Strain 1", "sex": "a", "alleles": ["leu2-3", "LEU2-112", "LEUX", "ADE1", "COX4", "PET1", "LYS9", "trp1"]},
+                    {"name": "Strain 2", "sex": "alpha", "alleles": ["LEU2-3", "leu2-112", "LEUX", "ADE1", "COX4", "PET1", "LYS9", "trp1"]},
+                    {"name": "Strain 3", "sex": "alpha", "alleles": ["LEU2-3", "LEU2-112", "leux", "ADE1", "COX4", "PET1", "LYS9", "trp1"]},
+                    {"name": "Strain 4", "sex": "a", "alleles": ["LEU2-3", "LEU2-112", "LEUX", "ade1", "COX4", "PET1", "LYS9", "TRP1"]},
+                    {"name": "Strain 5", "sex": "a", "alleles": ["LEU2-3", "LEU2-112", "LEUX", "ADE1", "cox4", "PET1", "LYS9", "TRP1"]},
+                    {"name": "Strain 6", "sex": "alpha", "alleles": ["LEU2-3", "LEU2-112", "LEUX", "ADE1", "COX4", "pet1", "LYS9", "TRP1"]},
+                    {"name": "MATa tester", "sex": "a", "alleles": ["LEU2-3", "LEU2-112", "LEUX", "ADE1", "COX4", "PET1", "lys9", "TRP1"]},
+                    {"name": "MATalpha tester", "sex": "alpha", "alleles": ["LEU2-3", "LEU2-112", "LEUX", "ADE1", "COX4", "PET1", "lys9", "TRP1"]}
+                ]
+            }
+        }
 
 
     }
 }
 
 export var tutorial = {
+    "ui":{
+        "title":"Tutorial Exercise"
+    },
     "genetics": {
         "visualizer": {"name": "fly"},
         "genome": {
             "chromosomes": {
-                "C_1": {
+                "X": {
                     "name": "Chromosome X",
                     "genes": [
                         { "name": "Body Color",
@@ -533,18 +536,18 @@ export var tutorial = {
             {   name: 'default',
                 matches: '*',
                 phenotype: {
-                    bodycolor: {
-                        text: 'wildtype',
+                    "bodycolor": {
+                        text: 'Wild type',
                         value: 'rgb(152,118,84)'
-                    },
+                    }
                 }
             },
             {
                 name: 'Gray body (F)',
                 matches: 'Sex:FEMALE;b,b',
                 phenotype: {
-                    bodycolor: {
-                        text: 'gray',
+                    "bodycolor": {
+                        text: 'Gray',
                         value: 'gray'
                     }
                 }
@@ -554,7 +557,7 @@ export var tutorial = {
                 matches: 'Sex:MALE;b',
                 phenotype: {
                     bodycolor: {
-                        text: 'gray',
+                        text: 'Gray',
                         value: 'gray'
                     }
                 }
@@ -567,8 +570,8 @@ export var tutorial = {
                 "name": "Initial Strains",
                 "list": [
                     {"name": "Mutant 1", "sex": "M", "alleles": [ "b" ]},
-                    {"name": "Wildtype M", "sex": "M", "alleles": [ "B,B" ]},
-                    {"name": "Wildtype F", "sex": "F", "alleles": [ "B" ]}
+                    {"name": "Wild type M", "sex": "M", "alleles": [ "B" ]},
+                    {"name": "Wild type F", "sex": "F", "alleles": [ "B,B" ]}
                 ]
             }
         }
@@ -689,6 +692,75 @@ export var fruit_fly_exercise_5 = {
                     {"name": "Fly 7", "sex": "F", "alleles": [ "b,b", "A,A", "w,w" ]},
                     {"name": "Fly 8", "sex": "F", "alleles": [ "B,B", "a,a", "w,w" ]},
                     {"name": "Fly 9", "sex": "F", "alleles": [ "b,b", "a,a", "W,W" ]}
+                ]
+            }
+        }
+    }
+}
+
+export var fruit_fly_exercise_1 = {
+    "genetics": {
+        "visualizer": {"name": "fly"},
+        "engine": {
+            "sex_type": "XY",
+            "male_recombination_rate": 0,
+            "female_recombination_rate": 1,
+            "female_sex_ratio": .50,
+            "twinning": 0,
+            "identical_twins_frequency": 0,
+            "avg_offspring_count": 100
+        },
+        "genome": {
+            "chromosomes": {
+                "C_1": {
+                    "name": "Chromosome 3",
+                    "genes": [
+                        { "name": "Wingless - dominant",
+                            "position": 0,
+                            "alleles": [
+                                {"name": "G"},
+                                {"name": "g"}
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "experiments": {},
+        "phenotype_rules": [
+            {   name: 'default',
+                matches: '*',
+                phenotype: {
+                    bodycolor: {
+                        text: 'wildtype',
+                        value: 'rgb(152,118,84)'
+                    },
+                    wingsize: {
+                        text: 'wildtype',
+                        value: '1'
+                    }
+                }
+            },
+            {
+                name: 'Winged',
+                matches: 'G',
+                phenotype: {
+                    wingsize: {
+                        text: 'grounded',
+                        value: '0'
+                    }
+                }
+            }
+        ],
+        "gel_rules": {},
+        "model_metadata": {},
+        "strains": {
+            "initial": {
+                "name": "Initial Strains",
+                "list": [
+                    {"name": "Wildtype M", "sex": "M", "alleles": [ "g,g" ]},
+                    {"name": "Wildtype F", "sex": "F", "alleles": [ "g,g" ]},
+                    {"name": "Grounded", "sex": "F", "alleles": [ "G,g" ]}
                 ]
             }
         }

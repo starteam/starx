@@ -28,12 +28,41 @@
             console.info("receiveMessage");
             console.info(event);
         }
-        if( event['data'] && event['data']['command'] == 'event')
-        {
-            window[ga]('send',event.data.command , event.data.category, event.data.action, event.data.label );
+        if (event['data'] && event['data']['command'] == 'event') {
+            window[ga]('send', event.data.command, event.data.category, event.data.action, event.data.label);
         }
     };
 
     window.addEventListener('message', receiveMessage, false);
 })(window, document, Math);
 // <!-- End Google Analytics -->
+(function (window, document, undefined) {
+    console.info("Window - Raven");
+    if (!window['Raven']) {
+        var toProcess = [];
+        var a = document.createElement('script'),
+            m = document.getElementsByTagName('script')[0];
+        a.async = 1;
+        a.onload = process;
+        a.src = '//cdn.ravenjs.com/1.1.11/raven.min.js';
+        m.parentNode.insertBefore(a, m);
+        function process() {
+            while( toProcess.length != 0 && window['Raven'])
+            {
+                var q = toProcess.shift();
+                window['Raven'].config(q.a, q.b).install();
+                if( q.callback ) {
+                    try {
+                        q.callback(window['Raven']);
+                    }
+                    catch(e)
+                    {};
+                }
+            }
+        }
+        window.RavenConfig = function (a, b,c) {
+            toProcess.push({a:a,b:b,callback:c});
+            process();
+        }
+    }
+})(window, document);

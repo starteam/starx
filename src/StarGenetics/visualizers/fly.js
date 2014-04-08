@@ -14,7 +14,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             this.bodyColor = 'rgb(152,118,84)';
             this.headColor = 'black';
             this.eyeColor = 'red';
-            this.wingColor = 'rgba(200,200,200,.8)';
+            this.wingColor = 'rgba(64,64,64,.2)';
             this.aristaeLength = 1;
             this.wingSize = 1;
         }

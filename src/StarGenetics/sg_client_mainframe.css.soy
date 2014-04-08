@@ -9,24 +9,30 @@ css file
   left: 20px;
   min-height: 800px;
   min-width: 650px;
-  max-width: 820px;
-  resize: both;
+  resize: none;
   overflow-x: hidden;
+  font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
 {rb}
-.sg_workspace_title {lb}
-  display: block;
+.sg_exercise_title {lb}
+  display: inline-block;
   top: 0px;
   left: 0px;
-  width: 100%;
   height: 50px;
   background: white;
   border: black 1px;
+  font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
   font-size: 15pt;
+{rb}
+.sg_logo {lb}
+  width: 200px;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
 {rb}
 .sg_strains_box {lb}
   display: block;
   background: #ffffff;
-  border: 1px solid #f0f4f8;
+  border: 1px solid #a0a4a8;
   margin-bottom: 8px;
 {rb}
 .sg_strains_title {lb}
@@ -40,26 +46,51 @@ css file
 {rb}
 .sg_s_strain_box {lb}
   display: inline-block;
+  margin: 1px;
+  padding: 0px;
+{rb}
+.sg_strain_box_hover:hover {lb}
   margin: 0px;
+  border: 1px solid #add8e6;
+  border-radius: 9px;
+  cursor: copy;
 {rb}
 .sg_strain_title {lb}
   display: block;
   vertical-align: top;
   width: 100%;
   height: 25px;
+  white-space: nowrap;
+{rb}
+.sg_strain_title > img {lb}
+  float: right;
 {rb}
 .sg_strain_visual {lb}
   display: block;
   vertical-align: top;
   text-align: center;
   vertical-align: text-bottom;
-  cursor: move;
+  position: relative;
+{rb}
+.sg_strain_visual_canvas {lb}
+  position: static;
+  top: 0px;
+  left: 0px;
+{rb}
+.sg_strain_visual_canvas_sex {lb}
+  position: absolute;
+  right: 5px;
+  bottom: 0px;
+  zoom: 75%;
+  float: left;
+  opacity: .65;
+  z-index: 2;
 {rb}
 .sg_experiment_box {lb}
   display: block;
   vertical-align: top;
-  width: 100%;
-  border: 1px solid #f0f4f8;
+  margin-bottom: 8px;
+  border: 1px solid #a0a4a8;
 {rb}
 .sg_experiment_heading {lb}
   display: block;
@@ -80,18 +111,81 @@ css file
   display: block;
   background-color: orangered;
 {rb}
+.sg_experiment_parents_wrapper {lb}
+  position: relative;
+  left: 110px;
+{rb}
 .sg_experiment_parents {lb}
   vertical-align: top;
   display: inline-block;
+  text-align: center;
 {rb}
 .sg_experiment_parent {lb}
   vertical-align: top;
   display: inline-block;
   margin: 5px;
-  width: 70px;
+  min-width: 70px;
   height: 80px;
-  background-color: aliceblue;
   text-align: center;
+  position: relative;
+  border: 2px dashed #808080;
+  border-radius: 8px;
+  padding: 2px;
+{rb}
+.sg_s_experiment_parent_table {lb}
+  vertical-align: top;
+  display: inline-block;
+  margin: 5px;
+  min-width: 70px;
+  height: 80px;
+  text-align: center;
+  position: relative;
+  border: 2px dashed #808080;
+  border-radius: 8px;
+  padding: 2px;
+{rb}
+td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {lb}
+  top: 0px;
+{rb}
+.sg_experiment_parent_remove {lb}
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  border: 0px;
+  padding: 3px;
+{rb}
+.sg_experiment_parent_x {lb}
+  display: inline-block;
+  vertical-align: center;
+  position: relative;
+  top: 25px;
+  font-size: 30pt;
+{rb}
+td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
+  top: 0px;
+{rb}
+.sg_s_experiment_parent_x_floaty {lb}
+  float: left;
+  position: relative;
+  left: 110px;
+  width: 0px;
+{rb}
+.sg_s_experiment_parent_to_floaty {lb}
+  display: inline-block;
+  vertical-align: center;
+  font-size: 30pt;
+  padding-right: 20px;
+{rb}
+.sg_experiment_parents_can_mate {lb}
+  display: inline-block;
+  max-width: 300px;
+  margin-left: 10pt;
+{rb}
+.sg_experiment_parents_can_mate_info {lb}
+  padding-top: 10pt;
+  padding-bottom: 5pt;
 {rb}
 .sg_s_col_head {lb}
   border-right: solid black 1px;
@@ -100,34 +194,35 @@ css file
   border-bottom: solid black 1px;
 {rb}
 .sg_title_box {lb}
-  font-size: 14pt;
-  font-weight: 800;
-  background-color: #f0f4f8;
-  padding-left: 8px;
+  font-size: 13.5pt;
+  font-weight: 400;
+  padding-left: 6px;
+  text-transform: uppercase;
+  padding-top: 6px;
 {rb}
 .sg_add_strain_box {lb}
   vertical-align: top;
   width: 70px;
   heigth: 80px;
-  background-color: aliceblue;
 {rb}
-.sg_expand {lb}
+.sg_s_expand {lb}
   border: none;
   border-radius: 9px;
   float: right;
   margin-right: 10px;
   background: #e3e3e3;
+{rb}
+.sg_s_expand_mating_site {lb}
+  margin-left: 150px;
+  margin-bottom: 1em;
 {rb}
 .sg_strain_expand_properties {lb}
-  border: none;
-  border-radius: 9px;
-  float: right;
-  margin-right: 10px;
-  background: #e3e3e3;
+  padding-left: 10px;
+  padding-right: 10px;
 {rb}
 .sg_new_experiment_box {lb}
-  margin-bottom: 5px;
-  border: 1px solid #f0f4f8;
+  margin-bottom: 8px;
+  border: 1px solid #a0a4a8;
   position: static;
 {rb}
 .sg_s_clear_parents,
@@ -136,43 +231,73 @@ css file
   border-radius: 9px;
   background: #e3e3e3;
 {rb}
+.sg_s_new_experiment_mate_large {lb}
+  background-image: linear-gradient(#51b151, #8aca8a) !important;
+{rb}
 table {lb}
   border-collapse: collapse;
 {rb}
-table tbody tr td {lb}
-  border: 1px solid #f0f4f8;
-{rb}
 .sg_s_row_head {lb}
-  border: 1px solid #f0f4f8;
+  border: 1px solid #a0a4a8;
   background: white;
 {rb}
 .sg_strain_box {lb}
   text-align: center;
+  z-index: 99;
 {rb}
 .sg_mini_experiment_box {lb}
   display: inline-block;
   width: auto;
   position: relative;
+  margin: 1px;
+  border: 1px solid #f0f0f0;
+  margin-right: 8px;
+  padding: 5px;
+{rb}
+.sg_mini_experiment_box:hover {lb}
+  border: 1px solid #add8e6;
+  border-radius: 9px;
+{rb}
+.sg_experiment_phenotype_detail_parent_m {lb}
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+{rb}
+.sg_experiment_phenotype_detail_parent_f {lb}
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
 {rb}
 .sg_experiment_phenotype_detail_left {lb}
   text-align: center;
-  text-transform: capitalize;
   border-left: 1px solid #d0d4d8;
   padding-left: 5px;
   padding-right: 5px;
 {rb}
 .sg_experiment_phenotype_detail_right {lb}
   text-align: center;
-  text-transform: capitalize;
   border-right: 1px solid #d0d4d8;
   padding-left: 5px;
   padding-right: 5px;
 {rb}
+.sg_experiment_phenotype_detail_double {lb}
+  padding-left: 15px !important;
+  text-align: center !important;
+{rb}
+.sg_experiment_phenotype_detail_header {lb}
+  width: 5.5em;
+{rb}
 .sg_experiment_p_count {lb}
   text-align: center;
 {rb}
+.sg_strains_p_visual {lb}
+  text-align: center !important;
+{rb}
 .sg_experiment_p_visual {lb}
-  text-align: center;
+  text-align: center !important;
+{rb}
+.sg_experiment_phenotype_detail_align_top {lb}
+  vertical-align: top !important;
 {rb}
 .sg_slider {lb}
   width: 100%;
@@ -195,6 +320,7 @@ table tbody tr td {lb}
   position: relative;
   left: 0px;
   top: 0px;
+  white-space: nowrap;
 {rb}
 .sg_experiment_box_floaty {lb}
   position: absolute;
@@ -207,5 +333,84 @@ table tbody tr td {lb}
 {rb}
 .sg_experiment_selected {lb}
   border: 1px solid black;
+{rb}
+.sg_experiment_selected:hover {lb}
+  border: 1px solid black;
+{rb}
+.sg_experiment_history {lb}
+  border: 1px solid #a0a4a8;
+{rb}
+.sg_slider_widget_wrapper {lb}
+  overflow-x: scroll;
+  resize: none;
+  padding: 8px;
+  width: 100%;
+{rb}
+.sg_strain_add_strain {lb}
+  border: 2px dashed #808080;
+  border-radius: 8px;
+  font-size: 50px;
+  padding: 10px;
+  padding-bottom: 20px;
+{rb}
+::-webkit-scrollbar {lb}
+  -webkit-appearance: none;
+  width: 7px;
+{rb}
+::-webkit-scrollbar-thumb {lb}
+  border-radius: 4px;
+  background-color: rgba(192, 192, 192, 0.3);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+{rb}
+.sg_plus_floaty {lb}
+  float: right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #add8e6;
+  padding: 1px;
+  font-size: 12pt;
+{rb}
+.sg_s_rename {lb}
+  border-bottom: 2px dotted #add8e6;
+  cursor: pointer;
+{rb}
+.sg_s_discard {lb}
+  float: right;
+  margin-right: 6px;
+  cursor: pointer;
+{rb}
+.sg_slider_widget_wrapper table tbody tr td {lb}
+  text-align: center !important;
+{rb}
+.sg_new_experiment_mate_count {lb}
+  width: 5em !important;
+  margin-bottom: 5px;
+  margin-right: 5px;
+{rb}
+.sg_workapace_button {lb}
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  margin-bottom: 5px !important;
+{rb}
+table.sg_slider_table tbody tr th {lb}
+  text-align: center !important;
+{rb}
+div.sg_mini_experiment_box table.sg_slider_table {lb}
+  margin: 0px !important;
+{rb}
+div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
+  max-height: 20px;
+{rb}
+.sg_expand_females {lb}
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+{rb}
+.sg_expand_males {lb}
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+{rb}
+.sg_s_strain_remove {lb}
+  float: right;
 {rb}
 {/template}
