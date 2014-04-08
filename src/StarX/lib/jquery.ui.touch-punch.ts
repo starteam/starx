@@ -1,6 +1,6 @@
 /// <reference path="../../StarX/lib/jquery.d.ts" />
-/// <amd-dependency path="StarX/lib/jquery.ui.touch-punch" />
-
+/// <amd-dependency path="jquery-ui" />
+/// <amd-dependency path="../../StarX/jquery.ui.touch-punch" />
 
 declare var $:JQueryStatic;
 

@@ -1,11 +1,9 @@
-define(["require", "exports", "jquery"], function(require, exports, __jQuery__) {
-    var jQuery = __jQuery__;
+/// <reference path="../../StarX/lib/jquery.d.ts" />
+/// <amd-dependency path="StarX/lib/jquery.ui.touch-punch" />
+define(["require", "exports", "jquery", "StarX/lib/jquery.ui.touch-punch"], function(require, exports, jQuery) {
+    
 
     exports.$ = jQuery;
-    if(jQuery && jQuery['noConflict'])
-    {
-        jQuery['noConflict'](true);
-    }
 
     var version = (function () {
         function version() {
@@ -16,4 +14,4 @@ define(["require", "exports", "jquery"], function(require, exports, __jQuery__) 
     exports.version = version;
     ;
 });
-//@ sourceMappingURL=jquery.js.map
+//# sourceMappingURL=jquery.js.map

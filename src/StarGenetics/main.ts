@@ -1,9 +1,11 @@
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
+/// <reference path="../StarX/lib/jquery.ts" />
 /// <reference path="jsappmodel.ts" />
 
-import $ = require("jquery");
+import jQuery = require("../StarX/lib/jquery");
+var $ = jQuery['$'];
 
 import JSStarGenetics = require('StarGenetics/jsappwidget');
 
