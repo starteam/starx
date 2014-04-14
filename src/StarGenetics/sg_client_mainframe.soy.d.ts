@@ -17,6 +17,7 @@ declare module "StarGenetics/sg_client_mainframe.soy" {
 	function female_icon(state:any):any;
 	function sg_logo(state:any):any;
 	function plus_floaty(state:any):any;
+	function sg_expand_females(state:any):any;
 }
 declare function gwt_content(state:any):any;
 declare function main(state:any):any;
@@ -35,3 +36,4 @@ declare function male_icon(state:any):any;
 declare function female_icon(state:any):any;
 declare function sg_logo(state:any):any;
 declare function plus_floaty(state:any):any;
+declare function sg_expand_females(state:any):any;

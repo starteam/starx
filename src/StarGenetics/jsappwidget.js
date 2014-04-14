@@ -391,13 +391,28 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 self.show();
             });
 
+            $('.sg_dialog_close', main).off('click').on('click', function () {
+                debugger;
+                var $parent = $(this).closest('[data-widget="dialog"]');
+                $parent.detach();
+            });
+
             $('.sg_expand_males').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 var phenotype_id = $(this).data('phenotype-id');
                 var phenotype = JSON.stringify(phenotype_id);
-                c['phenotypes'][phenotype].show_more_males = $(this).data('state');
+
+                //            c['phenotypes'][phenotype].show_more_males = $(this).data('state');
                 tmi.event("StarGenetics", "sg_expand_males");
-                self.show();
+
+                //            self.show();
+                var $parent = $(this).closest('.sg_experiment_box');
+                var $dialog = $(SGUIMAIN.sg_expand_females({ experiment: c, phenotype: phenotype, list_kind: 'males_list' })).appendTo($parent);
+                var offset_parent = $parent.offset();
+                var offset_this = $(this).offset();
+                $dialog.css({ top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px" });
+                self.apply_visualizer($dialog);
+                self.apply_strain_drag_and_drop(main);
             });
             $('.sg_move_start_males').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
@@ -412,9 +427,17 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var c = self.model.ui.get($(this).data('kind'));
                 var phenotype_id = $(this).data('phenotype-id');
                 var phenotype = JSON.stringify(phenotype_id);
-                c['phenotypes'][phenotype].show_more_females = $(this).data('state');
+
+                //            c['phenotypes'][phenotype].show_more_females = $(this).data('state');
                 tmi.event("StarGenetics", "sg_expand_females");
-                self.show();
+                var $parent = $(this).closest('.sg_experiment_box');
+                var $dialog = $(SGUIMAIN.sg_expand_females({ experiment: c, phenotype: phenotype, list_kind: 'females_list' })).appendTo($parent);
+                var offset_parent = $parent.offset();
+                var offset_this = $(this).offset();
+                $dialog.css({ top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px" });
+                self.apply_visualizer($dialog);
+                self.apply_strain_drag_and_drop(main);
+                self.sg_dialog_close($dialog);
             });
             $('.sg_move_start_females').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
@@ -556,57 +579,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     } });
                 self.show();
             });
-            $('.sg_strain_box').draggable({
-                revert: true,
-                start: function (e) {
-                    var parent = [];
-                    $(e.target).parents('.sg_slider_widget_wrapper').each(function () {
-                        parent.push(this);
-                    });
-                    console.info(parent);
-                    $(parent).each(function () {
-                        console.info("Start", this);
-                        window['box'] = this;
-                        var left_scroll = this.scrollLeft;
-                        $(this).css({ 'overflow-x': 'visible', 'margin-bottom': '15px' });
-                        $('[data-widget="slider-table"]', this).css({
-                            'position': 'relative',
-                            'left': -left_scroll + 'px'
-                        });
-                    });
-                    console.info("Start", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
-                },
-                stop: function (e) {
-                    var parent = [];
-                    $(e.target).parents('.sg_slider_widget_wrapper').each(function () {
-                        parent.push(this);
-                    });
-                    $(parent).each(function () {
-                        var $table = $('[data-widget="slider-table"]', this);
-                        var left_scroll = parseInt($table.css('left'));
-                        $table.css({
-                            'position': 'relative',
-                            'left': '0px'
-                        });
-                        $(this).css({ 'overflow-x': 'scroll', 'margin-bottom': '0px' }).scrollLeft(-left_scroll);
-                    });
-                    console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
-                },
-                helper: function (event) {
-                    console.info("HELPER", event, this);
-                    var copy = $(this).clone().removeAttr("id");
-                    copy.append(SGUIMAIN.plus_floaty({}));
-                    var canvas0 = $('canvas', this)[0];
-                    if (canvas0) {
-                        var canvas = $('canvas', copy)[0];
-                        canvas.width = canvas0.width;
-                        canvas.height = canvas0.height;
-                        var context = canvas.getContext('2d');
-                        context.drawImage(canvas0, 0, 0);
-                    }
-                    return copy;
-                }
-            }).addClass('sg_strain_box_hover');
 
             $('.sg_strain_box', '.sg_mini_experiment_box').draggable({ 'disabled': true }).addClass('sg_strain_box_nohover');
 
@@ -633,22 +605,8 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     self.show();
                 } });
 
-            var visualizer_name = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
-            var visualizer = new SGSmiley.Smiley();
-            if (visualizer_name == 'fly') {
-                visualizer = new SGFly.Fly();
-            }
-            $('.sg_strain_visual canvas').each(function () {
-                var c = self.model.ui.get($(this).data('kind'));
-                var organism = c.get($(this).data('id'));
-                visualizer.render($(this)[0], organism.properties, organism);
-                window['c'] = this;
-                window['v'] = visualizer;
-                var qq = this;
-                window['rr'] = function () {
-                    visualizer.render($(qq)[0], organism.properties, organism);
-                };
-            });
+            self.apply_visualizer(main);
+            self.apply_strain_drag_and_drop(main);
 
             $('.sg_workspace_save', main).off('click').on('click', function () {
                 console.info("Save");
@@ -667,6 +625,117 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     self.reset();
                 }
             });
+        };
+
+        StarGeneticsJSAppWidget.prototype.sg_dialog_close = function ($dialog) {
+            $('.sg_dialog_close', $dialog).off('click').on('click', function () {
+                var $parent = $(this).closest('[data-widget="dialog"]');
+                $parent.detach();
+            });
+        };
+
+        StarGeneticsJSAppWidget.prototype.apply_visualizer = function (scope) {
+            var self = this;
+            var visualizer_name = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
+            var visualizer = new SGSmiley.Smiley();
+            if (visualizer_name == 'fly') {
+                visualizer = new SGFly.Fly();
+            }
+            $('.sg_strain_visual canvas', scope).each(function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                var organism = c.get($(this).data('id'));
+                visualizer.render($(this)[0], organism.properties, organism);
+                window['c'] = this;
+                window['v'] = visualizer;
+                var qq = this;
+                window['rr'] = function () {
+                    visualizer.render($(qq)[0], organism.properties, organism);
+                };
+            });
+        };
+
+        StarGeneticsJSAppWidget.prototype.apply_strain_drag_and_drop = function (scope) {
+            var self = this;
+            $('.sg_strain_box').draggable({
+                revert: true,
+                start: function (e) {
+                    var parent = $(e.target).closest('.sg_slider_widget_wrapper');
+
+                    //                var parent = [];
+                    //                $(e.target).parents('.sg_slider_widget_wrapper').each(function () {
+                    //                    parent.push(this);
+                    //                })
+                    console.info(parent);
+                    $(parent).each(function () {
+                        console.info("Start", this);
+                        window['box'] = this;
+                        var left_scroll = this.scrollLeft;
+                        var top_scroll = this.scrollTop;
+                        $(this).data('overflow-x', $(this).css('overflow-x'));
+                        $(this).data('overflow-y', $(this).css('overflow-y'));
+
+                        $(this).css({ 'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '15px' }).scrollLeft(-0).scrollTop(-9);
+                        var table = $('[data-widget="slider-table"]', this).css({
+                            'position': 'relative',
+                            'left': -left_scroll + 'px',
+                            'top': -top_scroll + 'px'
+                        });
+                        var elem = $(e.target).closest('.sg_expand_dialog_strain');
+                        $('.sg_expand_dialog_strain', table).not(elem).each(function () {
+                            if (self.is_overflow_hidden($(this), $(parent))) {
+                                $(this).css({ 'visibility': 'hidden' });
+                            }
+                        });
+                    });
+                    console.info("Start", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
+                },
+                stop: function (e) {
+                    var parent = $(e.target).closest('.sg_slider_widget_wrapper');
+
+                    //                var parent = [];
+                    //                $(e.target).parents('.sg_slider_widget_wrapper').each(function () {
+                    //                    parent.push(this);
+                    //                })
+                    $(parent).each(function () {
+                        var $table = $('[data-widget="slider-table"]', this);
+                        var left_scroll = parseInt($table.css('left'));
+                        var top_scroll = parseInt($table.css('top'));
+                        $table.css({
+                            'position': 'relative',
+                            'left': '0px',
+                            'top': '0px'
+                        });
+                        $(this).css({ 'overflow-x': $(this).data('overflow-x'), 'overflow-y': $(this).data('overflow-y'), 'margin-bottom': '0px' }).scrollLeft(-left_scroll).scrollTop(-top_scroll);
+                        $('.sg_expand_dialog_strain', $table).css({ 'visibility': 'visible' });
+                    });
+
+                    console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
+                },
+                helper: function (event) {
+                    console.info("HELPER", event, this);
+                    var copy = $(this).clone().removeAttr("id");
+                    copy.append(SGUIMAIN.plus_floaty({}));
+                    copy.data('never_hide', true);
+                    var canvas0 = $('canvas', this)[0];
+                    if (canvas0) {
+                        var canvas = $('canvas', copy)[0];
+                        canvas.width = canvas0.width;
+                        canvas.height = canvas0.height;
+                        var context = canvas.getContext('2d');
+                        context.drawImage(canvas0, 0, 0);
+                    }
+                    return copy;
+                }
+            }).addClass('sg_strain_box_hover');
+        };
+
+        StarGeneticsJSAppWidget.prototype.is_overflow_hidden = function (elem, parent) {
+            var elem_offset = elem.offset();
+            var parent_offset = parent.offset();
+            if (elem_offset['top'] < parent_offset['top']) {
+                return true;
+            }
+            return false;
         };
 
         StarGeneticsJSAppWidget.prototype.reset = function () {

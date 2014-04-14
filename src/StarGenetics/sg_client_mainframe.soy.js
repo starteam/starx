@@ -488,5 +488,27 @@ sg_client_mainframe.plus_floaty = function(opt_data, opt_sb) {
   output.append('<div class=\'sg_plus_floaty\'>+</div>');
   return opt_sb ? '' : output.toString();
 };
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {soy.StringBuilder=} opt_sb
+ * @return {string}
+ * @notypecheck
+ */
+sg_client_mainframe.sg_expand_females = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<div class=\'sg_expand_females_dialog\' data-widget="dialog" data-id=\'', soy.$$escapeHtml(opt_data.experiment.id), '\'><button class=\'sg_dialog_close\'>X</button>Hello this is expand females dialog ', soy.$$escapeHtml(opt_data.experiment.name), '.<br><div class=\'sg_slider_widget_wrapper\'><div class=\'sg_expand_females_dialog_list\' data-widget="slider-table">');
+  var strainList564 = opt_data.experiment.phenotypes[opt_data.phenotype][opt_data.list_kind];
+  var strainListLen564 = strainList564.length;
+  for (var strainIndex564 = 0; strainIndex564 < strainListLen564; strainIndex564++) {
+    var strainData564 = strainList564[strainIndex564];
+    output.append('<span class=\'sg_expand_dialog_strain\'>');
+    sg_client_mainframe.strain({strain: strainData564, visuals: true, kind: opt_data.experiment.id}, output);
+    output.append('</span>');
+  }
+  output.append('</div></div></div>');
+  return opt_sb ? '' : output.toString();
+};
 for(var i in sg_client_mainframe) { exports[i] = sg_client_mainframe[i] };
 });

@@ -758,3 +758,29 @@
 {template .plus_floaty}
     <div class='sg_plus_floaty'>+</div>
 {/template}
+
+/**
+*
+* @param experiment
+* @param phenotype
+* @param list_kind
+*/
+{template .sg_expand_females}
+<div class='sg_expand_females_dialog' data-widget="dialog" data-id='{$experiment.id}'>
+    <button class='sg_dialog_close'>X</button>
+    Hello this is expand females dialog {$experiment.name}.<br>
+    <div class='sg_slider_widget_wrapper'>
+    <div class='sg_expand_females_dialog_list' data-widget="slider-table">
+    {foreach $strain in $experiment.phenotypes[$phenotype][$list_kind]}
+        <span class='sg_expand_dialog_strain'>
+        {call .strain}
+            {param strain:$strain /}
+            {param visuals:true /}
+            {param kind:$experiment.id/}
+        {/call}
+        </span>
+    {/foreach}
+    </div>
+    </div>
+</div>
+{/template}
