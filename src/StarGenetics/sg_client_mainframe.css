@@ -462,3 +462,9 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 .sg_current_experiment_name_input {
   font-size: 20px;
 }
+.sg_s_arrow_down {
+  font-size: 50px;
+  font-weight: 900;
+  color: #808080;
+  text-align: center;
+}
