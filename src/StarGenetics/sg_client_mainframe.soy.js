@@ -131,55 +131,68 @@ sg_client_mainframe.strain_place_holder = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.strains = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class=\'sg_strains_box\'><div class=\'sg_title_box\'>Strain Stocks', (opt_data.strains.expanded) ? '' : '<button class=\'sg_s_expand sg_expand\' data-kind=\'strains\' data-expanded=\'true\'>Expand</button>', '</div>');
-  if (opt_data.strains.expanded) {
-    output.append('<div class=\'sg_slider_widget_wrapper\'><table data-kind=\'strains\' data-widget="slider-table" class=\'sg_slider_table\'>');
-    if (opt_data.strains.visualsVisible) {
-      output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'>Strain</td>');
-      var strainList104 = opt_data.strains.list;
-      var strainListLen104 = strainList104.length;
-      for (var strainIndex104 = 0; strainIndex104 < strainListLen104; strainIndex104++) {
-        var strainData104 = strainList104[strainIndex104];
-        output.append('<td class=\'sg_experiment_phenotype_detail_right sg_strains_p_visual sg_experiment_phenotype_detail_left\' data-kind=\'strains\' data-id="', soy.$$escapeHtml(strainData104['id']), '">');
-        sg_client_mainframe.strain({strain: strainData104, visuals: true, kind: 'strains'}, output);
-        output.append('</td>');
-      }
-      if (opt_data.add_strain) {
-        output.append('<td rowspan=\'2\' class=\'sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left\'>');
-        sg_client_mainframe.strain_place_holder({kind: 'strains', visuals: opt_data.strains.visualsVisible}, output);
-        output.append('</td>');
-      }
-      output.append('</tr>');
-    }
-    if (opt_data.strains.propertiesVisible) {
-      output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \' ><b>Phenotypes</b></td><td class=\'sg_experiment_phenotype_detail_right\' colspan=\'', soy.$$escapeHtml(opt_data.strains.list.length), '\'><button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'false\'>Hide</button></td></tr><tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'>Sex</td>');
-      var strainList127 = opt_data.strains.list;
-      var strainListLen127 = strainList127.length;
-      for (var strainIndex127 = 0; strainIndex127 < strainListLen127; strainIndex127++) {
-        var strainData127 = strainList127[strainIndex127];
-        output.append('<td data-id="', soy.$$escapeHtml(strainData127.id), '" class=\'sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left\'>', (strainData127['sex'] == 'FEMALE') ? 'Female' : '', (strainData127['sex'] == 'MALE') ? 'Male' : '', '</td>');
-      }
-      output.append('</tr>');
-      var propertyList140 = soy.$$getMapKeys(opt_data.strains.capitalized_properties);
-      var propertyListLen140 = propertyList140.length;
-      for (var propertyIndex140 = 0; propertyIndex140 < propertyListLen140; propertyIndex140++) {
-        var propertyData140 = propertyList140[propertyIndex140];
-        output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'>', soy.$$escapeHtml(opt_data.strains.capitalized_properties[propertyData140]), '</td>');
-        var strainList144 = opt_data.strains.list;
-        var strainListLen144 = strainList144.length;
-        for (var strainIndex144 = 0; strainIndex144 < strainListLen144; strainIndex144++) {
-          var strainData144 = strainList144[strainIndex144];
-          output.append('<td data-id="', soy.$$escapeHtml(strainData144.id), '" class=\'sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left\'>', soy.$$escapeHtml(strainData144.capitalized_properties[opt_data.strains.capitalized_properties[propertyData140]].text), '</td>');
-        }
-        output.append('</tr>');
-      }
-      output.append((opt_data.add_strain) ? '<td rowspan=\'1\' class=\'sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left\'></td>' : '');
-    } else {
-      output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'><b>Phenotypes</b></td><td class=\'sg_experiment_phenotype_detail_right\' colspan=\'', soy.$$escapeHtml(opt_data.strains.list.length), '\'><button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'true\'>Show</button></td></tr>');
-    }
-    output.append('</table></div>');
+  output.append('<div class=\'sg_strains_box\'><div class=\'sg_slider_widget_wrapper\'><table data-kind=\'strains\' data-widget="slider-table" class=\'sg_slider_table\'><tr><td class=\'sg_s_col_head\'><span class=\'sg_bold_heading\'>Strain Stocks</span></td>');
+  var strainList93 = opt_data.strains.list;
+  var strainListLen93 = strainList93.length;
+  for (var strainIndex93 = 0; strainIndex93 < strainListLen93; strainIndex93++) {
+    var strainData93 = strainList93[strainIndex93];
+    output.append('<td class=\' ', (! (strainIndex93 == strainListLen93 - 1)) ? 'sg_experiment_phenotype_detail_right' : '', ' ', (! (strainIndex93 == 0)) ? 'sg_experiment_phenotype_detail_left' : '', '  sg_strains_p_visual \' data-kind=\'strains\' data-id="', soy.$$escapeHtml(strainData93['id']), '">');
+    sg_client_mainframe.strain({strain: strainData93, visuals: true, kind: 'strains'}, output);
+    output.append('</td>');
   }
-  output.append('</div>');
+  if (opt_data.add_strain) {
+    output.append('<td rowspan=\'1\' class=\'sg_place_holder\'>');
+    sg_client_mainframe.strain_place_holder({kind: 'strains', visuals: opt_data.strains.visualsVisible}, output);
+    output.append('</td>');
+  }
+  output.append('</tr>');
+  if (opt_data.strains.propertiesVisible) {
+    output.append('<tr><td class=\'sg_s_col_head \' ><b>Phenotypes</b> &nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'false\'>Hide</button></td>');
+    var strainList122 = opt_data.strains.list;
+    var strainListLen122 = strainList122.length;
+    for (var strainIndex122 = 0; strainIndex122 < strainListLen122; strainIndex122++) {
+      var strainData122 = strainList122[strainIndex122];
+      output.append('<td class=\'', (! (strainIndex122 == strainListLen122 - 1)) ? 'sg_experiment_phenotype_detail_right' : '', ' ', (! (strainIndex122 == 0)) ? 'sg_experiment_phenotype_detail_left' : '', '\'></td>');
+    }
+    output.append('</tr><tr><td class=\'sg_s_col_head \'>Sex</td>');
+    var strainList134 = opt_data.strains.list;
+    var strainListLen134 = strainList134.length;
+    for (var strainIndex134 = 0; strainIndex134 < strainListLen134; strainIndex134++) {
+      var strainData134 = strainList134[strainIndex134];
+      output.append('<td data-id="', soy.$$escapeHtml(strainData134.id), '" class=\'', (! (strainIndex134 == strainListLen134 - 1)) ? 'sg_experiment_phenotype_detail_right' : '', ' ', (! (strainIndex134 == 0)) ? 'sg_experiment_phenotype_detail_left' : '', '\'>', (strainData134['sex'] == 'FEMALE') ? 'Female' : '', (strainData134['sex'] == 'MALE') ? 'Male' : '', '</td>');
+    }
+    output.append('</tr>');
+    var propertyList155 = soy.$$getMapKeys(opt_data.strains.capitalized_properties);
+    var propertyListLen155 = propertyList155.length;
+    for (var propertyIndex155 = 0; propertyIndex155 < propertyListLen155; propertyIndex155++) {
+      var propertyData155 = propertyList155[propertyIndex155];
+      output.append('<tr><td class=\'sg_s_col_head \'>', soy.$$escapeHtml(opt_data.strains.capitalized_properties[propertyData155]), '</td>');
+      var strainList159 = opt_data.strains.list;
+      var strainListLen159 = strainList159.length;
+      for (var strainIndex159 = 0; strainIndex159 < strainListLen159; strainIndex159++) {
+        var strainData159 = strainList159[strainIndex159];
+        output.append('<td data-id="', soy.$$escapeHtml(strainData159.id), '" class=\'', (! (strainIndex159 == strainListLen159 - 1)) ? 'sg_experiment_phenotype_detail_right' : '', ' ', (! (strainIndex159 == 0)) ? 'sg_experiment_phenotype_detail_left' : '', '\'>', soy.$$escapeHtml(strainData159.capitalized_properties[opt_data.strains.capitalized_properties[propertyData155]].text), '</td>');
+      }
+      output.append('</tr>');
+    }
+    output.append((opt_data.add_strain) ? '<td rowspan=\'1\' class=\'sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left\'></td>' : '');
+  } else {
+    output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'><b>Phenotypes</b> &nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'true\'>Show</button></td><td class=\'sg_experiment_phenotype_detail_right\' colspan=\'', soy.$$escapeHtml(opt_data.strains.list.length), '\'></td></tr>');
+  }
+  output.append('<tr></table><div class=\'sg_bottom_border\'></div></div></div>');
+  return opt_sb ? '' : output.toString();
+};
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {soy.StringBuilder=} opt_sb
+ * @return {string}
+ * @notypecheck
+ */
+sg_client_mainframe.new_experiment_parent_text = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<span class=\'sg_experiment_parent_text\'>Drag & Drop a Specimen to create a pair to mate</span>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -192,19 +205,19 @@ sg_client_mainframe.strains = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.new_experiment_expanded = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class=\'sg_new_experiment_box\'><div class=\'sg_title_box\'>Mating Site &nbsp;', (opt_data.experiment.expanded) ? '<button class="sg_expand sg_s_discard" data-expanded="false" data-kind="new_experiment">_</button>' : '', '<!--', (opt_data.experiment.canclearparents) ? '<button class=\'sg_clear_parents sg_s_clear_parents\' data-kind="new_experiment">Clear</button>' : '', (opt_data.experiment.canmate) ? '<button class=\'sg_new_experiment_mate sg_s_new_experiment_mate\' data-kind=\'new_experiment\'>Mate</button>' : '', '--></div>');
+  output.append('<div class=\'sg_new_experiment_box\'>');
   if (opt_data.experiment.expanded) {
-    output.append('<div class=\'sg_experiment_parents_wrapper\'><div class=\'sg_experiment_parents\'>');
+    output.append('<div class=\'sg_left_heading sg_bold_heading\'>Mating Site</div><div class=\'sg_experiment_parents_wrapper\'><div class=\'sg_experiment_parents\'>');
     if (opt_data.experiment.parents.length < 1) {
-      output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' title="Drag a strain from the Strains box or from a previously performed experiment here">Parent</div>');
+      output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' title="Drag a strain from the Strains box or from a previously performed experiment here"><span class=\'sg_experiment_parent_text\'>Drag & Drop a Specimen to create a pair to mate</span></div>');
     } else {
       output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[0].id), '\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parents[0], visuals: opt_data.experiment.visualsVisible, kind: 'new_experiment'}, output);
-      output.append('<button class=\'sg_experiment_parent_remove\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[0].id), '\' data-kind=\'new_experiment\' title="Remove Parent">x</button></div>');
+      output.append('<button class=\'sg_experiment_parent_remove\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[0].id), '\' data-kind=\'new_experiment\' title="Remove Parent"><span class=\'sg_experiment_parent_remove_text\'>x</span></button></div>');
     }
     output.append('<div class=\'sg_experiment_parent_x\'>X</div>');
     if (opt_data.experiment.parents.length < 2) {
-      output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' title="Drag a strain from the Strains box or from a previously performed experiment here">Parent</div>');
+      output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' title="Drag a strain from the Strains box or from a previously performed experiment here"><span class=\'sg_experiment_parent_text\'>Drag & Drop a Specimen to create a pair to mate</span></div>');
     } else {
       output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[1].id), '\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parents[1], visuals: opt_data.experiment.visualsVisible, kind: 'new_experiment'}, output);
@@ -212,7 +225,7 @@ sg_client_mainframe.new_experiment_expanded = function(opt_data, opt_sb) {
     }
     output.append('</div>', (opt_data.experiment.canmate) ? '<div class=\'sg_experiment_parents_can_mate\'><div class=\'sg_experiment_parents_can_mate_info\'>How many progeny would you like to produce? (Between 1 and 500)</div><div class=\'sg_experiment_parents_can_mate_input\'><input type=\'text\' class=\'sg_new_experiment_mate_count\' value=\'' + ((opt_data.prg_count) ? soy.$$escapeHtml(opt_data.prg_count) : '50') + '\'><button class=\'sg_new_experiment_mate sg_s_new_experiment_mate_large\' data-kind=\'new_experiment\'>Mate</button></div></div>' : '', '</div>');
   }
-  output.append('</div>');
+  output.append('</div><div class=\'sg_bottom_border\'></div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -242,22 +255,23 @@ sg_client_mainframe.new_experiment = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.all_experiments = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  var experimentList228 = opt_data.experiments.list;
-  var experimentListLen228 = experimentList228.length;
-  for (var experimentIndex228 = 0; experimentIndex228 < experimentListLen228; experimentIndex228++) {
-    var experimentData228 = experimentList228[experimentIndex228];
-    if (experimentData228.id == opt_data.experiments.show_experiment) {
-      sg_client_mainframe.one_experiment({experiment: experimentData228, index: experimentIndex228, compact_view: false, css_class: ''}, output);
+  var experimentList245 = opt_data.experiments.list;
+  var experimentListLen245 = experimentList245.length;
+  for (var experimentIndex245 = 0; experimentIndex245 < experimentListLen245; experimentIndex245++) {
+    var experimentData245 = experimentList245[experimentIndex245];
+    if (experimentData245.id == opt_data.experiments.show_experiment) {
+      sg_client_mainframe.one_experiment({experiment: experimentData245, index: experimentIndex245, compact_view: false, css_class: ''}, output);
+      output.append('<div class=\'sg_bottom_border\'></div>');
     }
   }
   if (opt_data.experiments.list.length != 0) {
     output.append('<div class=\'sg_experiment_history\'><div class=\'sg_title_box\'>All Experiments</div><div class=\'sg_slider_widget_wrapper\'><div data-kind="history" data-widget="slider-table" class=\'sg_experiment_holder\'>');
-    var experimentList240 = opt_data.experiments.list;
-    var experimentListLen240 = experimentList240.length;
-    for (var experimentIndex240 = 0; experimentIndex240 < experimentListLen240; experimentIndex240++) {
-      var experimentData240 = experimentList240[experimentIndex240];
-      if (! experimentData240.discarded) {
-        sg_client_mainframe.one_experiment({experiment: experimentData240, index: experimentIndex240, compact_view: true, css_class: 'sg_mini_experiment_box ', selected: opt_data.experiments.show_experiment == experimentData240.id}, output);
+    var experimentList258 = opt_data.experiments.list;
+    var experimentListLen258 = experimentList258.length;
+    for (var experimentIndex258 = 0; experimentIndex258 < experimentListLen258; experimentIndex258++) {
+      var experimentData258 = experimentList258[experimentIndex258];
+      if (! experimentData258.discarded) {
+        sg_client_mainframe.compact_experiment({experiment: experimentData258, index: experimentIndex258, compact_view: true, css_class: 'sg_mini_experiment_box ', selected: opt_data.experiments.show_experiment == experimentData258.id}, output);
       }
     }
     output.append('</div></div></div></div>');
@@ -273,18 +287,18 @@ sg_client_mainframe.all_experiments = function(opt_data, opt_sb) {
  * @return {string}
  * @notypecheck
  */
-sg_client_mainframe.one_experiment = function(opt_data, opt_sb) {
+sg_client_mainframe.compact_experiment = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div class=\'sg_experiment_box ', soy.$$escapeHtml(opt_data.css_class), ' ', (opt_data.selected) ? 'sg_experiment_selected' : '', '\'>', (opt_data.compact_view) ? '<div data-kind=\'' + soy.$$escapeHtml(opt_data.experiment.id) + '\' class=\'sg_experiment_box_floaty\'></div>' : '', '<!-- header --><div class=\'sg_title_box\'>', (opt_data.compact_view) ? soy.$$escapeHtml(opt_data.experiment.name) : 'Current experiment: <em class=\'sg_rename sg_s_rename\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '"> ' + soy.$$escapeHtml(opt_data.experiment.name) + '</em>' + ((opt_data.experiment.canclearparents) ? '<button class=\'sg_discard sg_s_discard\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '">X</button>' : '') + ((opt_data.experiment.canmate) ? '' : ''), '</div>');
   if (opt_data.experiment.expanded) {
     output.append('<!-- expanded body -->', (! opt_data.compact_view) ? '<div class=\'sg_slider_widget_wrapper\'>' : '', '<table data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-widget="slider-table" class=\'sg_slider_table\'>');
     if (! opt_data.compact_view) {
       output.append('<tr><th class=\'sg_experiment_phenotype_detail_header sg_experiment_phenotype_detail_right\'><!--Name--></th><th colspan=\'3\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f sg_experiment_phenotype_detail_align_top\'><button class=\'sg_experiment_mate\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '">+ More progeny</button></th><th class=\'\'><!-- => --></th>');
-      var phenotypeList297 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
-      var phenotypeListLen297 = phenotypeList297.length;
-      for (var phenotypeIndex297 = 0; phenotypeIndex297 < phenotypeListLen297; phenotypeIndex297++) {
-        var phenotypeData297 = phenotypeList297[phenotypeIndex297];
-        output.append('<th colspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right\'><!-- ', soy.$$escapeHtml(phenotypeData297.short_description), ' --> Class ', soy.$$escapeHtml(phenotypeIndex297 + 1), '</th>');
+      var phenotypeList315 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+      var phenotypeListLen315 = phenotypeList315.length;
+      for (var phenotypeIndex315 = 0; phenotypeIndex315 < phenotypeListLen315; phenotypeIndex315++) {
+        var phenotypeData315 = phenotypeList315[phenotypeIndex315];
+        output.append('<th colspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right\'><!-- ', soy.$$escapeHtml(phenotypeData315.short_description), ' --> Class ', soy.$$escapeHtml(phenotypeIndex315 + 1), '</th>');
       }
       output.append('</tr>');
     }
@@ -294,96 +308,96 @@ sg_client_mainframe.one_experiment = function(opt_data, opt_sb) {
       output.append('</div></td><td class=\'sg_s_experiment_parent_table_x\'><div class=\'sg_experiment_parent_x\'>X</div></td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_2\'><div class=\'sg_s_experiment_parent_table\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.male, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
       output.append('</div></td><td><div class=\'sg_s_experiment_parent_to_floaty\'>=></div></td>');
-      var phenotypeList318 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
-      var phenotypeListLen318 = phenotypeList318.length;
-      for (var phenotypeIndex318 = 0; phenotypeIndex318 < phenotypeListLen318; phenotypeIndex318++) {
-        var phenotypeData318 = phenotypeList318[phenotypeIndex318];
+      var phenotypeList336 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+      var phenotypeListLen336 = phenotypeList336.length;
+      for (var phenotypeIndex336 = 0; phenotypeIndex336 < phenotypeListLen336; phenotypeIndex336++) {
+        var phenotypeData336 = phenotypeList336[phenotypeIndex336];
         output.append('<td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_left\'>');
-        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData318].top_female, count: opt_data.experiment.phenotypes[phenotypeData318].females, percentage: opt_data.experiment.phenotypes[phenotypeData318].females / opt_data.experiment.list.length, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id, name: opt_data.experiment.phenotypes[phenotypeData318].females}, output);
+        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData336].top_female, count: opt_data.experiment.phenotypes[phenotypeData336].females, percentage: opt_data.experiment.phenotypes[phenotypeData336].females / opt_data.experiment.list.length, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id, name: opt_data.experiment.phenotypes[phenotypeData336].females}, output);
         output.append('</td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_right\'>');
-        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData318].top_male, count: opt_data.experiment.phenotypes[phenotypeData318].males, percentage: opt_data.experiment.phenotypes[phenotypeData318].males / opt_data.experiment.list.length, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id, name: opt_data.experiment.phenotypes[phenotypeData318].males}, output);
+        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData336].top_male, count: opt_data.experiment.phenotypes[phenotypeData336].males, percentage: opt_data.experiment.phenotypes[phenotypeData336].males / opt_data.experiment.list.length, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id, name: opt_data.experiment.phenotypes[phenotypeData336].males}, output);
         output.append('</td>');
       }
       output.append('</tr>');
       if (! opt_data.compact_view) {
         if (opt_data.experiment.propertiesVisible) {
           output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top\' ><b>Phenotypes</b></td><td colspan=\'3\' class=\'sg_experiment_phenotype_detail_align_top\'>&nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'', soy.$$escapeHtml(opt_data.experiment.id), '\' data-expanded-properties=\'false\'>Hide</button>&nbsp; &nbsp;</td><td><!-- => --></td>');
-          var phenotypeList345 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
-          var phenotypeListLen345 = phenotypeList345.length;
-          for (var phenotypeIndex345 = 0; phenotypeIndex345 < phenotypeListLen345; phenotypeIndex345++) {
-            var phenotypeData345 = phenotypeList345[phenotypeIndex345];
+          var phenotypeList363 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+          var phenotypeListLen363 = phenotypeList363.length;
+          for (var phenotypeIndex363 = 0; phenotypeIndex363 < phenotypeListLen363; phenotypeIndex363++) {
+            var phenotypeData363 = phenotypeList363[phenotypeIndex363];
             output.append('<td class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_align_top\'>');
-            if (opt_data.experiment.phenotypes[phenotypeData345].show_more_females) {
-              output.append('<button class=\'sg_expand_females\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData345), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData345].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData345) + '" data-state="-">Previous</button>' : '');
-              var strainList361 = opt_data.experiment.phenotypes[phenotypeData345].females_list;
-              var strainListLen361 = strainList361.length;
-              for (var strainIndex361 = 0; strainIndex361 < strainListLen361; strainIndex361++) {
-                var strainData361 = strainList361[strainIndex361];
-                if (strainIndex361 >= opt_data.experiment.phenotypes[phenotypeData345].start_index_female && strainIndex361 <= opt_data.experiment.phenotypes[phenotypeData345].start_index_female + 5) {
+            if (opt_data.experiment.phenotypes[phenotypeData363].show_more_females) {
+              output.append('<button class=\'sg_expand_females\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData363), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData363].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData363) + '" data-state="-">Previous</button>' : '');
+              var strainList379 = opt_data.experiment.phenotypes[phenotypeData363].females_list;
+              var strainListLen379 = strainList379.length;
+              for (var strainIndex379 = 0; strainIndex379 < strainListLen379; strainIndex379++) {
+                var strainData379 = strainList379[strainIndex379];
+                if (strainIndex379 >= opt_data.experiment.phenotypes[phenotypeData363].start_index_female && strainIndex379 <= opt_data.experiment.phenotypes[phenotypeData363].start_index_female + 5) {
                   output.append('<br>');
-                  sg_client_mainframe.strain_short({strain: strainData361, kind: opt_data.experiment.id}, output);
+                  sg_client_mainframe.strain_short({strain: strainData379, kind: opt_data.experiment.id}, output);
                 }
               }
-              output.append((opt_data.experiment.phenotypes[phenotypeData345].females_list.length - opt_data.experiment.phenotypes[phenotypeData345].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData345) + '" data-state="+">Next</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData363].females_list.length - opt_data.experiment.phenotypes[phenotypeData363].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData363) + '" data-state="+">Next</button>' : '');
             } else {
-              output.append((opt_data.experiment.phenotypes[phenotypeData345].females_list.length > 0) ? '<button class=\'sg_expand_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData345) + '" data-state="true">Show Individuals</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData363].females_list.length > 0) ? '<button class=\'sg_expand_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData363) + '" data-state="true">Show Individuals</button>' : '');
             }
             output.append('</td><td class=\'sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top\'>');
-            if (opt_data.experiment.phenotypes[phenotypeData345].show_more_males) {
-              output.append('<button class=\'sg_expand_males\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData345), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData345].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData345) + '" data-state="-">Previous</button>' : '');
-              var strainList399 = opt_data.experiment.phenotypes[phenotypeData345].males_list;
-              var strainListLen399 = strainList399.length;
-              for (var strainIndex399 = 0; strainIndex399 < strainListLen399; strainIndex399++) {
-                var strainData399 = strainList399[strainIndex399];
-                if (strainIndex399 >= opt_data.experiment.phenotypes[phenotypeData345].start_index_male && strainIndex399 <= opt_data.experiment.phenotypes[phenotypeData345].start_index_male + 5) {
+            if (opt_data.experiment.phenotypes[phenotypeData363].show_more_males) {
+              output.append('<button class=\'sg_expand_males\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData363), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData363].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData363) + '" data-state="-">Previous</button>' : '');
+              var strainList417 = opt_data.experiment.phenotypes[phenotypeData363].males_list;
+              var strainListLen417 = strainList417.length;
+              for (var strainIndex417 = 0; strainIndex417 < strainListLen417; strainIndex417++) {
+                var strainData417 = strainList417[strainIndex417];
+                if (strainIndex417 >= opt_data.experiment.phenotypes[phenotypeData363].start_index_male && strainIndex417 <= opt_data.experiment.phenotypes[phenotypeData363].start_index_male + 5) {
                   output.append('<br>');
-                  sg_client_mainframe.strain_short({strain: strainData399, kind: opt_data.experiment.id}, output);
+                  sg_client_mainframe.strain_short({strain: strainData417, kind: opt_data.experiment.id}, output);
                 }
               }
-              output.append((opt_data.experiment.phenotypes[phenotypeData345].males_list.length - opt_data.experiment.phenotypes[phenotypeData345].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData345) + '" data-state="+">Next</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData363].males_list.length - opt_data.experiment.phenotypes[phenotypeData363].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData363) + '" data-state="+">Next</button>' : '');
             } else {
-              output.append((opt_data.experiment.phenotypes[phenotypeData345].males_list.length > 0) ? '<button class=\'sg_expand_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData345) + '" data-state="true">Show Individuals</button>&nbsp;' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData363].males_list.length > 0) ? '<button class=\'sg_expand_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData363) + '" data-state="true">Show Individuals</button>&nbsp;' : '');
             }
             output.append('</td>');
           }
           output.append('</tr>');
         } else {
           output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'><b>Phenotypes</b></td><td colspan=\'3\'><button class=\'sg_strain_expand_properties\' data-kind=\'', soy.$$escapeHtml(opt_data.experiment.id), '\' data-expanded-properties=\'true\'>Show</button>&nbsp; &nbsp;</td><td><!-- => --></td>');
-          var phenotypeList429 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
-          var phenotypeListLen429 = phenotypeList429.length;
-          for (var phenotypeIndex429 = 0; phenotypeIndex429 < phenotypeListLen429; phenotypeIndex429++) {
-            var phenotypeData429 = phenotypeList429[phenotypeIndex429];
+          var phenotypeList447 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+          var phenotypeListLen447 = phenotypeList447.length;
+          for (var phenotypeIndex447 = 0; phenotypeIndex447 < phenotypeListLen447; phenotypeIndex447++) {
+            var phenotypeData447 = phenotypeList447[phenotypeIndex447];
             output.append('<td class=\'sg_experiment_phenotype_detail_left\'>');
-            if (opt_data.experiment.phenotypes[phenotypeData429].show_more_females) {
-              output.append('<button class=\'sg_expand_females\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData429), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData429].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData429) + '" data-state="-">Previous?</button>' : '');
-              var strainList445 = opt_data.experiment.phenotypes[phenotypeData429].females_list;
-              var strainListLen445 = strainList445.length;
-              for (var strainIndex445 = 0; strainIndex445 < strainListLen445; strainIndex445++) {
-                var strainData445 = strainList445[strainIndex445];
-                if (strainIndex445 >= opt_data.experiment.phenotypes[phenotypeData429].start_index_female && strainIndex445 <= opt_data.experiment.phenotypes[phenotypeData429].start_index_female + 5) {
+            if (opt_data.experiment.phenotypes[phenotypeData447].show_more_females) {
+              output.append('<button class=\'sg_expand_females\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData447), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData447].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData447) + '" data-state="-">Previous?</button>' : '');
+              var strainList463 = opt_data.experiment.phenotypes[phenotypeData447].females_list;
+              var strainListLen463 = strainList463.length;
+              for (var strainIndex463 = 0; strainIndex463 < strainListLen463; strainIndex463++) {
+                var strainData463 = strainList463[strainIndex463];
+                if (strainIndex463 >= opt_data.experiment.phenotypes[phenotypeData447].start_index_female && strainIndex463 <= opt_data.experiment.phenotypes[phenotypeData447].start_index_female + 5) {
                   output.append('<br>');
-                  sg_client_mainframe.strain_short({strain: strainData445, kind: opt_data.experiment.id}, output);
+                  sg_client_mainframe.strain_short({strain: strainData463, kind: opt_data.experiment.id}, output);
                 }
               }
-              output.append((opt_data.experiment.phenotypes[phenotypeData429].females_list.length - opt_data.experiment.phenotypes[phenotypeData429].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData429) + '" data-state="+">Next?</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData447].females_list.length - opt_data.experiment.phenotypes[phenotypeData447].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData447) + '" data-state="+">Next?</button>' : '');
             } else {
-              output.append((opt_data.experiment.phenotypes[phenotypeData429].females_list.length > 0) ? '<button class=\'sg_expand_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData429) + '" data-state="true">Show Individuals</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData447].females_list.length > 0) ? '<button class=\'sg_expand_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData447) + '" data-state="true">Show Individuals</button>' : '');
             }
             output.append('</td><td class=\'sg_experiment_phenotype_detail_right\'>');
-            if (opt_data.experiment.phenotypes[phenotypeData429].show_more_males) {
-              output.append('<button class=\'sg_expand_males\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData429), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData429].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData429) + '" data-state="-">Previous?</button>' : '');
-              var strainList483 = opt_data.experiment.phenotypes[phenotypeData429].males_list;
-              var strainListLen483 = strainList483.length;
-              for (var strainIndex483 = 0; strainIndex483 < strainListLen483; strainIndex483++) {
-                var strainData483 = strainList483[strainIndex483];
-                if (strainIndex483 >= opt_data.experiment.phenotypes[phenotypeData429].start_index_male && strainIndex483 <= opt_data.experiment.phenotypes[phenotypeData429].start_index_male + 5) {
+            if (opt_data.experiment.phenotypes[phenotypeData447].show_more_males) {
+              output.append('<button class=\'sg_expand_males\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData447), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData447].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData447) + '" data-state="-">Previous?</button>' : '');
+              var strainList501 = opt_data.experiment.phenotypes[phenotypeData447].males_list;
+              var strainListLen501 = strainList501.length;
+              for (var strainIndex501 = 0; strainIndex501 < strainListLen501; strainIndex501++) {
+                var strainData501 = strainList501[strainIndex501];
+                if (strainIndex501 >= opt_data.experiment.phenotypes[phenotypeData447].start_index_male && strainIndex501 <= opt_data.experiment.phenotypes[phenotypeData447].start_index_male + 5) {
                   output.append('<br>');
-                  sg_client_mainframe.strain_short({strain: strainData483, kind: opt_data.experiment.id}, output);
+                  sg_client_mainframe.strain_short({strain: strainData501, kind: opt_data.experiment.id}, output);
                 }
               }
-              output.append((opt_data.experiment.phenotypes[phenotypeData429].males_list.length - opt_data.experiment.phenotypes[phenotypeData429].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData429) + '" data-state="+">Next?</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData447].males_list.length - opt_data.experiment.phenotypes[phenotypeData447].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData447) + '" data-state="+">Next?</button>' : '');
             } else {
-              output.append((opt_data.experiment.phenotypes[phenotypeData429].males_list.length > 0) ? '<button class=\'sg_expand_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData429) + '" data-state="true">Show Individuals</button>' : '');
+              output.append((opt_data.experiment.phenotypes[phenotypeData447].males_list.length > 0) ? '<button class=\'sg_expand_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData447) + '" data-state="true">Show Individuals</button>' : '');
             }
             output.append('</td>');
           }
@@ -392,29 +406,178 @@ sg_client_mainframe.one_experiment = function(opt_data, opt_sb) {
       }
       if (opt_data.experiment.propertiesVisible && ! opt_data.compact_view) {
         output.append('<tr><td rowspan=\'1\' class=\' sg_experiment_phenotype_detail_right\'>Sex </td><td rowspan=\'1\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f\'>Female</td><td rowspan=\'1\' class=\'\'><!-- x --></td><td rowspan=\'1\' class=\'sg_experiment_phenotype_detail_parent_m \'>Male</td><td rowspan=\'1\' class=\'\'></td>');
-        var phenotypeList512 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
-        var phenotypeListLen512 = phenotypeList512.length;
-        for (var phenotypeIndex512 = 0; phenotypeIndex512 < phenotypeListLen512; phenotypeIndex512++) {
-          var phenotypeData512 = phenotypeList512[phenotypeIndex512];
-          output.append('<td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_left\'>', (opt_data.experiment.phenotypes[phenotypeData512].females_list.length > 0) ? 'Female' : '', '</td><td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_right\'>', (opt_data.experiment.phenotypes[phenotypeData512].males_list.length > 0) ? 'Male' : '', '</td>');
+        var phenotypeList530 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+        var phenotypeListLen530 = phenotypeList530.length;
+        for (var phenotypeIndex530 = 0; phenotypeIndex530 < phenotypeListLen530; phenotypeIndex530++) {
+          var phenotypeData530 = phenotypeList530[phenotypeIndex530];
+          output.append('<td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_left\'>', (opt_data.experiment.phenotypes[phenotypeData530].females_list.length > 0) ? 'Female' : '', '</td><td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_right\'>', (opt_data.experiment.phenotypes[phenotypeData530].males_list.length > 0) ? 'Male' : '', '</td>');
         }
         output.append('</tr>');
-        var propertyList524 = opt_data.experiment.propertiesList;
-        var propertyListLen524 = propertyList524.length;
-        for (var propertyIndex524 = 0; propertyIndex524 < propertyListLen524; propertyIndex524++) {
-          var propertyData524 = propertyList524[propertyIndex524];
-          output.append('<tr><td class=\' sg_experiment_phenotype_detail_right \'>', soy.$$escapeHtml(opt_data.experiment.capitalized_properties[propertyData524]), '</td><td class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f\'>', soy.$$escapeHtml(opt_data.experiment.parent.female.properties[propertyData524].text), '</td><td rowspan=\'1\' class=\'\'><!-- x --></td><td class=\'sg_experiment_phenotype_detail_parent_m\'>', soy.$$escapeHtml(opt_data.experiment.parent.male.properties[propertyData524].text), '</td><td><!-- => --></td>');
-          var phenotypeList532 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
-          var phenotypeListLen532 = phenotypeList532.length;
-          for (var phenotypeIndex532 = 0; phenotypeIndex532 < phenotypeListLen532; phenotypeIndex532++) {
-            var phenotypeData532 = phenotypeList532[phenotypeIndex532];
-            output.append('<td colspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_double\'>', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData532].properties[propertyData524].text), '</td>');
+        var propertyList542 = opt_data.experiment.propertiesList;
+        var propertyListLen542 = propertyList542.length;
+        for (var propertyIndex542 = 0; propertyIndex542 < propertyListLen542; propertyIndex542++) {
+          var propertyData542 = propertyList542[propertyIndex542];
+          output.append('<tr><td class=\' sg_experiment_phenotype_detail_right \'>', soy.$$escapeHtml(opt_data.experiment.capitalized_properties[propertyData542]), '</td><td class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f\'>', soy.$$escapeHtml(opt_data.experiment.parent.female.properties[propertyData542].text), '</td><td rowspan=\'1\' class=\'\'><!-- x --></td><td class=\'sg_experiment_phenotype_detail_parent_m\'>', soy.$$escapeHtml(opt_data.experiment.parent.male.properties[propertyData542].text), '</td><td><!-- => --></td>');
+          var phenotypeList550 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+          var phenotypeListLen550 = phenotypeList550.length;
+          for (var phenotypeIndex550 = 0; phenotypeIndex550 < phenotypeListLen550; phenotypeIndex550++) {
+            var phenotypeData550 = phenotypeList550[phenotypeIndex550];
+            output.append('<td colspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_double\'>', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData550].properties[propertyData542].text), '</td>');
           }
           output.append('</tr>');
         }
       }
     }
     output.append('</table>', (! opt_data.compact_view) ? '</div>' : '');
+  }
+  output.append('</div>');
+  return opt_sb ? '' : output.toString();
+};
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {soy.StringBuilder=} opt_sb
+ * @return {string}
+ * @notypecheck
+ */
+sg_client_mainframe.one_experiment = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<div class=\'sg_experiment_box ', soy.$$escapeHtml(opt_data.css_class), ' ', (opt_data.selected) ? 'sg_experiment_selected' : '', '\'><!-- header --><div class=\'sg_title_box\'>', (opt_data.experiment.canclearparents) ? '<button class=\'sg_discard sg_s_discard\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '">X</button>' : '', '</div><div class=\'sg_left_heading sg_bold_heading\'>Current experiment:</div><span class=\'sg_current_experiment_name\'><input data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" class=\'sg_current_experiment_name_input\' type=\'text\' placeholder="', soy.$$escapeHtml(opt_data.experiment.name), '"></input></span>');
+  if (opt_data.experiment.expanded) {
+    output.append('<!-- expanded body --><div class=\'sg_slider_widget_wrapper\'><table data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-widget="slider-table" class=\'sg_slider_table\'><tr><th class=\'sg_experiment_phenotype_detail_header sg_experiment_phenotype_detail_right\'><!--Name--></th><th colspan=\'3\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f sg_experiment_phenotype_detail_align_top\'><button class=\'sg_experiment_mate\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '">+ More progeny</button></th><th class=\'\'><!-- => --></th>');
+    var phenotypeList587 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+    var phenotypeListLen587 = phenotypeList587.length;
+    for (var phenotypeIndex587 = 0; phenotypeIndex587 < phenotypeListLen587; phenotypeIndex587++) {
+      var phenotypeData587 = phenotypeList587[phenotypeIndex587];
+      output.append('<th colspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right\'><!-- ', soy.$$escapeHtml(phenotypeData587.short_description), ' --> Class ', soy.$$escapeHtml(phenotypeIndex587 + 1), '</th>');
+    }
+    output.append('</tr>');
+    if (opt_data.experiment.visualsVisible) {
+      output.append('<tr><td class=\' sg_experiment_phenotype_detail_right\'>Strain</td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_left sg_s_experiment_parent_table_1\'><div class=\'sg_s_experiment_parent_table\'>');
+      sg_client_mainframe.strain({strain: opt_data.experiment.parent.female, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
+      output.append('</div></td><td class=\'sg_s_experiment_parent_table_x\'><div class=\'sg_experiment_parent_x\'>X</div></td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_2\'><div class=\'sg_s_experiment_parent_table\'>');
+      sg_client_mainframe.strain({strain: opt_data.experiment.parent.male, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
+      output.append('</div></td><td><div class=\'sg_s_experiment_parent_to_floaty\'>=></div></td>');
+      var phenotypeList608 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+      var phenotypeListLen608 = phenotypeList608.length;
+      for (var phenotypeIndex608 = 0; phenotypeIndex608 < phenotypeListLen608; phenotypeIndex608++) {
+        var phenotypeData608 = phenotypeList608[phenotypeIndex608];
+        output.append('<td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_left\'>');
+        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData608].top_female, count: opt_data.experiment.phenotypes[phenotypeData608].females, percentage: opt_data.experiment.phenotypes[phenotypeData608].females / opt_data.experiment.list.length, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id, name: opt_data.experiment.phenotypes[phenotypeData608].females}, output);
+        output.append('</td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_right\'>');
+        sg_client_mainframe.strain({strain: opt_data.experiment.phenotypes[phenotypeData608].top_male, count: opt_data.experiment.phenotypes[phenotypeData608].males, percentage: opt_data.experiment.phenotypes[phenotypeData608].males / opt_data.experiment.list.length, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id, name: opt_data.experiment.phenotypes[phenotypeData608].males}, output);
+        output.append('</td>');
+      }
+      output.append('</tr>');
+      if (opt_data.experiment.propertiesVisible) {
+        output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top\' ><b>Phenotypes</b></td><td colspan=\'3\' class=\'sg_experiment_phenotype_detail_align_top\'>&nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'', soy.$$escapeHtml(opt_data.experiment.id), '\' data-expanded-properties=\'false\'>Hide</button>&nbsp; &nbsp;</td><td><!-- => --></td>');
+        var phenotypeList633 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+        var phenotypeListLen633 = phenotypeList633.length;
+        for (var phenotypeIndex633 = 0; phenotypeIndex633 < phenotypeListLen633; phenotypeIndex633++) {
+          var phenotypeData633 = phenotypeList633[phenotypeIndex633];
+          output.append('<td class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_align_top\'>');
+          if (opt_data.experiment.phenotypes[phenotypeData633].show_more_females) {
+            output.append('<button class=\'sg_expand_females\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData633), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData633].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData633) + '" data-state="-">Previous</button>' : '');
+            var strainList649 = opt_data.experiment.phenotypes[phenotypeData633].females_list;
+            var strainListLen649 = strainList649.length;
+            for (var strainIndex649 = 0; strainIndex649 < strainListLen649; strainIndex649++) {
+              var strainData649 = strainList649[strainIndex649];
+              if (strainIndex649 >= opt_data.experiment.phenotypes[phenotypeData633].start_index_female && strainIndex649 <= opt_data.experiment.phenotypes[phenotypeData633].start_index_female + 5) {
+                output.append('<br>');
+                sg_client_mainframe.strain_short({strain: strainData649, kind: opt_data.experiment.id}, output);
+              }
+            }
+            output.append((opt_data.experiment.phenotypes[phenotypeData633].females_list.length - opt_data.experiment.phenotypes[phenotypeData633].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData633) + '" data-state="+">Next</button>' : '');
+          } else {
+            output.append((opt_data.experiment.phenotypes[phenotypeData633].females_list.length > 0) ? '<button class=\'sg_expand_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData633) + '" data-state="true">Show Individuals</button>' : '');
+          }
+          output.append('</td><td class=\'sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top\'>');
+          if (opt_data.experiment.phenotypes[phenotypeData633].show_more_males) {
+            output.append('<button class=\'sg_expand_males\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData633), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData633].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData633) + '" data-state="-">Previous</button>' : '');
+            var strainList687 = opt_data.experiment.phenotypes[phenotypeData633].males_list;
+            var strainListLen687 = strainList687.length;
+            for (var strainIndex687 = 0; strainIndex687 < strainListLen687; strainIndex687++) {
+              var strainData687 = strainList687[strainIndex687];
+              if (strainIndex687 >= opt_data.experiment.phenotypes[phenotypeData633].start_index_male && strainIndex687 <= opt_data.experiment.phenotypes[phenotypeData633].start_index_male + 5) {
+                output.append('<br>');
+                sg_client_mainframe.strain_short({strain: strainData687, kind: opt_data.experiment.id}, output);
+              }
+            }
+            output.append((opt_data.experiment.phenotypes[phenotypeData633].males_list.length - opt_data.experiment.phenotypes[phenotypeData633].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData633) + '" data-state="+">Next</button>' : '');
+          } else {
+            output.append((opt_data.experiment.phenotypes[phenotypeData633].males_list.length > 0) ? '<button class=\'sg_expand_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData633) + '" data-state="true">Show Individuals</button>&nbsp;' : '');
+          }
+          output.append('</td>');
+        }
+        output.append('</tr>');
+      } else {
+        output.append('<tr><td class=\'sg_s_col_head sg_experiment_phenotype_detail_right \'><b>Phenotypes</b></td><td colspan=\'3\'><button class=\'sg_strain_expand_properties\' data-kind=\'', soy.$$escapeHtml(opt_data.experiment.id), '\' data-expanded-properties=\'true\'>Show</button>&nbsp; &nbsp;</td><td><!-- => --></td>');
+        var phenotypeList717 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+        var phenotypeListLen717 = phenotypeList717.length;
+        for (var phenotypeIndex717 = 0; phenotypeIndex717 < phenotypeListLen717; phenotypeIndex717++) {
+          var phenotypeData717 = phenotypeList717[phenotypeIndex717];
+          output.append('<td class=\'sg_experiment_phenotype_detail_left\'>');
+          if (opt_data.experiment.phenotypes[phenotypeData717].show_more_females) {
+            output.append('<button class=\'sg_expand_females\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData717), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData717].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData717) + '" data-state="-">Previous?</button>' : '');
+            var strainList733 = opt_data.experiment.phenotypes[phenotypeData717].females_list;
+            var strainListLen733 = strainList733.length;
+            for (var strainIndex733 = 0; strainIndex733 < strainListLen733; strainIndex733++) {
+              var strainData733 = strainList733[strainIndex733];
+              if (strainIndex733 >= opt_data.experiment.phenotypes[phenotypeData717].start_index_female && strainIndex733 <= opt_data.experiment.phenotypes[phenotypeData717].start_index_female + 5) {
+                output.append('<br>');
+                sg_client_mainframe.strain_short({strain: strainData733, kind: opt_data.experiment.id}, output);
+              }
+            }
+            output.append((opt_data.experiment.phenotypes[phenotypeData717].females_list.length - opt_data.experiment.phenotypes[phenotypeData717].start_index_female > 0) ? '<br><button class=\'sg_move_start_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData717) + '" data-state="+">Next?</button>' : '');
+          } else {
+            output.append((opt_data.experiment.phenotypes[phenotypeData717].females_list.length > 0) ? '<button class=\'sg_expand_females\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData717) + '" data-state="true">Show Individuals</button>' : '');
+          }
+          output.append('</td><td class=\'sg_experiment_phenotype_detail_right\'>');
+          if (opt_data.experiment.phenotypes[phenotypeData717].show_more_males) {
+            output.append('<button class=\'sg_expand_males\' data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-phenotype-id="', soy.$$escapeHtml(phenotypeData717), '" data-state="false">Hide Individuals</button>', (opt_data.experiment.phenotypes[phenotypeData717].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData717) + '" data-state="-">Previous?</button>' : '');
+            var strainList771 = opt_data.experiment.phenotypes[phenotypeData717].males_list;
+            var strainListLen771 = strainList771.length;
+            for (var strainIndex771 = 0; strainIndex771 < strainListLen771; strainIndex771++) {
+              var strainData771 = strainList771[strainIndex771];
+              if (strainIndex771 >= opt_data.experiment.phenotypes[phenotypeData717].start_index_male && strainIndex771 <= opt_data.experiment.phenotypes[phenotypeData717].start_index_male + 5) {
+                output.append('<br>');
+                sg_client_mainframe.strain_short({strain: strainData771, kind: opt_data.experiment.id}, output);
+              }
+            }
+            output.append((opt_data.experiment.phenotypes[phenotypeData717].males_list.length - opt_data.experiment.phenotypes[phenotypeData717].start_index_male > 0) ? '<br><button class=\'sg_move_start_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData717) + '" data-state="+">Next?</button>' : '');
+          } else {
+            output.append((opt_data.experiment.phenotypes[phenotypeData717].males_list.length > 0) ? '<button class=\'sg_expand_males\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '" data-phenotype-id="' + soy.$$escapeHtml(phenotypeData717) + '" data-state="true">Show Individuals</button>' : '');
+          }
+          output.append('</td>');
+        }
+        output.append('</tr>');
+      }
+      if (opt_data.experiment.propertiesVisible) {
+        output.append('<tr><td rowspan=\'1\' class=\' sg_experiment_phenotype_detail_right\'>Sex </td><td rowspan=\'1\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f\'>Female</td><td rowspan=\'1\' class=\'\'><!-- x --></td><td rowspan=\'1\' class=\'sg_experiment_phenotype_detail_parent_m \'>Male</td><td rowspan=\'1\' class=\'\'></td>');
+        var phenotypeList800 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+        var phenotypeListLen800 = phenotypeList800.length;
+        for (var phenotypeIndex800 = 0; phenotypeIndex800 < phenotypeListLen800; phenotypeIndex800++) {
+          var phenotypeData800 = phenotypeList800[phenotypeIndex800];
+          output.append('<td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_left\'>', (opt_data.experiment.phenotypes[phenotypeData800].females_list.length > 0) ? 'Female' : '', '</td><td class=\'sg_experiment_p_count sg_experiment_phenotype_detail_right\'>', (opt_data.experiment.phenotypes[phenotypeData800].males_list.length > 0) ? 'Male' : '', '</td>');
+        }
+        output.append('</tr>');
+        var propertyList812 = opt_data.experiment.propertiesList;
+        var propertyListLen812 = propertyList812.length;
+        for (var propertyIndex812 = 0; propertyIndex812 < propertyListLen812; propertyIndex812++) {
+          var propertyData812 = propertyList812[propertyIndex812];
+          output.append('<tr><td class=\' sg_experiment_phenotype_detail_right \'>', soy.$$escapeHtml(opt_data.experiment.capitalized_properties[propertyData812]), '</td><td class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f\'>', soy.$$escapeHtml(opt_data.experiment.parent.female.properties[propertyData812].text), '</td><td rowspan=\'1\' class=\'\'><!-- x --></td><td class=\'sg_experiment_phenotype_detail_parent_m\'>', soy.$$escapeHtml(opt_data.experiment.parent.male.properties[propertyData812].text), '</td><td><!-- => --></td>');
+          var phenotypeList820 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
+          var phenotypeListLen820 = phenotypeList820.length;
+          for (var phenotypeIndex820 = 0; phenotypeIndex820 < phenotypeListLen820; phenotypeIndex820++) {
+            var phenotypeData820 = phenotypeList820[phenotypeIndex820];
+            output.append('<td colspan=\'2\' class=\'sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_double\'>', soy.$$escapeHtml(opt_data.experiment.phenotypes[phenotypeData820].properties[propertyData812].text), '</td>');
+          }
+          output.append('</tr>');
+        }
+      }
+    }
+    output.append('</table></div>');
   }
   output.append('</div>');
   return opt_sb ? '' : output.toString();
@@ -499,12 +662,12 @@ sg_client_mainframe.plus_floaty = function(opt_data, opt_sb) {
 sg_client_mainframe.sg_expand_females = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div class=\'sg_expand_females_dialog\' data-widget="dialog" data-id=\'', soy.$$escapeHtml(opt_data.experiment.id), '\'><button class=\'sg_dialog_close\'>X</button>Hello this is expand females dialog ', soy.$$escapeHtml(opt_data.experiment.name), '.<br><div class=\'sg_slider_widget_wrapper\'><div class=\'sg_expand_females_dialog_list\' data-widget="slider-table">');
-  var strainList564 = opt_data.experiment.phenotypes[opt_data.phenotype][opt_data.list_kind];
-  var strainListLen564 = strainList564.length;
-  for (var strainIndex564 = 0; strainIndex564 < strainListLen564; strainIndex564++) {
-    var strainData564 = strainList564[strainIndex564];
+  var strainList849 = opt_data.experiment.phenotypes[opt_data.phenotype][opt_data.list_kind];
+  var strainListLen849 = strainList849.length;
+  for (var strainIndex849 = 0; strainIndex849 < strainListLen849; strainIndex849++) {
+    var strainData849 = strainList849[strainIndex849];
     output.append('<span class=\'sg_expand_dialog_strain\'>');
-    sg_client_mainframe.strain({strain: strainData564, visuals: true, kind: opt_data.experiment.id}, output);
+    sg_client_mainframe.strain({strain: strainData849, visuals: true, kind: opt_data.experiment.id}, output);
     output.append('</span>');
   }
   output.append('</div></div></div>');

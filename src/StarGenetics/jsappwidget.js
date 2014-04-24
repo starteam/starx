@@ -485,6 +485,24 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 }
             });
 
+            $('.sg_current_experiment_name_input').off('change').on('change', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                if (c) {
+                    var old_name = c.name;
+                    var new_name = $(this).val();
+                    if (new_name != null && new_name.length > 0) {
+                        c.name = new_name;
+                        _.each(c.list, function (s) {
+                            if (s.name.indexOf(old_name) == 0) {
+                                s.name = new_name + s.name.substr(old_name.length);
+                            }
+                        });
+                        tmi.event("StarGenetics", "sg_rename", old_name + " -> " + new_name);
+                        self.show();
+                    }
+                }
+            });
+
             $('.sg_discard').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 if (c instanceof SGModel.Experiment) {
