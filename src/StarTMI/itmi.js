@@ -1,6 +1,6 @@
 // <!-- Google Analytics -->
 (function (window, document, Math) {
-    var debug = true;
+    var debug = false;
     var ga = '_Star_TMI_';
     while (window[ga]) {
         ga = '_' + ga + '_' + Math.round(100000 * Math.random());
@@ -37,7 +37,6 @@
 })(window, document, Math);
 // <!-- End Google Analytics -->
 (function (window, document, undefined) {
-    console.info("Window - Raven");
     try {
     if (!window['Raven']) {
         var toProcess = [];
@@ -61,7 +60,7 @@
         a.onload = process;
         a.src = '//cdn.ravenjs.com/1.1.11/raven.min.js';
         m.parentNode.insertBefore(a, m);
-        window.RavenConfig = function (a, b,c) {
+        window.RavenConfigStarX = function (a, b,c) {
             toProcess.push({a:a,b:b,callback:c});
             process();
         }
