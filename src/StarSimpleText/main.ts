@@ -70,8 +70,10 @@ export class StarSimpleText {
                 }
             }
             elem['value'] = new_lines.join("\n");
-            console.debug("NEW TEXT");
-            console.debug(elem['value']);
+            if (window['starx_debug'] == true) {
+                console.debug("NEW TEXT");
+                console.debug(elem['value']);
+            }
         }
     }
 
@@ -110,7 +112,9 @@ export class StarSimpleText {
                 elem['value'] = val;
                 elem['selectionStart'] = pos;
                 elem['selectionEnd'] = pos;
-                console.debug(val);
+                if (window['starx_debug'] == true) {
+                    console.debug(val);
+                }
             }
         }
     }
@@ -143,7 +147,10 @@ export class StarSimpleText {
             return decodeURI(ret.attr('value'));
         }
         catch (e) {
-            console.debug("value can not be decoded, failing back on raw");
+            if (window['starx_debug'] == true) {
+
+                console.debug("value can not be decoded, failing back on raw");
+            }
             return ret ? ret.attr('value') : '';
         }
     }
@@ -172,7 +179,9 @@ export class StarSimpleText {
             text = this.get_from_jshidden();
         }
         catch (e) {
-            console.debug(e);
+            if (window['starx_debug'] == true) {
+                console.debug(e);
+            }
         }
         self.textarea_id = config.element_id + "_textarea";
         config.cols = config.cols ? parseInt(config.cols) : 80;
