@@ -3,7 +3,7 @@
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
 /// <reference path="../StarX/lib/jquery.ts" />
 /// <reference path="jsappmodel.ts" />
-define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget', "StarGenetics/state", 'StarTMI/tmi'], function(require, exports, jQuery, JSStarGenetics, GlobalState, StarTMI) {
+define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget', "StarGenetics/state", 'StarTMI/tmi'], function (require, exports, jQuery, JSStarGenetics, GlobalState, StarTMI) {
     var $ = jQuery['$'];
 
     var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
@@ -17,6 +17,7 @@ define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget',
             this.in_reset = false;
             this.in_editor = false;
         }
+
         StarGenetics.prototype.edx_specific = function (config) {
             if (config['edx_opts']) {
                 this.edx_opts = config['edx_opts'];
@@ -60,7 +61,7 @@ define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget',
         StarGenetics.prototype.load = function () {
             var jq = $('[name=' + this.config.state + ']');
             var ret = $('#' + jq.attr('inputid'));
-            try  {
+            try {
                 return decodeURI(ret.attr('value'));
             } catch (e) {
                 console.debug("value can not be decoded, failing back on raw");
@@ -70,20 +71,15 @@ define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget',
 
         StarGenetics.prototype.configure = function (config) {
             var self = this;
-            if (window['RavenConfig']) {
-                try  {
-                    window['RavenConfig']('https://b71ed16774dd47c896988d743f1ce940@app.getsentry.com/20171', { whitelistUrls: ['mit.edu'] }, function (Raven) {
-                        if (Raven) {
-                            if (config['edx_opts']) {
-                                Raven.setUser({ id: $('.user-link').text().replace(/\s*/g, '').replace('Dashboardfor:', '') });
-                                self.Raven = Raven;
-                            }
+            tmi.configure_raven(
+                'https://b71ed16774dd47c896988d743f1ce940@app.getsentry.com/20171', { whitelistUrls: ['mit.edu'] }, function (Raven) {
+                    if (Raven) {
+                        if (config['edx_opts']) {
+                            Raven.setUser({ id: $('.user-link').text().replace(/\s*/g, '').replace('Dashboardfor:', '') });
+                            self.Raven = Raven;
                         }
-                    });
-                } catch (e) {
-                }
-            }
-
+                    }
+                });
             this.config = config;
             if (config['state']) {
                 // enable edX integration
@@ -106,7 +102,7 @@ define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget',
                     },
                     log: function (message, context) {
                         if (self.Raven && self.Raven.captureMessage) {
-                            try  {
+                            try {
                                 self.Raven.captureMessage(message, context);
                             } catch (e) {
                             }
@@ -133,7 +129,7 @@ define(["require", "exports", "../StarX/lib/jquery", 'StarGenetics/jsappwidget',
                     },
                     log: function (message, context) {
                         if (self.Raven && self.Raven.captureMessage) {
-                            try  {
+                            try {
                                 self.Raven.captureMessage(message, context);
                             } catch (e) {
                             }
