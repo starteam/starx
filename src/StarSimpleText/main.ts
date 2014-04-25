@@ -70,8 +70,8 @@ export class StarSimpleText {
                 }
             }
             elem['value'] = new_lines.join("\n");
-            console.info("NEW TEXT");
-            console.info(elem['value']);
+            console.debug("NEW TEXT");
+            console.debug(elem['value']);
         }
     }
 
@@ -110,7 +110,7 @@ export class StarSimpleText {
                 elem['value'] = val;
                 elem['selectionStart'] = pos;
                 elem['selectionEnd'] = pos;
-                console.info(val);
+                console.debug(val);
             }
         }
     }
@@ -154,7 +154,16 @@ export class StarSimpleText {
     }
 
     configure(config:any) {
-        tmi.event('StarSimpleText','Start');
+        tmi.event('StarSimpleText', 'Start');
+        tmi.configure_raven(
+            'https://b71ed16774dd47c896988d743f1ce940@app.getsentry.com/20171', { whitelistUrls: ['mit.edu'] }, function (Raven) {
+                if (Raven) {
+                    if (config['edx_opts']) {
+                        Raven.setUser({ id: $('.user-link').text().replace(/\s*/g, '').replace('Dashboardfor:', '') });
+                    }
+                }
+            });
+
         this.config = config;
         var self:StarSimpleText = this;
         var top = $('#' + config.element_id);
@@ -163,7 +172,7 @@ export class StarSimpleText {
             text = this.get_from_jshidden();
         }
         catch (e) {
-            console.info(e);
+            console.debug(e);
         }
         self.textarea_id = config.element_id + "_textarea";
         config.cols = config.cols ? parseInt(config.cols) : 80;
@@ -173,11 +182,11 @@ export class StarSimpleText {
         $('#' + self.textarea_id).off('keyup').off('change').off('blur').on('keyup',function (e) {
             self.keyup(this, e);
         }).on('change',function (e) {
-                self.change(this, e);
-            }).on('blur',function (e) {
-                self.change(this, e);
-            }).ready(function () {
-                self.apply_css();
-            })
+            self.change(this, e);
+        }).on('blur',function (e) {
+            self.change(this, e);
+        }).ready(function () {
+            self.apply_css();
+        })
     }
 }

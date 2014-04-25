@@ -65,8 +65,8 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, export
                     }
                 }
                 elem['value'] = new_lines.join("\n");
-                console.info("NEW TEXT");
-                console.info(elem['value']);
+                console.debug("NEW TEXT");
+                console.debug(elem['value']);
             }
         };
 
@@ -102,7 +102,7 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, export
                     elem['value'] = val;
                     elem['selectionStart'] = pos;
                     elem['selectionEnd'] = pos;
-                    console.info(val);
+                    console.debug(val);
                 }
             }
         };
@@ -146,6 +146,14 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, export
 
         StarSimpleText.prototype.configure = function (config) {
             tmi.event('StarSimpleText', 'Start');
+            tmi.configure_raven('https://b71ed16774dd47c896988d743f1ce940@app.getsentry.com/20171', { whitelistUrls: ['mit.edu'] }, function (Raven) {
+                if (Raven) {
+                    if (config['edx_opts']) {
+                        Raven.setUser({ id: $('.user-link').text().replace(/\s*/g, '').replace('Dashboardfor:', '') });
+                    }
+                }
+            });
+
             this.config = config;
             var self = this;
             var top = $('#' + config.element_id);
@@ -153,7 +161,7 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, export
             try  {
                 text = this.get_from_jshidden();
             } catch (e) {
-                console.info(e);
+                console.debug(e);
             }
             self.textarea_id = config.element_id + "_textarea";
             config.cols = config.cols ? parseInt(config.cols) : 80;
