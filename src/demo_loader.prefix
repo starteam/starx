@@ -28,7 +28,10 @@ var require = function(deps, creator) {
             }
         }
     }
-    console.info( args );
+    if( window['debug_starx'] == true )
+    {
+        console.info( args );
+    }
     creator.apply( global , args );
 };
     modules['require'] = require;
@@ -53,6 +56,9 @@ var define = function(what, deps, creator) {
     }
     var module = creator.apply( creator_this , args );
     modules[what] = module || exports;
-    console.info( "Define module " , what , module, exports );
+    if( window['debug_starx'] == true )
+    {
+        console.info( "Define module " , what , module, exports );
+    }
 };
 define.amd = true;
