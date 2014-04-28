@@ -190,7 +190,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         }
     }
 
-    init();
+    if(!( require['starx_compiled'] == true ))
+    {
+        init();
+    }
 
     exports.load = load;
     exports.init = init;
