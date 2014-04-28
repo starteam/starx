@@ -4,7 +4,8 @@
 /// <reference path="../StarX/lib/underscore.d.ts" />
 /// <reference path="../StarX/lib/underscore.ts" />
 /// <reference path="../StarDistanceMap/widget.soy.d.ts" />
-define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap/widget.soy", "css!StarDistanceMap/widget.css", "jquery-ui"], function(require, exports, underscore, $, ui) {
+/// <reference path="../StarDistanceMap/widget.css.soy.d.ts" />
+define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap/widget.soy", "StarDistanceMap/widget.css.soy", "jquery-ui"], function(require, exports, underscore, $, ui, SDMCSS) {
     var _ = underscore['_'];
 
     var ui_config = {
@@ -553,6 +554,8 @@ define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap
             // alternative is that config contains 'state' which we would use to initialize state directly.
             this.top_selector = top_selector;
             this.config = config;
+            this.add_stylesheet();
+
             this.initialize_from_config_or_state(config);
             this.edit_chromosome_count = (config.edit_chromosome_count === undefined) ? true : config.edit_chromosome_count;
             this.sex_linked_show = (config.sex_linked_show === undefined) ? true : config.sex_linked_show;
@@ -604,6 +607,11 @@ define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap
                 alert("There is an error, look at the console.");
                 //throw new Error(str);
             }
+        };
+
+        State.prototype.add_stylesheet = function () {
+            console.info("Add stylesheet");
+            $('<style>' + SDMCSS.css_text({}) + '</style>').appendTo(this.top_selector.parent());
         };
 
         Object.defineProperty(State.prototype, "widget_id", {
