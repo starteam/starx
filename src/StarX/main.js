@@ -126,6 +126,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 }
                 element.html(new_html).ready(function () {
+                    if( callbacks.length != 0 )
+                    {
+                        element.addClass('starx_handled');
+                    }
                     $(callbacks).each(function () {
                         if (this instanceof Function) {
                             this();
