@@ -63,7 +63,7 @@ define(["require", "exports", "jquery", "StarTMI/tmi", "StarDistanceMap/widget"]
             console.info(obj);
             console.info(obj.ascii);
             if (old_value != obj.ascii) {
-                this.tmi.event('StarX_DistanceMatrix', "DemoConfig", obj.ascii);
+                tmi.event('StarX_DistanceMatrix', "DemoConfig", obj.ascii);
                 old_value = obj.ascii;
             }
         }
@@ -116,13 +116,7 @@ define(["require", "exports", "jquery", "StarTMI/tmi", "StarDistanceMap/widget"]
         };
 
         StarDistanceMap.prototype.configure_widget = function (selector, context, callback) {
-            //        var html = "<div class='swg_widget' style='position: relative;left:0px;top:0px;border-radius:8px;width:810px; height:300px;background-color:yellow'></div>";
-            //        $(selector).append(html).ready(
-            //            function () {
             new WidgetModule.GeneDistanceWidget(context.config, $(selector), callback);
-            //            }
-            //        );
-            //$('body').css('background-color','rgb(242,240,230)');
         };
 
         StarDistanceMap.prototype.configure = function (config) {
@@ -153,7 +147,6 @@ define(["require", "exports", "jquery", "StarTMI/tmi", "StarDistanceMap/widget"]
     })();
     exports.StarDistanceMap = StarDistanceMap;
 
-    console.info("HERE");
     if (false) {
         var x = new StarDistanceMap();
     }
