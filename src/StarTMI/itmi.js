@@ -1,6 +1,6 @@
 // <!-- Google Analytics -->
 (function (window, document, Math) {
-    var debug = true;
+    var debug = false;
     var ga = '_Star_TMI_';
     while (window[ga]) {
         ga = '_' + ga + '_' + Math.round(100000 * Math.random());
@@ -37,15 +37,11 @@
 })(window, document, Math);
 // <!-- End Google Analytics -->
 (function (window, document, undefined) {
-    console.info("Window - Raven");
+    try {
     if (!window['Raven']) {
         var toProcess = [];
         var a = document.createElement('script'),
             m = document.getElementsByTagName('script')[0];
-        a.async = 1;
-        a.onload = process;
-        a.src = '//cdn.ravenjs.com/1.1.11/raven.min.js';
-        m.parentNode.insertBefore(a, m);
         function process() {
             while( toProcess.length != 0 && window['Raven'])
             {
@@ -60,9 +56,19 @@
                 }
             }
         }
-        window.RavenConfig = function (a, b,c) {
+        a.async = 1;
+        a.onload = process;
+        a.src = '//cdn.ravenjs.com/1.1.11/raven.min.js';
+        m.parentNode.insertBefore(a, m);
+        window.RavenConfigStarX = function (a, b,c) {
             toProcess.push({a:a,b:b,callback:c});
             process();
         }
     }
+    }catch(e) {
+        if( console && console.info )
+        {
+            console.info( e );
+        }
+    };
 })(window, document);

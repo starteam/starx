@@ -4,14 +4,15 @@
 /// <reference path="../StarX/lib/underscore.d.ts" />
 /// <reference path="../StarX/lib/underscore.ts" />
 /// <reference path="../StarDistanceMap/widget.soy.d.ts" />
+/// <reference path="../StarDistanceMap/widget.css.soy.d.ts" />
 
-/// <amd-dependency path="css!StarDistanceMap/widget.css" />
 /// <amd-dependency path="jquery-ui" />
 
 import underscore = require("StarX/lib/underscore");
 var _ = underscore['_'];
 import $ = require("jquery");
 import ui = require("StarDistanceMap/widget.soy");
+import SDMCSS = require("StarDistanceMap/widget.css.soy");
 
 var ui_config = {
     step_x: 70,
@@ -223,7 +224,8 @@ export class Gene {
 export class Chromosome {
     __data__:any;
     state:State;
-    cache:{[id:string]:Gene} = {};
+    cache:{[id:string]:Gene
+    } = {};
 
     constructor(config:any, state:State) {
         this.__data__ = config;
@@ -536,10 +538,17 @@ export class State {
         // alternative is that config contains 'state' which we would use to initialize state directly.
         this.top_selector = top_selector;
         this.config = config;
+        this.add_stylesheet();
+
         this.initialize_from_config_or_state(config);
         this.edit_chromosome_count = (config.edit_chromosome_count === undefined) ? true : config.edit_chromosome_count;
         this.sex_linked_show = (config.sex_linked_show === undefined) ? true : config.sex_linked_show;
 
+    }
+
+    add_stylesheet() {
+        console.info( "Add stylesheet");
+        $('<style>' + SDMCSS.css_text({}) + '</style>').appendTo(this.top_selector.parent());
     }
 
     get widget_id():string {
@@ -567,10 +576,10 @@ export class State {
 
     get chromosomes_sex_linked() {
         var ret = false;
-        console.info( "chromosomes_sex_linked");
-        _.each(this.chromosomes , function(e){
-        console.info( "chromosomes_sex_linked " + e.sex_linked);
-            ret =  ret || e['sex_linked'];
+        console.info("chromosomes_sex_linked");
+        _.each(this.chromosomes, function (e) {
+            console.info("chromosomes_sex_linked " + e.sex_linked);
+            ret = ret || e['sex_linked'];
         });
         return ret;
     }
@@ -1288,8 +1297,7 @@ export class GeneDistanceWidget {
         var move = {x: 0, y: 0};
         var gene_initial = { top: 0, left: 0 };
 
-        function process_touch(e)
-        {
+        function process_touch(e) {
             var touches = e.originalEvent['changedTouches'][0];
             move.x = touches['pageX'];
             move.y = touches['pageY'];
@@ -1320,13 +1328,13 @@ export class GeneDistanceWidget {
         });
         $('.sgw_gene', top).bind('touchend', function (e) {
             process_touch(e);
-            self.stop_dragging_gene(e,undefined,target);
+            self.stop_dragging_gene(e, undefined, target);
             e.preventDefault();
         });
         $('.sgw_gene', top).bind('touchcancel', function (e) {
             $(target).css({ top: gene_initial.top + "px", left: gene_initial.left + "px"});
             self.set_gene_position(e, undefined, target);
-            self.stop_dragging_gene(e,undefined,target);
+            self.stop_dragging_gene(e, undefined, target);
             e.preventDefault();
         });
 

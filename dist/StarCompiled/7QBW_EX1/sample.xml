@@ -1,0 +1,20 @@
+<problem>
+  <p>
+    $str
+  </p>
+<script type="loncapa/python"><![CDATA[
+def always_right(expect, ans):
+  return ans!=""
+
+def tag(str):
+  return chr(60) + str + chr(62)
+str =''
+str = tag('script src="//starx.mit.edu/StarCompiled/7QBW_EX1/main.min.js"') + tag('/script')+str
+str = tag('div id="starx_widget_7QBW_EX1"') + str + tag( '/div')
+
+]]></script>
+  <customresponse cfn="always_right">
+    <textline hidden="starx_data_for_widget_7QBW_EX1" size="40" />    <br/>
+  </customresponse>
+
+</problem>

@@ -1,12 +1,7 @@
 define(['require', 'exports', 'jquery'], function (require, exports, $) {
-    // restore window.$ version
-    if( $ )
+    if( !$ )
     {
-        $.noConflict();
-    }
-    if(! window.$ )
-    {
-        window.$ = $ ;
+        $ = jQuery;
     }
     var widget_ids = {};
 
@@ -101,9 +96,9 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         in_load = true;
         var elements = [];
         var list = $("*:contains('{[" + del + "StarX" + del + ":')", target);
-        console.info("in load " + del + " ");
-        console.info(target);
-        console.info("in load " + list.length);
+       // console.info("in load " + del + " ");
+       // console.info(target);
+       // console.info("in load " + list.length);
         for (var i = 1; i < list.length; i++) {
             if (!list[i - 1].contains(list[i])) {
                 test_and_add(list[i - 1], elements);
@@ -131,6 +126,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 }
                 element.html(new_html).ready(function () {
+                    if( callbacks.length != 0 )
+                    {
+                        element.addClass('starx_handled');
+                    }
                     $(callbacks).each(function () {
                         if (this instanceof Function) {
                             this();
@@ -195,7 +194,10 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         }
     }
 
-    init();
+    if(!( require['starx_compiled'] == true ))
+    {
+        init();
+    }
 
     exports.load = load;
     exports.init = init;

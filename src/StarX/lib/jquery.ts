@@ -1,12 +1,12 @@
-/// <reference path="../../../starx/src/StarX/lib/jquery.d.ts" />
+/// <reference path="../../StarX/lib/jquery.d.ts" />
+/// <amd-dependency path="StarX/lib/jquery.ui.touch-punch" />
+
 
 declare var $:JQueryStatic;
-declare var $:JQueryStatic;
 
-import jQuery = module("jquery");
+import jQuery = require("jquery");
 declare var exports;
 exports.$ = jQuery;
-jQuery['noConflict'](true);
 
 export class version {
     constructor() {

@@ -1,8 +1,11 @@
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarX/lib/jqueryui.d.ts" />
+/// <reference path="../StarX/lib/jquery.ts" />
 /// <reference path="jsappmodel.ts" />
-define(["require", "exports", "jquery", 'StarGenetics/jsappwidget', "StarGenetics/state", 'StarTMI/tmi'], function(require, exports, $, JSStarGenetics, GlobalState, StarTMI) {
+define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "StarGenetics/state", 'StarTMI/tmi'], function(require, exports, jQuery, JSStarGenetics, GlobalState, StarTMI) {
+    var $ = jQuery['$'];
+
     var StarGeneticsGlobalState = new GlobalState.StarGeneticsGlobalState();
 
     var tmi = new StarTMI.TMI();

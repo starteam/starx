@@ -1,11 +1,11 @@
 define(["require", "exports"], function(require, exports) {
     var TMI = (function () {
         function TMI() {
-            this.debug = true;
+            this.debug = false;
         }
         TMI.prototype.pageview = function () {
             if (this.debug) {
-                console.info("TMI:pageview");
+                console.debug("TMI:pageview");
             }
             var payload = {
                 source: '_Star_TMI_',
@@ -19,7 +19,7 @@ define(["require", "exports"], function(require, exports) {
             if (typeof label === "undefined") { label = undefined; }
             if (typeof value === "undefined") { value = 0; }
             if (this.debug) {
-                console.info("TMI:event c:" + category + " a:" + action + " l:" + label + " v:" + value);
+                console.debug("TMI:event c:" + category + " a:" + action + " l:" + label + " v:" + value);
             }
             var payload = {
                 source: '_Star_TMI_',
@@ -30,6 +30,18 @@ define(["require", "exports"], function(require, exports) {
                 value: value
             };
             top.window.postMessage(payload, '*');
+        };
+
+        TMI.prototype.configure_raven = function (a, b, callback) {
+            if (window['RavenConfigStarX']) {
+                try  {
+                    window['RavenConfigStarX'](a, b, callback);
+                } catch (e) {
+                    console.debug(e);
+                }
+            } else {
+                console.debug('no raven');
+            }
         };
         return TMI;
     })();

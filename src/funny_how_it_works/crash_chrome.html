@@ -1,0 +1,41 @@
+<html>
+    <body>
+        <a id='crash_link' href="#">This is download</a>
+    <script>
+        setTimeout( function() {
+            var data = '';
+            var original_data = 'X';
+            var tag = document.getElementById( 'crash_link');
+            tag.click();
+            console.info( "step 0 ");
+            for( var length = 1 ; length < 20000000 ; length *= 2)
+            {
+                console.info( "step next 1  " + length);
+                original_data = original_data+ original_data ;
+                console.info( "step next 2 " + length);
+//                data = 'data:image/png;base64,' + encodeURIComponent( original_data );
+                console.info( "step next 3 " + length);
+              // tag.setAttribute('href', data);
+                console.info( "step next 4 " + length);
+                if( length > 10000000 )
+                {
+                    var bb = new Blob([original_data], {type: 'text/csv'});
+                    tag.setAttribute('href', window.URL.createObjectURL(bb));
+//                    window.open(data, "_new");
+                    tag.click();
+                    console.info( "WE ARE HERE?!")
+                    setTimeout(function() {
+                            window.URL.revokeObjectURL(tag.href);
+
+                    },3000);
+                    break;
+                }
+                console.info( "step next done" + length);
+            }
+        } , 50 );
+
+    </script>
+    </body>
+
+
+</html>

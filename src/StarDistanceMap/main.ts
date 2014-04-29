@@ -7,7 +7,6 @@ declare var window;
 import $ = require("jquery");
 import StarTMI = require("StarTMI/tmi");
 var tmi:StarTMI.TMI = new StarTMI.TMI();
-
 import WidgetModule = require("StarDistanceMap/widget");
 
 var old_value = '';
@@ -66,7 +65,7 @@ var demo_config = {
         console.info(obj);
         console.info(obj.ascii);
         if (old_value != obj.ascii) {
-            this.tmi.event('StarX_DistanceMatrix', "DemoConfig", obj.ascii);
+            tmi.event('StarX_DistanceMatrix', "DemoConfig", obj.ascii);
             old_value = obj.ascii;
         }
     }
@@ -123,14 +122,7 @@ export class StarDistanceMap {
     }
 
     configure_widget(selector, context, callback) {
-
-//        var html = "<div class='swg_widget' style='position: relative;left:0px;top:0px;border-radius:8px;width:810px; height:300px;background-color:yellow'></div>";
-//        $(selector).append(html).ready(
-//            function () {
         new WidgetModule.GeneDistanceWidget(context.config, $(selector), callback);
-//            }
-//        );
-        //$('body').css('background-color','rgb(242,240,230)');
     }
 
     configure(config:any) {
@@ -162,7 +154,6 @@ export class StarDistanceMap {
     }
 }
 
-console.info( "HERE");
 if (false) {
     var x = new StarDistanceMap();
 }

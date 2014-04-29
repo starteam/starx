@@ -1,0 +1,215 @@
+.sgw_gene {
+    z-index: 99;
+    position: absolute;
+    border: 1px solid black;
+    background-color: white;
+    border-radius:12px;
+    height:20px;
+    width:60px;
+    vertical-align: bottom;
+    padding-top:2px;
+    color: black;
+    text-align: center;
+    font: normal 12px "Open Sans", Verdana, Geneva, sans-serif;
+}
+
+.sgw_dropper {
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:1px;
+    height:600px;
+    background-color: black;
+}
+
+.sgw_distance_dropper {
+    position: absolute;
+    top: 0px;
+    left:0px;
+    width:8px;
+    height:16px;
+    background-color: black;
+    z-index: 99;
+    display:block;
+}
+
+.sgw_chromosome {
+    position: absolute;
+    width: 100%;
+}
+
+.sgw_distance_holder {
+    position: absolute;
+}
+.sgw_add_chromosome {
+    position: absolute;
+    bottom: 0px;
+}
+
+.sgw_trash {
+    display:inline;
+    font-size: 20px;
+    width:20px;
+    height:20px;
+    background-image: url('data:image/png;base64,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');
+}
+
+.sgw_delete_chromosome {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    display:inline;
+}
+
+.swg_sex_linked_label {
+    position: absolute;
+    top: 155px;
+    left: 0px;
+    font-size: 12px;
+    padding:0px;
+    margin:0px;
+
+}
+
+input[type='checkbox'].sgw_sexlinked_checkbox {
+    padding:0px;
+    margin:0px 0px 0px 25px;
+}
+
+.sgw_axis {
+    display: inline-block;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    right:40px;
+    left:75px;
+    height: 5px;
+    margin-top: 5px;
+    width:700px;
+}
+
+.sgw_gene_element {
+    margin-left: -5px;
+    height:7px;
+    width:10px;
+    z-index:99;
+    top:145px;
+    position: absolute;
+}
+
+.sgw_distance_input {
+    font-size: 0.9em;
+    z-index:99;
+    color: black;
+    vertical-align: text-bottom;
+    text-align:center;
+}
+
+div.sgw_distance_input input[type="text"].sgw_cm_input {
+    text-align:right;
+    height:20px;
+    border-top:0px;
+    border-left:0px;
+    border-right:0px;
+    overflow:visible;
+    padding:0px;
+    max-width: 36px;
+    width:36px;
+    overflow: visible ;
+    text-align: center;
+}
+
+.sgw_line_down {
+    background-color: #e0e0e0;
+    z-index:999;
+}
+
+.sgw_line_across {
+ color: black;
+ font-family: Verdana, Geneva, sans-serif;
+ margin:0px;
+ padding:0px;
+font-size: 18px;
+}
+
+.sgw_help_genes {
+    left:0px;
+    right:0px;
+    top:5px;
+    height:70px;
+    text-align: center;
+    font-size:1.5em;
+    position: absolute;
+    background-color:rgba(242,240,230,.92);
+    z-index:100;
+    color: #4D4C49;
+}
+
+.sgw_help_chromosome {
+    left:0px;
+    right:0px;
+    top:120px;
+    text-align: center;
+    font-size:1.5em;
+    position: absolute;
+    height:60px;
+    background-color:rgba(242,240,230,.92);
+    z-index:100;
+    color: #4D4C49;
+}
+
+.sgw_help_text {
+    left:0px;
+    right:0px;
+    top:85px;
+    color: black;
+    text-align:center;
+    vertical-align: middle;
+    position:absolute;
+    font-size:1.5em;
+    color: #4D4C49;
+}
+.sgw_line_across {
+    overflow:hidden;
+}
+
+.sgw_line_across div.sgw_line_across_internal {
+    width:100%;
+    height:20px;
+    display: inline;
+    position: absolute;
+    top:0px;
+    left:0px;
+}
+
+.sgw_cm_unit {
+    background-color: white;
+}
+
+.sgw_line_across_arrow {
+    position: relative;
+    top:0px;
+    left:0px;
+}
+
+.sgw_distance_measurement {
+    position: absolute;
+    bottom:0px;
+    right:0px;
+}
+
+.sgw_line_across_internal_solid {
+    width:100%;
+    padding:1px;
+    background-color: black;
+    height:0px;
+    top:50%;
+    position: absolute;
+}
+
+.sgw_group_title {
+    position: absolute;
+    display: inline-block;
+    font-size: 14px;
+}
