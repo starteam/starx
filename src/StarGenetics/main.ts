@@ -4,7 +4,7 @@
 /// <reference path="../StarX/lib/jquery.ts" />
 /// <reference path="jsappmodel.ts" />
 
-import jQuery = require("../StarX/lib/jquery");
+import jQuery = require("StarX/lib/jquery");
 var $ = jQuery['$'];
 
 import JSStarGenetics = require('StarGenetics/jsappwidget');
