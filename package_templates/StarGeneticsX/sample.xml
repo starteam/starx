@@ -1,0 +1,20 @@
+<problem>
+  <p>
+    $str
+  </p>
+<script type="loncapa/python"><![CDATA[
+def always_right(expect, ans):
+  return ans!=""
+
+def tag(str):
+  return chr(60) + str + chr(62)
+str =''
+str = tag('script src="//starx.mit.edu/StarCompiled/{PKG_NAME}/main.min.js"') + tag('/script')+str
+str = tag('div id="{PKG_TAG_NAME}"') + str + tag( '/div')
+
+]]></script>
+  <customresponse cfn="always_right">
+    <textline hidden="{PKG_EX_INPUT_NAME}" size="40" />    <br/>
+  </customresponse>
+
+</problem>
