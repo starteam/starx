@@ -587,7 +587,7 @@ define(["require", "exports"], function(require, exports) {
             "genome": {
                 "chromosomes": {
                     "C_1": {
-                        "name": "Chromosome X",
+                        "name": "Chromosome 2",
                         "genes": [
                             {
                                 "name": "Brown body - dominant",
@@ -599,7 +599,7 @@ define(["require", "exports"], function(require, exports) {
                             },
                             {
                                 "name": "Long artisae - dominant",
-                                "position": 75,
+                                "position": 25,
                                 "alleles": [
                                     { "name": "A" },
                                     { "name": "a" }
@@ -607,7 +607,7 @@ define(["require", "exports"], function(require, exports) {
                             },
                             {
                                 "name": "Wingless - recessive",
-                                "position": 150,
+                                "position": 55,
                                 "alleles": [
                                     { "name": "W" },
                                     { "name": "w" }
@@ -651,7 +651,7 @@ define(["require", "exports"], function(require, exports) {
                     matches: 'a,a',
                     phenotype: {
                         aristae: {
-                            text: 'missing',
+                            text: 'none',
                             value: '0'
                         }
                     }
@@ -683,6 +683,8 @@ define(["require", "exports"], function(require, exports) {
                 "initial": {
                     "name": "Initial Strains",
                     "list": [
+                        //   {"name": "Test M", "sex":"M", "alleles": [ "B,b", "A,a", "W,W"]},
+                        //   {"name": "Test F", "sex":"F", "alleles": [ "B,b", "A,a", "W,W"]},
                         { "name": "Fly 1", "sex": "M", "alleles": ["B,B", "A,A", "w,w"] },
                         { "name": "Fly 2", "sex": "F", "alleles": ["b,b", "A,A", "W,W"] },
                         { "name": "Fly 3", "sex": "M", "alleles": ["B,B", "a,a", "W,W"] },
@@ -752,6 +754,13 @@ define(["require", "exports"], function(require, exports) {
                             value: '0'
                         }
                     }
+                },
+                {
+                    name: 'Lethal',
+                    matches: 'G,G',
+                    phenotype: {
+                        lethal: true
+                    }
                 }
             ],
             "gel_rules": {},
@@ -762,6 +771,7 @@ define(["require", "exports"], function(require, exports) {
                     "list": [
                         { "name": "Wildtype M", "sex": "M", "alleles": ["g,g"] },
                         { "name": "Wildtype F", "sex": "F", "alleles": ["g,g"] },
+                        //    {"name": "Grounded M", "sex": "M", "alleles": [ "G,g" ]},
                         { "name": "Grounded", "sex": "F", "alleles": ["G,g"] }
                     ]
                 }
