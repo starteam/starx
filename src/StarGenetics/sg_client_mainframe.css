@@ -438,7 +438,7 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   z-index: 50;
 }
 .sg_expand_dialog_strain {
-  display: inline-block;
+  display: inline-block !important;
   margin: 5px;
   width: 70px;
 }
