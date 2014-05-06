@@ -142,6 +142,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                     function capitalize(str) {
                         return remapper.Remapper.transform(str);
                     }
+
                     var properties = this.properties;
                     var ret = {};
                     _.each(properties, function (q, v) {
@@ -281,12 +282,13 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                     //TODO: Depending on the model, it is possible that sex needs to be different...
                     if (this.parents[0].sex == s.sex) {
                         alert("There is already a " + s.sex.toLowerCase() + " parent.");
-                        return;
+                        return false;
                     }
                 }
-                console.info("Added here!");
                 this.__data__.parents.push(s.__data__);
+                return true;
             }
+            return false;
         };
 
         Experiment.prototype.clearParents = function () {

@@ -14,12 +14,14 @@ declare module "StarGenetics/sg_client_mainframe.soy" {
 	function all_experiments(state:any):any;
 	function compact_experiment(state:any):any;
 	function one_experiment(state:any):any;
+	function one_experiment_horizontal(state:any):any;
 	function sex_icon(state:any):any;
 	function male_icon(state:any):any;
 	function female_icon(state:any):any;
 	function sg_logo(state:any):any;
 	function plus_floaty(state:any):any;
 	function sg_expand_females(state:any):any;
+	function sg_expand_class(state:any):any;
 }
 declare function gwt_content(state:any):any;
 declare function main(state:any):any;
@@ -35,9 +37,11 @@ declare function new_experiment(state:any):any;
 declare function all_experiments(state:any):any;
 declare function compact_experiment(state:any):any;
 declare function one_experiment(state:any):any;
+declare function one_experiment_horizontal(state:any):any;
 declare function sex_icon(state:any):any;
 declare function male_icon(state:any):any;
 declare function female_icon(state:any):any;
 declare function sg_logo(state:any):any;
 declare function plus_floaty(state:any):any;
 declare function sg_expand_females(state:any):any;
+declare function sg_expand_class(state:any):any;

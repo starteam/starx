@@ -417,6 +417,12 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 .sg_s_strain_remove {
   float: right;
 }
+.sg_expand_class_dialog {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #e0e0e0;
+}
 .sg_expand_females_dialog {
   position: absolute;
   top: 0px;
@@ -436,11 +442,10 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   margin: 5px;
   width: 70px;
 }
-.sg_dialog_close {
-  float: right;
-  position: absolute;
-  top: 0px;
-  right: 0px;
+.sg_expand_class_dialog_title {
+  font-size: 12pt;
+  font-weight: 900;
+  color: #808080;
 }
 .sg_bold_heading {
   font-weight: 900;
