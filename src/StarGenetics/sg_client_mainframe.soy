@@ -1054,11 +1054,14 @@
                     {/foreach}
                 </tr>
             // Properties Rows
-    {if $experiment.propertiesVisible}
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_align_top' >
             <b>Phenotypes</b>
+    {if $experiment.propertiesVisible}
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide</button>&nbsp; &nbsp;
+    {else}
+                    <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
+    {/if}
             </td><td colspan='3' class='sg_experiment_phenotype_detail_align_top'>
                             <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
             </td>
@@ -1070,17 +1073,6 @@
             {/foreach}
 
                 </tr>
-
-    {else}
-        <tr>
-            <td class='sg_s_col_head '>
-            <b>Phenotypes</b>
-                    <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
-                   // <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
-            </td>
-            <td><!-- => --></td>
-        </tr>
-    {/if}
 
             {if $experiment.propertiesVisible}
             // SEX

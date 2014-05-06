@@ -641,17 +641,19 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var $dialog = $(SGUIMAIN.sg_expand_class({ experiment: c, phenotype: phenotype, name: class_name })).appendTo($parent);
                 var offset_parent = $parent.offset();
                 var offset_this = $(this).offset();
-                setTimeout(function () {
-                    $dialog.css({ top: "70px", left: "150px", width: ($parent.width() - 70) + "px", height: $table.height() + "px", position: "absolute" });
-                    var w = $('.sg_slider_widget_wrapper', $dialog);
-                    var w_1 = $('.sg_expand_dialog_strain', w).width() + 15;
-                    var count = c['phenotypes'][phenotype]['list'].length;
-                    console.info("here we go:", w_1, count);
-                    w.css({ width: ($parent.width() - 50) + "px", height: ($table.height() - 30) + "px" });
-                    $('.sg_expand_class_dialog_list', w).css({ 'width': (count * w_1) + 'px', 'height': '50px' });
-                    console.info("And this is the dialog", $('.sg_slider_widget_wrapper', $dialog));
-                }, 1);
 
+                //            setTimeout(function () {
+                $dialog.css({ top: "70px", left: "150px", width: ($parent.width() - 70) + "px", height: $table.height() + "px", position: "absolute" });
+
+                var w = $('.sg_slider_widget_wrapper', $dialog);
+                var w_1 = $('.sg_expand_dialog_strain', w).width() + 15;
+                var count = c['phenotypes'][phenotype]['list'].length;
+                console.info("here we go:", w_1, count);
+                w.css({ width: ($parent.width() - 50) + "px", height: ($table.height() - 30) + "px" });
+                $('.sg_expand_class_dialog_list', w).css({ 'width': (count * w_1) + 'px', 'height': '50px' });
+                console.info("And this is the dialog", $('.sg_slider_widget_wrapper', $dialog));
+
+                //            }, 1);
                 //            $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px", width:$parent.width() + "px" , height: $parent.height() + "px"});
                 self.apply_visualizer($dialog);
                 self.apply_strain_drag_and_drop(main);
@@ -659,6 +661,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 setTimeout(function () {
                     $table.css({ visibility: 'hidden' });
                 }, 1);
+                //            $table.animate({'opacity':'toggle'});
             });
 
             self.apply_visualizer(main);
