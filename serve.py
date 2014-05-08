@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-import SimpleHTTPServer
-import SocketServer
+import http.server
+import socketserver
 import os
 import re
 
 
-class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class MyHandler(http.server.SimpleHTTPRequestHandler):
     def send_head(self):
         path = self.translate_path(self.path)
         f = None
@@ -34,7 +34,7 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             f = open(path, 'rb')
         except IOError:
             self.send_error(404, "File not found")
-            print "File not found: {0}".format(path)
+            print("File not found: {0}".format(path))
             return None
         self.send_response(200)
         self.send_header("Content-type", ctype)
@@ -62,8 +62,8 @@ if __name__ == '__main__':
     h = MyHandler
     h.mapping = mapping
     #httpd = SocketServer.TCPServer(("127.0.0.1", PORT), h)
-    httpd = SocketServer.TCPServer(("0.0.0.0", PORT), h)
-    print "serving at port", PORT
+    httpd = socketserver.TCPServer(("0.0.0.0", PORT), h)
+    print( "serving at port", PORT)
     while True:
         httpd.handle_request()
 

@@ -4,5 +4,5 @@
 /StarBiochem/ /../../starbiochem_html/src/StarBiochem/
 #/StarGenetics/ /../../stargenetics_html/src/StarGenetics/
 /StarGeneticsYeast/ /../../stargenetics_yeast_html/src/StarGeneticsYeast/
-/StarGeneticsGWT /../../stargenetics_gwt_java/
+/StarGeneticsGWT /../../stargenetics_gwt_java//war/stargenetics_gwt_java/
 /StarSimpleText/ /StarSimpleText/
