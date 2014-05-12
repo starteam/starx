@@ -1,0 +1,2 @@
+# Module stargenetics_gwt_java
+# RPC service class, partial path of RPC policy file

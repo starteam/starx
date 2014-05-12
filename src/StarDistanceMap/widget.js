@@ -1446,4 +1446,3 @@ define(["require", "exports", "StarX/lib/underscore", "jquery", "StarDistanceMap
     })();
     exports.GeneDistanceWidget = GeneDistanceWidget;
 });
-//# sourceMappingURL=widget.js.map

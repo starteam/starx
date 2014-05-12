@@ -1,5 +1,5 @@
-/// <reference path="../StarGenetics_Obsolete/state.ts" />
-/// <reference path="../StarGenetics_Obsolete/config.d.ts" />
+/// <reference path="../StarGenetics/state.ts" />
+/// <reference path="../StarGenetics/config.d.ts" />
 /// <reference path="jsappmodel.ts" />
 /// <reference path="visualizers/smiley.ts" />
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
@@ -18,7 +18,7 @@ import SGCSS = require("StarGenetics/sg_client_mainframe.css.soy");
 import SGUIMAIN = require("StarGenetics/sg_client_mainframe.soy");
 import bundled_samples = require("StarGenetics/bundled_samples");
 import SGModel = require("StarGenetics/jsappmodel");
-import SGState = require("../StarGenetics_Obsolete/state");
+import SGState = require("StarGenetics/state");
 import VisualizerBase = require("StarGenetics/visualizers/base");
 import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
@@ -47,6 +47,7 @@ export class StarGeneticsJSAppWidget {
         this.config = config;
 
         var backend_model = undefined;
+        debugger;
         if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
             tmi.event("StarGenetics", "Start", config['config']['bundled_samples']);
             backend_model = bundled_samples[config['config']['bundled_samples']];

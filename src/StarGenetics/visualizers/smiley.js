@@ -103,4 +103,3 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
     })(base.BaseVisualizer);
     exports.Smiley = Smiley;
 });
-//# sourceMappingURL=smiley.js.map

@@ -160,4 +160,3 @@ define(["require", "exports"], function(require, exports) {
     })();
     exports.StarGeneticsGlobalState = StarGeneticsGlobalState;
 });
-//# sourceMappingURL=state.js.map

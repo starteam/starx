@@ -47,4 +47,3 @@ define(["require", "exports"], function(require, exports) {
     })();
     exports.TMI = TMI;
 });
-//# sourceMappingURL=tmi.js.map

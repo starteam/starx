@@ -29,4 +29,3 @@ define(["require", "exports"], function(require, exports) {
     }
     exports.onerror = onerror;
 });
-//# sourceMappingURL=qunit.js.map

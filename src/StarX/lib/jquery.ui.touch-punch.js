@@ -15,4 +15,3 @@ define(["require", "exports", "jquery", "jquery-ui", "../../StarX/jquery.ui.touc
     exports.version = version;
     ;
 });
-//# sourceMappingURL=jquery.ui.touch-punch.js.map

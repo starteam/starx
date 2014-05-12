@@ -566,4 +566,3 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
     Base.defineStaticRWField(Top, "backend", {});
     Base.readOnlyWrappedField(Top, "ui", UIModel);
 });
-//# sourceMappingURL=jsappmodel.js.map

@@ -13,4 +13,3 @@ define(["require", "exports"], function(require, exports) {
         new ConfigElement('hide')
     ];
 });
-//# sourceMappingURL=config.js.map
