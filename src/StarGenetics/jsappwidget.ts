@@ -47,7 +47,6 @@ export class StarGeneticsJSAppWidget {
         this.config = config;
 
         var backend_model = undefined;
-        debugger;
         if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
             tmi.event("StarGenetics", "Start", config['config']['bundled_samples']);
             backend_model = bundled_samples[config['config']['bundled_samples']];

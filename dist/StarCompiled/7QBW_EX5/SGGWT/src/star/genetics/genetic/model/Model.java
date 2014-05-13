@@ -1,6 +1,8 @@
 package star.genetics.genetic.model;
 
-public interface Model extends GeneticModel
+import star.genetics.client.CreatureProxy;
+
+public interface Model extends GeneticModel, CreatureProxy
 {
 	Genome getGenome();
 

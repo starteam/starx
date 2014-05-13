@@ -15,4 +15,8 @@ public class UpdateExperiment extends Exec
 	                                                  return this.data.command;
 	                                                  }-*/;
 
+	public final native String getAvgOffspringCount() /*-{
+    return this.data.avg_offspring_count;
+    }-*/;
+
 }

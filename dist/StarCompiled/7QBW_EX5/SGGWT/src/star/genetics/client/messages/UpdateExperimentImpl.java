@@ -35,7 +35,18 @@ public class UpdateExperimentImpl
 			CrateModel cratemodel = model.getCrateSet().newCrateModel();
 			if ("mate".equalsIgnoreCase(exp.getExperimentCommand()))
 			{
-				mate(model, experiment, cratemodel, true);
+				int count = -1;
+				try
+				{
+					count = Integer.parseInt(exp.getAvgOffspringCount());
+				}
+				catch (NullPointerException ex)
+				{
+				}
+				catch (NumberFormatException ex2)
+				{
+				}
+				mate(model, experiment, cratemodel, true, count);
 			}
 			else if ("metadata".equalsIgnoreCase(exp.getExperimentCommand()))
 			{
@@ -57,7 +68,19 @@ public class UpdateExperimentImpl
 			JSONObject ret = new JSONObject();
 			if ("mate".equalsIgnoreCase(exp.getExperimentCommand()))
 			{
-				mate(model, experiment, cratemodel, false);
+				int count = -1;
+				try
+				{
+					count = Integer.parseInt(exp.getAvgOffspringCount());
+				}
+				catch (NullPointerException ex)
+				{
+				}
+				catch (NumberFormatException ex2)
+				{
+				}
+
+				mate(model, experiment, cratemodel, false, count);
 				return;
 			}
 			else if ("metadata".equalsIgnoreCase(exp.getExperimentCommand()))
@@ -75,7 +98,7 @@ public class UpdateExperimentImpl
 		}
 	}
 
-	private void mate(Model model, Experiment experiment, CrateModel cratemodel, boolean isNew)
+	private void mate(Model model, Experiment experiment, CrateModel cratemodel, boolean isNew, int count)
 	{
 		int starting = cratemodel.getProgenies().size();
 		int iter = -1;
@@ -96,7 +119,8 @@ public class UpdateExperimentImpl
 		try
 		{
 			int matings = model.getMatingsCount();
-			CreatureSet children = model.getMatingEngine().getProgenies(cratemodel.getName(), cratemodel.getParents(), cratemodel.getProgenies().size() + 1, matings, model.getRules());
+			logger.info( "Calling mating with " + count );
+			CreatureSet children = model.getMatingEngine().getProgenies(cratemodel.getName(), cratemodel.getParents(), cratemodel.getProgenies().size() + 1, matings, model.getRules(), count );
 			iter = children.size();
 			for (Creature c : children)
 			{

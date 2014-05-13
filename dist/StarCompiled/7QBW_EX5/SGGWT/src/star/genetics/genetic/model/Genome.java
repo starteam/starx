@@ -12,9 +12,9 @@ public interface Genome extends Iterable<Chromosome>, JSONable
 {
 	public static enum SexType
 	{
-		XY(new String[] { "XY/XX", "XY", "XX/XY" }, new String[] { "XX", "xx", "Xx" }), //
+		XY(new String[] { "XY/XX", "XY", "XX/XY" }, new String[] { "XX", "xx", "Xx", "F", "f" }), //
 		XO(new String[] { "XX/X0", "X0", "XO", "XX/XO" }, new String[] { "XX", "xx", "Xx" }), //
-		Aa(new String[] { "MetA/Meta", "MATAa", "MATa/MATalpha" }, new String[] { "Alpha", "alpha" }), UNISEX(new String[] { "Unisex", "Self", "Hermafrodit" }, new String[] {});
+		Aa(new String[] { "MetA/Meta", "MATAa", "MATa/MATalpha", "Aa" }, new String[] { "Alpha", "alpha" }), UNISEX(new String[] { "Unisex", "Self", "Hermafrodit" }, new String[] {});
 
 		private final String[] name;
 		private final String[] female;

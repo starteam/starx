@@ -115,3 +115,4 @@ define(["require", "exports"], function(require, exports) {
         });
     }
 });
+//# sourceMappingURL=suite.js.map

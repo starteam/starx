@@ -2,6 +2,7 @@ package star.genetics.genetic.impl;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import star.genetics.client.Helper;
 import star.genetics.client.JSONable;
@@ -66,8 +67,17 @@ public abstract class MatingEngineImpl_Common implements Serializable, JSONable
 
 	};
 
-	public CreatureSet getProgenies(String crateName, CreatureSet parents, int countFrom, int matings, RuleSet rules) throws MatingException
+	public CreatureSet getProgenies(String crateName, CreatureSet parents, int countFrom, int matings, RuleSet rules ) throws MatingException
 	{
+		return getProgenies(crateName, parents, countFrom, matings, rules, progeniesCount());
+	}
+	
+	public CreatureSet getProgenies(String crateName, CreatureSet parents, int countFrom, int matings, RuleSet rules, int targetCount) throws MatingException
+	{
+		if( targetCount <= 0 )
+		{
+			targetCount = progeniesCount();
+		}
 		CreatureSet set = new star.genetics.genetic.impl.CreatureSetImpl(getModel());
 		if (canMate(parents))
 		{
@@ -79,7 +89,7 @@ public abstract class MatingEngineImpl_Common implements Serializable, JSONable
 			}
 			int creature_count = 0;
 			int lethal_count = 0;
-			LOOP: for (int j = 0; j < progeniesCount(); j++)
+			LOOP: for (int j = 0; j < targetCount; j++)
 			{
 				Creature c = mate(crateName, parentArray[0], parentArray[1], "-" + (countFrom + creature_count), matings, rules); //$NON-NLS-1$
 				boolean isLethal = (c == null);
@@ -185,6 +195,9 @@ public abstract class MatingEngineImpl_Common implements Serializable, JSONable
 		}
 		return canMate;
 	}
+	
+	private static Logger logger = Logger.getLogger("StarGenetics MatingEngine_Common");
+
 
 	protected boolean randomizeInternal(boolean original, float distance, Creature.Sex sex)
 	{

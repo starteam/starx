@@ -48,7 +48,7 @@ public interface JSONable
 	static final String RULES = "rules";
 	static final String COMPILEDRULES = "COMPILEDRULES";
 	static final String KIND = "kind";
-	
+	static final String CREATURESMAP = "CREATURESMAP";
 	JSONObject getJSON();
 	Model getModel();
 }

@@ -3,6 +3,7 @@ package star.genetics.genetic.impl;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import star.genetics.client.Helper;
 import star.genetics.genetic.model.Allele;
@@ -83,6 +84,14 @@ public class MatingEngineImpl_XY extends MatingEngineImpl_Common implements Mati
 			{
 				isLethal = Boolean.parseBoolean(lethal);
 			}
+			else
+			{
+				lethal = x.get(GeneticModel.lethal.toLowerCase());
+				if (lethal != null)
+				{
+					isLethal = Boolean.parseBoolean(lethal);
+				}
+			}
 			if (!isLethal)
 			{
 				star.genetics.genetic.impl.CreatureImpl ret = new star.genetics.genetic.impl.CreatureImpl(name, genome, sex, makeup, matings, x, parents, getModel());
@@ -102,20 +111,31 @@ public class MatingEngineImpl_XY extends MatingEngineImpl_Common implements Mati
 
 	protected GeneticMakeup mate(Genome genome, GeneticMakeup makeup1, Creature.Sex sex1, GeneticMakeup makeup2, Creature.Sex sex2)
 	{
+//		radomize_flips = 0;
+//		randomize_calls = 0;
+//		StringBuffer short_text = new StringBuffer();
+//		StringBuffer short_text_p1 = new StringBuffer();
+//		StringBuffer short_text_p2 = new StringBuffer();
 		GeneticMakeup makeup = new star.genetics.genetic.impl.GeneticMakeupImpl(getModel());
 		boolean position1 = Math.random() < .5f;
 		boolean position2 = Math.random() < .5f;
 		star.genetics.genetic.model.Creature.Sex sex = Math.random() < femaleSexRatio() ? star.genetics.genetic.model.Creature.Sex.FEMALE : star.genetics.genetic.model.Creature.Sex.MALE;
 
-		float previousGenePosition = 0;
 		Chromosome previousChromosome = null;
 		TreeSet<Gene> set = new TreeSet<Gene>();
 		set.addAll(genome.getGenes());
+		StringBuffer genes_text = new StringBuffer();
+//		for(Gene g: set)
+//		{
+//			genes_text.append( g.getChromosome().getName()+"-"+g.getName()+",");
+//		}
+		float previousGenePosition = 0;
 		for (Gene g : set)
 		{
 			Chromosome c = g.getChromosome();
-			if (previousChromosome != c)
+			if (previousChromosome == null || previousChromosome.getName() != c.getName())
 			{
+				logger.info( "MATING END CHROMOSOME FLIP " + (previousChromosome != null ? previousChromosome.getName():"NONE") + " " + c.getName());
 				position1 = Math.random() < .5f;
 				position2 = Math.random() < .5f;
 				previousGenePosition = g.getPosition();
@@ -178,15 +198,37 @@ public class MatingEngineImpl_XY extends MatingEngineImpl_Common implements Mati
 					}
 				}
 			}
-			DiploidAlleles allele = new star.genetics.genetic.impl.DiploidAllelesImpl(a1, a2, getModel());
+			DiploidAllelesImpl allele = new star.genetics.genetic.impl.DiploidAllelesImpl(a1, a2, getModel());
+
+//			short_text.append( " " + allele.toStortString());
+//			if( allele1 instanceof DiploidAllelesImpl )
+//			{
+//				short_text_p1.append( " " + ((DiploidAllelesImpl)allele1).toStortString());
+//			}
+//			if( allele2 instanceof DiploidAllelesImpl )
+//			{
+//				short_text_p2.append( " " + ((DiploidAllelesImpl)allele2).toStortString());
+//			}
 			makeup.put(g, allele);
 		}
+//		logger.info( "MATING END FLIPS: " + radomize_flips + " " + randomize_calls + " " + short_text + " P1" + short_text_p1 + " P2:" + short_text_p2 );
 		return makeup;
 	}
 
+	private static Logger logger = Logger.getLogger("StarGenetics MatingEngine_XY");
+//	int randomize_calls = 0 ;
+//	int radomize_flips = 0 ;
+	
 	private boolean randomize(boolean original, float distance, Creature.Sex sex)
 	{
-		return randomizeInternal(original, distance * (Creature.Sex.MALE.equals(sex) ? maleRecombinationRate() : femaleRecombinationRate()), sex);
+		boolean ret = randomizeInternal(original, distance * (Creature.Sex.MALE.equals(sex) ? maleRecombinationRate() : femaleRecombinationRate()), sex);
+//		if( original != ret )
+//		{
+//			radomize_flips++;
+//		}
+//		randomize_calls++;
+		return ret;
+
 	}
 
 }

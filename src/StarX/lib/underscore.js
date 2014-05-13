@@ -11,3 +11,4 @@ define(["require", "exports", "StarX/underscore"], function(require, exports) {
         window['_'] = exports._;
     }
 });
+//# sourceMappingURL=underscore.js.map

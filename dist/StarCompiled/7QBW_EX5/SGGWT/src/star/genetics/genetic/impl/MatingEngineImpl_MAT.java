@@ -10,6 +10,10 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.google.gwt.json.client.JSONObject;
+
+import star.genetics.client.Helper;
+import star.genetics.client.JSONable;
 import star.genetics.client.Messages;
 import star.genetics.genetic.model.Allele;
 import star.genetics.genetic.model.Chromosome;
@@ -22,7 +26,7 @@ import star.genetics.genetic.model.MatingEngine;
 import star.genetics.genetic.model.Model;
 import star.genetics.genetic.model.RuleSet;
 
-public class MatingEngineImpl_MAT implements MatingEngine, Serializable
+public class MatingEngineImpl_MAT implements MatingEngine, Serializable, JSONable
 {
 
 	static class Mapping
@@ -68,11 +72,35 @@ public class MatingEngineImpl_MAT implements MatingEngine, Serializable
 	}
 
 	private static final long serialVersionUID = 1L;
-	float maleRecombinationRate;
-	float femaleRecombinationRate;
-	float femaleSexRatio;
-	int progeniesCount;
+	float maleRecombinationRate()
+	{
+		return Helper.unwrapNumber(data.get(MALERECOMBINATIONRATE));
+	};
+
+	float femaleRecombinationRate()
+	{
+		return Helper.unwrapNumber(data.get(FEMALERECOMBINATIONRATE));
+
+	};
+
+	float femaleSexRatio()
+	{
+		return Helper.unwrapNumber(data.get("femaleSexRatio"));
+
+	};
+
+	private int progeniesCount()
+	{
+		return Math.round(Helper.unwrapNumber(data.get("progeniesCount")));
+	};
+
 	private final Model model;
+	protected final JSONObject data;
+
+	public JSONObject getJSON()
+	{
+		return data;
+	};
 
 	public Model getModel()
 	{
@@ -81,12 +109,20 @@ public class MatingEngineImpl_MAT implements MatingEngine, Serializable
 
 	public MatingEngineImpl_MAT(float maleRecombinationRate, float femaleRecombinationRate, float femaleSexRatio, int progeniesCount, Model model)
 	{
+		data = new JSONObject();
+		data.put("progeniesCount", Helper.wrapNumber(progeniesCount));
+		data.put(MALERECOMBINATIONRATE, Helper.wrapNumber(maleRecombinationRate));
+		data.put(FEMALERECOMBINATIONRATE, Helper.wrapNumber(femaleRecombinationRate));
+		data.put("femaleSexRatio", Helper.wrapNumber(femaleSexRatio));
+
 		this.model = model;
-		this.maleRecombinationRate = maleRecombinationRate;
-		this.femaleRecombinationRate = femaleRecombinationRate;
-		this.femaleSexRatio = femaleSexRatio;
-		this.progeniesCount = progeniesCount;
 	}
+
+	public MatingEngineImpl_MAT(JSONObject data, Model model)
+    {
+		this.data = data;
+		this.model = model;
+    }
 
 	static class GeneComparator implements Comparator<Gene>, Serializable
 	{
@@ -167,9 +203,17 @@ public class MatingEngineImpl_MAT implements MatingEngine, Serializable
 		}
 		return chromosomeMapping;
 	}
-
 	public CreatureSet getProgenies(String crateName, CreatureSet parents, int countFrom, int matings, RuleSet rules) throws MatingException
 	{
+		return getProgenies(crateName, parents, countFrom, matings, rules,progeniesCount());
+	}
+	
+	public CreatureSet getProgenies(String crateName, CreatureSet parents, int countFrom, int matings, RuleSet rules, int targetCount) throws MatingException
+	{
+		if( targetCount <= 0 )
+		{
+			targetCount = progeniesCount();
+		}
 
 		Creature c1 = parents.get(0);
 		Creature c2 = parents.get(1);
@@ -177,7 +221,7 @@ public class MatingEngineImpl_MAT implements MatingEngine, Serializable
 		Random rng = new Random();
 		CreatureSetImpl ret = new CreatureSetImpl(getModel());
 		Genome genome = c1.getGenome();
-		for (int pIndex = 0; pIndex < progeniesCount; pIndex++)
+		for (int pIndex = 0; pIndex < targetCount; pIndex++)
 		{
 			GeneticMakeupImpl[] makeups = new GeneticMakeupImpl[4];
 			for (int i = 0; i < 4; i++)

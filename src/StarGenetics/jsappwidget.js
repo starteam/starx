@@ -23,7 +23,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             this.config = config;
 
             var backend_model = undefined;
-            debugger;
             if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
                 tmi.event("StarGenetics", "Start", config['config']['bundled_samples']);
                 backend_model = bundled_samples[config['config']['bundled_samples']];
@@ -863,3 +862,4 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
     })();
     exports.StarGeneticsJSAppWidget = StarGeneticsJSAppWidget;
 });
+//# sourceMappingURL=jsappwidget.js.map

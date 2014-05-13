@@ -73,7 +73,7 @@
 */
 {template .strain}
 {if $count != 0}
-<div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}">
+<div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}" data-name="{$strain['name']}">
                     {if $visuals}
                     <div class='sg_strain_visual' title='Sex:{$strain['sex']}{\n}
 {foreach $property in keys($strain.capitalized_properties)}
@@ -100,7 +100,6 @@
     <div class='sg_strain_title'>{$strain['name']} /*-- {if $strain['sex'] == 'FEMALE'}{call .female_icon/}{else}{call .male_icon/}{/if} --*/</div>
 </div>
 {/template}
-
 
 /**
 * @param kind

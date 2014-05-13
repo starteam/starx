@@ -19,3 +19,4 @@ define(["require", "exports"], function(require, exports) {
     })();
     exports.Remapper = Remapper;
 });
+//# sourceMappingURL=property_name_remap.js.map

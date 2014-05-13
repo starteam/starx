@@ -88,7 +88,7 @@ public class GeneImpl implements star.genetics.genetic.model.Gene
 
 	public int compareTo(star.genetics.genetic.model.Gene that)
 	{
-		if (this.getChromosome() != null && that.getChromosome() != null && this.getChromosome().equals(that.getChromosome()))
+		if (this.getChromosome() != null && that.getChromosome() != null && this.getChromosome().getName().equals(that.getChromosome().getName()))
 		{
 			int ret = Double.compare(this.getPosition(), that.getPosition());
 			return ret != 0 ? ret : this.getId().compareTo(that.getId());

@@ -262,3 +262,4 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
     })(base.BaseVisualizer);
     exports.Fly = Fly;
 });
+//# sourceMappingURL=fly.js.map

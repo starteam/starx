@@ -14,6 +14,7 @@ import star.genetics.genetic.model.Creature.Sex;
 import star.genetics.genetic.model.DiploidAlleles;
 import star.genetics.genetic.model.Gene;
 import star.genetics.genetic.model.Genome;
+import star.genetics.genetic.model.Genome.SexType;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
@@ -41,9 +42,14 @@ public class StrainsParser
 	{
 		String name = strain.get("name").isString().stringValue();
 		String ssex = strain.get("sex").isString().stringValue();
-		Sex sex = "M".equalsIgnoreCase(ssex) ? Sex.MALE : Sex.FEMALE;
+		SexType sex_type = model.getGenome().getSexType();
+		
+		Sex sex = sex_type.parseSex(ssex); 
 		GeneticMakeupImpl makeup = parseGeneticMakeup(model, strain.get("alleles").isArray());
-		fixMakeup_XY(model.getGenome(), makeup, sex, model);
+		if( sex_type.equals(SexType.XY))
+		{
+			fixMakeup_XY(model.getGenome(), makeup, sex, model);
+		}
 		Map<String, String> properties = new HashMap<String, String>();
 		CreatureImpl c = new CreatureImpl(name, model.getGenome(), sex, makeup, model.getMatingsCount(), properties, null, model);
 		set.add(c);

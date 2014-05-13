@@ -31,7 +31,7 @@ public class CreatureImpl implements star.genetics.genetic.model.Creature, Seria
 	CreatureImpl(JSONObject data, Model model)
 	{
 		this.model = model;
-		this.data = data;
+		this.data = model.getCreatureData(Helper.unwrapString(data.get(UUID)));
 	}
 
 	public CreatureImpl(String name, Genome genome, Sex sex, GeneticMakeup makeup, int matingsAvailable, Map<String, String> properties, CreatureSet parents, Model model)
@@ -44,10 +44,11 @@ public class CreatureImpl implements star.genetics.genetic.model.Creature, Seria
 		data.put(MAKEUP, makeup.getJSON());
 		data.put(MATINGSAVAILABLE, Helper.wrapNumber(matingsAvailable));
 		data.put(PROPERTIES, new JSONObject());
-		data.put(PARENTS, new JSONArray());
+		data.put(PARENTS, parents != null ? parents.getJSON() : new JSONObject());
 		data.put(READONLY, JSONBoolean.getInstance(false));
 		addProperties(properties);
 		data.put(UUID, Helper.wrapString(generateUUID()));
+		model.setCreatureData(data);
 	}
 
 	public CreatureSet getParents()
@@ -167,7 +168,9 @@ public class CreatureImpl implements star.genetics.genetic.model.Creature, Seria
 
 	public JSONObject getJSON()
 	{
-		return data;
+		JSONObject ret = new JSONObject();
+		ret.put(UUID, data.get(UUID));
+		return ret;
 	}
 
 }
