@@ -999,7 +999,7 @@
                     <th colspan='5'></th>
                 {foreach $phenotype in keys($experiment.phenotypes)}
                 <th colspan='2' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right'>
-                <!-- {$phenotype.short_description} --> Class {index($phenotype)+1}
+                <!-- {$phenotype.short_description} --> Class {index($phenotype)+1} ({round(($experiment.phenotypes[$phenotype].females+$experiment.phenotypes[$phenotype].males)/$experiment.list.length*100,0)}%)
                 </th>
                 {/foreach}
                 </tr>
