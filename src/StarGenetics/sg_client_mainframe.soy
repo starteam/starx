@@ -70,10 +70,11 @@
 * @param percentage
 * @param kind
 * @param name
+* @param testid
 */
 {template .strain}
 {if $count != 0}
-<div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}" data-name="{$strain['name']}">
+<div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}" data-name="{$strain['name']}" {if $testid}data-test-id="{$testid}"{/if}>
                     {if $visuals}
                     <div class='sg_strain_visual' title='Sex:{$strain['sex']}{\n}
 {foreach $property in keys($strain.capitalized_properties)}
@@ -218,7 +219,7 @@
     <div class='sg_experiment_parents_wrapper'>
     <div class='sg_experiment_parents'>
         {if $experiment.parents.length <1}
-        <div class='sg_experiment_parent' data-kind='new_experiment' title="Drag a strain from the Strains box or from a previously performed experiment here">
+        <div class='sg_experiment_parent' data-kind='new_experiment' data-empty='true' title="Drag a strain from the Strains box or from a previously performed experiment here">
             {call .new_experiment_parent_text/}
         </div>
         {else}
@@ -235,7 +236,7 @@
         X
         </div>
         {if $experiment.parents.length <2}
-        <div class='sg_experiment_parent' data-kind='new_experiment' title="Drag a strain from the Strains box or from a previously performed experiment here">
+        <div class='sg_experiment_parent' data-kind='new_experiment' data-empty='true' title="Drag a strain from the Strains box or from a previously performed experiment here">
             {call .new_experiment_parent_text/}
         </div>
         {else}
@@ -1038,6 +1039,7 @@
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
+                            {param testid:$experiment.name+' '+(index($phenotype)+1)+' F'/}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_right'>
@@ -1048,6 +1050,7 @@
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
+                            {param testid:$experiment.name+' '+(index($phenotype)+1)+' M'/}
                         {/call}
                         </td>
                     {/foreach}

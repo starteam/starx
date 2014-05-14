@@ -450,7 +450,7 @@ export class StarGeneticsJSAppWidget {
             var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'males_list'})).appendTo($parent);
             var offset_parent = $parent.offset();
             var offset_this = $(this).offset();
-            $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px"});
+            $dialog.css({top: (offset_this['top'] - offset_parent['top']) + "px", left: (offset_this.left - offset_parent.left) + "px"});
             self.apply_visualizer($dialog);
             self.apply_strain_drag_and_drop(main);
         });
@@ -612,7 +612,7 @@ export class StarGeneticsJSAppWidget {
                 return;
             }
             tmi.event("StarGenetics", "sg_new_experiment_mate");
-            $('.sg_new_experiment_box').css({'overflow': 'hidden'}).animate({ 'height': 25}, 750, function () {
+//            $('.sg_new_experiment_box').css({'overflow': 'hidden'}).animate({ 'height': 25}, 750, function () {
                 self.mate(c, {onsuccess: function () {
                     console.info("Mate success!");
 
@@ -623,9 +623,9 @@ export class StarGeneticsJSAppWidget {
                 }, avg_offspring_count: count
                 });
                 self.show();
-                $('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
+                //$('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
 
-            });
+//            });
         });
         $('.sg_new_experiment_mate_count').off('keyup').on('keyup', function (e) {
             console.info($(this).val());
