@@ -45,8 +45,8 @@
 }
 .sg_strain_box_hover:hover {
   margin: 0px;
-  border: 1px solid #add8e6;
-  border-radius: 9px;
+  border: 1px solid #00ff00;
+  border-radius: 0px;
   cursor: copy;
 }
 .sg_strain_title {
@@ -264,7 +264,7 @@ table {
   padding: 5px;
 }
 .sg_mini_experiment_box:hover {
-  border: 1px solid #add8e6;
+  border: 1px solid #00ff00;
   border-radius: 9px;
 }
 .sg_experiment_phenotype_detail_parent_m {
@@ -374,12 +374,12 @@ table {
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: #add8e6;
+  background-color: #00ff00;
   padding: 1px;
   font-size: 12pt;
 }
 .sg_s_rename {
-  border-bottom: 2px dotted #add8e6;
+  border-bottom: 2px dotted #00ff00;
   cursor: pointer;
 }
 .sg_s_discard {
