@@ -221,7 +221,7 @@ sg_client_mainframe.new_experiment_expanded = function(opt_data, opt_sb) {
     } else {
       output.append('<div class=\'sg_experiment_parent\' data-kind=\'new_experiment\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[1].id), '\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parents[1], visuals: opt_data.experiment.visualsVisible, kind: 'new_experiment'}, output);
-      output.append('<button class=\'sg_experiment_parent_remove\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[1].id), '\' data-kind=\'new_experiment\' title="Remove Parent">x</button></div>');
+      output.append('<button class=\'sg_experiment_parent_remove\' data-id=\'', soy.$$escapeHtml(opt_data.experiment.parents[1].id), '\' data-kind=\'new_experiment\' title="Remove Parent"><span class=\'sg_experiment_parent_remove_text\'>x</span></button></div>');
     }
     output.append('</div>', (opt_data.experiment.canmate) ? '<div class=\'sg_experiment_parents_can_mate\'><div class=\'sg_experiment_parents_can_mate_info\'>How many progeny would you like to produce? (Between 1 and 500)</div><div class=\'sg_experiment_parents_can_mate_input\'><input type=\'text\' class=\'sg_new_experiment_mate_count\' value=\'' + ((opt_data.prg_count) ? soy.$$escapeHtml(opt_data.prg_count) : '50') + '\'><button class=\'sg_new_experiment_mate sg_s_new_experiment_mate_large\' data-kind=\'new_experiment\'>Mate</button></div></div>' : '', '</div>');
   }

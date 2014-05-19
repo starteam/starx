@@ -4,6 +4,7 @@
 @button-bg: #e3e3e3;
 @drag-color: #00ff00;
 @med-gray: #808080;
+@experiment_parent_bg_color: white;
 
 .sg_workspace {
   background: white;
@@ -160,7 +161,7 @@
   width:80px;
   font-weight: 900;
   font-size: 12px;
-  background-color: @group-border;
+  background-color: @experiment_parent_bg_color;
   color: @med-gray;
 }
 
@@ -196,7 +197,7 @@ td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {
   top: 0px;
   right: 0px;
   -webkit-appearance: none;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: @experiment_parent_bg_color;
   border: 0px;
   padding: 3px;
 }
@@ -304,11 +305,12 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
 }
 
 .sg_s_new_experiment_mate_large {
-  background-image: linear-gradient(#51b151, #8aca8a) !important;
-  //  border: green 1px solid;
-//  border-radius: 9px;
-//  background: lightgreen;
-//  font-size: 14px;
+  border: green 1px solid;
+  border-radius: 9px;
+  font-size: 14pt;
+  background-color: green;
+  color: white;
+
 }
 
 table {
@@ -598,7 +600,13 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 
 .sg_experiment_parent_remove_text {
-  font-size:12px;
+  font-size: 12px;
+  background-color: #a0a0a0;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  display: block;
+  color: white;
 }
 
 .sg_left_heading {
