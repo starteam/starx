@@ -661,8 +661,9 @@
             <button class='sg_discard sg_s_discard' data-kind="{$experiment.id}">X</button>
             {/if}
     </div>
-        <div class='sg_left_heading sg_bold_heading'>Current experiment:</div>
-        <span class='sg_current_experiment_name'><input data-kind="{$experiment.id}" class='sg_current_experiment_name_input' type='text' placeholder="{$experiment.name}"></input></span>
+        {call .sg_current_experiment_name}
+            {param experiment:$experiment/}
+        {/call}
     {if $experiment.expanded}
         <div class='sg_slider_widget_wrapper'>
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>
@@ -977,6 +978,18 @@
 
 
 /**
+    @param experiment
+*/
+{template .sg_current_experiment_name}
+<!--        <div class='sg_left_heading sg_bold_heading'>Current experiment:</div>-->
+        <span class='sg_current_experiment_name'>
+            <input data-kind="{$experiment.id}" class='sg_current_experiment_name_input' type='text' placeholder="{$experiment.name}"></input>
+            <input data-kind="{$experiment.id}" class='sg_current_experiment_name_save' type='button' value='Save'></input>
+            <input data-kind="{$experiment.id}" class='sg_current_experiment_name_cancel' type='button' value='Cancel'></input>
+        </span>
+{/template}
+
+/**
 * @param experiment
 * @param css_class
 * @param selected
@@ -989,8 +1002,9 @@
             <button class='sg_discard sg_s_discard' data-kind="{$experiment.id}">X</button>
             {/if}
     </div>
-        <div class='sg_left_heading sg_bold_heading'>Current experiment:</div>
-        <span class='sg_current_experiment_name'><input data-kind="{$experiment.id}" class='sg_current_experiment_name_input' type='text' placeholder="{$experiment.name}"></input></span>
+    {call .sg_current_experiment_name}
+        {param experiment:$experiment/}
+    {/call}
     {if $experiment.expanded}
         <div class='sg_slider_widget_wrapper'>
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>

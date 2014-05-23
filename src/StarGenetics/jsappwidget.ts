@@ -476,7 +476,7 @@ export class StarGeneticsJSAppWidget {
             $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px"});
             self.apply_visualizer($dialog);
             self.apply_strain_drag_and_drop(main);
-            self.sg_dialog_close($dialog,undefined);
+            self.sg_dialog_close($dialog, undefined);
 
 
         });
@@ -527,11 +527,47 @@ export class StarGeneticsJSAppWidget {
             }
         });
 
-        $('.sg_current_experiment_name_input').off('change').on('change', function () {
+
+        var sg_current_experiment_name_input_hide = function () {
+            $('.sg_current_experiment_name_save').css({'visibility': 'hidden'});
+            $('.sg_current_experiment_name_cancel').css({'visibility': 'hidden'});
+            $('.sg_current_experiment_name').css({'background-color': 'rgba(0,128,0,0)'})
+
+        }
+
+        var sg_current_experiment_name_input_show = function () {
+            $('.sg_current_experiment_name_save').css({'visibility': 'visible'});
+            $('.sg_current_experiment_name_cancel').css({'visibility': 'visible'});
+            $('.sg_current_experiment_name').css({'background-color': 'rgba(0,128,0,.7)'})
+        }
+        var sg_current_experiment_name_input_change = function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
             if (c) {
                 var old_name = c.name;
                 var new_name = $(this).val();
+                console.info("old_name", old_name, "new_name", new_name);
+                if (new_name != null && new_name.length > 0 && new_name != old_name) {
+                    sg_current_experiment_name_input_show();
+                }
+                else {
+                    sg_current_experiment_name_input_hide();
+                }
+
+            }
+        };
+
+        sg_current_experiment_name_input_hide();
+        $('.sg_current_experiment_name_input').off('focus').on('focus', function () {
+            sg_current_experiment_name_input_show();
+        });
+
+        $('.sg_current_experiment_name_input').off('blur').on('blur', sg_current_experiment_name_input_change);
+
+        $('.sg_current_experiment_name_save').off('click').on('click',function () {
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            if (c) {
+                var old_name = c.name;
+                var new_name = $('.sg_current_experiment_name_input[data-kind="' + $(this).data('kind') + '"]').val();
                 if (new_name != null && new_name.length > 0) {
                     c.name = new_name;
                     _.each(c.list, function (s) {
@@ -542,9 +578,13 @@ export class StarGeneticsJSAppWidget {
                     tmi.event("StarGenetics", "sg_rename", old_name + " -> " + new_name);
                     self.show();
                 }
-
             }
-        });
+        }).css({visibility: 'hidden'});
+
+        $('.sg_current_experiment_name_cancel').off('click').on('click',function () {
+//            }
+            self.show();
+        }).css({visibility: 'hidden'});
 
         $('.sg_discard').off('click').on('click', function () {
             var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
@@ -613,17 +653,17 @@ export class StarGeneticsJSAppWidget {
             }
             tmi.event("StarGenetics", "sg_new_experiment_mate");
 //            $('.sg_new_experiment_box').css({'overflow': 'hidden'}).animate({ 'height': 25}, 750, function () {
-                self.mate(c, {onsuccess: function () {
-                    console.info("Mate success!");
+            self.mate(c, {onsuccess: function () {
+                console.info("Mate success!");
 
-                }, onerror: function () {
-                    console.info("Mate error!");
-                    self.context['io']['log']("StarGenetics - Mate Error");
+            }, onerror: function () {
+                console.info("Mate error!");
+                self.context['io']['log']("StarGenetics - Mate Error");
 
-                }, avg_offspring_count: count
-                });
-                self.show();
-                //$('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
+            }, avg_offspring_count: count
+            });
+            self.show();
+            //$('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
 
 //            });
         });
@@ -655,9 +695,8 @@ export class StarGeneticsJSAppWidget {
                 var src_strain:SGModel.Strain = src_collection.get(source.data('id'));
                 var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
                 var success = self.add_parent(target_collection, src_strain);
-                if(! success )
-                {
-                    return ;
+                if (!success) {
+                    return;
                 }
                 tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
                 self.show();
@@ -683,19 +722,19 @@ export class StarGeneticsJSAppWidget {
             tmi.event("StarGenetics", "sg_expand_class");
             var $table = $(this).closest('.sg_slider_table');
             var $parent = $table.parent();
-            var $dialog = $(SGUIMAIN.sg_expand_class({experiment: c, phenotype: phenotype,name:class_name})).appendTo($parent);
+            var $dialog = $(SGUIMAIN.sg_expand_class({experiment: c, phenotype: phenotype, name: class_name})).appendTo($parent);
             var offset_parent = $parent.offset();
             var offset_this = $(this).offset();
 //            setTimeout(function () {
-                $dialog.css({top: "70px", left: "150px", width: ($parent.width()-70) + "px", height: $table.height()+ "px", position:"absolute"});
+            $dialog.css({top: "70px", left: "150px", width: ($parent.width() - 70) + "px", height: $table.height() + "px", position: "absolute"});
 
-                var w = $('.sg_slider_widget_wrapper',$dialog);
-                var w_1 = $('.sg_expand_dialog_strain',w).width()+15;
-                var count = c['phenotypes'][phenotype]['list'].length;
-                console.info( "here we go:" , w_1 , count );
-                w.css({width: ($parent.width()-50) + "px", height: ($table.height()-30)+ "px"});
-                $('.sg_expand_class_dialog_list',w).css({'width':(count*w_1)+'px','height':'50px'});
-                console.info( "And this is the dialog" , $('.sg_slider_widget_wrapper',$dialog) );
+            var w = $('.sg_slider_widget_wrapper', $dialog);
+            var w_1 = $('.sg_expand_dialog_strain', w).width() + 15;
+            var count = c['phenotypes'][phenotype]['list'].length;
+            console.info("here we go:", w_1, count);
+            w.css({width: ($parent.width() - 50) + "px", height: ($table.height() - 30) + "px"});
+            $('.sg_expand_class_dialog_list', w).css({'width': (count * w_1) + 'px', 'height': '50px'});
+            console.info("And this is the dialog", $('.sg_slider_widget_wrapper', $dialog));
 //            }, 1);
 
 //            $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px", width:$parent.width() + "px" , height: $parent.height() + "px"});
@@ -734,9 +773,9 @@ export class StarGeneticsJSAppWidget {
         $('.sg_dialog_close', $dialog).off('click').on('click', function () {
             var $parent = $(this).closest('[data-widget="dialog"]');
             $parent.detach();
-            setTimeout(function() {
+            setTimeout(function () {
                 $table.css({visibility: 'visible'});
-            },1)
+            }, 1)
 
         });
 

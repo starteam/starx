@@ -489,11 +489,43 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 }
             });
 
-            $('.sg_current_experiment_name_input').off('change').on('change', function () {
+            var sg_current_experiment_name_input_hide = function () {
+                $('.sg_current_experiment_name_save').css({ 'visibility': 'hidden' });
+                $('.sg_current_experiment_name_cancel').css({ 'visibility': 'hidden' });
+                $('.sg_current_experiment_name').css({ 'background-color': 'rgba(0,128,0,0)' });
+            };
+
+            var sg_current_experiment_name_input_show = function () {
+                $('.sg_current_experiment_name_save').css({ 'visibility': 'visible' });
+                $('.sg_current_experiment_name_cancel').css({ 'visibility': 'visible' });
+                $('.sg_current_experiment_name').css({ 'background-color': 'rgba(0,128,0,.7)' });
+            };
+            var sg_current_experiment_name_input_change = function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 if (c) {
                     var old_name = c.name;
                     var new_name = $(this).val();
+                    console.info("old_name", old_name, "new_name", new_name);
+                    if (new_name != null && new_name.length > 0 && new_name != old_name) {
+                        sg_current_experiment_name_input_show();
+                    } else {
+                        sg_current_experiment_name_input_hide();
+                    }
+                }
+            };
+
+            sg_current_experiment_name_input_hide();
+            $('.sg_current_experiment_name_input').off('focus').on('focus', function () {
+                sg_current_experiment_name_input_show();
+            });
+
+            $('.sg_current_experiment_name_input').off('blur').on('blur', sg_current_experiment_name_input_change);
+
+            $('.sg_current_experiment_name_save').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                if (c) {
+                    var old_name = c.name;
+                    var new_name = $('.sg_current_experiment_name_input[data-kind="' + $(this).data('kind') + '"]').val();
                     if (new_name != null && new_name.length > 0) {
                         c.name = new_name;
                         _.each(c.list, function (s) {
@@ -505,7 +537,12 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         self.show();
                     }
                 }
-            });
+            }).css({ visibility: 'hidden' });
+
+            $('.sg_current_experiment_name_cancel').off('click').on('click', function () {
+                //            }
+                self.show();
+            }).css({ visibility: 'hidden' });
 
             $('.sg_discard').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));

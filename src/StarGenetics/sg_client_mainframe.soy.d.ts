@@ -14,6 +14,7 @@ declare module "StarGenetics/sg_client_mainframe.soy" {
 	function all_experiments(state:any):any;
 	function compact_experiment(state:any):any;
 	function one_experiment(state:any):any;
+	function sg_current_experiment_name(state:any):any;
 	function one_experiment_horizontal(state:any):any;
 	function sex_icon(state:any):any;
 	function male_icon(state:any):any;
@@ -37,6 +38,7 @@ declare function new_experiment(state:any):any;
 declare function all_experiments(state:any):any;
 declare function compact_experiment(state:any):any;
 declare function one_experiment(state:any):any;
+declare function sg_current_experiment_name(state:any):any;
 declare function one_experiment_horizontal(state:any):any;
 declare function sex_icon(state:any):any;
 declare function male_icon(state:any):any;
