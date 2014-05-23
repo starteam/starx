@@ -1222,3 +1222,16 @@
     </div>
 </div>
 {/template}
+
+/**
+    @param kind
+    @param id
+*/
+{template .sg_select_strain_target}
+<div class="sg_select_strain_target">
+    <button class='sg_add_to_mating_site' data-kind='{$kind}' data-id='{$id}'>(i) Mating Site</button>
+    {if $kind != 'strains'}
+    <button class='sg_add_to_strains' data-kind='{$kind}' data-id='{$id}'>(i) Strains Stock</button>
+    {/if}
+</div>
+{/template}

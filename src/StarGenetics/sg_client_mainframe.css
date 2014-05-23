@@ -7,6 +7,7 @@
   resize: none;
   overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+  position: relative;
 }
 .sg_exercise_title {
   display: inline-block;
@@ -48,6 +49,11 @@
   border: 1px solid #00ff00;
   border-radius: 0px;
   cursor: copy;
+}
+.sg_strain_box_nohover:hover {
+  border: 0px solid #00ff00 !important;
+  border-radius: 0px !important;
+  cursor: normal !important;
 }
 .sg_strain_title {
   display: block;
@@ -502,4 +508,14 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   background-color: white;
   border: 1px solid #c0c0c0;
   min-height: 100px;
+}
+.sg_select_strain_target {
+  position: absolute;
+  width: 125px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid #00ff00;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
 }

@@ -800,5 +800,18 @@ sg_client_mainframe.sg_expand_class = function(opt_data, opt_sb) {
   output.append('</div></div></div>');
   return opt_sb ? '' : output.toString();
 };
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {soy.StringBuilder=} opt_sb
+ * @return {string}
+ * @notypecheck
+ */
+sg_client_mainframe.sg_select_strain_target = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<div class="sg_select_strain_target"><button class=\'sg_add_to_mating_site\' data-kind=\'', soy.$$escapeHtml(opt_data.kind), '\' data-id=\'', soy.$$escapeHtml(opt_data.id), '\'>(i) Mating Site</button>', (opt_data.kind != 'strains') ? '<button class=\'sg_add_to_strains\' data-kind=\'' + soy.$$escapeHtml(opt_data.kind) + '\' data-id=\'' + soy.$$escapeHtml(opt_data.id) + '\'>(i) Strains Stock</button>' : '', '</div>');
+  return opt_sb ? '' : output.toString();
+};
 for(var i in sg_client_mainframe) { exports[i] = sg_client_mainframe[i] };
 });

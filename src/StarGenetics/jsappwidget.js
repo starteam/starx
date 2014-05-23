@@ -21,6 +21,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             var self = this;
             this.context = context;
             this.config = config;
+            this.workspace = $('#' + config.element_id);
 
             var backend_model = undefined;
             if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
@@ -296,6 +297,15 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         */
         StarGeneticsJSAppWidget.prototype.add_parent = function (experiment, strain) {
             return experiment.addParent(strain);
+        };
+
+        /**
+        * add strain
+        * @param experiments
+        */
+        StarGeneticsJSAppWidget.prototype.add_strain = function (experiment, strain) {
+            experiment.add_strain(strain);
+            return true;
         };
 
         /**
@@ -824,9 +834,54 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         var context = canvas.getContext('2d');
                         context.drawImage(canvas0, 0, 0);
                     }
+                    $(".sg_select_strain_target").detach();
                     return copy;
                 }
             }).addClass('sg_strain_box_hover');
+            $('.sg_strain_box').off('click').on('click', function () {
+                $(".sg_select_strain_target").detach();
+                var id = $(this).data('id');
+                var kind = $(this).data('kind');
+
+                var html = SGUIMAIN.sg_select_strain_target({
+                    kind: kind,
+                    id: id
+                });
+                var parent = $(this).offsetParent();
+                var this_offset = $(this).position();
+                var css = {
+                    'top': (this_offset.top) + 'px',
+                    'left': (this_offset.left - 125) + 'px'
+                };
+                $(html).appendTo(parent).css(css);
+            });
+
+            $(self.workspace).off('click', '.sg_add_to_mating_site').on('click', '.sg_add_to_mating_site', function () {
+                console.info("sg_add_to_mating_site", this);
+                var c = self.model.ui.get($(this).data('kind'));
+                var src_strain = c.get($(this).data('id'));
+                var target = $('.sg_experiment_parent').first();
+                var target_collection = self.model.ui.get(target.data('kind'));
+                var success = self.add_parent(target_collection, src_strain);
+                if (!success) {
+                    return;
+                }
+                tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
+                self.show();
+            });
+
+            $(self.workspace).off('click', '.sg_add_to_strains').on('click', '.sg_add_to_strains', function () {
+                console.info("sg_add_to_mating_site", this);
+                var c = self.model.ui.get($(this).data('kind'));
+                var src_strain = c.get($(this).data('id'));
+                var target_collection = self.model.ui.get('strains');
+                var success = self.add_strain(target_collection, src_strain);
+                if (!success) {
+                    return;
+                }
+                tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
+                self.show();
+            });
         };
 
         StarGeneticsJSAppWidget.prototype.is_overflow_hidden = function (elem, parent) {

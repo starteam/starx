@@ -40,11 +40,13 @@ export class StarGeneticsJSAppWidget {
     eventlistener_setup = false;
     model:SGModel.Top;
     postInitExecuted:boolean = false;
+    workspace:JQuery;
 
     constructor(context:any, config:StarGeneticsConfig) {
         var self:StarGeneticsJSAppWidget = this;
         this.context = context;
         this.config = config;
+        this.workspace = $('#' + config.element_id);
 
         var backend_model = undefined;
         if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
@@ -60,6 +62,7 @@ export class StarGeneticsJSAppWidget {
 
         this.initModel(config);
         this.init();
+
     }
 
     /**
@@ -332,6 +335,15 @@ export class StarGeneticsJSAppWidget {
         return experiment.addParent(strain);
     }
 
+        /**
+     * add strain
+     * @param experiments
+     */
+        add_strain(experiment:SGModel.Strains, strain:SGModel.Strain):boolean {
+            experiment.add_strain(strain);
+            return true;
+    }
+
     /**
      * Run mating experiment
      * @param experiments
@@ -448,8 +460,8 @@ export class StarGeneticsJSAppWidget {
 //            self.show();
             var $parent = $(this).closest('.sg_experiment_box');
             var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'males_list'})).appendTo($parent);
-            var offset_parent = $parent.offset();
-            var offset_this = $(this).offset();
+            var offset_parent:any = $parent.offset();
+            var offset_this:any = $(this).offset();
             $dialog.css({top: (offset_this['top'] - offset_parent['top']) + "px", left: (offset_this.left - offset_parent.left) + "px"});
             self.apply_visualizer($dialog);
             self.apply_strain_drag_and_drop(main);
@@ -471,8 +483,8 @@ export class StarGeneticsJSAppWidget {
             tmi.event("StarGenetics", "sg_expand_females");
             var $parent = $(this).closest('.sg_experiment_box');
             var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'females_list'})).appendTo($parent);
-            var offset_parent = $parent.offset();
-            var offset_this = $(this).offset();
+            var offset_parent:any = $parent.offset();
+            var offset_this:any = $(this).offset();
             $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px"});
             self.apply_visualizer($dialog);
             self.apply_strain_drag_and_drop(main);
@@ -855,7 +867,6 @@ export class StarGeneticsJSAppWidget {
                     });
                     $(this).css({'overflow-x': $(this).data('overflow-x'), 'overflow-y': $(this).data('overflow-y'), 'margin-bottom': '0px'}).scrollLeft(-left_scroll).scrollTop(-top_scroll);
                     $('.sg_expand_dialog_strain', $table).css({'visibility': 'visible'});
-
                 });
 
                 console.info("Stop", e, $(e.target).parents('.sg_experiment_box'), $(e.target).parents('.sg_strains_box'));
@@ -873,11 +884,58 @@ export class StarGeneticsJSAppWidget {
                     var context = canvas.getContext('2d');
                     context.drawImage(canvas0, 0, 0);
                 }
+                $(".sg_select_strain_target").detach();
                 return copy;
             }
 
 
         }).addClass('sg_strain_box_hover');
+        $('.sg_strain_box').off('click').on('click', function () {
+            $(".sg_select_strain_target").detach();
+            var id = $(this).data('id');
+            var kind = $(this).data('kind');
+
+            var html = SGUIMAIN.sg_select_strain_target({
+                kind: kind,
+                id: id
+            });
+            var parent = $(this).offsetParent();
+            var this_offset = $(this).position();
+            var css = {
+                'top': (this_offset.top) + 'px',
+                'left': (this_offset.left - 125) + 'px'
+            };
+            $(html).appendTo(parent).css(css);
+        });
+
+        $(self.workspace).off('click', '.sg_add_to_mating_site').on('click', '.sg_add_to_mating_site', function () {
+            console.info("sg_add_to_mating_site", this);
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var src_strain:SGModel.Strain = c.get($(this).data('id'));
+            var target = $('.sg_experiment_parent').first();
+            var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
+            var success = self.add_parent(target_collection, src_strain);
+            if (!success) {
+                return;
+            }
+            tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
+            self.show();
+
+        });
+
+        $(self.workspace).off('click', '.sg_add_to_strains').on('click', '.sg_add_to_strains', function () {
+            console.info("sg_add_to_mating_site", this);
+            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var src_strain:SGModel.Strain = c.get($(this).data('id'));
+            var target_collection:SGModel.Strains = <SGModel.Strains>self.model.ui.get('strains');
+            var success = self.add_strain(target_collection, src_strain);
+            if (!success) {
+                return;
+            }
+            tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
+            self.show();
+
+        });
 
     }
 
