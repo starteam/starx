@@ -190,3 +190,4 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, export
     })();
     exports.StarSimpleText = StarSimpleText;
 });
+//# sourceMappingURL=main.js.map

@@ -162,3 +162,4 @@ define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "S
         var x = new StarGenetics();
     }
 });
+//# sourceMappingURL=main.js.map
