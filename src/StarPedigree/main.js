@@ -1,7 +1,6 @@
 /// <reference path="../StarX/lib/require.d.ts" />
 /// <reference path="../StarX/lib/jquery.d.ts" />
-/// <reference path="../StarX/lib/edXintegration.ts" />
-define(["require", "exports", 'jquery', 'StarTMI/tmi', "StarX/edXintegration"], function(require, exports, $, StarTMI, integration) {
+define(["require", "exports", 'jquery', 'StarTMI/tmi', "StarX/edXintegration", "StarPedigree/Assignment", "StarPedigree/Model"], function(require, exports, $, StarTMI, integration, Assignment, Model) {
     
 
     var tmi = new StarTMI.TMI();
@@ -18,6 +17,10 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi', "StarX/edXintegration"], 
             var top = $('#' + config.element_id);
             var text = '';
             top.html("Welcome to " + this.config.StarX);
+            var assignment = new Assignment.Assignment(Model.model1);
+            console.info(assignment.ui);
+            top.html("Welcome to " + this.config.StarX + "!");
+            window['__StarX'] = assignment;
         };
         return StarPedigree;
     })();
