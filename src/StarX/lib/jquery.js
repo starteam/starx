@@ -14,3 +14,4 @@ define(["require", "exports", "jquery", "StarX/lib/jquery.ui.touch-punch"], func
     exports.version = version;
     ;
 });
+//# sourceMappingURL=jquery.js.map
