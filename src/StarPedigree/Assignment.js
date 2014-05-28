@@ -1,4 +1,5 @@
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarPedigree/widget_template.soy.d.ts" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -168,7 +169,6 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
                     if (typeof self.__data__[name] === 'undefined') {
                         throw "__data__[" + name + "] is undefined for " + cls;
                     }
-
                     var list = this.__context__[context_id][name];
                     var ret = _.map(self.__data__[name], function (q) {
                         return list[q] || q;
@@ -218,8 +218,9 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         return Marker;
     })(Base);
     exports.Marker = Marker;
-    Base.defineStaticRWField(Sex, "id", null);
-    Base.defineStaticRWField(Sex, "name", null);
+    Base.defineStaticRWField(Marker, "id", null);
+    Base.defineStaticRWField(Marker, "name", null);
+    Base.defineStaticRWField(Marker, "kind", null);
 
     var Location = (function (_super) {
         __extends(Location, _super);
@@ -238,6 +239,24 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         function Individual() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(Individual.prototype, "affected", {
+            get: function () {
+                var self = this;
+                var affected = false;
+                var symbol_markers = this.__context__['UI'].options['symbol_markers'] || [];
+                _.each(symbol_markers, function (id) {
+                    var marker = _.find(self.markers, function (marker) {
+                        return id == marker.id;
+                    });
+                    if (marker) {
+                        affected = true;
+                    }
+                });
+                return affected;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Individual;
     })(Base);
     exports.Individual = Individual;
@@ -251,11 +270,31 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         function Relationship() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(Relationship.prototype, "children_column_span", {
+            get: function () {
+                var children = this.children;
+                var min = children[0].location;
+                _.each(children, function (c) {
+                    if (c.location.column < min.column) {
+                        min = c.location;
+                    }
+                });
+                var max = children[0].location;
+                _.each(children, function (c) {
+                    if (c.location.column > max.column) {
+                        max = c.location;
+                    }
+                });
+                return [min, max];
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Relationship;
     })(Base);
     exports.Relationship = Relationship;
-    Base.readOnlyWrappedListById(Individual, "parents", 'UI');
-    Base.readOnlyWrappedListById(Individual, "children", 'UI');
+    Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
+    Base.readOnlyWrappedListById(Relationship, "children", 'UI');
 
     var UI = (function (_super) {
         __extends(UI, _super);
@@ -265,12 +304,40 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         UI.prototype.sex = function (id) {
             return this.sexes[id];
         };
+        Object.defineProperty(UI.prototype, "individuals_as_map", {
+            get: function () {
+                var ret = {};
+                _.each(this.individuals, function (q) {
+                    ret[q.id] = q;
+                });
+                return ret;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(UI.prototype, "parents", {
+            get: function () {
+                return this.individuals_as_map;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(UI.prototype, "children", {
+            get: function () {
+                return this.individuals_as_map;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return UI;
     })(Base);
     exports.UI = UI;
     Base.readOnlyWrappedList(UI, "individuals", Individual);
+    Base.readOnlyWrappedList(UI, "relationships", Relationship);
     Base.readOnlyWrappedMap(UI, "sexes", Sex);
     Base.readOnlyWrappedMap(UI, "markers", Marker);
+    Base.readOnlyField(UI, "options", {});
 
     var Assignment = (function (_super) {
         __extends(Assignment, _super);

@@ -1,7 +1,10 @@
 /// <reference path="../StarX/lib/underscore.d.ts" />
+/// <reference path="../StarPedigree/widget_template.soy.d.ts" />
+
 
 import underscore = require("StarX/lib/underscore");
 var _ = underscore['_'];
+import ui = require("StarPedigree/widget_template.soy");
 
 export class Base {
     __data__:any;
@@ -170,7 +173,6 @@ export class Base {
                 if (typeof self.__data__[name] === 'undefined') {
                     throw "__data__[" + name + "] is undefined for " + cls;
                 }
-
                 var list = this.__context__[context_id][name];
                 var ret = _.map(self.__data__[name], function (q) {
                     return list[q] || q;
@@ -212,8 +214,9 @@ export class Marker extends Base {
     id:string;
     name:string;
 }
-Base.defineStaticRWField(Sex, "id", null);
-Base.defineStaticRWField(Sex, "name", null);
+Base.defineStaticRWField(Marker, "id", null);
+Base.defineStaticRWField(Marker, "name", null);
+Base.defineStaticRWField(Marker, "kind", null);
 
 export class Location extends Base {
     layout:string;
@@ -229,6 +232,19 @@ export class Individual extends Base {
     markers:Marker[];
     sex:Sex;
     location:Location;
+
+    get affected():boolean {
+        var self:Individual = this;
+        var affected:boolean = false;
+        var symbol_markers = this.__context__['UI'].options['symbol_markers'] || [];
+        _.each( symbol_markers , function(id) {
+            var marker = _.find(self.markers, function( marker ) { return id == marker.id;});
+            if( marker ) {
+                affected = true;
+            }
+        });
+        return affected;
+    }
 }
 Base.defineStaticRWField(Individual, "id", null);
 Base.readOnlyWrappedListById(Individual, "markers", 'UI');
@@ -239,25 +255,61 @@ export class Relationship extends Base {
     id:string;
     parents:Individual[];
     children:Individual[];
+
+    get children_column_span():Location[] {
+        var children = this.children;
+        var min:Location = children[0].location;
+        _.each( children , function(c) {
+            if(c.location.column < min.column )
+            {
+                min = c.location;
+            }
+        });
+        var max:Location = children[0].location;
+        _.each( children , function(c) {
+            if(c.location.column > max.column )
+            {
+                max = c.location;
+            }
+        });
+        return [min,max];
+    }
 }
-Base.readOnlyWrappedListById(Individual, "parents", 'UI');
-Base.readOnlyWrappedListById(Individual, "children", 'UI');
+Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
+Base.readOnlyWrappedListById(Relationship, "children", 'UI');
 
 export class UI extends Base {
     individuals:Individual[];
     relationships:Relationship[];
-    sexes:{[id:string]:Sex
-    };
-    markers:{[id:string]:Marker
-    };
+    sexes:{[id:string]:Sex};
+    markers:{[id:string]:Marker};
+    options:any;
 
     sex(id:string):Sex {
         return this.sexes[id];
     }
+    get individuals_as_map():{[id:string]:Individual}
+    {
+        var ret:{[id:string]:Individual} = {} ;
+        _.each(this.individuals,function(q) {
+            ret[q.id] = q;
+        });
+        return ret;
+    }
+
+    get parents():{[id:string]:Individual} {
+        return this.individuals_as_map;
+    }
+    get children():{[id:string]:Individual} {
+        return this.individuals_as_map;
+    }
+
 }
 Base.readOnlyWrappedList(UI, "individuals", Individual);
+Base.readOnlyWrappedList(UI, "relationships", Relationship);
 Base.readOnlyWrappedMap(UI, "sexes", Sex);
 Base.readOnlyWrappedMap(UI, "markers", Marker);
+Base.readOnlyField(UI,"options",{});
 
 export class Assignment extends Base {
     ui:UI;

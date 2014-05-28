@@ -18,9 +18,8 @@ define(["require", "exports"], function(require, exports) {
                     'sex': 'F',
                     'markers': ['H', 'A'],
                     'location': {
-                        'layout': 'grid',
                         'row': 1,
-                        'column:': 1
+                        'column': 1
                     }
                 },
                 {
@@ -28,7 +27,6 @@ define(["require", "exports"], function(require, exports) {
                     'sex': 'M',
                     'markers': ['C', 'D'],
                     'location': {
-                        'layout': 'grid',
                         'row': 1,
                         'column': 6
                     }
@@ -38,7 +36,6 @@ define(["require", "exports"], function(require, exports) {
                     'sex': 'F',
                     'markers': ['H', 'C'],
                     'location': {
-                        'layout': 'grid',
                         'row': 2,
                         'column': 2
                     }
@@ -46,9 +43,8 @@ define(["require", "exports"], function(require, exports) {
                 {
                     'id': 'II-2',
                     'sex': 'F',
-                    'markers': ['H', 'D'],
+                    'markers': ['A', 'D'],
                     'location': {
-                        'layout': 'grid',
                         'row': 2,
                         'column': 3
                     }
@@ -56,9 +52,8 @@ define(["require", "exports"], function(require, exports) {
                 {
                     'id': 'II-3',
                     'sex': 'M',
-                    'markers': ['A', 'C'],
+                    'markers': ['H', 'C'],
                     'location': {
-                        'layout': 'grid',
                         'row': 2,
                         'column': 4
                     }
@@ -68,7 +63,6 @@ define(["require", "exports"], function(require, exports) {
                     'sex': 'M',
                     'markers': ['A', 'D'],
                     'location': {
-                        'layout': 'grid',
                         'row': 2,
                         'column': 5
                     }
@@ -80,7 +74,16 @@ define(["require", "exports"], function(require, exports) {
                     'parents': ['I-1', 'I-2'],
                     'children': ['II-1', 'II-2', 'II-3', 'II-4']
                 }
-            ]
+            ],
+            options: {
+                'layout': 'grid',
+                'cell_width': 80,
+                'cell_height': 80,
+                'cell_offset_x': 50,
+                'cell_offset_y': 50,
+                'generations': ['', 'I', 'II'],
+                'symbol_markers': ['H']
+            }
         }
     };
 });

@@ -26,9 +26,9 @@ export class StarPedigree {
         var text = '';
         top.html("Welcome to " + this.config.StarX);
         this.assignment = new model.Assignment(data.model1);
+        window['__StarX'] = this.assignment;
         this.widget = new ui.Widget(config,this.assignment);
         this.widget.run();
 //        top.html("Welcome to " + this.config.StarX + "!");
-        window['__StarX'] = this.assignment;
     }
 }
