@@ -4,7 +4,7 @@ import sys
 import subprocess
 import os
 
-prefix = ['{namespace less_css}\n','/**\n','css file\n', '*/\n','{template .css_text}\n']
+prefix = ['{namespace less_css}\n', '/**\n','css file\n', '*/\n','{template .css_html}\n', '<style>\n{call .css_text}\n{/call}\n</style>' , '\n{/template}\n', '/**\n','css file\n', '*/\n','{template .css_text}\n']
 suffix = ['{/template}']
 
 def run(input_file,cp_dir):
