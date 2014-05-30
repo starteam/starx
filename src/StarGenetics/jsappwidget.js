@@ -864,6 +864,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var target_collection = self.model.ui.get(target.data('kind'));
                 var success = self.add_parent(target_collection, src_strain);
                 if (!success) {
+                    self.show();
                     return;
                 }
                 tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);

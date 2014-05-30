@@ -178,9 +178,9 @@
                 {/if}
 {else}
     <tr>
-        <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
+        <td class='sg_s_col_head  '>
         <b>Phenotypes</b> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
-        </td><td class='sg_experiment_phenotype_detail_right' colspan='{$strains.list.length}'>
+        </td><td class='' colspan='{$strains.list.length}'>
 
         </td>
     </tr>
@@ -388,7 +388,7 @@
 
                 <!--Name--></th>
                 <th colspan='3' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_parent_f sg_experiment_phenotype_detail_align_top'>
-                <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
+                <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
 
 //                <!--Parent F--></th>
 //                <th class=''><!-- X --></th>
@@ -538,7 +538,7 @@
             <b>Phenotypes</b>
             </td><td colspan='3'>
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
-                   // <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
+                   // <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
             </td>
             <td><!-- => --></td>
             {foreach $phenotype in keys($experiment.phenotypes)}
@@ -715,7 +715,7 @@
             <td class='sg_s_col_head '>
             <b>Phenotypes</b>
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
-                   // <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
+                   // <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
             </td>
             <td><!-- => --></td>
         </tr>
@@ -748,7 +748,7 @@
 
                 <!--Name--></th>
                 <td colspan='3' class='sg_experiment_phenotype_detail_parent_f sg_experiment_phenotype_detail_align_top'>
-                <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
+                <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
                 </td>
         </tr>
         <tr>
@@ -1079,12 +1079,12 @@
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
     {/if}
             </td><td colspan='3' class='sg_experiment_phenotype_detail_align_top'>
-                            <button class='sg_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
+                            <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
             </td>
             <td></td>
             {foreach $phenotype in keys($experiment.phenotypes)}
                 <td colspan='2' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right'>
-                    <button class='sg_expand_class' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-class-name="Class {index($phenotype)+1}" data-state="true">Show Individuals</button>
+                    <button class='sg_expand_class sg_s_expand_class' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-class-name="Class {index($phenotype)+1}" data-state="true">Show Individuals</button>
                 </td>
             {/foreach}
 
@@ -1229,9 +1229,9 @@
 */
 {template .sg_select_strain_target}
 <div class="sg_select_strain_target">
-    <button class='sg_add_to_mating_site' data-kind='{$kind}' data-id='{$id}'>(i) Mating Site</button>
+    <button class='sg_add_to_mating_site sg_s_add_to_mating_site' data-kind='{$kind}' data-id='{$id}'>(i) Mating Site</button>
     {if $kind != 'strains'}
-    <button class='sg_add_to_strains' data-kind='{$kind}' data-id='{$id}'>(i) Strains Stock</button>
+    <button class='sg_add_to_strains sg_s_add_to_strains' data-kind='{$kind}' data-id='{$id}'>(i) Strains Stock</button>
     {/if}
 </div>
 {/template}

@@ -916,6 +916,7 @@ export class StarGeneticsJSAppWidget {
             var target_collection:SGModel.Experiment = <SGModel.Experiment>self.model.ui.get(target.data('kind'));
             var success = self.add_parent(target_collection, src_strain);
             if (!success) {
+                self.show();
                 return;
             }
             tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);

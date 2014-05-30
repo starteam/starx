@@ -2,6 +2,15 @@
 /**
 css file
 */
+{template .css_html}
+<style>
+{call .css_text}
+{/call}
+</style>
+{/template}
+/**
+css file
+*/
 {template .css_text}
 .sg_workspace {lb}
   background: white;
@@ -232,7 +241,8 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
   margin-left: 150px;
   margin-bottom: 1em;
 {rb}
-.sg_strain_expand_properties {lb}
+.sg_strain_expand_properties,
+.sg_s_expand_class {lb}
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -523,5 +533,15 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
   top: 0px;
   left: 0px;
   z-index: 99;
+{rb}
+.sg_s_add_to_mating_site,
+.sg_s_add_to_strains,
+.sg_s_experiment_mate {lb}
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: green;
+  color: white;
+  text-transform: uppercase;
 {rb}
 {/template}
