@@ -746,8 +746,15 @@ export class StarGeneticsJSAppWidget {
             console.info("here we go:", w_1, count);
             var hh =($table.height() - 30);
             if( hh > 130 ) { hh = 130; }
-            w.css({width: ($parent.width() - 50) + "px", height: hh + "px"});
+            var ww = (count * w_1);
+            var width_wrapper = ww ;
+            if( width_wrapper > 575 )
+            {
+                width_wrapper = 575;
+            }
+            w.css({width: width_wrapper + "px", height: hh + "px"});
             $('.sg_expand_class_dialog_list', w).css({'width': (count * w_1) + 'px', 'height': '50px'});
+            $dialog.css({width: (width_wrapper + 15)+"px"});
             console.info("And this is the dialog", $('.sg_slider_widget_wrapper', $dialog));
 //            }, 1);
 
@@ -893,7 +900,11 @@ export class StarGeneticsJSAppWidget {
 
         }).addClass('sg_strain_box_hover');
         $('.sg_strain_box').off('click').on('click', function () {
-            $(".sg_select_strain_target").detach();
+            var list = $(".sg_select_strain_target");
+            if( list.length > 0 ) {
+                $(".sg_select_strain_target").detach();
+                return;
+            }
             var id = $(this).data('id');
             var kind = $(this).data('kind');
 

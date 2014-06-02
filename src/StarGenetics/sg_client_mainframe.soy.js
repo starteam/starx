@@ -307,7 +307,7 @@ sg_client_mainframe.compact_experiment = function(opt_data, opt_sb) {
       output.append('</tr>');
     }
     if (opt_data.experiment.visualsVisible) {
-      output.append('<tr><td class=\' sg_experiment_phenotype_detail_right\'>Strain</td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_left sg_s_experiment_parent_table_1\'><div class=\'sg_s_experiment_parent_table\'>');
+      output.append('<tr><td class=\' sg_experiment_phenotype_detail_right\'></td><td class=\'sg_experiment_p_visual sg_experiment_phenotype_detail_left sg_s_experiment_parent_table_1\'><div class=\'sg_s_experiment_parent_table\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.female, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
       output.append('</div></td><td class=\'sg_s_experiment_parent_table_x\'><div class=\'sg_experiment_parent_x\'>X</div></td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_2\'><div class=\'sg_s_experiment_parent_table\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.male, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
@@ -635,7 +635,7 @@ sg_client_mainframe.one_experiment_horizontal = function(opt_data, opt_sb) {
     }
     output.append('</tr>');
     if (opt_data.experiment.visualsVisible) {
-      output.append('<tr><td class=\' \'>Strain</td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_1\'><div class=\'sg_s_experiment_parent_table\'>');
+      output.append('<tr><td class=\' \'></td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_1\'><div class=\'sg_s_experiment_parent_table\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.female, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
       output.append('</div></td><td class=\'sg_s_experiment_parent_table_x\'><div class=\'sg_experiment_parent_x\'>X</div></td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_2\'><div class=\'sg_s_experiment_parent_table\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.male, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
