@@ -1006,6 +1006,7 @@
         {param experiment:$experiment/}
     {/call}
     {if $experiment.expanded}
+            <div class='sg_one_experiment_table'>
         <div class='sg_slider_widget_wrapper'>
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>
             // HEAD ROW
@@ -1123,6 +1124,7 @@
         {/if}
         </table>
     </div>
+    </div>
     {/if}
 </div>
 {/template}
@@ -1229,9 +1231,11 @@
 */
 {template .sg_select_strain_target}
 <div class="sg_select_strain_target">
-    <button class='sg_add_to_mating_site sg_s_add_to_mating_site' data-kind='{$kind}' data-id='{$id}'>(i) Mating Site</button>
+    {if $kind != 'new_experiment'}
+    <button class='sg_add_to_mating_site sg_s_add_to_mating_site' data-kind='{$kind}' data-id='{$id}'>Mating Site</button>
+    {/if}
     {if $kind != 'strains'}
-    <button class='sg_add_to_strains sg_s_add_to_strains' data-kind='{$kind}' data-id='{$id}'>(i) Strains Stock</button>
+    <button class='sg_add_to_strains sg_s_add_to_strains' data-kind='{$kind}' data-id='{$id}'>Strains Stock</button>
     {/if}
 </div>
 {/template}

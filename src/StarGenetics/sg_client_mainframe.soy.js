@@ -626,7 +626,7 @@ sg_client_mainframe.one_experiment_horizontal = function(opt_data, opt_sb) {
   output.append('<div class=\'sg_experiment_box ', soy.$$escapeHtml(opt_data.css_class), ' ', (opt_data.selected) ? 'sg_experiment_selected' : '', '\'><!-- header --><div class=\'sg_title_box\'>', (opt_data.experiment.canclearparents) ? '<button class=\'sg_discard sg_s_discard\' data-kind="' + soy.$$escapeHtml(opt_data.experiment.id) + '">X</button>' : '', '</div>');
   sg_client_mainframe.sg_current_experiment_name(opt_data, output);
   if (opt_data.experiment.expanded) {
-    output.append('<div class=\'sg_slider_widget_wrapper\'><table data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-widget="slider-table" class=\'sg_slider_table\'><tr><th colspan=\'5\'></th>');
+    output.append('<div class=\'sg_one_experiment_table\'><div class=\'sg_slider_widget_wrapper\'><table data-kind="', soy.$$escapeHtml(opt_data.experiment.id), '" data-widget="slider-table" class=\'sg_slider_table\'><tr><th colspan=\'5\'></th>');
     var phenotypeList898 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
     var phenotypeListLen898 = phenotypeList898.length;
     for (var phenotypeIndex898 = 0; phenotypeIndex898 < phenotypeListLen898; phenotypeIndex898++) {
@@ -682,7 +682,7 @@ sg_client_mainframe.one_experiment_horizontal = function(opt_data, opt_sb) {
         }
       }
     }
-    output.append('</table></div>');
+    output.append('</table></div></div>');
   }
   output.append('</div>');
   return opt_sb ? '' : output.toString();
@@ -810,7 +810,7 @@ sg_client_mainframe.sg_expand_class = function(opt_data, opt_sb) {
  */
 sg_client_mainframe.sg_select_strain_target = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class="sg_select_strain_target"><button class=\'sg_add_to_mating_site sg_s_add_to_mating_site\' data-kind=\'', soy.$$escapeHtml(opt_data.kind), '\' data-id=\'', soy.$$escapeHtml(opt_data.id), '\'>(i) Mating Site</button>', (opt_data.kind != 'strains') ? '<button class=\'sg_add_to_strains sg_s_add_to_strains\' data-kind=\'' + soy.$$escapeHtml(opt_data.kind) + '\' data-id=\'' + soy.$$escapeHtml(opt_data.id) + '\'>(i) Strains Stock</button>' : '', '</div>');
+  output.append('<div class="sg_select_strain_target">', (opt_data.kind != 'new_experiment') ? '<button class=\'sg_add_to_mating_site sg_s_add_to_mating_site\' data-kind=\'' + soy.$$escapeHtml(opt_data.kind) + '\' data-id=\'' + soy.$$escapeHtml(opt_data.id) + '\'>Mating Site</button>' : '', (opt_data.kind != 'strains') ? '<button class=\'sg_add_to_strains sg_s_add_to_strains\' data-kind=\'' + soy.$$escapeHtml(opt_data.kind) + '\' data-id=\'' + soy.$$escapeHtml(opt_data.id) + '\'>Strains Stock</button>' : '', '</div>');
   return opt_sb ? '' : output.toString();
 };
 for(var i in sg_client_mainframe) { exports[i] = sg_client_mainframe[i] };
