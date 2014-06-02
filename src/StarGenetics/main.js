@@ -32,10 +32,20 @@ define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "S
                 if (this.edx_opts['hide_actions'] == true || this.edx_opts['hide_actions'] == 'true') {
                     $('section.action').hide();
                 }
+                this.hide_aria();
                 tmi.event("StarGenetics", "edX", $('.user-link').text().replace(/\s*/g, '').replace('Dashboardfor:', ''));
             }
         };
 
+        StarGenetics.prototype.hide_aria = function () {
+            console.info("Aria hide start!");
+            var jq = $('[name=' + this.config.state + ']');
+            console.info("Aria hide start! 2 ", jq);
+            var i4id = jq.attr('inputid');
+            console.info("Aria hide start! 3 ", i4id);
+            $('p.status[aria-describedby="' + i4id + '"]').hide();
+            console.info("Aria hide start! 4 ", i4id);
+        };
         StarGenetics.prototype.edx_postinit = function (data) {
             console.info("edx_postinit", this);
             if (this.edx_opts['auto_load'] == true || this.edx_opts['auto_load'] == 'true') {
@@ -43,11 +53,13 @@ define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "S
                     this.cls.load();
                 }
             }
+            this.hide_aria();
         };
 
         StarGenetics.prototype.save = function (val) {
             var jq = $('[name=' + this.config.state + ']');
-            var ret = $('#' + jq.attr('inputid'));
+            var i4id = jq.attr('inputid');
+            var ret = $('#' + i4id);
             ret.attr('value', encodeURI(val));
             if (this.edx_opts['hide_actions']) {
                 $('input.check, input.save').click();
@@ -55,6 +67,7 @@ define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "S
             if (this.config.unsaved_message) {
                 jq.show().text(this.config.unsaved_message);
             }
+            this.hide_aria();
         };
 
         StarGenetics.prototype.load = function () {

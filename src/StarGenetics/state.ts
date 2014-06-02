@@ -1,4 +1,5 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
+/// <reference path="../StarGenetics/config.d.ts" />
 
 export class StudentIDWidgetState {
     element_id: string;

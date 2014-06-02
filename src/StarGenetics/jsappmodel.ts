@@ -136,10 +136,10 @@ export class Strain extends Base {
 
     get capitalized_properties():any {
         if (!this.properties_cached_capitalized) {
-            function capitalize( str )
-            {
-               return remapper.Remapper.transform(str);
+            function capitalize(str) {
+                return remapper.Remapper.transform(str);
             }
+
             var properties = this.properties;
             var ret = {};
             _.each(properties, function (q, v) {
@@ -179,15 +179,17 @@ export class Collapsable extends Base {
         this.__data__.propertiesList = _.keys(properties);
         var cp = {}
         this.__data__.capitalized_properties = cp;
-        _.each(_.keys(properties) , function(e) { cp[e] = remapper.Remapper.transform(e); } );
+        _.each(_.keys(properties), function (e) {
+            cp[e] = remapper.Remapper.transform(e);
+        });
     }
 
     get propertiesList() {
-        return this.__data__.propertiesList || [] ;
+        return this.__data__.propertiesList || [];
     }
 
     get capitalized_properties() {
-        return this.__data__.capitalized_properties || [] ;
+        return this.__data__.capitalized_properties || [];
     }
 
     set_list(strains:any[]):void {
@@ -203,7 +205,7 @@ export class Collapsable extends Base {
 }
 Base.defineStaticRWField(Collapsable, "expanded", true);
 Base.defineStaticRWField(Collapsable, "visualsVisible", true);
-Base.defineStaticRWField(Collapsable, "propertiesVisible", true);
+Base.defineStaticRWField(Collapsable, "propertiesVisible", false);
 Base.defineStaticRWField(Collapsable, "showIndividuals", false);
 Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
 Base.readOnlyWrappedList(Collapsable, "list", Strain);
@@ -268,18 +270,23 @@ export class Experiment extends Collapsable {
         super(q);
     }
 
-    addParent(s:Strain):void {
+    addParent(s:Strain):boolean {
         if (this.parents.length < 2) {
             if (this.parents.length == 1) {
                 //TODO: Depending on the model, it is possible that sex needs to be different...
                 if (this.parents[0].sex == s.sex) {
                     alert("There is already a " + s.sex.toLowerCase() + " parent.");
-                    return;
+                    return false;
                 }
             }
-            console.info("Added here!");
             this.__data__.parents.push(s.__data__);
+            return true;
         }
+        else {
+            alert("There is already two parents.");
+            return false;
+        }
+        return false;
     }
 
     clearParents() {
@@ -287,8 +294,8 @@ export class Experiment extends Collapsable {
     }
 
     clearParent(id:string) {
-        var new_parents = _.filter( this.__data__.parents , function(elem) {
-           return elem.id != id;
+        var new_parents = _.filter(this.__data__.parents, function (elem) {
+            return elem.id != id;
         });
         this.__data__.parents = new_parents;
     }

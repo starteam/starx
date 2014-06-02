@@ -20,7 +20,7 @@ test.helloWorld = function(opt_data, opt_sb) {
   output.append('</b><br/>');
   exports.sum({a: 2, b: 3}, output);
   output.append('<br/><button>');
-  exports.switch(null, output);
+  exports.switch2(null, output);
   output.append('</button>');
   return opt_sb ? '' : output.toString();
 };

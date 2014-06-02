@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import subprocess
 import os
 
-prefix = ['{namespace less_css}\n','/**\n','css file\n', '*/\n','{template .css_text}\n']
+prefix = ['{namespace less_css}\n', '/**\n','css file\n', '*/\n','{template .css_html}\n', '<style>\n{call .css_text}\n{/call}\n</style>' , '\n{/template}\n', '/**\n','css file\n', '*/\n','{template .css_text}\n']
 suffix = ['{/template}']
 
 def run(input_file,cp_dir):
@@ -12,9 +12,11 @@ def run(input_file,cp_dir):
     soy_file = input_file.replace( ".less", ".css.soy")
     if( css_file == input_file):
         exit(1);
-    process = subprocess.Popen(["/usr/local/bin/lessc","--no-color", input_file],stdout=subprocess.PIPE)
+    process = subprocess.Popen(["/usr/bin/env", "lessc","--no-color", input_file],stdout=subprocess.PIPE)
     stdout = process.stdout
-    lines = stdout.readlines()
+    lines = []
+    for line in stdout:
+        lines.append( line.decode('utf-8'))
     css = open( css_file, 'w')
     css.writelines(lines)
     css.close()

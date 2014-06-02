@@ -1,0 +1,105 @@
+{namespace widget_template}
+
+/**
+ @param config
+*/
+{template .wrapper}
+    <div class='starpedigree_workspace' id='{$config.element_id+'_workspace'}'>Workspace</div>
+{/template}
+
+
+/**
+* @param options
+*/
+{template .render_generations}
+    {foreach $generation in $options.generations}
+        <div class='starpedigree_generation' style='left:0px;top:{$options.cell_height*index($generation)}px'>
+            <span class='starpedigree_generation_label'>
+                {$generation}
+            </span>
+        </div>
+    {/foreach}
+{/template}
+
+/**
+* @param individuals
+* @param options
+*/
+{template .render_individuals}
+    {foreach $individual in $individuals}
+        <div class='starpedigree_individual starpedigree_sexsymbol_{$individual.sex.kind} {if $individual.affected}starpedigree_individual_label_affected_1{else}starpedigree_individual_label_unaffected_1{/if}' style='left:{$options.cell_width*$individual.location.column}px;top:{$options.cell_height*$individual.location.row}px'>
+             <span class='starpedigree_individual_label' >
+                {$individual.id}
+            </span>
+        </div>
+    {/foreach}
+{/template}
+
+/**
+* @ param individuals
+* @param relationships
+* @param options
+*/
+{template .render_relationships}
+    {foreach $relationship in $relationships}
+        {call .render_relationship}
+            {param relationship:$relationship/}
+            {param options:$options/}
+            {param options:$options/}
+        {/call}
+    {/foreach}
+{/template}
+
+/**
+* @param relationship
+* @param options
+*/
+{template .render_relationship}
+    {call .render_parental_link}
+        {param from:$relationship.parents[0]/}
+        {param to:$relationship.parents[1]/}
+        {param options:$options/}
+    {/call}
+    {call .render_children_links}
+        {param from:$relationship.children_column_span[0]/}
+        {param to:$relationship.children_column_span[1]/}
+        {param children:$relationship.children/}
+        {param options:$options/}
+    {/call}
+
+{/template}
+
+/**
+* @param from
+* @param to
+* @param options
+*/
+{template .render_parental_link}
+    <div class='starpedigree_parents_link' style='top:{$from.location.row*$options.cell_width}px;left:{$from.location.column*$options.cell_height}px;width:{($to.location.column-$from.location.column)*$options.cell_height}px;height:{$options.cell_height}px'>
+        <div class='starpedigree_parents_link_horizontal'>
+        </div>
+        <div class='starpedigree_parents_link_vertical_2'>
+        <div class='starpedigree_parents_link_vertical'>
+        </div>
+        </div>
+    </div>
+{/template}
+
+/**
+* @param from
+* @param to
+* @param children
+* @param options
+*/
+{template .render_children_links}
+    <div class='starpedigree_children_span' style='top:{$from.row*$options.cell_width}px;left:{$from.column*$options.cell_height}px;width:{($to.column-$from.column)*$options.cell_height}px;height:{$options.cell_height}px'>
+        <div class='starpedigree_children_link_horizontal'>
+        </div>
+    </div>
+    {foreach $child in $children}
+        <div class='starpedigree_children_link' style='top:{$child.location.row*$options.cell_width}px;left:{$child.location.column*$options.cell_height}px;width:{$options.cell_width}px;height:{$options.cell_height}px'>
+            <div class='starpedigree_children_link_vertical'>
+            </div>
+        </div>
+    {/foreach}
+{/template}

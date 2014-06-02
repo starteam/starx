@@ -1,4 +1,5 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
+/// <reference path="../StarGenetics/config.d.ts" />
 define(["require", "exports"], function(require, exports) {
     var StudentIDWidgetState = (function () {
         function StudentIDWidgetState(config) {

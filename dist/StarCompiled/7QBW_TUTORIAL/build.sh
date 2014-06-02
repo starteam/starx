@@ -3,6 +3,7 @@
 ## this is configurable
 export PKG_NAME=7QBW_TUTORIAL
 export PKG_SAMPLE=tutorial
+## derived
 export PKG_TAG_NAME=starx_widget_$PKG_NAME
 export PKG_EX_INPUT_NAME=starx_data_for_widget_$PKG_NAME
 

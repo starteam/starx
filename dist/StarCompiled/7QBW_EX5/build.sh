@@ -2,7 +2,7 @@
 
 ## this is configurable
 export PKG_NAME=7QBW_EX5
-export PKG_SAMPLE=fruit_fly_exercise_5
+export PKG_SAMPLE=fruit_fly_exercise_7QBW_mapping_exercise
 
 ## derived
 export PKG_TAG_NAME=starx_widget_$PKG_NAME

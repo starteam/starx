@@ -152,4 +152,3 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi', 'StarStudentStateExport/m
     })();
     exports.StarStudentStateExport = StarStudentStateExport;
 });
-//# sourceMappingURL=main.js.map

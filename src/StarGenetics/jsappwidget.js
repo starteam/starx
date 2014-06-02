@@ -1,5 +1,5 @@
-/// <reference path="../StarGenetics_Obsolete/state.ts" />
-/// <reference path="../StarGenetics_Obsolete/config.d.ts" />
+/// <reference path="../StarGenetics/state.ts" />
+/// <reference path="../StarGenetics/config.d.ts" />
 /// <reference path="jsappmodel.ts" />
 /// <reference path="visualizers/smiley.ts" />
 /// <reference path="../../../starx/src/StarX/lib/require.d.ts" />
@@ -21,6 +21,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             var self = this;
             this.context = context;
             this.config = config;
+            this.workspace = $('#' + config.element_id);
 
             var backend_model = undefined;
             if (config && config['config'] && config['config']['model_type'] == 'bundled_samples' && config['config']['bundled_samples']) {
@@ -295,7 +296,16 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         * @param experiments
         */
         StarGeneticsJSAppWidget.prototype.add_parent = function (experiment, strain) {
-            experiment.addParent(strain);
+            return experiment.addParent(strain);
+        };
+
+        /**
+        * add strain
+        * @param experiments
+        */
+        StarGeneticsJSAppWidget.prototype.add_strain = function (experiment, strain) {
+            experiment.add_strain(strain);
+            return true;
         };
 
         /**
@@ -380,6 +390,10 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
         StarGeneticsJSAppWidget.prototype.show = function () {
             var zoom_bugs_factor = 2;
             var self = this;
+            console.info("CONFIG", self.config);
+            if (self.config['feature_flag']) {
+                this.model['_feature_flag_'] = self.config['feature_flag'];
+            }
             var main = $('.sg_workspace', '#' + this.config.element_id);
             main.html(SGUIMAIN.workspace({ model: this.model }));
 
@@ -410,7 +424,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var $dialog = $(SGUIMAIN.sg_expand_females({ experiment: c, phenotype: phenotype, list_kind: 'males_list' })).appendTo($parent);
                 var offset_parent = $parent.offset();
                 var offset_this = $(this).offset();
-                $dialog.css({ top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px" });
+                $dialog.css({ top: (offset_this['top'] - offset_parent['top']) + "px", left: (offset_this.left - offset_parent.left) + "px" });
                 self.apply_visualizer($dialog);
                 self.apply_strain_drag_and_drop(main);
             });
@@ -437,7 +451,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 $dialog.css({ top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px" });
                 self.apply_visualizer($dialog);
                 self.apply_strain_drag_and_drop(main);
-                self.sg_dialog_close($dialog);
+                self.sg_dialog_close($dialog, undefined);
             });
             $('.sg_move_start_females').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
@@ -485,11 +499,43 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 }
             });
 
-            $('.sg_current_experiment_name_input').off('change').on('change', function () {
+            var sg_current_experiment_name_input_hide = function () {
+                $('.sg_current_experiment_name_save').css({ 'visibility': 'hidden' });
+                $('.sg_current_experiment_name_cancel').css({ 'visibility': 'hidden' });
+                $('.sg_current_experiment_name').css({ 'background-color': 'rgba(0,128,0,0)' });
+            };
+
+            var sg_current_experiment_name_input_show = function () {
+                $('.sg_current_experiment_name_save').css({ 'visibility': 'visible' });
+                $('.sg_current_experiment_name_cancel').css({ 'visibility': 'visible' });
+                $('.sg_current_experiment_name').css({ 'background-color': 'rgba(0,128,0,.7)' });
+            };
+            var sg_current_experiment_name_input_change = function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 if (c) {
                     var old_name = c.name;
                     var new_name = $(this).val();
+                    console.info("old_name", old_name, "new_name", new_name);
+                    if (new_name != null && new_name.length > 0 && new_name != old_name) {
+                        sg_current_experiment_name_input_show();
+                    } else {
+                        sg_current_experiment_name_input_hide();
+                    }
+                }
+            };
+
+            sg_current_experiment_name_input_hide();
+            $('.sg_current_experiment_name_input').off('focus').on('focus', function () {
+                sg_current_experiment_name_input_show();
+            });
+
+            $('.sg_current_experiment_name_input').off('blur').on('blur', sg_current_experiment_name_input_change);
+
+            $('.sg_current_experiment_name_save').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                if (c) {
+                    var old_name = c.name;
+                    var new_name = $('.sg_current_experiment_name_input[data-kind="' + $(this).data('kind') + '"]').val();
                     if (new_name != null && new_name.length > 0) {
                         c.name = new_name;
                         _.each(c.list, function (s) {
@@ -501,7 +547,12 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         self.show();
                     }
                 }
-            });
+            }).css({ visibility: 'hidden' });
+
+            $('.sg_current_experiment_name_cancel').off('click').on('click', function () {
+                //            }
+                self.show();
+            }).css({ visibility: 'hidden' });
 
             $('.sg_discard').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
@@ -568,18 +619,19 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     return;
                 }
                 tmi.event("StarGenetics", "sg_new_experiment_mate");
-                $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).animate({ 'height': 25 }, 750, function () {
-                    self.mate(c, {
-                        onsuccess: function () {
-                            console.info("Mate success!");
-                        }, onerror: function () {
-                            console.info("Mate error!");
-                            self.context['io']['log']("StarGenetics - Mate Error");
-                        }, avg_offspring_count: count
-                    });
-                    self.show();
-                    $('.sg_new_experiment_box').css({ 'overflow': 'hidden' }).height(0).animate({ 'height': 160 }, 2000);
+
+                //            $('.sg_new_experiment_box').css({'overflow': 'hidden'}).animate({ 'height': 25}, 750, function () {
+                self.mate(c, {
+                    onsuccess: function () {
+                        console.info("Mate success!");
+                    }, onerror: function () {
+                        console.info("Mate error!");
+                        self.context['io']['log']("StarGenetics - Mate Error");
+                    }, avg_offspring_count: count
                 });
+                self.show();
+                //$('.sg_new_experiment_box').css({'overflow': 'hidden'}).height(0).animate({ 'height': 160}, 2000);
+                //            });
             });
             $('.sg_new_experiment_mate_count').off('keyup').on('keyup', function (e) {
                 console.info($(this).val());
@@ -607,7 +659,10 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     var src_collection = self.model.ui.get(source.data('kind'));
                     var src_strain = src_collection.get(source.data('id'));
                     var target_collection = self.model.ui.get(target.data('kind'));
-                    self.add_parent(target_collection, src_strain);
+                    var success = self.add_parent(target_collection, src_strain);
+                    if (!success) {
+                        return;
+                    }
                     tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
                     self.show();
                 } });
@@ -622,6 +677,50 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
                     self.show();
                 } });
+
+            $('.sg_expand_class').off('click').on('click', function () {
+                var c = self.model.ui.get($(this).data('kind'));
+                var phenotype_id = $(this).data('phenotype-id');
+                var class_name = $(this).data('class-name');
+                var phenotype = JSON.stringify(phenotype_id);
+                tmi.event("StarGenetics", "sg_expand_class");
+                var $table = $(this).closest('.sg_slider_table');
+                var $parent = $table.parent();
+                var $dialog = $(SGUIMAIN.sg_expand_class({ experiment: c, phenotype: phenotype, name: class_name })).appendTo($parent);
+                var offset_parent = $parent.offset();
+                var offset_this = $(this).offset();
+
+                //            setTimeout(function () {
+                $dialog.css({ top: "30px", left: "150px", width: ($parent.width() - 70) + "px", height: $table.height() + "px", position: "absolute" });
+
+                var w = $('.sg_slider_widget_wrapper', $dialog);
+                var w_1 = $('.sg_expand_dialog_strain', w).width() + 15;
+                var count = c['phenotypes'][phenotype]['list'].length;
+                console.info("here we go:", w_1, count);
+                var hh = ($table.height() - 30);
+                if (hh > 130) {
+                    hh = 130;
+                }
+                var ww = (count * w_1);
+                var width_wrapper = ww;
+                if (width_wrapper > 575) {
+                    width_wrapper = 575;
+                }
+                w.css({ width: width_wrapper + "px", height: hh + "px" });
+                $('.sg_expand_class_dialog_list', w).css({ 'width': (count * w_1) + 'px', 'height': '50px' });
+                $dialog.css({ width: (width_wrapper + 15) + "px" });
+                console.info("And this is the dialog", $('.sg_slider_widget_wrapper', $dialog));
+
+                //            }, 1);
+                //            $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px", width:$parent.width() + "px" , height: $parent.height() + "px"});
+                self.apply_visualizer($dialog);
+                self.apply_strain_drag_and_drop(main);
+                self.sg_dialog_close($dialog, $table);
+                setTimeout(function () {
+                    $table.css({ visibility: 'hidden' });
+                }, 1);
+                //            $table.animate({'opacity':'toggle'});
+            });
 
             self.apply_visualizer(main);
             self.apply_strain_drag_and_drop(main);
@@ -645,10 +744,13 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             });
         };
 
-        StarGeneticsJSAppWidget.prototype.sg_dialog_close = function ($dialog) {
+        StarGeneticsJSAppWidget.prototype.sg_dialog_close = function ($dialog, $table) {
             $('.sg_dialog_close', $dialog).off('click').on('click', function () {
                 var $parent = $(this).closest('[data-widget="dialog"]');
                 $parent.detach();
+                setTimeout(function () {
+                    $table.css({ visibility: 'visible' });
+                }, 1);
             });
         };
 
@@ -692,11 +794,12 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         $(this).data('overflow-x', $(this).css('overflow-x'));
                         $(this).data('overflow-y', $(this).css('overflow-y'));
 
-                        $(this).css({ 'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '15px' }).scrollLeft(-0).scrollTop(-9);
+                        $(this).css({ 'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '10px' }).scrollLeft(-0).scrollTop(-9);
                         var table = $('[data-widget="slider-table"]', this).css({
                             'position': 'relative',
                             'left': -left_scroll + 'px',
-                            'top': -top_scroll + 'px'
+                            'top': -top_scroll + 'px',
+                            'padding-bottom': '16px'
                         });
                         var elem = $(e.target).closest('.sg_expand_dialog_strain');
                         $('.sg_expand_dialog_strain', table).not(elem).each(function () {
@@ -742,9 +845,60 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         var context = canvas.getContext('2d');
                         context.drawImage(canvas0, 0, 0);
                     }
+                    $(".sg_select_strain_target").detach();
                     return copy;
                 }
             }).addClass('sg_strain_box_hover');
+            $('.sg_strain_box').off('click').on('click', function () {
+                var list = $(".sg_select_strain_target");
+                if (list.length > 0) {
+                    $(".sg_select_strain_target").detach();
+                    return;
+                }
+                var id = $(this).data('id');
+                var kind = $(this).data('kind');
+
+                var html = SGUIMAIN.sg_select_strain_target({
+                    kind: kind,
+                    id: id
+                });
+                var parent = $(this).offsetParent();
+                var this_offset = $(this).position();
+                var css = {
+                    'top': (this_offset.top) + 'px',
+                    'left': (this_offset.left - 125) + 'px',
+                    'height': $(this).height() + 'px'
+                };
+                $(html).appendTo(parent).css(css);
+            });
+
+            $(self.workspace).off('click', '.sg_add_to_mating_site').on('click', '.sg_add_to_mating_site', function () {
+                console.info("sg_add_to_mating_site", this);
+                var c = self.model.ui.get($(this).data('kind'));
+                var src_strain = c.get($(this).data('id'));
+                var target = $('.sg_experiment_parent').first();
+                var target_collection = self.model.ui.get(target.data('kind'));
+                var success = self.add_parent(target_collection, src_strain);
+                if (!success) {
+                    self.show();
+                    return;
+                }
+                tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
+                self.show();
+            });
+
+            $(self.workspace).off('click', '.sg_add_to_strains').on('click', '.sg_add_to_strains', function () {
+                console.info("sg_add_to_mating_site", this);
+                var c = self.model.ui.get($(this).data('kind'));
+                var src_strain = c.get($(this).data('id'));
+                var target_collection = self.model.ui.get('strains');
+                var success = self.add_strain(target_collection, src_strain);
+                if (!success) {
+                    return;
+                }
+                tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);
+                self.show();
+            });
         };
 
         StarGeneticsJSAppWidget.prototype.is_overflow_hidden = function (elem, parent) {

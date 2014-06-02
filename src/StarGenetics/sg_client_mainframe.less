@@ -2,8 +2,9 @@
 @group-border: #e7e7e9;
 @strains-bg: white;
 @button-bg: #e3e3e3;
-@drag-color: lightblue;
+@drag-color: #00ff00;
 @med-gray: #808080;
+@experiment_parent_bg_color: white;
 
 .sg_workspace {
   background: white;
@@ -13,9 +14,10 @@
   min-width: 650px;
   //  max-width: 820px;
   resize: none;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-
+  position: relative;
+  font-size: 11pt;
 }
 
 .sg_exercise_title {
@@ -62,8 +64,15 @@
 .sg_strain_box_hover:hover {
   margin: 0px;
   border: 1px solid @drag-color;
-  border-radius: 9px;
+  border-radius: 0px;
   cursor: copy;
+}
+
+.sg_strain_box_nohover:hover {
+  border: 0px solid @drag-color !important;
+  border-radius: 0px !important;
+  cursor: normal !important;
+
 }
 
 .sg_strain_title {
@@ -160,7 +169,7 @@
   width:80px;
   font-weight: 900;
   font-size: 12px;
-  background-color: @group-border;
+  background-color: @experiment_parent_bg_color;
   color: @med-gray;
 }
 
@@ -176,8 +185,6 @@
   height: 80px;
   text-align: center;
   position: relative;
-  border: 2px dashed rgb(128, 128, 128);
-  border-radius: 8px;
   padding: 2px;
 }
 
@@ -196,7 +203,7 @@ td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {
   top: 0px;
   right: 0px;
   -webkit-appearance: none;
-  background-color: rgba(255, 255, 255, 1);
+  background: @experiment_parent_bg_color;
   border: 0px;
   padding: 3px;
 }
@@ -245,6 +252,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
 
 .sg_s_col_head {
   vertical-align: top;
+  color: @title-color;
 }
 
 .sg_s_row_head {
@@ -283,7 +291,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
 //  background: @button-bg;
 }
 
-.sg_strain_expand_properties {
+.sg_strain_expand_properties, .sg_s_expand_class {
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -304,12 +312,15 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
 }
 
 .sg_s_new_experiment_mate_large {
-  background-image: linear-gradient(#51b151, #8aca8a) !important;
-  //  border: green 1px solid;
-//  border-radius: 9px;
-//  background: lightgreen;
-//  font-size: 14px;
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 12pt;
+  background-color: green;
+  color: white;
+  text-transform: uppercase;
+  background:green;
 }
+
 
 table {
   border-collapse: collapse;
@@ -448,7 +459,6 @@ table {
 .sg_slider_widget_wrapper {
   overflow-x: scroll;
   resize: none;
-  padding: 8px;
   width:100%;
 }
 
@@ -467,6 +477,7 @@ table {
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
+  height:4px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -492,8 +503,15 @@ table {
 
 .sg_s_discard {
   float: right;
-  margin-right: 6px;
+  margin-right: 25px;
   cursor: pointer;
+  border: @med-gray 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: @med-gray;
+  color: white;
+  text-transform: uppercase;
+
 }
 
 .sg_slider_widget_wrapper table tbody tr td {
@@ -547,6 +565,13 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 
 }
 
+.sg_expand_class_dialog {
+  position: absolute;
+  top:0px;
+  left:0px;
+  background-color: #e0e0e0;
+}
+
 .sg_expand_females_dialog {
   position: absolute;
   top:0px;
@@ -556,6 +581,7 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   border-radius: 9px;
 }
 
+
 .sg_expand_females_dialog_list {
   width:400px;
   height:600px;
@@ -564,16 +590,17 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 
 .sg_expand_dialog_strain {
-  display: inline-block;
+  display: inline-block !important;
   margin:5px;
   width:70px;
 }
 
+.sg_expand_class_dialog_title {
+  font-size: 12pt;
+  font-weight: 900;
+  color: @med-gray;
+}
 .sg_dialog_close {
-  float:right;
-  position: absolute;
-  top:0px;
-  right:0px;
 }
 
 .sg_bold_heading {
@@ -589,7 +616,13 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 
 .sg_experiment_parent_remove_text {
-  font-size:12px;
+  font-size: 12px;
+  background-color: #a0a0a0;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  display: block;
+  color: white;
 }
 
 .sg_left_heading {
@@ -598,11 +631,32 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 
 .sg_current_experiment_name {
-  //font-size: 20px;
+  display: block;
+  position: relative;
+  background-color: rbga(0,128,0,0);
+  z-index: 99;
+  width:150px;
+  padding:1px;
 }
 
 .sg_current_experiment_name_input {
-  font-size: 20px;
+  font-size: 10pt;
+  display: block;
+}
+
+.sg_current_experiment_name_save {
+  font-size: 10pt;
+  display: inline-block;
+}
+
+.sg_current_experiment_name_cancel {
+  font-size: 10pt;
+  display: inline-block;
+}
+
+.sg_one_experiment_table {
+  position: relative;
+  top: -30px;
 }
 
 .sg_s_arrow_down {
@@ -610,4 +664,43 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   font-weight: 900;
   color: @med-gray;
   text-align:center;
+}
+
+.sg_expand_class_dialog_list {
+  background-color: white;
+  border: 1px solid #c0c0c0;
+  min-height: 100px;
+}
+
+.sg_select_strain_target {
+  position: absolute;
+  width: 125px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid @drag-color;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+}
+
+.sg_dialog_close {
+  border: @med-gray 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: @med-gray;
+  color: white;
+  text-transform: uppercase;
+}
+
+.sg_s_add_to_mating_site, .sg_s_add_to_strains, .sg_s_experiment_mate {
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: green;
+  background:green;
+  color: white;
+  text-transform: uppercase;
+  width:125px;
+  padding:4px;
+  margin:1px;
 }

@@ -2,6 +2,15 @@
 /**
 css file
 */
+{template .css_html}
+<style>
+{call .css_text}
+{/call}
+</style>
+{/template}
+/**
+css file
+*/
 {template .css_text}
 .sg_workspace {lb}
   background: white;
@@ -10,8 +19,9 @@ css file
   min-height: 800px;
   min-width: 650px;
   resize: none;
-  overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+  position: relative;
+  font-size: 11pt;
 {rb}
 .sg_exercise_title {lb}
   display: inline-block;
@@ -50,9 +60,14 @@ css file
 {rb}
 .sg_strain_box_hover:hover {lb}
   margin: 0px;
-  border: 1px solid #add8e6;
-  border-radius: 9px;
+  border: 1px solid #00ff00;
+  border-radius: 0px;
   cursor: copy;
+{rb}
+.sg_strain_box_nohover:hover {lb}
+  border: 0px solid #00ff00 !important;
+  border-radius: 0px !important;
+  cursor: normal !important;
 {rb}
 .sg_strain_title {lb}
   display: block;
@@ -135,7 +150,7 @@ css file
   width: 80px;
   font-weight: 900;
   font-size: 12px;
-  background-color: #e7e7e9;
+  background-color: #ffffff;
   color: #808080;
 {rb}
 .sg_experiment_parent_text {lb}
@@ -150,8 +165,6 @@ css file
   height: 80px;
   text-align: center;
   position: relative;
-  border: 2px dashed #808080;
-  border-radius: 8px;
   padding: 2px;
 {rb}
 td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {lb}
@@ -162,7 +175,7 @@ td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {lb}
   top: 0px;
   right: 0px;
   -webkit-appearance: none;
-  background-color: #ffffff;
+  background: #ffffff;
   border: 0px;
   padding: 3px;
 {rb}
@@ -201,6 +214,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
 {rb}
 .sg_s_col_head {lb}
   vertical-align: top;
+  color: #a0a4a8;
 {rb}
 .sg_s_row_head {lb}
   border-bottom: solid black 1px;
@@ -228,7 +242,8 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
   margin-left: 150px;
   margin-bottom: 1em;
 {rb}
-.sg_strain_expand_properties {lb}
+.sg_strain_expand_properties,
+.sg_s_expand_class {lb}
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -246,7 +261,13 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
   background: #e3e3e3;
 {rb}
 .sg_s_new_experiment_mate_large {lb}
-  background-image: linear-gradient(#51b151, #8aca8a) !important;
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 12pt;
+  background-color: green;
+  color: white;
+  text-transform: uppercase;
+  background: green;
 {rb}
 table {lb}
   border-collapse: collapse;
@@ -269,7 +290,7 @@ table {lb}
   padding: 5px;
 {rb}
 .sg_mini_experiment_box:hover {lb}
-  border: 1px solid #add8e6;
+  border: 1px solid #00ff00;
   border-radius: 9px;
 {rb}
 .sg_experiment_phenotype_detail_parent_m {lb}
@@ -354,7 +375,6 @@ table {lb}
 .sg_slider_widget_wrapper {lb}
   overflow-x: scroll;
   resize: none;
-  padding: 8px;
   width: 100%;
 {rb}
 .sg_strain_add_strain {lb}
@@ -368,6 +388,7 @@ table {lb}
 ::-webkit-scrollbar {lb}
   -webkit-appearance: none;
   width: 7px;
+  height: 4px;
 {rb}
 ::-webkit-scrollbar-thumb {lb}
   border-radius: 4px;
@@ -379,18 +400,24 @@ table {lb}
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: #add8e6;
+  background-color: #00ff00;
   padding: 1px;
   font-size: 12pt;
 {rb}
 .sg_s_rename {lb}
-  border-bottom: 2px dotted #add8e6;
+  border-bottom: 2px dotted #00ff00;
   cursor: pointer;
 {rb}
 .sg_s_discard {lb}
   float: right;
-  margin-right: 6px;
+  margin-right: 25px;
   cursor: pointer;
+  border: #808080 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: #808080;
+  color: white;
+  text-transform: uppercase;
 {rb}
 .sg_new_experiment_mate_count {lb}
   width: 5em !important;
@@ -422,6 +449,12 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
 .sg_s_strain_remove {lb}
   float: right;
 {rb}
+.sg_expand_class_dialog {lb}
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #e0e0e0;
+{rb}
 .sg_expand_females_dialog {lb}
   position: absolute;
   top: 0px;
@@ -437,15 +470,14 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
   z-index: 50;
 {rb}
 .sg_expand_dialog_strain {lb}
-  display: inline-block;
+  display: inline-block !important;
   margin: 5px;
   width: 70px;
 {rb}
-.sg_dialog_close {lb}
-  float: right;
-  position: absolute;
-  top: 0px;
-  right: 0px;
+.sg_expand_class_dialog_title {lb}
+  font-size: 12pt;
+  font-weight: 900;
+  color: #808080;
 {rb}
 .sg_bold_heading {lb}
   font-weight: 900;
@@ -459,18 +491,82 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
 {rb}
 .sg_experiment_parent_remove_text {lb}
   font-size: 12px;
+  background-color: #a0a0a0;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  display: block;
+  color: white;
 {rb}
 .sg_left_heading {lb}
   width: 150px;
   display: inline-block;
 {rb}
+.sg_current_experiment_name {lb}
+  display: block;
+  position: relative;
+  background-color: rbga(0, 128, 0, 0);
+  z-index: 99;
+  width: 150px;
+  padding: 1px;
+{rb}
 .sg_current_experiment_name_input {lb}
-  font-size: 20px;
+  font-size: 10pt;
+  display: block;
+{rb}
+.sg_current_experiment_name_save {lb}
+  font-size: 10pt;
+  display: inline-block;
+{rb}
+.sg_current_experiment_name_cancel {lb}
+  font-size: 10pt;
+  display: inline-block;
+{rb}
+.sg_one_experiment_table {lb}
+  position: relative;
+  top: -30px;
 {rb}
 .sg_s_arrow_down {lb}
   font-size: 50px;
   font-weight: 900;
   color: #808080;
   text-align: center;
+{rb}
+.sg_expand_class_dialog_list {lb}
+  background-color: white;
+  border: 1px solid #c0c0c0;
+  min-height: 100px;
+{rb}
+.sg_select_strain_target {lb}
+  position: absolute;
+  width: 125px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid #00ff00;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+{rb}
+.sg_dialog_close {lb}
+  border: #808080 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: #808080;
+  color: white;
+  text-transform: uppercase;
+{rb}
+.sg_s_add_to_mating_site,
+.sg_s_add_to_strains,
+.sg_s_experiment_mate {lb}
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: green;
+  background: green;
+  color: white;
+  text-transform: uppercase;
+  width: 125px;
+  padding: 4px;
+  margin: 1px;
 {rb}
 {/template}

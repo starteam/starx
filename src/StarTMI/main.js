@@ -25,4 +25,3 @@ define(["require", "exports", "jquery", 'StarTMI/tmi', "jquery", "StarTMI/tmi"],
     })();
     exports.StarTMI = StarTMI;
 });
-//# sourceMappingURL=main.js.map

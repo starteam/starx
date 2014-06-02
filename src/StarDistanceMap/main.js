@@ -151,4 +151,3 @@ define(["require", "exports", "jquery", "StarTMI/tmi", "StarDistanceMap/widget"]
         var x = new StarDistanceMap();
     }
 });
-//# sourceMappingURL=main.js.map
