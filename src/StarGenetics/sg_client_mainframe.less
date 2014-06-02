@@ -14,9 +14,10 @@
   min-width: 650px;
   //  max-width: 820px;
   resize: none;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
   position: relative;
+  font-size: 11pt;
 }
 
 .sg_exercise_title {
@@ -251,6 +252,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
 
 .sg_s_col_head {
   vertical-align: top;
+  color: @title-color;
 }
 
 .sg_s_row_head {
@@ -289,7 +291,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
 //  background: @button-bg;
 }
 
-.sg_strain_expand_properties {
+.sg_strain_expand_properties, .sg_s_expand_class {
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -316,8 +318,8 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
   background-color: green;
   color: white;
   text-transform: uppercase;
-
 }
+
 
 table {
   border-collapse: collapse;
@@ -456,7 +458,6 @@ table {
 .sg_slider_widget_wrapper {
   overflow-x: scroll;
   resize: none;
-  padding: 8px;
   width:100%;
 }
 
@@ -500,8 +501,15 @@ table {
 
 .sg_s_discard {
   float: right;
-  margin-right: 6px;
+  margin-right: 25px;
   cursor: pointer;
+  border: @med-gray 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: @med-gray;
+  color: white;
+  text-transform: uppercase;
+
 }
 
 .sg_slider_widget_wrapper table tbody tr td {
@@ -621,11 +629,12 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 
 .sg_current_experiment_name {
-  display: inline-block;
-  position: absolute;
-  float: left;
+  display: block;
+  position: relative;
   background-color: rbga(0,128,0,0);
   z-index: 99;
+  width:150px;
+  padding:1px;
 }
 
 .sg_current_experiment_name_input {
@@ -641,6 +650,11 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 .sg_current_experiment_name_cancel {
   font-size: 10pt;
   display: inline-block;
+}
+
+.sg_one_experiment_table {
+  position: relative;
+  top: -30px;
 }
 
 .sg_s_arrow_down {
@@ -665,4 +679,22 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   top: 0px;
   left: 0px;
   z-index: 99;
+}
+
+.sg_dialog_close {
+  border: @med-gray 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: @med-gray;
+  color: white;
+  text-transform: uppercase;
+}
+
+.sg_s_add_to_mating_site, .sg_s_add_to_strains, .sg_s_experiment_mate {
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: green;
+  color: white;
+  text-transform: uppercase;
 }

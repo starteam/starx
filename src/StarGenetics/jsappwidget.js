@@ -691,13 +691,17 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var offset_this = $(this).offset();
 
                 //            setTimeout(function () {
-                $dialog.css({ top: "70px", left: "150px", width: ($parent.width() - 70) + "px", height: $table.height() + "px", position: "absolute" });
+                $dialog.css({ top: "30px", left: "150px", width: ($parent.width() - 70) + "px", height: $table.height() + "px", position: "absolute" });
 
                 var w = $('.sg_slider_widget_wrapper', $dialog);
                 var w_1 = $('.sg_expand_dialog_strain', w).width() + 15;
                 var count = c['phenotypes'][phenotype]['list'].length;
                 console.info("here we go:", w_1, count);
-                w.css({ width: ($parent.width() - 50) + "px", height: ($table.height() - 30) + "px" });
+                var hh = ($table.height() - 30);
+                if (hh > 130) {
+                    hh = 130;
+                }
+                w.css({ width: ($parent.width() - 50) + "px", height: hh + "px" });
                 $('.sg_expand_class_dialog_list', w).css({ 'width': (count * w_1) + 'px', 'height': '50px' });
                 console.info("And this is the dialog", $('.sg_slider_widget_wrapper', $dialog));
 
@@ -784,11 +788,12 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                         $(this).data('overflow-x', $(this).css('overflow-x'));
                         $(this).data('overflow-y', $(this).css('overflow-y'));
 
-                        $(this).css({ 'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '15px' }).scrollLeft(-0).scrollTop(-9);
+                        $(this).css({ 'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '24px' }).scrollLeft(-0).scrollTop(-9);
                         var table = $('[data-widget="slider-table"]', this).css({
                             'position': 'relative',
                             'left': -left_scroll + 'px',
-                            'top': -top_scroll + 'px'
+                            'top': -top_scroll + 'px',
+                            'padding-bottom': '16px'
                         });
                         var elem = $(e.target).closest('.sg_expand_dialog_strain');
                         $('.sg_expand_dialog_strain', table).not(elem).each(function () {
@@ -864,6 +869,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var target_collection = self.model.ui.get(target.data('kind'));
                 var success = self.add_parent(target_collection, src_strain);
                 if (!success) {
+                    self.show();
                     return;
                 }
                 tmi.event("StarGenetics", "sg_experiment_parent", src_strain.name);

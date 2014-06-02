@@ -2,6 +2,15 @@
 /**
 css file
 */
+{template .css_html}
+<style>
+{call .css_text}
+{/call}
+</style>
+{/template}
+/**
+css file
+*/
 {template .css_text}
 .sg_workspace {lb}
   background: white;
@@ -10,9 +19,9 @@ css file
   min-height: 800px;
   min-width: 650px;
   resize: none;
-  overflow-x: hidden;
   font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
   position: relative;
+  font-size: 11pt;
 {rb}
 .sg_exercise_title {lb}
   display: inline-block;
@@ -205,6 +214,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
 {rb}
 .sg_s_col_head {lb}
   vertical-align: top;
+  color: #a0a4a8;
 {rb}
 .sg_s_row_head {lb}
   border-bottom: solid black 1px;
@@ -232,7 +242,8 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {lb}
   margin-left: 150px;
   margin-bottom: 1em;
 {rb}
-.sg_strain_expand_properties {lb}
+.sg_strain_expand_properties,
+.sg_s_expand_class {lb}
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -363,7 +374,6 @@ table {lb}
 .sg_slider_widget_wrapper {lb}
   overflow-x: scroll;
   resize: none;
-  padding: 8px;
   width: 100%;
 {rb}
 .sg_strain_add_strain {lb}
@@ -398,8 +408,14 @@ table {lb}
 {rb}
 .sg_s_discard {lb}
   float: right;
-  margin-right: 6px;
+  margin-right: 25px;
   cursor: pointer;
+  border: #808080 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: #808080;
+  color: white;
+  text-transform: uppercase;
 {rb}
 .sg_new_experiment_mate_count {lb}
   width: 5em !important;
@@ -485,11 +501,12 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
   display: inline-block;
 {rb}
 .sg_current_experiment_name {lb}
-  display: inline-block;
-  position: absolute;
-  float: left;
+  display: block;
+  position: relative;
   background-color: rbga(0, 128, 0, 0);
   z-index: 99;
+  width: 150px;
+  padding: 1px;
 {rb}
 .sg_current_experiment_name_input {lb}
   font-size: 10pt;
@@ -502,6 +519,10 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
 .sg_current_experiment_name_cancel {lb}
   font-size: 10pt;
   display: inline-block;
+{rb}
+.sg_one_experiment_table {lb}
+  position: relative;
+  top: -30px;
 {rb}
 .sg_s_arrow_down {lb}
   font-size: 50px;
@@ -523,5 +544,23 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {lb}
   top: 0px;
   left: 0px;
   z-index: 99;
+{rb}
+.sg_dialog_close {lb}
+  border: #808080 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: #808080;
+  color: white;
+  text-transform: uppercase;
+{rb}
+.sg_s_add_to_mating_site,
+.sg_s_add_to_strains,
+.sg_s_experiment_mate {lb}
+  border: green 1px solid;
+  border-radius: 6px;
+  font-size: 8pt;
+  background-color: green;
+  color: white;
+  text-transform: uppercase;
 {rb}
 {/template}
