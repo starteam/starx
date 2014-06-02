@@ -161,7 +161,7 @@ td.sg_s_experiment_parent_table_x .sg_s_experiment_parent_x {
   top: 0px;
   right: 0px;
   -webkit-appearance: none;
-  background-color: #ffffff;
+  background: #ffffff;
   border: 0px;
   padding: 3px;
 }
@@ -253,6 +253,7 @@ td.sg_s_experiment_parent_table_x .sg_experiment_parent_x {
   background-color: green;
   color: white;
   text-transform: uppercase;
+  background: green;
 }
 table {
   border-collapse: collapse;
@@ -373,6 +374,7 @@ table {
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
+  height: 4px;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
@@ -546,6 +548,10 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   border-radius: 6px;
   font-size: 8pt;
   background-color: green;
+  background: green;
   color: white;
   text-transform: uppercase;
+  width: 125px;
+  padding: 4px;
+  margin: 1px;
 }

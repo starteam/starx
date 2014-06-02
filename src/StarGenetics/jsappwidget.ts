@@ -834,13 +834,13 @@ export class StarGeneticsJSAppWidget {
                     $(this).data('overflow-x', $(this).css('overflow-x'));
                     $(this).data('overflow-y', $(this).css('overflow-y'));
 
-                    $(this).css({'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '24px'}).scrollLeft(-0).scrollTop(-9);
+                    $(this).css({'overflow-x': 'visible', 'overflow-y': 'visible', 'margin-bottom': '10px'}).scrollLeft(-0).scrollTop(-9);
                     var table = $('[data-widget="slider-table"]', this).css({
                         'position': 'relative',
                         'left': -left_scroll + 'px',
                         'top': -top_scroll + 'px',
                         'padding-bottom': '16px'
-                    })
+                    });
                     var elem = $(e.target).closest('.sg_expand_dialog_strain');
                     $('.sg_expand_dialog_strain', table).not(elem).each(function () {
                         if (self.is_overflow_hidden($(this), $(parent))) {
@@ -905,7 +905,8 @@ export class StarGeneticsJSAppWidget {
             var this_offset = $(this).position();
             var css = {
                 'top': (this_offset.top) + 'px',
-                'left': (this_offset.left - 125) + 'px'
+                'left': (this_offset.left - 125) + 'px',
+                'height':$(this).height() +'px'
             };
             $(html).appendTo(parent).css(css);
         });
