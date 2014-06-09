@@ -17,7 +17,11 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi', "StarX/edXintegration", "
             var top = $('#' + config.element_id);
             var text = '';
             top.html("Welcome to " + this.config.StarX);
-            this.assignment = new model.Assignment(data.model1);
+            if (data[config.model]) {
+                this.assignment = new model.Assignment(data[config.model]);
+            } else {
+                this.assignment = new model.Assignment(data.model1);
+            }
             window['__StarX'] = this.assignment;
             this.widget = new ui.Widget(config, this.assignment);
             this.widget.run();

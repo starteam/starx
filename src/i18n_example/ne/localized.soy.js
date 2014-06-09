@@ -24,7 +24,7 @@ test.world = function(opt_data, opt_sb) {
  * @return {string}
  * @notypecheck
  */
-test.switch = function(opt_data, opt_sb) {
+test.switch2 = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('Switch to EN');
   return opt_sb ? '' : output.toString();

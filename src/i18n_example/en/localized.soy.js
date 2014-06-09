@@ -11,7 +11,7 @@ define(['require','exports','lib/soyutils'],function(require,exports,soy){
  * @return {string}
  * @notypecheck
  */
-test.switch = function(opt_data, opt_sb) {
+test.switch2 = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('Switch to NE');
   return opt_sb ? '' : output.toString();
