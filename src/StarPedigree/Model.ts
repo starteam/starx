@@ -783,7 +783,7 @@ export var model_h = {
             'cell_height': 80,
             'cell_offset_x': 50,
             'cell_offset_y': 50,
-            'generations': ['', 'I', 'II'],
+            'generations': ['', 'I', 'II','III','IV','V','VI','VII'],
             'symbol_markers': ['H']
 
         }
