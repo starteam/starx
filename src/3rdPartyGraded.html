@@ -1,0 +1,25 @@
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>StarX 3rdParty example</title>
+	</head>
+
+	<body>
+        Basic demonstration of embedding 3rParty widgets.
+        You will need to paste:
+            { [ "StarX": "3rdParty","src":"http://localhost:8002/demo_3rdPartyGraded.js","main":"3rd_party_main" ] }
+        <br>
+        Here is an example of result:
+        <div style='border:1px solid #e0e0e0; padding:8px; border-radius:5px;'>
+
+
+		<div class="starx_widget">{["StarX":"3rdParty", "state":"jshidden", "src":"http://localhost:8002/3rdParty/demo_3rdPartyGraded.js","main":"third_party_main"]}</div>
+        </div>
+
+        <div name="jshidden" inputid="jshidden_input_id"></div>
+        <input type="text" id="jshidden_input_id" value="test"/>
+
+    </body>
+	<script data-main='StarX/main' src='StarX/starx.js'></script>
+</html>

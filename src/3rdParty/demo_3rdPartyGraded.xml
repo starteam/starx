@@ -1,0 +1,34 @@
+<problem>
+  <p>
+    <br/><br/>
+    $str
+
+    <script type="loncapa/python">
+def tag(str):
+  return chr(60) + str + chr(62)
+
+str = '{["StarX":"3rdParty", "state":"jshidden", "src":"https://starx.mit.edu/3rdParty/demo_3rdPartyGraded.js","main":"third_party_main"]}'
+
+str = tag('script src="https://starx.mit.edu/StarX/starxx.js"') + tag('/script')+str
+str = tag('div class="starx_widget"') + str + tag( '/div')
+
+def sdm_grader(expect,ans):
+  import json
+  try:
+    answer = json.loads(ans)
+    if float(answer['add1']) + float(answer['add2']) == float(answer['sum']):
+      return True
+    else:
+      return False;
+  except ValueError,KeyError:
+    return False
+
+</script>
+
+<p>Here is the sum of parts:</p>
+<customresponse cfn="sdm_grader">
+          <textline hidden="jshidden" name="jshidden" size="40" correct_answer="2"/><br/>
+</customresponse>
+
+  </p>
+</problem> 
