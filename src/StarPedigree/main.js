@@ -22,6 +22,7 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi', "StarX/edXintegration", "
                 $.getJSON(config.model, function (json, textStatus, jqXHR) {
                     console.info("data", json, "textStatus", textStatus, "jqXHR", jqXHR);
                     top.html("Loaded:" + config.model);
+
                     this.assignment = new model.Assignment(json);
                     window['__StarX'] = this.assignment;
                     this.widget = new ui.Widget(config, this.assignment);
