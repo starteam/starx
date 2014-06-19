@@ -147,7 +147,7 @@ define(["require", "exports", 'jquery', 'StarTMI/tmi'], function(require, export
 
         StarSimpleText.prototype.apply_css = function () {
             var elem = document.getElementById(this.textarea_id);
-            $(elem).css('min-height', '300px');
+            $(elem).css('min-height', this.config.min_widget_height ? this.config.min_widget_height : '300px');
         };
 
         StarSimpleText.prototype.configure = function (config) {

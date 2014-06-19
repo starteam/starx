@@ -9,4 +9,3 @@ declare function switch2(state:any):any;
 declare function test(state:any):any;
 declare function world(state:any):any;
 declare function is(state:any):any;
-

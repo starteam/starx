@@ -48,7 +48,14 @@ widget_template.render_individuals = function(opt_data, opt_sb) {
   var individualListLen15 = individualList15.length;
   for (var individualIndex15 = 0; individualIndex15 < individualListLen15; individualIndex15++) {
     var individualData15 = individualList15[individualIndex15];
-    output.append('<div class=\'starpedigree_individual starpedigree_sexsymbol_', soy.$$escapeHtml(individualData15.sex.kind), ' ', (individualData15.affected) ? 'starpedigree_individual_label_affected_1' : 'starpedigree_individual_label_unaffected_1', '\' style=\'left:', soy.$$escapeHtml(opt_data.options.cell_width * individualData15.location.column), 'px;top:', soy.$$escapeHtml(opt_data.options.cell_height * individualData15.location.row), 'px\'><span class=\'starpedigree_individual_label\' >', soy.$$escapeHtml(individualData15.id), '</span></div>');
+    output.append('<div class=\'starpedigree_individual starpedigree_sexsymbol_', soy.$$escapeHtml(individualData15.sex.kind), ' ', (individualData15.affected) ? 'starpedigree_individual_label_affected_1' : 'starpedigree_individual_label_unaffected_1', '\' style=\'left:', soy.$$escapeHtml(opt_data.options.cell_width * individualData15.location.column), 'px;top:', soy.$$escapeHtml(opt_data.options.cell_height * individualData15.location.row), 'px\'><span class=\'starpedigree_individual_label\' >', soy.$$escapeHtml(individualData15.id), '</span><span class=\'starpedigree_individual_markers\'>');
+    var markerList31 = individualData15.markers;
+    var markerListLen31 = markerList31.length;
+    for (var markerIndex31 = 0; markerIndex31 < markerListLen31; markerIndex31++) {
+      var markerData31 = markerList31[markerIndex31];
+      output.append(soy.$$escapeHtml(markerData31.id));
+    }
+    output.append('</span></div>');
   }
   return opt_sb ? '' : output.toString();
 };
@@ -62,11 +69,11 @@ widget_template.render_individuals = function(opt_data, opt_sb) {
  */
 widget_template.render_relationships = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  var relationshipList33 = opt_data.relationships;
-  var relationshipListLen33 = relationshipList33.length;
-  for (var relationshipIndex33 = 0; relationshipIndex33 < relationshipListLen33; relationshipIndex33++) {
-    var relationshipData33 = relationshipList33[relationshipIndex33];
-    widget_template.render_relationship({relationship: relationshipData33, options: opt_data.options, options: opt_data.options}, output);
+  var relationshipList37 = opt_data.relationships;
+  var relationshipListLen37 = relationshipList37.length;
+  for (var relationshipIndex37 = 0; relationshipIndex37 < relationshipListLen37; relationshipIndex37++) {
+    var relationshipData37 = relationshipList37[relationshipIndex37];
+    widget_template.render_relationship({relationship: relationshipData37, options: opt_data.options, options: opt_data.options}, output);
   }
   return opt_sb ? '' : output.toString();
 };
@@ -108,11 +115,11 @@ widget_template.render_parental_link = function(opt_data, opt_sb) {
 widget_template.render_children_links = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div class=\'starpedigree_children_span\' style=\'top:', soy.$$escapeHtml(opt_data.from.row * opt_data.options.cell_width), 'px;left:', soy.$$escapeHtml(opt_data.from.column * opt_data.options.cell_height), 'px;width:', soy.$$escapeHtml((opt_data.to.column - opt_data.from.column) * opt_data.options.cell_height), 'px;height:', soy.$$escapeHtml(opt_data.options.cell_height), 'px\'><div class=\'starpedigree_children_link_horizontal\'></div></div>');
-  var childList69 = opt_data.children;
-  var childListLen69 = childList69.length;
-  for (var childIndex69 = 0; childIndex69 < childListLen69; childIndex69++) {
-    var childData69 = childList69[childIndex69];
-    output.append('<div class=\'starpedigree_children_link\' style=\'top:', soy.$$escapeHtml(childData69.location.row * opt_data.options.cell_width), 'px;left:', soy.$$escapeHtml(childData69.location.column * opt_data.options.cell_height), 'px;width:', soy.$$escapeHtml(opt_data.options.cell_width), 'px;height:', soy.$$escapeHtml(opt_data.options.cell_height), 'px\'><div class=\'starpedigree_children_link_vertical\'></div></div>');
+  var childList73 = opt_data.children;
+  var childListLen73 = childList73.length;
+  for (var childIndex73 = 0; childIndex73 < childListLen73; childIndex73++) {
+    var childData73 = childList73[childIndex73];
+    output.append('<div class=\'starpedigree_children_link\' style=\'top:', soy.$$escapeHtml(childData73.location.row * opt_data.options.cell_width), 'px;left:', soy.$$escapeHtml(childData73.location.column * opt_data.options.cell_height), 'px;width:', soy.$$escapeHtml(opt_data.options.cell_width), 'px;height:', soy.$$escapeHtml(opt_data.options.cell_height), 'px\'><div class=\'starpedigree_children_link_vertical\'></div></div>');
   }
   return opt_sb ? '' : output.toString();
 };
