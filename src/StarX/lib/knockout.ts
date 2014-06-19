@@ -1,12 +1,8 @@
-/// <reference path="knockout-3.1.0.js" />
+// <reference path="../../StarX/lib/knockout-3.1.0.js" />
+// <reference path="../../StarX/lib/jquery.ts" />
+// <reference path="../../StarX/lib/knockout.d.ts"/>
 
-
-import knockout = require("../../StarX/lib/knockout-3.1.0.js");
+import kout = require("../../StarX/lib/knockout-3.1.0");
 declare var exports;
-exports.ko = knockout;
-
-export class version {
-    constructor() {
-        console.info("Hi");
-    }
-};
+kout.version;
+exports['ko'] = kout;

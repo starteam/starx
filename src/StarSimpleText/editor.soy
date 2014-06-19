@@ -1,0 +1,16 @@
+{namespace editor}
+
+/**
+    @param config
+*/
+{template .main}
+    <p>Columns: <input data-bind="value: cols" /></p>
+    <p>Rows: <input data-bind="value: rows" /></p>
+    <p>EdX State: <input data-bind="value: state" /></p>
+    <p>Minimal Widget Height: <input data-bind="value: min_widget_height" /></p>
+
+    <p>Full Text:
+    <div class="starx_widget" data-bind="text: starx_text"></div>
+    <div id="{$config.element_id}_Preview"></div>
+    </p>
+{/template}

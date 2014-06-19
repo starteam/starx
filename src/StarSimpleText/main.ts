@@ -157,7 +157,7 @@ export class StarSimpleText {
 
     apply_css() {
         var elem = document.getElementById(this.textarea_id);
-        $(elem).css('min-height', '300px');
+        $(elem).css('min-height', this.config.min_widget_height ? this.config.min_widget_height : '300px');
     }
 
     configure(config:any) {

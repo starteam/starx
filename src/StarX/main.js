@@ -1,6 +1,5 @@
 define(['require', 'exports', 'jquery'], function (require, exports, $) {
-    if( !$ )
-    {
+    if (!$) {
         $ = jQuery;
     }
     var widget_ids = {};
@@ -46,30 +45,62 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
 
             data.element_id = id;
             data.base_url = get_base_url();
-	    if( data.base_url == '' ) { data.base_url = document.location.origin; }
-            function callback() {
-                require(['../' + data.StarX + '/main'], function (project) {
-                    if (project) {
-                        try {
-                            if (project.configure) {
-                                project.configure(data);
+            if (data.base_url == '') {
+                data.base_url = document.location.origin;
+            }
+            var callback;
+            console.info( "Parse" , data);
+            if (data['editor'] && (data['editor'] == 'true'|| data['editor'] === true)) {
+                callback = function () {
+                    require(['../' + data.StarX + '/editor'], function (project) {
+                        if (project) {
+                            try {
+                                if (project.configure) {
+                                    project.configure(data);
+                                }
+                                else if (project[data.StarX+"Editor"]) {
+                                    q = new project[data.StarX+"Editor"]();
+                                    q.configure(data);
+                                }
+                            } catch (e) {
+                                var config = data;
+                                document.getElementById(config.element_id).innerHTML = data.StarX + " has an issue. (" + e + ")";
                             }
-                            else if (project[data.StarX]) {
-                                q = new project[data.StarX]();
-                                q.configure(data);
-                            }
-                        } catch (e) {
-                            var config = data;
-                            document.getElementById(config.element_id).innerHTML = data.StarX + " has an issue. (" + e + ")";
                         }
-                    }
-                    else {
-                        console.info("Has other");
-                        var config = data;
-                        document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
-                    }
-                });
-            };
+                        else {
+                            console.info("Has other");
+                            var config = data;
+                            document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
+                        }
+                    });
+                };
+
+            }
+            else {
+                callback = function () {
+                    require(['../' + data.StarX + '/main'], function (project) {
+                        if (project) {
+                            try {
+                                if (project.configure) {
+                                    project.configure(data);
+                                }
+                                else if (project[data.StarX]) {
+                                    q = new project[data.StarX]();
+                                    q.configure(data);
+                                }
+                            } catch (e) {
+                                var config = data;
+                                document.getElementById(config.element_id).innerHTML = data.StarX + " has an issue. (" + e + ")";
+                            }
+                        }
+                        else {
+                            console.info("Has other");
+                            var config = data;
+                            document.getElementById(config.element_id).innerHTML = "project " + data.StarX + " not found";
+                        }
+                    });
+                };
+            }
             return { html: "<span id='" + id + "'></span>", callback: callback };
         } catch (e) {
             return "STARX: ERROR PARSING: " + str.substr(2, str.length - 4) + ":ERROR PARSING :STARX";
@@ -96,9 +127,9 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         in_load = true;
         var elements = [];
         var list = $("*:contains('{[" + del + "StarX" + del + ":')", target);
-       // console.info("in load " + del + " ");
-       // console.info(target);
-       // console.info("in load " + list.length);
+        // console.info("in load " + del + " ");
+        // console.info(target);
+        // console.info("in load " + list.length);
         for (var i = 1; i < list.length; i++) {
             if (!list[i - 1].contains(list[i])) {
                 test_and_add(list[i - 1], elements);
@@ -126,8 +157,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
                     }
                 }
                 element.html(new_html).ready(function () {
-                    if( callbacks.length != 0 )
-                    {
+                    if (callbacks.length != 0) {
                         element.addClass('starx_handled');
                     }
                     $(callbacks).each(function () {
@@ -194,8 +224,7 @@ define(['require', 'exports', 'jquery'], function (require, exports, $) {
         }
     }
 
-    if(!( require['starx_compiled'] == true ))
-    {
+    if (!( require['starx_compiled'] == true )) {
         init();
     }
 
