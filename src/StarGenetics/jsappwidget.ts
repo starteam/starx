@@ -727,7 +727,7 @@ export class StarGeneticsJSAppWidget {
             }});
 
         $('.sg_page_button').off('click').on('click', function() {
-            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+            var c:SGModel.Pagination = self.model.ui.getPagable($(this).data('kind'));
             var from = $(this).data('from');
             c.from = parseInt(from);
             tmi.event("StarGenetics", "sg_page_change", $(this).data('kind') + " " + $(this).data('from'));

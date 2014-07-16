@@ -679,7 +679,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 } });
 
             $('.sg_page_button').off('click').on('click', function () {
-                var c = self.model.ui.get($(this).data('kind'));
+                var c = self.model.ui.getPagable($(this).data('kind'));
                 var from = $(this).data('from');
                 c.from = parseInt(from);
                 tmi.event("StarGenetics", "sg_page_change", $(this).data('kind') + " " + $(this).data('from'));
