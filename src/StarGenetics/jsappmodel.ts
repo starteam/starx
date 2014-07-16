@@ -239,7 +239,7 @@ export class Collapsable extends Base implements Pagination {
             var is_selected = (index == this.from);
             ret.push({
                 index: index,
-                page: i,
+                page: i+1,
                 selected: is_selected
             });
         }
@@ -555,7 +555,7 @@ export class Experiments extends Base implements Pagination {
             var is_selected = (index == this.from);
             ret.push({
                 index: index,
-                page: i,
+                page: i+1,
                 selected: is_selected
             });
         }

@@ -53,7 +53,7 @@
 .sg_strain_box_nohover:hover {
   border: 0px solid #00ff00 !important;
   border-radius: 0px !important;
-  cursor: normal !important;
+  cursor: default;
 }
 .sg_strain_title {
   display: block;

@@ -368,7 +368,7 @@
 * @param selected
 */
 {template .compact_experiment}
-<div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}'>
+<div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}' data-kind='{$experiment.id}'>
     {if $compact_view}
     <div data-kind='{$experiment.id}' class='sg_experiment_box_floaty'>
     </div>

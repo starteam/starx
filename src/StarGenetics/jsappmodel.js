@@ -244,7 +244,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                     var is_selected = (index == this.from);
                     ret.push({
                         index: index,
-                        page: i,
+                        page: i + 1,
                         selected: is_selected
                     });
                 }
@@ -583,7 +583,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                     var is_selected = (index == this.from);
                     ret.push({
                         index: index,
-                        page: i,
+                        page: i + 1,
                         selected: is_selected
                     });
                 }

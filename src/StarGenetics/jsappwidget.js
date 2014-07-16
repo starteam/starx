@@ -397,14 +397,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             var main = $('.sg_workspace', '#' + this.config.element_id);
             main.html(SGUIMAIN.workspace({ model: this.model }));
 
-            $('.sg_experiment_box_floaty').off('click').on('click', function (e) {
-                var id = $(this).data('kind');
-                self.model.ui.experiments.show_experiment = id;
-                tmi.event("StarGenetics", "sg_select_experiment");
-                e.stopPropagation();
-                self.show();
-            });
-
             $('.sg_dialog_close', main).off('click').on('click', function () {
                 debugger;
                 var $parent = $(this).closest('[data-widget="dialog"]');
@@ -748,6 +740,14 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 if (really_reset) {
                     self.reset();
                 }
+            });
+
+            $('.sg_experiment_box_floaty').parent().off('click').find("*").off('click').end().on('click', function (e) {
+                var id = $(this).data('kind');
+                self.model.ui.experiments.show_experiment = id;
+                tmi.event("StarGenetics", "sg_select_experiment");
+                e.stopPropagation();
+                self.show();
             });
         };
 
