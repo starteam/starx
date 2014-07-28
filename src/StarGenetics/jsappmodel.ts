@@ -8,6 +8,13 @@ import remapper = require("StarGenetics/visualizers/property_name_remap");
 import underscore = require("StarX/lib/underscore");
 var _ = underscore['_'];
 
+export interface Pagination {
+    from:number;
+    page_size:number;
+    currpage:any[];
+    pages:any[];
+}
+
 export class Base {
     __data__:any;
 
@@ -159,13 +166,15 @@ Base.readOnlyField(Strain, "sex", null);
 /**
  * Collapsable defines core UI element
  */
-export class Collapsable extends Base {
+export class Collapsable extends Base implements Pagination {
     expanded:boolean;
     visualsVisible:boolean;
     propertiesVisible:boolean;
     showIndividuals:boolean;
     name:string;
     list:Strain[];
+    from:number;
+    page_size: number;
 
     update_properties(list:any[]) {
         var properties = {};
@@ -202,6 +211,40 @@ export class Collapsable extends Base {
             return element.id == id;
         });
     }
+
+    sublist( from: number, to:number):Strain[] {
+        var list = this.list;
+        var ret = [];
+        var ifrom = from > 0 ? from : 0;
+        var ito = to < list.length ? to : list.length;
+        for( var i = ifrom ; i < ito ; i++ )
+        {
+            ret.push(list[i]);
+        }
+        return ret;
+    }
+
+    get currpage() {
+        return this.sublist( this.from , this.from + this.page_size );
+    }
+
+    get pages() {
+        var from = 0 ;
+        var to = this.list.length;
+        var step = this.page_size;
+        var ret = [];
+        for( var i = from ; i < to/step ; i++ )
+        {
+            var index = i*step;
+            var is_selected = (index == this.from);
+            ret.push({
+                index: index,
+                page: i+1,
+                selected: is_selected
+            });
+        }
+        return ret;
+    }
 }
 Base.defineStaticRWField(Collapsable, "expanded", true);
 Base.defineStaticRWField(Collapsable, "visualsVisible", true);
@@ -209,6 +252,9 @@ Base.defineStaticRWField(Collapsable, "propertiesVisible", false);
 Base.defineStaticRWField(Collapsable, "showIndividuals", false);
 Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
 Base.readOnlyWrappedList(Collapsable, "list", Strain);
+Base.defineStaticRWField(Collapsable, "from", 0);
+Base.defineStaticRWField(Collapsable, "page_size", 5);
+
 
 export class ExperimentStatistics extends Base {
     experiment:Experiment;
@@ -428,13 +474,17 @@ export class Strains extends Collapsable {
     }
 }
 
+
 export class NewExperiment extends Experiment {
 }
 
-export class Experiments extends Base {
+export class Experiments extends Base implements Pagination {
     list:Experiment[];
     show_experiments:number;
     show_experiment:string;
+    from:number;
+    page_size: number;
+
 
     update_experiment(experiment:Experiment) {
         var exp = _.find(this.list, function (e) {
@@ -477,10 +527,46 @@ export class Experiments extends Base {
 
         }
     }
+
+    sublist( from: number, to:number):Strain[] {
+        var list = _.filter( this.list , function(e) { return !e.discarded});
+        var ret = [];
+        var ifrom = from > 0 ? from : 0;
+        var ito = to < list.length ? to : list.length;
+        for( var i = ifrom ; i < ito ; i++ )
+        {
+            ret.push(list[i]);
+        }
+        return ret;
+    }
+
+    get currpage() {
+        return this.sublist( this.from , this.from + this.page_size );
+    }
+
+    get pages() {
+        var from = 0 ;
+        var to = this.list.length;
+        var step = this.page_size;
+        var ret = [];
+        for( var i = from ; i < to/step ; i++ )
+        {
+            var index = i*step;
+            var is_selected = (index == this.from);
+            ret.push({
+                index: index,
+                page: i+1,
+                selected: is_selected
+            });
+        }
+        return ret;
+    }
 }
 Base.readOnlyWrappedList(Experiments, "list", Experiment);
 Base.defineStaticRWField(Experiments, "show_experiments", 0);
 Base.defineStaticRWField(Experiments, "show_experiment", undefined);
+Base.defineStaticRWField(Experiments, "from", 0);
+Base.defineStaticRWField(Experiments, "page_size", 2);
 
 
 /**
@@ -510,6 +596,14 @@ export class UIModel extends Base {
                 throw "Error " + str;
             }
         }
+    }
+
+    getPagable(str:string):Pagination {
+        if( str == 'experiments')
+        {
+            return this.experiments;
+        }
+        return this.get(str);
     }
 
     clearNewExperiment() {

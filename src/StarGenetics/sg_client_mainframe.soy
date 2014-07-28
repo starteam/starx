@@ -126,7 +126,7 @@
             <table data-kind='strains' data-widget="slider-table" class='sg_slider_table'>
                 <tr>
                     <td class='sg_s_col_head'><span class='sg_bold_heading'>Strain Stocks</span></td>
-                    {foreach $strain in $strains.list}
+                    {foreach $strain in $strains.currpage}
                         <td class=' {if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}  sg_strains_p_visual ' data-kind='strains' data-id="{$strain['id']}">
                     {call .strain}
                     {param strain:$strain /}
@@ -145,6 +145,16 @@
                     {/call}
                     </td>
                     {/if}
+                </tr>
+                <tr>
+                    <td><!-- title --></td>
+                    <td colspan='{$strains.page_size+1}'>
+                        <div class='sg_page_button_holder'>
+                        {foreach $page in $strains.pages}
+                            <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='strains' data-from="{$page.index}">{$page.page}</div>
+                        {/foreach}
+                        </div>
+                    </td>
                 </tr>
 {if $strains.propertiesVisible}
     <tr>
@@ -321,22 +331,28 @@
     {if $experiments.list.length != 0}
     <div class='sg_experiment_history'>
         <div class='sg_title_box'>All Experiments</div>
-                <div class='sg_slider_widget_wrapper'>
 
+            <div class='sg_slider_widget_wrapper'>
             <div data-kind="history" data-widget="slider-table" class='sg_experiment_holder'>
-    {foreach $experiment in $experiments.list}
-            {if not $experiment.discarded}
-                {call .compact_experiment}
-                    {param experiment:$experiment /}
-                    {param index:index($experiment) /}
-                    {param compact_view:true /}
-                    {param css_class:'sg_mini_experiment_box '/}
-                    {param selected: $experiments.show_experiment == $experiment.id/}
-                {/call}
-            {/if}
-    {/foreach}
+                {foreach $experiment in $experiments.currpage}
+                        {if not $experiment.discarded}
+                            {call .compact_experiment}
+                                {param experiment:$experiment /}
+                                {param index:index($experiment) /}
+                                {param compact_view:true /}
+                                {param css_class:'sg_mini_experiment_box '/}
+                                {param selected: $experiments.show_experiment == $experiment.id/}
+                            {/call}
+                        {/if}
+                {/foreach}
             </div>
-                    </div>
+            </div>
+            <div class='sg_page_button_holder'>
+            {foreach $page in $experiments.pages}
+                <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='experiments' data-from="{$page.index}">{$page.page}</div>
+            {/foreach}
+            </div>
+
 
         </div>
         </div>
@@ -352,7 +368,7 @@
 * @param selected
 */
 {template .compact_experiment}
-<div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}'>
+<div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}' data-kind='{$experiment.id}'>
     {if $compact_view}
     <div data-kind='{$experiment.id}' class='sg_experiment_box_floaty'>
     </div>
