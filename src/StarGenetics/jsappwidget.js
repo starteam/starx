@@ -397,14 +397,6 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             var main = $('.sg_workspace', '#' + this.config.element_id);
             main.html(SGUIMAIN.workspace({ model: this.model }));
 
-            $('.sg_experiment_box_floaty').off('click').on('click', function (e) {
-                var id = $(this).data('kind');
-                self.model.ui.experiments.show_experiment = id;
-                tmi.event("StarGenetics", "sg_select_experiment");
-                e.stopPropagation();
-                self.show();
-            });
-
             $('.sg_dialog_close', main).off('click').on('click', function () {
                 debugger;
                 var $parent = $(this).closest('[data-widget="dialog"]');
@@ -678,6 +670,13 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                     self.show();
                 } });
 
+            $('.sg_page_button').off('click').on('click', function () {
+                var c = self.model.ui.getPagable($(this).data('kind'));
+                var from = $(this).data('from');
+                c.from = parseInt(from);
+                tmi.event("StarGenetics", "sg_page_change", $(this).data('kind') + " " + $(this).data('from'));
+                self.show();
+            });
             $('.sg_expand_class').off('click').on('click', function () {
                 var c = self.model.ui.get($(this).data('kind'));
                 var phenotype_id = $(this).data('phenotype-id');
@@ -741,6 +740,14 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 if (really_reset) {
                     self.reset();
                 }
+            });
+
+            $('.sg_experiment_box_floaty').parent().off('click').find("*").off('click').end().on('click', function (e) {
+                var id = $(this).data('kind');
+                self.model.ui.experiments.show_experiment = id;
+                tmi.event("StarGenetics", "sg_select_experiment");
+                e.stopPropagation();
+                self.show();
             });
         };
 

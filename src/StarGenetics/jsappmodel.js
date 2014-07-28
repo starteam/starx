@@ -213,6 +213,46 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 return element.id == id;
             });
         };
+
+        Collapsable.prototype.sublist = function (from, to) {
+            var list = this.list;
+            var ret = [];
+            var ifrom = from > 0 ? from : 0;
+            var ito = to < list.length ? to : list.length;
+            for (var i = ifrom; i < ito; i++) {
+                ret.push(list[i]);
+            }
+            return ret;
+        };
+
+        Object.defineProperty(Collapsable.prototype, "currpage", {
+            get: function () {
+                return this.sublist(this.from, this.from + this.page_size);
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Collapsable.prototype, "pages", {
+            get: function () {
+                var from = 0;
+                var to = this.list.length;
+                var step = this.page_size;
+                var ret = [];
+                for (var i = from; i < to / step; i++) {
+                    var index = i * step;
+                    var is_selected = (index == this.from);
+                    ret.push({
+                        index: index,
+                        page: i + 1,
+                        selected: is_selected
+                    });
+                }
+                return ret;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Collapsable;
     })(Base);
     exports.Collapsable = Collapsable;
@@ -222,6 +262,8 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
     Base.defineStaticRWField(Collapsable, "showIndividuals", false);
     Base.defineStaticRWField(Collapsable, "name", "--name not defined--");
     Base.readOnlyWrappedList(Collapsable, "list", Strain);
+    Base.defineStaticRWField(Collapsable, "from", 0);
+    Base.defineStaticRWField(Collapsable, "page_size", 5);
 
     var ExperimentStatistics = (function (_super) {
         __extends(ExperimentStatistics, _super);
@@ -508,12 +550,56 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 }
             }
         };
+
+        Experiments.prototype.sublist = function (from, to) {
+            var list = _.filter(this.list, function (e) {
+                return !e.discarded;
+            });
+            var ret = [];
+            var ifrom = from > 0 ? from : 0;
+            var ito = to < list.length ? to : list.length;
+            for (var i = ifrom; i < ito; i++) {
+                ret.push(list[i]);
+            }
+            return ret;
+        };
+
+        Object.defineProperty(Experiments.prototype, "currpage", {
+            get: function () {
+                return this.sublist(this.from, this.from + this.page_size);
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Experiments.prototype, "pages", {
+            get: function () {
+                var from = 0;
+                var to = this.list.length;
+                var step = this.page_size;
+                var ret = [];
+                for (var i = from; i < to / step; i++) {
+                    var index = i * step;
+                    var is_selected = (index == this.from);
+                    ret.push({
+                        index: index,
+                        page: i + 1,
+                        selected: is_selected
+                    });
+                }
+                return ret;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Experiments;
     })(Base);
     exports.Experiments = Experiments;
     Base.readOnlyWrappedList(Experiments, "list", Experiment);
     Base.defineStaticRWField(Experiments, "show_experiments", 0);
     Base.defineStaticRWField(Experiments, "show_experiment", undefined);
+    Base.defineStaticRWField(Experiments, "from", 0);
+    Base.defineStaticRWField(Experiments, "page_size", 2);
 
     /**
     * UIModel
@@ -538,6 +624,13 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                     throw "Error " + str;
                 }
             }
+        };
+
+        UIModel.prototype.getPagable = function (str) {
+            if (str == 'experiments') {
+                return this.experiments;
+            }
+            return this.get(str);
         };
 
         UIModel.prototype.clearNewExperiment = function () {
