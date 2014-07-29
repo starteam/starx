@@ -16,6 +16,7 @@
   display: block;
   position: absolute;
   background-color: grey;
+  z-index: 2;
 }
 .starpedigree_individual_label {
   position: relative;
@@ -96,4 +97,31 @@
   background-color: white;
   color: black;
   border: 1px solid black;
+}
+.starpedigree_genotype_dialog {
+  width: 400px;
+  height: 400px;
+  background-color: whitesmoke;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.starpedigree_genotype_dialog_lhs {
+  width: 200px;
+  height: 400px;
+  background-color: lime;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: inline-block;
+  z-index: 3;
+}
+.starpedigree_genotype_dialog_rhs {
+  width: 200px;
+  height: 400px;
+  background-color: yellowgreen;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: inline-block;
 }

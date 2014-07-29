@@ -22,12 +22,13 @@
 {/template}
 
 /**
-* @param individuals
+* @param individual
 * @param options
 */
-{template .render_individuals}
-    {foreach $individual in $individuals}
-        <div class='starpedigree_individual starpedigree_sexsymbol_{$individual.sex.kind} {if $individual.affected}starpedigree_individual_label_affected_1{else}starpedigree_individual_label_unaffected_1{/if}' style='left:{$options.cell_width*$individual.location.column}px;top:{$options.cell_height*$individual.location.row}px'>
+{template .render_individual}
+        <div class='starpedigree_individual starpedigree_sexsymbol_{$individual.sex.kind} {if $individual.affected}starpedigree_individual_label_affected_1{else}starpedigree_individual_label_unaffected_1{/if}' style='left:{$options.cell_width*$individual.location.column}px;top:{$options.cell_height*$individual.location.row}px'
+            data-id='{$individual.id}' data-kind='starpedigree_individual'
+            >
              <span class='starpedigree_individual_label' >
                 {$individual.id}
             </span>
@@ -37,6 +38,17 @@
                 {/foreach}
             </span>
         </div>
+{/template}
+/**
+* @param individuals
+* @param options
+*/
+{template .render_individuals}
+    {foreach $individual in $individuals}
+        {call .render_individual}
+            {param individual:$individual/}
+            {param options:$options/}
+        {/call}
     {/foreach}
 {/template}
 
@@ -107,4 +119,81 @@
             </div>
         </div>
     {/foreach}
+{/template}
+
+/**
+* @param individual
+* @param options
+* @param column
+* @param row
+*/
+{template .render_individual_in_dialog}
+        <div class='starpedigree_individual starpedigree_sexsymbol_{$individual.sex.kind} {if $individual.affected}starpedigree_individual_label_affected_1{else}starpedigree_individual_label_unaffected_1{/if}'
+        style='left:{$options.cell_width*$column}px;top:{$options.cell_height*$row}px'
+            data-id='{$individual.id}' data-kind='starpedigree_individual'
+            >
+             <span class='starpedigree_individual_label' >
+                {$individual.id}
+            </span>
+            <span class='starpedigree_individual_markers'>
+                {foreach $marker in $individual.markers}
+                    {$marker.id}
+                {/foreach}
+            </span>
+        </div>
+{/template}
+/**
+* @param individual
+* @param options
+*/
+{template .genotype_dialog_lhs}
+<div class='starpedigree_genotype_dialog_lhs'>
+        {call .render_individual_in_dialog}
+            {param individual:$individual/}
+            {param options:$options/}
+            {param column:1/}
+            {param row:1/}
+        {/call}
+        {foreach $parent in $individual.parents}
+            {call .render_individual_in_dialog}
+                {param individual:$parent/}
+                {param options:$options/}
+                {param column:(0.5+index($parent)) /}
+                {param row:0/}
+            {/call}
+        {/foreach}
+</div>
+{/template}
+
+/**
+* @param individual
+* @param options
+*/
+{template .genotype_dialog_rhs}
+<div class='starpedigree_genotype_dialog_rhs'>
+        {call .render_individual_in_dialog}
+            {param individual:$individual/}
+            {param options:$options/}
+            {param column:1/}
+            {param row:1/}
+        {/call}
+</div>
+{/template}
+
+
+/**
+* @param individual
+* @param options
+*/
+{template .genotype_dialog}
+<div class='starpedigree_genotype_dialog'>
+    {call .genotype_dialog_lhs}
+            {param individual:$individual/}
+            {param options:$options/}
+    {/call}
+    {call .genotype_dialog_rhs}
+            {param individual:$individual/}
+            {param options:$options/}
+    {/call}
+</div>
 {/template}

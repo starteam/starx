@@ -1,7 +1,10 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarPedigree/widget_template.soy.d.ts" />
 /// <reference path="../StarPedigree/widget_template.css.soy.d.ts" />
-define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "StarPedigree/widget_template.css.soy"], function(require, exports, $, ui, css) {
+/// <reference path="../StarX/lib/underscore.d.ts" />
+define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "StarPedigree/widget_template.css.soy", '../StarX/lib/underscore'], function(require, exports, $, ui, css, underscore) {
+    var _ = underscore._;
+
     var Widget = (function () {
         function Widget(config, model) {
             this.config = config;
@@ -26,6 +29,24 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
             html += ui.render_individuals({ individuals: individuals, options: options });
             html += ui.render_relationships({ relationships: relationships, options: options });
             $(w).html(html);
+            this.add_interactions(w);
+        };
+
+        Widget.prototype.add_interactions = function (w) {
+            var self = this;
+            $('.starpedigree_individual', w).off('click').on('click', function (e) {
+                console.info($(this).data('id'));
+                var html = '';
+                var individual_id = $(this).data('id');
+                var individual = _.find(self.model.ui.individuals, function (e) {
+                    return e.id == individual_id;
+                });
+                var options = self.model.ui.options;
+                $('.starpedigree_genotype_dialog', w).remove();
+                html += ui.genotype_dialog({ individual: individual, options: options });
+                window.individual = individual;
+                $(w).append(html);
+            });
         };
         return Widget;
     })();

@@ -16,7 +16,6 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             this.__data__ = jsonmodel;
             this.__context__ = _.clone(context || {});
             this.__context__[this.getName()] = this;
-            console.info("Context for ", this.getName(), this.__context__);
         }
         Base.prototype.getName = function () {
             var funcNameRegex = /function (.{1,})\(/;
@@ -257,6 +256,65 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             enumerable: true,
             configurable: true
         });
+
+        Object.defineProperty(Individual.prototype, "parents", {
+            get: function () {
+                var relationship = this.child_relationship;
+                if (relationship) {
+                    return relationship.parents;
+                } else {
+                    return [];
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "children", {
+            get: function () {
+                var relationship = this.parent_relationship;
+                if (relationship) {
+                    return relationship.children;
+                } else {
+                    return [];
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "child_relationship", {
+            get: function () {
+                var self = this;
+                var relationships = this.__context__['UI'].relationships;
+                var relationship = _.find(relationships, function (e) {
+                    var c = e.children;
+                    return _.find(c, function (ee) {
+                        return ee.id == self.id;
+                    });
+                });
+                return relationship;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "parent_relationship", {
+            get: function () {
+                var self = this;
+                var relationships = this.__context__['UI'].relationships;
+                var relationship = _.find(relationships, function (e) {
+                    var c = e.parents;
+                    console.info("Checking ", e.parents[0].id, e.parents[1].id);
+                    return _.find(c, function (ee) {
+                        return ee.id == self.id;
+                    });
+                });
+                return relationship;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Individual;
     })(Base);
     exports.Individual = Individual;
@@ -304,6 +362,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         UI.prototype.sex = function (id) {
             return this.sexes[id];
         };
+
         Object.defineProperty(UI.prototype, "individuals_as_map", {
             get: function () {
                 var ret = {};
@@ -323,6 +382,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             enumerable: true,
             configurable: true
         });
+
         Object.defineProperty(UI.prototype, "children", {
             get: function () {
                 return this.individuals_as_map;
