@@ -32,6 +32,18 @@
   width: 40px;
 }
 
+.starpedigree_individual_genotype {
+  position: absolute;
+  left: 0px;
+  top: 40px;
+  width:40px;
+  text-align: center;
+  color: black;
+  padding: 0px;
+  font-size: 8px;
+  margin-top: 1px;
+}
+
 .starpedigree_individual_markers {
   position: absolute;
   left: 42px;
@@ -78,7 +90,7 @@
   left: 50%;
   top: 20px;
   width: 1px;
-  height: 40px;
+  height: 45px; /*TODO: this should be options.cell_height - 40px */
   background-color: black;
 }
 
@@ -125,15 +137,15 @@
   height: 400px;
   background-color: whitesmoke;
   position: relative;
-  top: 0px;
-  left: 0px;
+  top: 75px;
+  left: 75px;
 }
 
 .starpedigree_genotype_dialog_lhs {
   width: 200px;
   height: 400px;
   background-color: lime;
-  position: relative;
+  position: absolute;
   top: 0px;
   left: 0px;
   display: inline-block;
@@ -144,8 +156,61 @@
   width: 200px;
   height: 400px;
   background-color: yellowgreen;
-  position: relative;
+  position: absolute;
   top: 0px;
-  left: 0px;
+  left: 200px;
   display: inline-block;
+  z-index: @ZINDEX_DIALOG;
+}
+
+.starpedigree_genotype {
+  position: relative;
+  display: block;
+  width:30px;
+  height:20px;
+}
+
+.starpedigree_genotype_1_Top {
+  position: absolute;
+  top:0px;
+  left:0px;
+  width:10px;
+  height:10px;
+  font-size: 8px;
+}
+
+.starpedigree_genotype_1_Bottom {
+  position: absolute;
+  top:12px;
+  left:0px;
+  width:10px;
+  height:10px;
+  font-size: 8px;
+}
+
+.starpedigree_genotype_2_Top {
+  position: absolute;
+  top:0px;
+  left:20px;
+  width:10px;
+  height:10px;
+  font-size: 8px;
+}
+
+.starpedigree_genotype_2_Bottom {
+  position: absolute;
+  top:12px;
+  left:20px;
+  width:10px;
+  height:10px;
+  font-size: 8px;
+}
+
+.starpedigree_genotype_Symbol {
+  position: absolute;
+  top: 8px;
+  left:12px;
+  width: 10px;
+  height: 10px;
+  font-size: 8px;
 }

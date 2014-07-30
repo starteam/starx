@@ -1,1 +1,759 @@
-{"ui":{"individuals":[{"sex":"M","location":{"row":1.0,"column":2.5},"id":"I-1","markers":["H","h","A","B"],"genotype":[["H","h"],["A","B"],["A_X",""],["A_Y",""]]},{"sex":"F","location":{"row":1.0,"column":3.5},"id":"I-2","markers":["h","D","F"],"genotype":[["h","h"],["D","F"],["A_X","A_X"]]},{"sex":"M","location":{"row":1.0,"column":5.5},"id":"I-3","markers":["h","G","I"],"genotype":[["h","h"],["G","I"],["A_X",""],["A_Y",""]]},{"sex":"F","location":{"row":1.0,"column":6.5},"id":"I-4","markers":["H","h","A","C"],"genotype":[["H","h"],["A","C"],["A_X","A_X"]]},{"sex":"M","location":{"row":2.0,"column":1.0},"id":"II-1","markers":["h","J","K"],"genotype":[["h","h"],["J","K"],["A_X",""],["A_Y",""]]},{"sex":"F","location":{"row":2.0,"column":2.0},"id":"II-2","markers":["H","h","A","D"],"genotype":[["H","h"],["A","D"],["",""],["A_X","A_X"]]},{"sex":"M","location":{"row":2.0,"column":3.0},"id":"II-3","markers":["h","B","D"],"genotype":[["h","h"],["B","D"],["",""],["","A_X"],["A_Y",""]]},{"sex":"F","location":{"row":2.0,"column":4.0},"id":"II-4","markers":["H","h","A","D"],"genotype":[["H","h"],["A","D"],["",""],["A_X","A_X"]]},{"sex":"M","location":{"row":2.0,"column":5.0},"id":"II-5","markers":["h","I","C"],"genotype":[["h","h"],["I","C"],["",""],["","A_X"],["A_Y",""]]},{"sex":"F","location":{"row":2.0,"column":6.0},"id":"II-6","markers":["h","G","C"],"genotype":[["h","h"],["G","C"],["",""],["A_X","A_X"]]},{"sex":"M","location":{"row":2.0,"column":7.0},"id":"II-7","markers":["h","H","I","A"],"genotype":[["h","H"],["I","A"],["",""],["","A_X"],["A_Y",""]]},{"sex":"F","location":{"row":2.0,"column":8.0},"id":"II-8","markers":["h","L","M"],"genotype":[["h","h"],["L","M"],["A_X","A_X"]]},{"sex":"F","location":{"row":3.0,"column":1.0},"id":"III-1","markers":["h","J","D"],"genotype":[["h","h"],["J","D"],["",""],["A_X","A_X"]]},{"sex":"F","location":{"row":3.0,"column":2.0},"id":"III-2","markers":["h","H","J","A"],"genotype":[["h","H"],["J","A"],["",""],["A_X","A_X"]]},{"sex":"F","location":{"row":3.0,"column":3.0},"id":"III-3","markers":["h","D","C"],"genotype":[["h","h"],["D","C"],["",""],["A_X","A_X"]]},{"sex":"F","location":{"row":3.0,"column":4.0},"id":"III-4","markers":["H","h","A","I"],"genotype":[["H","h"],["A","I"],["",""],["A_X","A_X"]]},{"sex":"F","location":{"row":3.0,"column":5.0},"id":"III-5","markers":["h","D","C"],"genotype":[["h","h"],["D","C"],["",""],["A_X","A_X"]]},{"sex":"M","location":{"row":3.0,"column":6.0},"id":"III-6","markers":["H","h","A","C"],"genotype":[["H","h"],["A","C"],["",""],["A_X",""],["","A_Y"]]},{"sex":"F","location":{"row":3.0,"column":7.0},"id":"III-7","markers":["H","h","A","M"],"genotype":[["H","h"],["A","M"],["",""],["A_X","A_X"]]},{"sex":"M","location":{"row":3.0,"column":8.0},"id":"III-8","markers":["h","I","M"],"genotype":[["h","h"],["I","M"],["",""],["","A_X"],["A_Y",""]]}],"sexes":[{"id":"F","kind":"female"},{"id":"M","kind":"male"}],"relationships":[{"id":"GenI-1,2","parents":["I-1","I-2"],"children":["II-2","II-3","II-4"]},{"id":"GenI-3,4","parents":["I-3","I-4"],"children":["II-5","II-6","II-7"]},{"id":"GenII-1,2","parents":["II-1","II-2"],"children":["III-1","III-2"]},{"id":"GenII-4,5","parents":["II-4","II-5"],"children":["III-3","III-4","III-5","III-6"]},{"id":"GenII-7,8","parents":["II-7","II-8"],"children":["III-7","III-8"]}],"markers":[{"id":"H","name":"Disease","kind":"fill"},{"id":"h","name":"Disease","kind":"label"},{"id":"A","name":"A","kind":"label"},{"id":"B","name":"B","kind":"label"},{"id":"C","name":"C","kind":"label"},{"id":"D","name":"D","kind":"label"},{"id":"F","name":"F","kind":"label"},{"id":"G","name":"G","kind":"label"},{"id":"I","name":"I","kind":"label"},{"id":"J","name":"J","kind":"label"},{"id":"K","name":"K","kind":"label"},{"id":"L","name":"L","kind":"label"},{"id":"M","name":"M","kind":"label"}],"options":{"layout":"grid","cell_offset_y":50.0,"cell_height":80.0,"cell_offset_x":50.0,"generations":["","I","II","III"],"cell_width":80.0,"symbol_markers":["H"]}},"rules":{"individuals":[{"id":"I-1","genotype":"complete","alleles":[["H","h"],["A","B"]]},{"id":"I-2","genotype":"complete","alleles":[["h","h"]],"options":"Alleles"},{"id":"I-3","genotype":"complete","alleles":[["h","h"]],"options":"Alleles"},{"id":"I-4","genotype":"complete","alleles":[["H","h"],["A","C"]]},{"id":"II-1","genotype":"complete","alleles":[["h","h"]],"options":"Alleles"},{"id":"II-2","genotype":"complete","alleles":[["H","h"],["A","D"],["",""],["A_X","A_X"]]},{"id":"II-3","genotype":"complete","alleles":[["h","h"],["B","D"],["",""],["","A_X"],["A_Y",""]]},{"id":"II-4","genotype":"complete","alleles":[["H","h"],["A","D"],["",""],["A_X","A_X"]]},{"id":"II-5","genotype":"complete","alleles":[["h","h"],["I","C"],["",""],["","A_X"],["A_Y",""]]},{"id":"II-6","genotype":"complete","alleles":[["h","h"],["G","C"],["",""],["A_X","A_X"]]},{"id":"II-7","genotype":"complete","alleles":[["h","H"],["I","A"],["",""],["","A_X"],["A_Y",""]]},{"id":"II-8","genotype":"complete","alleles":[["h","h"]],"options":"Alleles"},{"id":"III-1","genotype":"complete","alleles":[["h","h"],["J","D"],["",""],["A_X","A_X"]]},{"id":"III-2","genotype":"complete","alleles":[["h","H"],["J","A"],["",""],["A_X","A_X"]]},{"id":"III-3","genotype":"complete","alleles":[["h","h"],["D","C"],["",""],["A_X","A_X"]]},{"id":"III-4","genotype":"complete","alleles":[["H","h"],["A","I"],["",""],["A_X","A_X"]]},{"id":"III-5","genotype":"complete","alleles":[["h","h"],["D","C"],["",""],["A_X","A_X"]]},{"id":"III-6","genotype":"complete","alleles":[["H","h"],["A","C"],["",""],["A_X",""],["","A_Y"]]},{"id":"III-7","genotype":"complete","alleles":[["H","h"],["A","M"],["",""],["A_X","A_X"]]},{"id":"III-8","genotype":"complete","alleles":[["h","h"],["I","M"],["",""],["","A_X"],["A_Y",""]]}],"genes":[{"id":"Huntington\u0027s","chromosome":"1","alleles":["H","h"],"location":20.0},{"id":"Alleles","chromosome":"1","alleles":["A","B","C"],"location":25.0},{"id":"Unlinked","chromosome":"2","alleles":["Q","W","E","R"],"location":25.0}]}}
+{"ui": {
+    "individuals": [
+        {
+            "sex": "M",
+            "location": {
+                "row": 1.0,
+                "column": 2.5
+            },
+            "id": "I-1",
+            "markers": ["H", "h", "A", "B"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "B"]
+                ],
+                "X": [
+                    ["A_X", ""]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 1.0,
+                "column": 3.5
+            },
+            "id": "I-2",
+            "markers": ["h", "D", "F"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["D", "F"]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 1.0,
+                "column": 5.5
+            },
+            "id": "I-3",
+            "markers": ["h", "G", "I"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["G", "I"]
+                ],
+                "X": [
+                    ["A_X", ""]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 1.0,
+                "column": 6.5
+            },
+            "id": "I-4",
+            "markers": ["H", "h", "A", "C"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "C"]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 2.0,
+                "column": 1.0
+            },
+            "id": "II-1",
+            "markers": ["h", "J", "K"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["J", "K"]
+                ],
+                "X": [
+                    ["A_X", ""]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 2.0,
+                "column": 2.0
+            },
+            "id": "II-2",
+            "markers": ["H", "h", "A", "D"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "D"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 2.0,
+                "column": 3.0
+            },
+            "id": "II-3",
+            "markers": ["h", "B", "F"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["B", "F"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["", "A_X"]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 2.0,
+                "column": 4.0
+            },
+            "id": "II-4",
+            "markers": ["H", "h", "A", "F"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "F"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 2.0,
+                "column": 5.0
+            },
+            "id": "II-5",
+            "markers": ["h", "I", "C"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["I", "C"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["", "A_X"]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 2.0,
+                "column": 6.0
+            },
+            "id": "II-6",
+            "markers": ["h", "I", "C"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["I", "C"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 2.0,
+                "column": 7.0
+            },
+            "id": "II-7",
+            "markers": ["h", "H", "I", "A"],
+            "genotype": {
+                "1": [
+                    ["h", "H"],
+                    ["I", "A"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["", "A_X"]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 2.0,
+                "column": 8.0
+            },
+            "id": "II-8",
+            "markers": ["h", "L", "M"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["L", "M"]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 3.0,
+                "column": 1.0
+            },
+            "id": "III-1",
+            "markers": ["h", "K", "D"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["K", "D"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 3.0,
+                "column": 2.0
+            },
+            "id": "III-2",
+            "markers": ["h", "H", "J", "A"],
+            "genotype": {
+                "1": [
+                    ["h", "H"],
+                    ["J", "A"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 3.0,
+                "column": 3.0
+            },
+            "id": "III-3",
+            "markers": ["h", "F", "I"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["F", "I"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 3.0,
+                "column": 4.0
+            },
+            "id": "III-4",
+            "markers": ["H", "h", "A", "C"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "C"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 3.0,
+                "column": 5.0
+            },
+            "id": "III-5",
+            "markers": ["h", "F", "I"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["F", "I"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 3.0,
+                "column": 6.0
+            },
+            "id": "III-6",
+            "markers": ["H", "h", "A", "I"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "I"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", ""]
+                ],
+                "Y": [
+                    ["", "A_Y"]
+                ]
+            }
+        },
+        {
+            "sex": "F",
+            "location": {
+                "row": 3.0,
+                "column": 7.0
+            },
+            "id": "III-7",
+            "markers": ["H", "h", "A", "M"],
+            "genotype": {
+                "1": [
+                    ["H", "h"],
+                    ["A", "M"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["A_X", "A_X"]
+                ]
+            }
+        },
+        {
+            "sex": "M",
+            "location": {
+                "row": 3.0,
+                "column": 8.0
+            },
+            "id": "III-8",
+            "markers": ["h", "I", "M"],
+            "genotype": {
+                "1": [
+                    ["h", "h"],
+                    ["I", "M"]
+                ],
+                "2": [
+                    ["", ""]
+                ],
+                "X": [
+                    ["", "A_X"]
+                ],
+                "Y": [
+                    ["A_Y", ""]
+                ]
+            }
+        }
+    ],
+    "sexes": [
+        {
+            "id": "F",
+            "kind": "female"
+        },
+        {
+            "id": "M",
+            "kind": "male"
+        }
+    ],
+    "relationships": [
+        {
+            "id": "GenI-1,2",
+            "parents": ["I-1", "I-2"],
+            "children": ["II-2", "II-3", "II-4"]
+        },
+        {
+            "id": "GenI-3,4",
+            "parents": ["I-3", "I-4"],
+            "children": ["II-5", "II-6", "II-7"]
+        },
+        {
+            "id": "GenII-1,2",
+            "parents": ["II-1", "II-2"],
+            "children": ["III-1", "III-2"]
+        },
+        {
+            "id": "GenII-4,5",
+            "parents": ["II-4", "II-5"],
+            "children": ["III-3", "III-4", "III-5", "III-6"]
+        },
+        {
+            "id": "GenII-7,8",
+            "parents": ["II-7", "II-8"],
+            "children": ["III-7", "III-8"]
+        }
+    ],
+    "markers": [
+        {
+            "id": "H",
+            "name": "Disease",
+            "kind": "fill"
+        },
+        {
+            "id": "h",
+            "name": "Disease",
+            "kind": "label"
+        },
+        {
+            "id": "A",
+            "name": "A",
+            "kind": "label"
+        },
+        {
+            "id": "B",
+            "name": "B",
+            "kind": "label"
+        },
+        {
+            "id": "C",
+            "name": "C",
+            "kind": "label"
+        },
+        {
+            "id": "D",
+            "name": "D",
+            "kind": "label"
+        },
+        {
+            "id": "F",
+            "name": "F",
+            "kind": "label"
+        },
+        {
+            "id": "G",
+            "name": "G",
+            "kind": "label"
+        },
+        {
+            "id": "I",
+            "name": "I",
+            "kind": "label"
+        },
+        {
+            "id": "J",
+            "name": "J",
+            "kind": "label"
+        },
+        {
+            "id": "K",
+            "name": "K",
+            "kind": "label"
+        },
+        {
+            "id": "L",
+            "name": "L",
+            "kind": "label"
+        },
+        {
+            "id": "M",
+            "name": "M",
+            "kind": "label"
+        }
+    ],
+    "options": {
+        "layout": "grid",
+        "cell_offset_y": 50.0,
+        "cell_height": 85.0,
+        "cell_offset_x": 50.0,
+        "generations": ["", "I", "II", "III"],
+        "cell_width": 85.0,
+        "symbol_markers": ["H"]
+    }
+}, "rules": {
+    "individuals": [
+        {
+            "id": "I-1",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "B"]
+            ]
+        },
+        {
+            "id": "I-2",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"]
+            ],
+            "options": "Alleles"
+        },
+        {
+            "id": "I-3",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"]
+            ],
+            "options": "Alleles"
+        },
+        {
+            "id": "I-4",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "C"]
+            ]
+        },
+        {
+            "id": "II-1",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"]
+            ],
+            "options": "Alleles"
+        },
+        {
+            "id": "II-2",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "D"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "II-3",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["B", "F"],
+                ["", ""],
+                ["", "A_X"],
+                ["A_Y", ""]
+            ]
+        },
+        {
+            "id": "II-4",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "F"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "II-5",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["I", "C"],
+                ["", ""],
+                ["", "A_X"],
+                ["A_Y", ""]
+            ]
+        },
+        {
+            "id": "II-6",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["I", "C"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "II-7",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "H"],
+                ["I", "A"],
+                ["", ""],
+                ["", "A_X"],
+                ["A_Y", ""]
+            ]
+        },
+        {
+            "id": "II-8",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"]
+            ],
+            "options": "Alleles"
+        },
+        {
+            "id": "III-1",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["K", "D"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "III-2",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "H"],
+                ["J", "A"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "III-3",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["F", "I"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "III-4",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "C"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "III-5",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["F", "I"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "III-6",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "I"],
+                ["", ""],
+                ["A_X", ""],
+                ["", "A_Y"]
+            ]
+        },
+        {
+            "id": "III-7",
+            "genotype": "complete",
+            "alleles": [
+                ["H", "h"],
+                ["A", "M"],
+                ["", ""],
+                ["A_X", "A_X"]
+            ]
+        },
+        {
+            "id": "III-8",
+            "genotype": "complete",
+            "alleles": [
+                ["h", "h"],
+                ["I", "M"],
+                ["", ""],
+                ["", "A_X"],
+                ["A_Y", ""]
+            ]
+        }
+    ],
+    "genes": [
+        {
+            "id": "Huntington\u0027s",
+            "chromosome": "1",
+            "alleles": ["H", "h"],
+            "location": 20.0
+        },
+        {
+            "id": "Alleles",
+            "chromosome": "1",
+            "alleles": ["A", "B", "C"],
+            "location": 25.0
+        },
+        {
+            "id": "Unlinked",
+            "chromosome": "2",
+            "alleles": ["Q", "W", "E", "R"],
+            "location": 25.0
+        }
+    ]
+}}

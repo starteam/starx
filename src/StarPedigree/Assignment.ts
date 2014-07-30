@@ -291,8 +291,8 @@ export class Individual extends Base {
             });
         })
         return relationship;
-
     }
+
 }
 Base.defineStaticRWField(Individual, "id", null);
 Base.readOnlyWrappedListById(Individual, "markers", 'UI');
