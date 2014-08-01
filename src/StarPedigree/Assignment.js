@@ -315,6 +315,31 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             enumerable: true,
             configurable: true
         });
+
+        Individual.prototype.is_genotype = function (diploidAllelesArray) {
+            var self = this;
+            var ret = true;
+
+            function compare_diploidAlleles(a, b) {
+                var first = (a[0] == b[0] && a[1] == b[1]);
+                var second = (a[0] == b[1] && a[1] == b[0]);
+                return first || second;
+            }
+
+            _.each(diploidAllelesArray, function (thatDiploid) {
+                var exist = false;
+                var genotype_map = self.__data__.genotype;
+                _.each(genotype_map, function (diploidArray) {
+                    _.each(diploidArray, function (thisDiploid) {
+                        var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                        exist = exist || cmp;
+                    });
+                });
+                ret = ret && exist;
+            });
+            console.info("is_genotype", ret);
+            return ret;
+        };
         return Individual;
     })(Base);
     exports.Individual = Individual;

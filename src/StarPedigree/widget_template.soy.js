@@ -201,12 +201,12 @@ widget_template.genotype_dialog_lhs = function(opt_data, opt_sb) {
  */
 widget_template.genotype_dialog_select = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<select>');
-  var markerList158 = opt_data.individual.markers;
-  var markerListLen158 = markerList158.length;
-  for (var markerIndex158 = 0; markerIndex158 < markerListLen158; markerIndex158++) {
-    var markerData158 = markerList158[markerIndex158];
-    output.append('<option>', soy.$$escapeHtml(markerData158.id), '</option>');
+  output.append('<select data-index="', soy.$$escapeHtml(opt_data.index), '" data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class="starpedigree_genotype_dialog_select">');
+  var markerList162 = opt_data.individual.markers;
+  var markerListLen162 = markerList162.length;
+  for (var markerIndex162 = 0; markerIndex162 < markerListLen162; markerIndex162++) {
+    var markerData162 = markerList162[markerIndex162];
+    output.append('<option value="', soy.$$escapeHtml(markerData162.id), '">', soy.$$escapeHtml(markerData162.id), '</option>');
   }
   output.append('<select>');
   return opt_sb ? '' : output.toString();
@@ -222,14 +222,14 @@ widget_template.genotype_dialog_select = function(opt_data, opt_sb) {
 widget_template.genotype_dialog_rhs = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div class=\'starpedigree_genotype_dialog_rhs\'><table><tr><th>Gene 1</th><th>Gene 2</th><tr><td>');
-  widget_template.genotype_dialog_select(opt_data, output);
+  widget_template.genotype_dialog_select({individual: opt_data.individual, index: 0}, output);
   output.append('</td><td>');
-  widget_template.genotype_dialog_select(opt_data, output);
+  widget_template.genotype_dialog_select({individual: opt_data.individual, index: 1}, output);
   output.append('</td></tr><tr><td>');
-  widget_template.genotype_dialog_select(opt_data, output);
+  widget_template.genotype_dialog_select({individual: opt_data.individual, index: 2}, output);
   output.append('</td><td>');
-  widget_template.genotype_dialog_select(opt_data, output);
-  output.append('</td></tr></table><button>Check genotype</button><br><span class=\'starpedigree_genotype_phase_select\'><input type=\'radio\' value=\'unknown\' name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'>Unknown</label></input><input type=\'radio\' value=\'inphase\' name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_inphase\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_inphase\'>In phase</label></input><input type=\'radio\' value=\'outofphase\' name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_outofphase\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_outofphase\'>Out of phase</label></input><input type=\'radio\' value=\'unlinked\' name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unlinked\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unlinked\'>Unlinked</label></input></span><br>');
+  widget_template.genotype_dialog_select({individual: opt_data.individual, index: 3}, output);
+  output.append('</td></tr></table><button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_check_genotype\' data-text="Check genotype">Check genotype</button><br><span class=\'starpedigree_genotype_phase_select\'><input type=\'radio\' value=\'unknown\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'>Unknown</label></input><input type=\'radio\' value=\'inphase\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_inphase\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_inphase\'>In phase</label></input><input type=\'radio\' value=\'outofphase\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_outofphase\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_outofphase\'>Out of phase</label></input><input type=\'radio\' value=\'unlinked\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unlinked\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unlinked\'>Unlinked</label></input></span><br>');
   widget_template.render_genotype(opt_data, output);
   output.append(soy.$$escapeHtml(opt_data.options), '</div>');
   return opt_sb ? '' : output.toString();

@@ -190,11 +190,12 @@
 
 /**
 *   @param individual
+* @param index
 */
 {template .genotype_dialog_select}
-        <select>
+        <select data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
                 {foreach $marker in $individual.markers}
-                   <option>{$marker.id}</option>
+                   <option value="{$marker.id}">{$marker.id}</option>
                 {/foreach}
         <select>
 {/template}
@@ -217,11 +218,13 @@
             <td>
                 {call .genotype_dialog_select}
                     {param individual:$individual /}
+                    {param index:0/}
                 {/call}
             </td>
             <td>
                 {call .genotype_dialog_select}
                     {param individual:$individual /}
+                    {param index:1/}
                 {/call}
             </td>
         </tr>
@@ -229,22 +232,24 @@
             <td>
                 {call .genotype_dialog_select}
                     {param individual:$individual /}
+                    {param index:2/}
                 {/call}
             </td>
             <td>
                 {call .genotype_dialog_select}
                     {param individual:$individual /}
+                    {param index:3/}
                 {/call}
             </td>
         </tr>
     </table>
-    <button>Check genotype</button>
+    <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_check_genotype' data-text="Check genotype">Check genotype</button>
     <br>
     <span class='starpedigree_genotype_phase_select'>
-            <input type='radio' value='unknown' name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_unknown'><label for='starpedigree_genotype_phase_select_{$individual.id}_unknown'>Unknown</label></input>
-            <input type='radio' value='inphase' name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_inphase'><label for='starpedigree_genotype_phase_select_{$individual.id}_inphase'>In phase</label></input>
-            <input type='radio' value='outofphase' name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_outofphase'><label for='starpedigree_genotype_phase_select_{$individual.id}_outofphase'>Out of phase</label></input>
-            <input type='radio' value='unlinked' name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_unlinked'><label for='starpedigree_genotype_phase_select_{$individual.id}_unlinked'>Unlinked</label></input>
+            <input type='radio' value='unknown' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_unknown'><label for='starpedigree_genotype_phase_select_{$individual.id}_unknown'>Unknown</label></input>
+            <input type='radio' value='inphase' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_inphase'><label for='starpedigree_genotype_phase_select_{$individual.id}_inphase'>In phase</label></input>
+            <input type='radio' value='outofphase' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_outofphase'><label for='starpedigree_genotype_phase_select_{$individual.id}_outofphase'>Out of phase</label></input>
+            <input type='radio' value='unlinked' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_unlinked'><label for='starpedigree_genotype_phase_select_{$individual.id}_unlinked'>Unlinked</label></input>
     </span>
     <br>
     {call .render_genotype}
