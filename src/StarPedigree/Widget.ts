@@ -43,7 +43,7 @@ export class Widget {
         this.add_interactions(w);
     }
 
-    save_genotype(id:string,individual,$button:JQuery) {
+    save_genotype(id:string,individual,$button:JQuery):boolean {
         var map = {}
         $('.starpedigree_genotype_dialog_select[data-id="' + id + '"]').each(function () {
             var $select = $(this);
@@ -60,8 +60,14 @@ export class Widget {
         else
         {
             $button.text( $button.data('text') + "- NOT OK!" );
-
         }
+        return is_genotype;
+    }
+
+    check_phase(id,individual,$button:JQuery) {
+        var value = null ;
+        $('input[kind-id="'+id+'"]').each( function() { if( $(this).prop('checked') ) { value = $(this).val() } } );
+        
     }
 
     show_genotype_dialog(w:JQuery, individual_id:number) {
@@ -76,8 +82,14 @@ export class Widget {
         $(w).append(html);
         $('.starpedigree_genotype_dialog_check_genotype').off('click').on('click', function () {
             var $button = $(this);
-            var id = $button.data('id')
+            var id = $button.data('id');
             self.save_genotype(id,individual, $button);
+        });
+        $('.starpedigree_genotype_dialog_check_phase').off('click').on('click',function(){
+            var $button = $(this);
+            var id = $button.data('id');
+            var is_genotype = self.save_genotype(id,individual,$('.starpedigree_genotype_dialog_check_genotype[data-id="'+id+'"'));
+            self.check_phase(id,individual,$button);
         });
     }
 

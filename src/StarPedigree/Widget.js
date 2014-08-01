@@ -47,6 +47,16 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
             } else {
                 $button.text($button.data('text') + "- NOT OK!");
             }
+            return is_genotype;
+        };
+
+        Widget.prototype.check_phase = function (id, individual, $button) {
+            var value = null;
+            $('input[kind-id="' + id + '"]').each(function () {
+                if ($(this).prop('checked')) {
+                    value = $(this).val();
+                }
+            });
         };
 
         Widget.prototype.show_genotype_dialog = function (w, individual_id) {
@@ -63,6 +73,12 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
                 var $button = $(this);
                 var id = $button.data('id');
                 self.save_genotype(id, individual, $button);
+            });
+            $('.starpedigree_genotype_dialog_check_phase').off('click').on('click', function () {
+                var $button = $(this);
+                var id = $button.data('id');
+                var is_genotype = self.save_genotype(id, individual, $('.starpedigree_genotype_dialog_check_genotype[data-id="' + id + '"'));
+                self.check_phase(id, individual, $button);
             });
         };
 
