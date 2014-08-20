@@ -786,16 +786,16 @@
 //
 //
 
-        <div class='sg_slider_widget_wrapper'>
+        <div class='sg_slider_widget_wrapper_disabled'>
         <table data-kind="{$experiment.id}" data-widget="slider-table" class='sg_slider_table'>
             // HEAD ROW
                 <tr>
                 <th class='sg_experiment_phenotype_detail_header sg_experiment_phenotype_detail_right'>
 
                 <!--Name--></th>
-                {foreach $phenotype in keys($experiment.phenotypes)}
+                {foreach $phenotype in $experiment.currpage}
                 <th colspan='2' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right'>
-                <!-- {$phenotype.short_description} --> Class {index($phenotype)+1}
+                <!-- {$phenotype.short_description} --> Class {index($phenotype)+1+$experiment.from}
                 </th>
                 {/foreach}
                 </tr>
@@ -803,7 +803,7 @@
                 {if $experiment.visualsVisible}
                 <tr>
                     <td class=' sg_experiment_phenotype_detail_right'>Strain</td>
-                    {foreach $phenotype in keys($experiment.phenotypes)}
+                    {foreach $phenotype in $experiment.currpage}
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_left'>
                         {call .strain}
                             {param strain:$experiment.phenotypes[$phenotype].top_female /}
@@ -833,7 +833,7 @@
             <b>Phenotypes</b>
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide</button>&nbsp; &nbsp;
             </td>
-                    {foreach $phenotype in keys($experiment.phenotypes)}
+                    {foreach $phenotype in $experiment.currpage}
                     <td class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_align_top'>
                         {if $experiment.phenotypes[$phenotype].show_more_females}
                             <button class='sg_expand_females' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="false">Hide Individuals</button>
@@ -896,7 +896,7 @@
             <b>Phenotypes</b>
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
             </td>
-            {foreach $phenotype in keys($experiment.phenotypes)}
+            {foreach $phenotype in $experiment.currpage}
             <td class='sg_experiment_phenotype_detail_left'>
             {if $experiment.phenotypes[$phenotype].show_more_females}
                             <button class='sg_expand_females' data-kind="{$experiment.id}" data-phenotype-id="{$phenotype}" data-state="false">Hide Individuals</button>
@@ -958,7 +958,7 @@
                 <tr>
                     <td rowspan='1' class=' sg_experiment_phenotype_detail_right'>Sex </td>
 
-                    {foreach $phenotype in keys($experiment.phenotypes)}
+                    {foreach $phenotype in $experiment.currpage}
                         <td class='sg_experiment_p_count sg_experiment_phenotype_detail_left'>
                         {if length($experiment.phenotypes[$phenotype].females_list) > 0}
                                 Female
@@ -975,7 +975,7 @@
                 {foreach $property in $experiment.propertiesList}
                     <tr>
                         <td class=' sg_experiment_phenotype_detail_right '>{$experiment.capitalized_properties[$property]}</td>
-                        {foreach $phenotype in keys($experiment.phenotypes)}
+                        {foreach $phenotype in $experiment.currpage}
                             <td colspan='2' class='sg_experiment_phenotype_detail_left sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_double'>
                             {$experiment.phenotypes[$phenotype].properties[$property].text}
                             </td>
@@ -986,6 +986,11 @@
 
         {/if}
         </table>
+            <div class='sg_page_button_holder'>
+            {foreach $page in $experiment.pages}
+                <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='{$experiment.id}' data-from="{$page.index}">{$page.page}</div>
+            {/foreach}
+            </div>
 
 
     {/if}
