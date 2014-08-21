@@ -523,16 +523,41 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   border: 1px solid #c0c0c0;
   min-height: 100px;
 }
+/* green box START */
 .sg_select_strain_target {
   position: absolute;
+  border: 1px solid #00ff00;
   width: 125px;
   height: 50px;
   background-color: white;
-  border: 1px solid #00ff00;
   top: 0px;
   left: 0px;
   z-index: 99;
 }
+.sg_select_strain_target:after,
+.sg_select_strain_target:before {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.sg_select_strain_target:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #ffffff;
+  border-width: 10px;
+  margin-top: -10px;
+}
+.sg_select_strain_target:before {
+  border-color: rgba(0, 245, 16, 0);
+  border-left-color: #00f510;
+  border-width: 12px;
+  margin-top: -12px;
+}
+/* green box END */
 .sg_dialog_close {
   border: #808080 1px solid;
   border-radius: 6px;
@@ -547,13 +572,13 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   border: green 1px solid;
   border-radius: 6px;
   font-size: 8pt;
-  background-color: green;
   background: green;
   color: white;
   text-transform: uppercase;
-  width: 125px;
+  width: 115px;
   padding: 4px;
   margin: 1px;
+  margin-left: 5px;
 }
 .sg_page_button {
   display: inline-block;
