@@ -161,14 +161,14 @@
         <td class='sg_s_col_head ' >
         <b>Phenotypes</b> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide</button>
         </td>
-        {foreach $strain in $strains.list}
+        {foreach $strain in $strains.currpage}
                 <td class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>
                 </td>
         {/foreach}
     </tr>
                 <tr>
                 <td class='sg_s_col_head '>Sex</td>
-                    {foreach $strain in $strains.list}
+                    {foreach $strain in $strains.currpage}
                         <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>{if $strain['sex'] == 'FEMALE'}Female{/if}{if $strain['sex'] == 'MALE'}Male{/if}</td>
                     {/foreach}
 
@@ -176,7 +176,7 @@
                 {foreach $property in keys($strains.capitalized_properties)}
                 <tr>
                     <td class='sg_s_col_head '>{$strains.capitalized_properties[$property]}</td>
-                    {foreach $strain in $strains.list}
+                    {foreach $strain in $strains.currpage}
                         <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>{$strain.capitalized_properties[$strains.capitalized_properties[$property]].text}</td>
                     {/foreach}
 
@@ -190,7 +190,7 @@
     <tr>
         <td class='sg_s_col_head  '>
         <b>Phenotypes</b> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
-        </td><td class='' colspan='{$strains.list.length}'>
+        </td><td class='' colspan='{$strains.currpage.length}'>
 
         </td>
     </tr>

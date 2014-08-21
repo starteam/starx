@@ -155,14 +155,14 @@ sg_client_mainframe.strains = function(opt_data, opt_sb) {
   output.append('</div></td></tr>');
   if (opt_data.strains.propertiesVisible) {
     output.append('<tr><td class=\'sg_s_col_head \' ><b>Phenotypes</b> &nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'false\'>Hide</button></td>');
-    var strainList145 = opt_data.strains.list;
+    var strainList145 = opt_data.strains.currpage;
     var strainListLen145 = strainList145.length;
     for (var strainIndex145 = 0; strainIndex145 < strainListLen145; strainIndex145++) {
       var strainData145 = strainList145[strainIndex145];
       output.append('<td class=\'', (! (strainIndex145 == strainListLen145 - 1)) ? 'sg_experiment_phenotype_detail_right' : '', ' ', (! (strainIndex145 == 0)) ? 'sg_experiment_phenotype_detail_left' : '', '\'></td>');
     }
     output.append('</tr><tr><td class=\'sg_s_col_head \'>Sex</td>');
-    var strainList157 = opt_data.strains.list;
+    var strainList157 = opt_data.strains.currpage;
     var strainListLen157 = strainList157.length;
     for (var strainIndex157 = 0; strainIndex157 < strainListLen157; strainIndex157++) {
       var strainData157 = strainList157[strainIndex157];
@@ -174,7 +174,7 @@ sg_client_mainframe.strains = function(opt_data, opt_sb) {
     for (var propertyIndex178 = 0; propertyIndex178 < propertyListLen178; propertyIndex178++) {
       var propertyData178 = propertyList178[propertyIndex178];
       output.append('<tr><td class=\'sg_s_col_head \'>', soy.$$escapeHtml(opt_data.strains.capitalized_properties[propertyData178]), '</td>');
-      var strainList182 = opt_data.strains.list;
+      var strainList182 = opt_data.strains.currpage;
       var strainListLen182 = strainList182.length;
       for (var strainIndex182 = 0; strainIndex182 < strainListLen182; strainIndex182++) {
         var strainData182 = strainList182[strainIndex182];
@@ -184,7 +184,7 @@ sg_client_mainframe.strains = function(opt_data, opt_sb) {
     }
     output.append((opt_data.add_strain) ? '<td rowspan=\'1\' class=\'sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left\'></td>' : '');
   } else {
-    output.append('<tr><td class=\'sg_s_col_head  \'><b>Phenotypes</b> &nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'true\'>Show</button></td><td class=\'\' colspan=\'', soy.$$escapeHtml(opt_data.strains.list.length), '\'></td></tr>');
+    output.append('<tr><td class=\'sg_s_col_head  \'><b>Phenotypes</b> &nbsp; <button class=\'sg_strain_expand_properties\' data-kind=\'strains\' data-expanded-properties=\'true\'>Show</button></td><td class=\'\' colspan=\'', soy.$$escapeHtml(opt_data.strains.currpage.length), '\'></td></tr>');
   }
   output.append('<tr></table><div class=\'sg_bottom_border\'></div></div></div>');
   return opt_sb ? '' : output.toString();
