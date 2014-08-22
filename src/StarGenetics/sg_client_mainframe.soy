@@ -148,7 +148,7 @@
                         </td>
                     {/foreach}
                     {if $add_strain}
-                    <td rowspan='1' class='sg_place_holder'>
+                    <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
 
                     {call .strain_place_holder }
                         {param kind: 'strains' /}
@@ -156,16 +156,6 @@
                     {/call}
                     </td>
                     {/if}
-                </tr>
-                <tr>
-                    <td><!-- title --></td>
-                    <td colspan='{$strains.page_size+1}'>
-                        <div class='sg_page_button_holder'>
-                        {foreach $page in $strains.pages}
-                            <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='strains' data-from="{$page.index}">{$page.page}</div>
-                        {/foreach}
-                        </div>
-                    </td>
                 </tr>
 {if $strains.propertiesVisible}
     <tr>
@@ -177,12 +167,21 @@
                 <td class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>
                 </td>
         {/foreach}
+        {if $add_strain}
+            <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
+            </td>
+        {/if}
+
     </tr>
                 <tr>
                 <td class='sg_s_col_head '>Sex</td>
                     {foreach $strain in $strains.currpage}
                         <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>{if $strain['sex'] == 'FEMALE'}Female{/if}{if $strain['sex'] == 'MALE'}Male{/if}</td>
                     {/foreach}
+                    {if $add_strain}
+                    <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
+                    </td>
+                    {/if}
 
                 </tr>
                 {foreach $property in keys($strains.capitalized_properties)}
@@ -191,13 +190,12 @@
                     {foreach $strain in $strains.currpage}
                         <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>{$strain.capitalized_properties[$strains.capitalized_properties[$property]].text}</td>
                     {/foreach}
-
+                    {if $add_strain}
+                    <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
+                    </td>
+                    {/if}
                 </tr>
                 {/foreach}
-                {if $add_strain}
-                <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_left'>
-                </td>
-                {/if}
 {else}
     <tr>
         <td class='sg_s_col_head  '>
@@ -207,6 +205,17 @@
         </td>
     </tr>
 {/if}
+                <tr>
+                    <td><!-- title --></td>
+                    <td colspan='{$strains.page_size+1}'>
+                        <div class='sg_page_button_holder'>
+                        {foreach $page in $strains.pages}
+                            <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='strains' data-from="{$page.index}">{$page.page}</div>
+                        {/foreach}
+                        </div>
+                    </td>
+                </tr>
+
     <tr>
             </table>
         <div class='sg_bottom_border'>
@@ -255,7 +264,7 @@
         </div>
         {/if}
         <div class='sg_experiment_parent_x'>
-        X
+                    {literal}&#10799;{/literal}
         </div>
         {if $experiment.parents.length <2}
         <div class='sg_experiment_parent' data-kind='new_experiment' data-empty='true' title="Drag a strain from the Strains box or from a previously performed experiment here">
@@ -447,7 +456,8 @@
                         </div>
                      </td>
                      <td class='sg_s_experiment_parent_table_x'>
-                        <div class='sg_experiment_parent_x'>X
+                        <div class='sg_experiment_parent_x'>
+                                            {literal}&#10799;{/literal}
                         </div>
                     </td>
                     <td class='sg_experiment_p_visual sg_s_experiment_parent_table_2'>
@@ -713,7 +723,9 @@
                         </div>
                      </td>
                      <td class='sg_s_experiment_parent_table_x'>
-                        <div class='sg_experiment_parent_x'>X
+                        <div class='sg_experiment_parent_x'>
+                                            {literal}&#10799;{/literal}
+
                         </div>
                     </td>
                     <td class='sg_experiment_p_visual sg_s_experiment_parent_table_2'>
@@ -784,7 +796,7 @@
 
                 <!--Name--></th>
                 <td colspan='3' class='sg_s_arrow_down'>
-                    {literal}&#8897;{/literal}
+                    {literal}&#11015;{/literal}
                 </td>
         </tr>
         </table>
@@ -1065,7 +1077,9 @@
                         </div>
                      </td>
                      <td class='sg_s_experiment_parent_table_x'>
-                        <div class='sg_experiment_parent_x'>X
+                        <div class='sg_experiment_parent_x'>
+                                            {literal}&#10799;{/literal}
+
                         </div>
                     </td>
                     <td class='sg_experiment_p_visual sg_s_experiment_parent_table_2'>
