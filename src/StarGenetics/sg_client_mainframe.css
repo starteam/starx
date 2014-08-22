@@ -427,6 +427,9 @@ table {
 table.sg_slider_table tbody tr th {
   text-align: center !important;
 }
+td.sg_center_align {
+  text-align: center !important;
+}
 div.sg_mini_experiment_box table.sg_slider_table {
   margin: 0px !important;
 }
@@ -613,9 +616,46 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 .sg_page_button_holder {
   width: 100%;
-  padding-left: 100px;
+  padding-left: 150px;
 }
 .sg_s_col_subhead {
   color: #000000;
   font-weight: bold;
+}
+.sg_parents_line_vertical_left {
+  display: inline;
+  width: 1px;
+  heigth: 10px;
+  border: 2px solid #e7e7e9;
+  position: relative;
+  top: 10px;
+}
+.sg_parents_line_cross_left {
+  display: inline-block;
+  width: 90%;
+  heigth: 1px;
+  border: 2px solid #e7e7e9;
+  position: relative;
+  top: -4px;
+}
+.sg_parents_line_cross {
+  display: inline;
+  color: #65b356;
+  text-align: center;
+}
+.sg_parents_line_cross_right {
+  display: inline-block;
+  width: 90%;
+  heigth: 1px;
+  border: 2px solid #e7e7e9;
+  position: relative;
+  top: -4px;
+}
+.sg_parents_line_vertical_right {
+  display: inline;
+  width: 1px;
+  heigth: 100%;
+  border: 2px solid #e7e7e9;
+  position: relative;
+  top: 10px;
 }
