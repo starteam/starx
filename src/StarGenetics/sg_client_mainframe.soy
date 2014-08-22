@@ -828,7 +828,9 @@
                 <td>
                 </td>
                 <td colspan='{$experiment.currpage.length-1}'>
+                        {if $experiment.is_first_page }
                         <div class='sg_parents_line_vertical_left'></div>
+                        {/if}
                         <div class='sg_parents_line_cross_left'></div>
                     </td>
                     <td colspan='2' class='sg_center_align'>
@@ -836,7 +838,9 @@
                     </td>
                     <td colspan='{$experiment.currpage.length-1}'>
                         <div class='sg_parents_line_cross_right'></div>
+                        {if $experiment.is_last_page }
                         <div class='sg_parents_line_vertical_right'></div>
+                        {/if}
                 </td>
         </tr>
 

@@ -513,6 +513,25 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
+
+        Object.defineProperty(Experiment.prototype, "is_first_page", {
+            get: function () {
+                return this.from == 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Experiment.prototype, "is_last_page", {
+            get: function () {
+                var from = this.from;
+                var to = _.keys(this.phenotypes).length;
+                var step = this.page_size;
+                return (to - from) <= step;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Experiment;
     })(Collapsable);
     exports.Experiment = Experiment;

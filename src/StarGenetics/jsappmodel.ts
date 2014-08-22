@@ -492,7 +492,16 @@ export class Experiment extends Collapsable {
         return ret;
     }
 
+    get is_first_page():boolean {
+        return this.from == 0;
+    }
 
+    get is_last_page():boolean {
+        var from = this.from;
+        var to = _.keys(this.phenotypes).length;
+        var step = this.page_size;
+        return (to - from ) <= step;
+    }
 
 }
 Base.defineStaticRWField(Experiment, "phenotypes_map", {});
