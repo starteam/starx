@@ -1,10 +1,11 @@
-@title-color: #a0a4a8;
+@title-color: black;
 @group-border: #e7e7e9;
 @strains-bg: white;
 @button-bg: #e3e3e3;
 @drag-color: #00ff00;
 @med-gray: #808080;
 @experiment_parent_bg_color: white;
+@green-border: rgb(101,179,86);
 
 .sg_workspace {
   background: white;
@@ -63,13 +64,13 @@
 
 .sg_strain_box_hover:hover {
   margin: 0px;
-  border: 1px solid @drag-color;
+  border: 1px solid @green-border;
   border-radius: 0px;
   cursor: copy;
 }
 
 .sg_strain_box_nohover:hover {
-  border: 0px solid @drag-color !important;
+  border: 0px solid @green-border !important;
   border-radius: 0px !important;
   cursor: default;
 
@@ -466,12 +467,25 @@ table {
 }
 
 .sg_strain_add_strain {
-  background-color: @group-border;
-  font-size: 50px;
-  padding: 10px;
-  padding-bottom: 20px;
+  padding: 1px;
+  padding-top: 10px;
   color: @med-gray;
   font-weight:900;
+}
+
+.sg_strain_add_strain_plus {
+  font-size: 25px;
+
+}
+
+.sg_strain_add_strain_text {
+  font-size: 9px;
+  display: inline-block;
+}
+
+.sg_strain_add_strain_text_green {
+  display: inline;
+  color: @green-border;
 }
 
 ::-webkit-scrollbar {
@@ -674,7 +688,7 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 /* green box START */
 .sg_select_strain_target {
   position: absolute;
-  border: 1px solid @drag-color;
+  border: 1px solid @green-border;
   width: 125px;
   height: 50px;
   background-color: white;
@@ -702,7 +716,7 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
 }
 .sg_select_strain_target:before {
 	border-color: rgba(0, 245, 16, 0);
-	border-left-color: #00f510;
+	border-left-color: @green-border;
 	border-width: 12px;
 	margin-top: -12px;
 }
@@ -736,25 +750,32 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   height: 16px;
   font-size: 10px;
   border-radius: 9px;
-  background-color: black;
+  background-color: white;
   text-align: center;
-  color:white;
+  color:black;
   margin: 2px;
   padding: 1px;
   padding-top:3px;
-  font-weight: 900;
-  border-color:black;
+  font-weight: 500;
+  border-color:@group-border;
   border-width: 1px;
   border-style: solid;
+  cursor: pointer;
 }
 
 .sg_page_button_selected {
-  background-color:white;
-  color:black;
+  background-color:black;
+  color:white;
+  font-weight: bold;
 }
 
 
 .sg_page_button_holder {
   width:100%;
   padding-left:100px;
+}
+
+.sg_s_col_subhead {
+  color: @title-color;
+  font-weight: bold;
 }

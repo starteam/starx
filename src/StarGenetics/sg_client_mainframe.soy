@@ -107,7 +107,18 @@
 */
 {template .strain_place_holder}
 <div class='sg_add_strain_box sg_s_strain_box' data-kind='{$kind}' >
-                    <div class='sg_strain_add_strain sg_strain_visual'>+</div>
+                    <div class='sg_strain_add_strain sg_strain_visual'>
+                        <div class='sg_strain_add_strain_plus'>+</div>
+                        <div class='sg_strain_add_strain_text'>
+                        To add a strain,
+                        click on
+                        a specimen
+                        and select<br>
+                        "<div class='sg_strain_add_strain_text_green'>
+                        + STRAIN STOCKS
+                            </div>"
+                        </span>
+                    </div>
                 </div>
 {/template}
 
@@ -159,7 +170,8 @@
 {if $strains.propertiesVisible}
     <tr>
         <td class='sg_s_col_head ' >
-        <b>Phenotypes</b> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide</button>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
+         &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide</button>
         </td>
         {foreach $strain in $strains.currpage}
                 <td class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>
@@ -189,7 +201,7 @@
 {else}
     <tr>
         <td class='sg_s_col_head  '>
-        <b>Phenotypes</b> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
+        <span class='sg_s_col_subhead'>Phenotypes</span> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
         </td><td class='' colspan='{$strains.currpage.length}'>
 
         </td>
@@ -480,7 +492,7 @@
     {if $experiment.propertiesVisible}
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top' >
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
             </td><td colspan='3' class='sg_experiment_phenotype_detail_align_top'>
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide</button>&nbsp; &nbsp;
             </td>
@@ -551,7 +563,7 @@
     {else}
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
             </td><td colspan='3'>
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
                    // <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
@@ -719,7 +731,7 @@
     {if $experiment.propertiesVisible}
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_align_top' >
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide</button>&nbsp; &nbsp;
             </td><td colspan='3' class='sg_experiment_phenotype_detail_align_top'>
             </td>
@@ -729,7 +741,7 @@
     {else}
         <tr>
             <td class='sg_s_col_head '>
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
                    // <button class='sg_experiment_mate sg_s_experiment_mate' data-kind="{$experiment.id}">+ More progeny</button>
             </td>
@@ -830,7 +842,7 @@
     {if $experiment.propertiesVisible}
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right sg_experiment_phenotype_detail_align_top' >
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide</button>&nbsp; &nbsp;
             </td>
                     {foreach $phenotype in $experiment.currpage}
@@ -893,7 +905,7 @@
     {else}
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_right '>
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
                     <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='true'>Show</button>&nbsp; &nbsp;
             </td>
             {foreach $phenotype in $experiment.currpage}
@@ -1094,7 +1106,7 @@
             // Properties Rows
         <tr>
             <td class='sg_s_col_head sg_experiment_phenotype_detail_align_top' >
-            <b>Phenotypes</b>
+            <span class='sg_s_col_subhead'>Phenotypes</span>
     {if $experiment.propertiesVisible}
                     &nbsp; <button class='sg_strain_expand_properties' data-kind='{$experiment.id}' data-expanded-properties='false'>Hide</button>&nbsp; &nbsp;
     {else}
