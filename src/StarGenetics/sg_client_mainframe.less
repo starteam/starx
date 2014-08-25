@@ -785,44 +785,61 @@ div.sg_mini_experiment_box table.sg_slider_table tbody tr th {
   font-weight: bold;
 }
 
+.sg_parents_line_cross_parent {
+  position: relative;
+  margin-top:10px;
+  height:30px;
+}
+
+@line_cross_top_offset: 22px;
+
 .sg_parents_line_vertical_left {
   display: inline;
-  width:1px;
-  heigth: 10px;
+  width:0px;
+  height: 20px;
   border: 2px solid @group-border;
-  position: relative;
-  top: 10px;
+  position: absolute;
+  top: @line_cross_top_offset;
 }
 
 .sg_parents_line_cross_left {
   display: inline-block;
-  width:90%;
+  width:100%;
   heigth: 1px;
   border: 2px solid @group-border;
-  position: relative;
-  top: -4px;
+  position: absolute;
+  top: @line_cross_top_offset;
 }
+
+@parent_line_cross_width: 100px;
 
 .sg_parents_line_cross {
   display: inline;
   color: @green-border;
   text-align: center;
+  background-color: white;
+  position: absolute;
+  left:50%;
+  width: ceil(@parent_line_cross_width);
+  margin-left: ceil(-@parent_line_cross_width/2);
+  z-index:99;
 }
 
 .sg_parents_line_cross_right {
   display: inline-block;
-  width:90%;
+  width:100%;
   heigth: 1px;
   border: 2px solid @group-border;
-  position: relative;
-  top: -4px;
+  position: absolute;
+  top: @line_cross_top_offset;
 }
 
 .sg_parents_line_vertical_right {
-  display: inline;
-  width:1px;
-  heigth: 100%;
+  display: inline-block;
+  width:0px;
+  height: 20px;
   border: 2px solid @group-border;
-  position: relative;
-  top: 10px;
+  position: absolute;
+  top: @line_cross_top_offset;
+  right: -5px;
 }

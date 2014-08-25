@@ -708,13 +708,10 @@
             // HEAD ROW
                 <tr>
                 <td></td>
-                    <td>
+                    <td class='sg_parents_line_cross_parent' colspan='3'>
                         <div class='sg_parents_line_vertical_left'></div>
                         <div class='sg_parents_line_cross_left'></div>
-                    </td>
-                    <td>
-                        <div class='sg_parents_line_cross'>Parents</div>
-</td><td>
+                        <span class='sg_parents_line_cross'>Parents</span>
                         <div class='sg_parents_line_cross_right'></div>
                         <div class='sg_parents_line_vertical_right'></div>
 
@@ -827,16 +824,12 @@
         <tr>
                 <td>
                 </td>
-                <td colspan='{$experiment.currpage.length-1}'>
+                <td colspan='{2*$experiment.currpage.length}' class='sg_parents_line_cross_parent'>
                         {if $experiment.is_first_page }
                         <div class='sg_parents_line_vertical_left'></div>
                         {/if}
                         <div class='sg_parents_line_cross_left'></div>
-                    </td>
-                    <td colspan='2' class='sg_center_align'>
-                        <div class='sg_parents_line_cross'>Progeny</div>
-                    </td>
-                    <td colspan='{$experiment.currpage.length-1}'>
+                        <span class='sg_parents_line_cross'>Progeny</span>
                         <div class='sg_parents_line_cross_right'></div>
                         {if $experiment.is_last_page }
                         <div class='sg_parents_line_vertical_right'></div>
