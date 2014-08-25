@@ -1,6 +1,7 @@
 {namespace sg_client_mainframe}
 
 /**
+    Load GWT backend
     @param url
 */
 {template .gwt_content}
@@ -13,24 +14,15 @@
 
 {/template}
 /**
- * Says hello to the world.
+ Main wrapper for the content
  @param config
 */
 {template .main}
-<!--
-    <div class='sg_main'>
-        <button class='sg_open_ps'>Open</button>
-    </div>
-    <div class='sg_main'>
-        <button class='sg_open_ps'>Close</button>
-    </div>
--->
     <div class='sg_workspace' id='{$config.element_id+'_workspace'}'>Workspace</div>
-
 {/template}
 
 /**
-*   Strains
+* Structure of the main page
 * @param model
 */
 {template .workspace}
@@ -55,7 +47,7 @@
 {/template}
 
 /**
-*
+*   IO Block allows for Load/Save and problem Reset
 */
 {template .io}
     <button class='sg_workapace_button sg_workspace_save'>Save</button>
@@ -64,6 +56,18 @@
 {/template}
 
 /**
+    Strain tooltip
+    @param strain
+*/
+{template .strain_tooltip}
+Sex:{$strain['sex']}{\n}
+{foreach $property in keys($strain.capitalized_properties)}
+{$property}: {$strain.capitalized_properties[$property].text}{\n}
+{/foreach}
+{/template}
+
+/**
+  Display strain
 * @param strain
 * @param visuals
 * @param count
@@ -74,23 +78,19 @@
 */
 {template .strain}
 {if $count != 0}
-<div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}" data-name="{$strain['name']}" {if $testid}data-test-id="{$testid}"{/if}>
-                    {if $visuals}
-                    <div class='sg_strain_visual' title='Sex:{$strain['sex']}{\n}
-{foreach $property in keys($strain.capitalized_properties)}
-{$property}:{$strain.capitalized_properties[$property].text}{\n}
-{/foreach}
-'><canvas data-kind='{$kind}' data-id='{$strain['id']}' class='sg_strain_visual_canvas'></canvas>
-<div class='sg_strain_visual_canvas_sex'>{if $strain['sex'] == 'FEMALE'}{call .female_icon/}{else}{call .male_icon/}{/if}</div>
-</div>
-{/if}
-                </div>
-                <div class='sg_strain_title'>{if $name}{$name}{else}{$strain['name']}{/if}{if $percentage} <small>({round($percentage*100,0)}%)</small>{/if}</div>
+    <div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}" data-name="{$strain['name']}" {if $testid}data-test-id="{$testid}"{/if}>
+    {if $visuals}
+        <div class='sg_strain_visual' title='{call .strain_tooltip}{param strain:$strain/}{/call}'>
+            <canvas data-kind='{$kind}' data-id='{$strain['id']}' class='sg_strain_visual_canvas'></canvas>
+            <div class='sg_strain_visual_canvas_sex'>{if $strain['sex'] == 'FEMALE'}{call .female_icon/}{else}{call .male_icon/}{/if}</div>
+        </div>
+    {/if}
+    </div>
+    <div class='sg_strain_title'>{if $name}{$name}{else}{$strain['name']}{/if}{if $percentage} <small>({round($percentage*100,0)}%)</small>{/if}</div>
 {else}
-<div class='sg_strain_box'></div>
+    <div class='sg_strain_box'></div>
 {/if}
 {/template}
-
 
 /**
 * @param strain
@@ -106,20 +106,15 @@
 * @param kind
 */
 {template .strain_place_holder}
-<div class='sg_add_strain_box sg_s_strain_box' data-kind='{$kind}' >
-                    <div class='sg_strain_add_strain sg_strain_visual'>
-                        <div class='sg_strain_add_strain_plus'>+</div>
-                        <div class='sg_strain_add_strain_text'>
-                        To add a strain,
-                        click on
-                        a specimen
-                        and select<br>
-                        "<div class='sg_strain_add_strain_text_green'>
-                        + STRAIN STOCKS
-                            </div>"
-                        </span>
-                    </div>
-                </div>
+<div class='sg_add_strain_box sg_s_strain_box' data-kind='{$kind}'>
+    <div class='sg_strain_add_strain sg_strain_visual'>
+        <div class='sg_strain_add_strain_plus'>+</div>
+        <div class='sg_strain_add_strain_text'>
+        To add a strain, click on a specimen and select<br>
+            "<div class='sg_strain_add_strain_text_green'>+ STRAIN STOCKS</div>"
+        </div>
+    </div>
+</div>
 {/template}
 
 
@@ -130,105 +125,131 @@
 */
 {template .strains}
 <div class='sg_strains_box'>
-//    <div class='sg_title_box'>
-//        Strain Stocks
-//    </div>
-        <div class='sg_slider_widget_wrapper'>
-            <table data-kind='strains' data-widget="slider-table" class='sg_slider_table'>
-                <tr>
-                    <td class='sg_s_col_head'><span class='sg_bold_heading'>Strain Stocks</span></td>
-                    {foreach $strain in $strains.currpage}
-                        <td class=' {if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}  sg_strains_p_visual ' data-kind='strains' data-id="{$strain['id']}">
-                    {call .strain}
+    <div class='sg_slider_widget_wrapper'>
+        <table data-kind='strains' data-widget="slider-table" class='sg_slider_table'>
+            <tr>
+                <td class='sg_s_col_head'><span class='sg_bold_heading'>Strain Stocks</span></td>
+            {foreach $strain in $strains.currpage}
+                <td class=' {if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}  sg_strains_p_visual ' data-kind='strains' data-id="{$strain['id']}">
+                {call .strain}
                     {param strain:$strain /}
                     {param visuals: true/}
                     {param kind:'strains'/}
-                    {/call}
-
-                        </td>
-                    {/foreach}
-                    {if $add_strain}
-                    <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
-
-                    {call .strain_place_holder }
-                        {param kind: 'strains' /}
-                        {param visuals: $strains.visualsVisible/}
-                    {/call}
-                    </td>
-                    {/if}
-                </tr>
-{if $strains.propertiesVisible}
-    <tr>
-        <td class='sg_s_col_head ' >
-            <span class='sg_s_col_subhead'>Phenotypes</span>
-         &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide</button>
-        </td>
-        {foreach $strain in $strains.currpage}
+                {/call}
+                </td>
+            {/foreach}
+            {if $add_strain}
+                <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
+                {call .strain_place_holder }
+                    {param kind: 'strains' /}
+                    {param visuals: $strains.visualsVisible/}
+                {/call}
+                </td>
+            {/if}
+            </tr>
+        {if $strains.propertiesVisible}
+            <tr>
+                <td class='sg_s_col_head'>
+                    <span class='sg_s_col_subhead'>Phenotypes</span>
+                    &nbsp;
+                    <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='false'>Hide</button>
+                </td>
+            {foreach $strain in $strains.currpage}
                 <td class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>
                 </td>
+            {/foreach}
+            {if $add_strain}
+                <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
+                </td>
+            {/if}
+            </tr>
+            <tr>
+                <td class='sg_s_col_head'>Sex</td>
+            {foreach $strain in $strains.currpage}
+                <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>
+                {if $strain['sex'] == 'FEMALE'}Female{/if}{if $strain['sex'] == 'MALE'}Male{/if}
+                </td>
+            {/foreach}
+            {if $add_strain}
+                <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
+                </td>
+            {/if}
+            </tr>
+        {foreach $property in keys($strains.capitalized_properties)}
+            <tr>
+                <td class='sg_s_col_head '>{$strains.capitalized_properties[$property]}</td>
+            {foreach $strain in $strains.currpage}
+                <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>
+                {$strain.capitalized_properties[$strains.capitalized_properties[$property]].text}
+                </td>
+            {/foreach}
+            {if $add_strain}
+                <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'></td>
+            {/if}
+            </tr>
         {/foreach}
-        {if $add_strain}
-            <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
-            </td>
-        {/if}
-
-    </tr>
-                <tr>
-                <td class='sg_s_col_head '>Sex</td>
-                    {foreach $strain in $strains.currpage}
-                        <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>{if $strain['sex'] == 'FEMALE'}Female{/if}{if $strain['sex'] == 'MALE'}Male{/if}</td>
-                    {/foreach}
-                    {if $add_strain}
-                    <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
-                    </td>
-                    {/if}
-
-                </tr>
-                {foreach $property in keys($strains.capitalized_properties)}
-                <tr>
-                    <td class='sg_s_col_head '>{$strains.capitalized_properties[$property]}</td>
-                    {foreach $strain in $strains.currpage}
-                        <td data-id="{$strain.id}" class='{if not isLast($strain)}sg_experiment_phenotype_detail_right{/if} {if not isFirst($strain)}sg_experiment_phenotype_detail_left{/if}'>{$strain.capitalized_properties[$strains.capitalized_properties[$property]].text}</td>
-                    {/foreach}
-                    {if $add_strain}
-                    <td rowspan='1' class='sg_place_holder sg_experiment_phenotype_detail_left'>
-                    </td>
-                    {/if}
-                </tr>
-                {/foreach}
-{else}
-    <tr>
-        <td class='sg_s_col_head  '>
-        <span class='sg_s_col_subhead'>Phenotypes</span> &nbsp; <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
-        </td><td class='' colspan='{$strains.currpage.length}'>
-
-        </td>
-    </tr>
-{/if}
-                <tr>
-                    <td><!-- title --></td>
-                    <td colspan='{$strains.page_size+1}'>
-                        <div class='sg_page_button_holder'>
-                        {foreach $page in $strains.pages}
-                            <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='strains' data-from="{$page.index}">{$page.page}</div>
-                        {/foreach}
-                        </div>
-                    </td>
-                </tr>
-
-    <tr>
-            </table>
-        <div class='sg_bottom_border'>
-        </div>
+    {else}
+            <tr>
+                <td class='sg_s_col_head '>
+                <span class='sg_s_col_subhead'>Phenotypes</span>
+                &nbsp;
+                <button class='sg_strain_expand_properties' data-kind='strains' data-expanded-properties='true'>Show</button>
+                </td>
+                <td class='' colspan='{$strains.currpage.length}'></td>
+            </tr>
+    {/if}
+            <tr>
+                <td><!-- title --></td>
+                <td colspan='{$strains.page_size+1}'>
+                {call .page_selector}
+                    {param pageable:$strains/}
+                    {param kind:'strains'/}
+                {/call}
+                </td>
+            </tr>
+            <tr>
+        </table>
+    </div>
+    <div class='sg_bottom_border'>
     </div>
 </div>
 {/template}
 
 /**
-*   Text when Parent is not present
+    Display pages
+* @param pageable
+* @param kind
 */
-{template .new_experiment_parent_text}
+{template .page_selector}
+<div class='sg_page_button_holder'>
+{foreach $page in $pageable.pages}
+    <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='{$kind}' data-from="{$page.index}">{$page.page}</div>
+{/foreach}
+</div>
+{/template}
+
+/**
+Display parent or placeholder in new experiment
+@param experiment
+@param index
+*/
+{template .new_experiment_parent}
+{if $experiment.parents.length <$index}
+<div class='sg_experiment_parent' data-kind='new_experiment' data-empty='true' title="Drag a strain from the Strains box or from a previously performed experiment here">
     <span class='sg_experiment_parent_text'>Drag & Drop a Specimen to create a pair to mate</span>
+</div>
+{else}
+<div class='sg_experiment_parent' data-kind='new_experiment' data-id='{$experiment.parents[$index-1].id}'>
+    {call .strain}
+            {param strain:$experiment.parents[$index-1] /}
+            {param visuals: $experiment.visualsVisible/}
+            {param kind:'new_experiment'/}
+    {/call}
+    <button class='sg_experiment_parent_remove' data-id='{$experiment.parents[$index-1].id}' data-kind='new_experiment' title="Remove Parent"><span class='sg_experiment_parent_remove_text'>x</span>
+    </button>
+</div>
+{/if}
+
 {/template}
 /**
 *   New Experiment - Expanded
@@ -238,65 +259,33 @@
 */
 {template .new_experiment_expanded}
 <div class='sg_new_experiment_box'>
-//    <div class='sg_title_box'>
-//        Mating Site
-//        &nbsp;
-//        {if $experiment.expanded}
-//        <button class="sg_expand sg_s_discard" data-expanded="false" data-kind="new_experiment">_</button>
-//        {/if}
-//    </div>
-    {if $experiment.expanded}
+{if $experiment.expanded}
     <div class='sg_left_heading sg_bold_heading'>Mating Site</div>
     <div class='sg_experiment_parents_wrapper'>
-    <div class='sg_experiment_parents'>
-        {if $experiment.parents.length <1}
-        <div class='sg_experiment_parent' data-kind='new_experiment' data-empty='true' title="Drag a strain from the Strains box or from a previously performed experiment here">
-            {call .new_experiment_parent_text/}
-        </div>
-        {else}
-        <div class='sg_experiment_parent' data-kind='new_experiment' data-id='{$experiment.parents[0].id}'>
-            {call .strain}
-                    {param strain:$experiment.parents[0] /}
-                    {param visuals: $experiment.visualsVisible/}
-                    {param kind:'new_experiment'/}
+        <div class='sg_experiment_parents'>
+            {call .new_experiment_parent}
+                {param experiment:$experiment/}
+                {param index:1/}
             {/call}
-            <button class='sg_experiment_parent_remove' data-id='{$experiment.parents[0].id}' data-kind='new_experiment' title="Remove Parent"><span class='sg_experiment_parent_remove_text'>x</span></button>
-        </div>
-        {/if}
-        <div class='sg_experiment_parent_x'>
-                    {literal}&#10799;{/literal}
-        </div>
-        {if $experiment.parents.length <2}
-        <div class='sg_experiment_parent' data-kind='new_experiment' data-empty='true' title="Drag a strain from the Strains box or from a previously performed experiment here">
-            {call .new_experiment_parent_text/}
-        </div>
-        {else}
-        <div class='sg_experiment_parent' data-kind='new_experiment' data-id='{$experiment.parents[1].id}'>
-            {call .strain}
-                    {param strain:$experiment.parents[1] /}
-                    {param visuals: $experiment.visualsVisible/}
-                    {param kind:'new_experiment'/}
+            <div class='sg_experiment_parent_x'>{literal}&#10799;{/literal}</div>
+            {call .new_experiment_parent}
+                {param experiment:$experiment/}
+                {param index:2/}
             {/call}
-                        <button class='sg_experiment_parent_remove' data-id='{$experiment.parents[1].id}' data-kind='new_experiment' title="Remove Parent"><span class='sg_experiment_parent_remove_text'>x</span>
-            </button>
-
         </div>
-        {/if}
-    </div>
-        {if $experiment.canmate}
-    <div class='sg_experiment_parents_can_mate'>
-            <div class='sg_experiment_parents_can_mate_info'>How many progeny would you like to produce? (Between 1 and 500)</div>
-            <div class='sg_experiment_parents_can_mate_input'>
-            <input type='text' class='sg_new_experiment_mate_count' value='{if $prg_count}{$prg_count}{else}50{/if}'><button class='sg_new_experiment_mate sg_s_new_experiment_mate_large' data-kind='new_experiment'>Mate</button>
-            </div>
-    </div>
-        {/if}
-    </div>
+    {if $experiment.canmate}
+        <div class='sg_experiment_parents_can_mate'>
+                <div class='sg_experiment_parents_can_mate_info'>How many progeny would you like to produce? (Between 1 and 500)</div>
+                <div class='sg_experiment_parents_can_mate_input'>
+                <input type='text' class='sg_new_experiment_mate_count' value='{if $prg_count}{$prg_count}{else}50{/if}'><button class='sg_new_experiment_mate sg_s_new_experiment_mate_large' data-kind='new_experiment'>Mate</button>
+                </div>
+        </div>
     {/if}
+    </div>
+{/if}
 </div>
-        <div class='sg_bottom_border'>
-        </div>
-
+<div class='sg_bottom_border'>
+</div>
 {/template}
 
 /**
@@ -368,13 +357,10 @@
                 {/foreach}
             </div>
             </div>
-            <div class='sg_page_button_holder'>
-            {foreach $page in $experiments.pages}
-                <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='experiments' data-from="{$page.index}">{$page.page}</div>
-            {/foreach}
-            </div>
-
-
+            {call .page_selector}
+                {param pageable:$experiments/}
+                {param kind:'experiments'/}
+            {/call}
         </div>
         </div>
     {/if}
@@ -1037,11 +1023,10 @@
             <td>
             </td>
             <td colspan='{$experiment.currpage.length*2}'>
-                <div class='sg_page_button_holder'>
-                {foreach $page in $experiment.pages}
-                    <div class='sg_page_button {if $page.selected}sg_page_button_selected{/if}' data-kind='{$experiment.id}' data-from="{$page.index}">{$page.page}</div>
-                {/foreach}
-                </div>
+            {call .page_selector}
+                {param pageable:$experiment/}
+                {param kind:$experiment.id/}
+            {/call}
             </td>
         </tr>
         </table>
