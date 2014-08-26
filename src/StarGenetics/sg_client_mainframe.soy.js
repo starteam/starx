@@ -342,7 +342,7 @@ sg_client_mainframe.compact_experiment = function(opt_data, opt_sb) {
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.female, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
       output.append('</div></td><td class=\'sg_s_experiment_parent_table_x\'><div class=\'sg_experiment_parent_x\'>&#10799;</div></td><td class=\'sg_experiment_p_visual sg_s_experiment_parent_table_2\'><div class=\'sg_s_experiment_parent_table\'>');
       sg_client_mainframe.strain({strain: opt_data.experiment.parent.male, visuals: opt_data.experiment.visualsVisible, kind: opt_data.experiment.id}, output);
-      output.append('</div></td><td><div class=\'sg_s_experiment_parent_to_floaty\'>=></div></td>');
+      output.append('</div></td><td><div class=\'sg_s_experiment_parent_to_floaty\'>&#10145;</div></td>');
       var phenotypeList378 = soy.$$getMapKeys(opt_data.experiment.phenotypes);
       var phenotypeListLen378 = phenotypeList378.length;
       for (var phenotypeIndex378 = 0; phenotypeIndex378 < phenotypeListLen378; phenotypeIndex378++) {
