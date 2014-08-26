@@ -318,7 +318,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
 
         Individual.prototype.is_genotype = function (diploidAllelesArray) {
             var self = this;
-            var ret = true;
+            var ret = 0;
 
             function compare_diploidAlleles(a, b) {
                 var first = (a[0] == b[0] && a[1] == b[1]);
@@ -326,19 +326,27 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
                 return first || second;
             }
 
+            var alleles = [];
+            var genotype_map = self.__data__.genotype;
+            _.each(genotype_map, function (diploidArray) {
+                _.each(diploidArray, function (thisDiploid) {
+                    alleles.push(thisDiploid);
+                });
+            });
+
             _.each(diploidAllelesArray, function (thatDiploid) {
                 var exist = false;
-                var genotype_map = self.__data__.genotype;
-                _.each(genotype_map, function (diploidArray) {
-                    _.each(diploidArray, function (thisDiploid) {
-                        var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
-                        exist = exist || cmp;
-                    });
+                _.each(alleles, function (thisDiploid) {
+                    var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                    if (cmp) {
+                        alleles = _.without(alleles, thisDiploid);
+                    }
+                    exist = exist || cmp;
                 });
-                ret = ret && exist;
+                ret = ret + (exist ? 1 : 0);
             });
-            console.info("is_genotype", ret);
-            return ret;
+            console.info("is_genotype", ret == 2);
+            return ret == 2;
         };
         return Individual;
     })(Base);
