@@ -44,14 +44,15 @@ export class StarGenetics {
     }
 
     hide_aria() {
-        console.info( "Aria hide start!");
+        console.info("Aria hide start!");
         var jq = $('[name=' + this.config.state + ']');
-        console.info( "Aria hide start! 2 ", jq );
+        console.info("Aria hide start! 2 ", jq);
         var i4id = jq.attr('inputid');
-        console.info( "Aria hide start! 3 ", i4id );
-        $('p.status[aria-describedby="'+i4id+'"]').hide();
-        console.info( "Aria hide start! 4 ", i4id );
+        console.info("Aria hide start! 3 ", i4id);
+        $('p.status[aria-describedby="' + i4id + '"]').hide();
+        console.info("Aria hide start! 4 ", i4id);
     }
+
     edx_postinit(data:any) {
         console.info("edx_postinit", this);
         if (this.edx_opts['auto_load'] == true || this.edx_opts['auto_load'] == 'true') {
@@ -135,6 +136,34 @@ export class StarGenetics {
                     }
                 }
             }
+        } else if (config['serialization_mode'] == 'local') {
+            this.context['io'] = {
+                load: function () {
+                    return decodeURI(localStorage['stargenetics']);
+                },
+                save: function (state) {
+                    localStorage['stargenetics'] = encodeURI(state);
+                },
+                reset: function (state) {
+                    delete localStorage['stargenetics'];
+                    self.in_reset = true;
+                    self.cls = new JSStarGenetics.StarGeneticsJSAppWidget(self.context, config);
+                    self.cls.run();
+                },
+                edx_postinit: function (state) {
+                    self.edx_postinit(state);
+                    self.in_reset = false;
+                },
+                log: function (message, context) {
+                    if (self.Raven && self.Raven.captureMessage) {
+                        try {
+                            self.Raven.captureMessage(message, context);
+                        } catch (e) {
+                        }
+                    }
+                }
+            };
+
         }
         else {
             this.context['io'] = {

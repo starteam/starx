@@ -873,7 +873,7 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 var this_offset = $(this).position();
                 var css = {
                     'top': (this_offset.top) + 'px',
-                    'left': (this_offset.left - 125) + 'px',
+                    'left': (this_offset.left - 135) + 'px',
                     'height': $(this).height() + 'px'
                 };
                 $(html).appendTo(parent).css(css);

@@ -472,6 +472,66 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
+
+        Experiment.prototype.sublist = function (from, to) {
+            var dict = this.phenotypes;
+            var list = _.keys(dict);
+            var ret = [];
+            var ifrom = from > 0 ? from : 0;
+            var ito = to < list.length ? to : list.length;
+            for (var i = ifrom; i < ito; i++) {
+                ret.push(list[i]);
+            }
+            return ret;
+        };
+
+        Object.defineProperty(Experiment.prototype, "currpage", {
+            get: function () {
+                return this.sublist(this.from, this.from + this.page_size);
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Experiment.prototype, "pages", {
+            get: function () {
+                var from = 0;
+                var to = _.keys(this.phenotypes).length;
+                var step = this.page_size;
+                var ret = [];
+                for (var i = from; i < to / step; i++) {
+                    var index = i * step;
+                    var is_selected = (index == this.from);
+                    ret.push({
+                        index: index,
+                        page: i + 1,
+                        selected: is_selected
+                    });
+                }
+                return ret;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Experiment.prototype, "is_first_page", {
+            get: function () {
+                return this.from == 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Experiment.prototype, "is_last_page", {
+            get: function () {
+                var from = this.from;
+                var to = _.keys(this.phenotypes).length;
+                var step = this.page_size;
+                return (to - from) <= step;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Experiment;
     })(Collapsable);
     exports.Experiment = Experiment;
@@ -479,6 +539,8 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
     Base.readOnlyWrappedList(Experiment, "parents", Strain);
     Base.readOnlyField(Experiment, "id", null);
     Base.defineStaticRWField(Experiment, "discarded", false);
+    Base.defineStaticRWField(Experiment, "from", 0);
+    Base.defineStaticRWField(Experiment, "page_size", 2);
 
     /**
     * Strains box
@@ -575,7 +637,9 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
         Object.defineProperty(Experiments.prototype, "pages", {
             get: function () {
                 var from = 0;
-                var to = this.list.length;
+                var to = _.filter(this.list, function (e) {
+                    return !e.discarded;
+                }).length;
                 var step = this.page_size;
                 var ret = [];
                 for (var i = from; i < to / step; i++) {

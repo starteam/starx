@@ -46,6 +46,7 @@ define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "S
             $('p.status[aria-describedby="' + i4id + '"]').hide();
             console.info("Aria hide start! 4 ", i4id);
         };
+
         StarGenetics.prototype.edx_postinit = function (data) {
             console.info("edx_postinit", this);
             if (this.edx_opts['auto_load'] == true || this.edx_opts['auto_load'] == 'true') {
@@ -109,6 +110,33 @@ define(["require", "exports", "StarX/lib/jquery", 'StarGenetics/jsappwidget', "S
                     },
                     reset: function (state) {
                         $('#' + config.element_id).html("Restarting...");
+                        self.in_reset = true;
+                        self.cls = new JSStarGenetics.StarGeneticsJSAppWidget(self.context, config);
+                        self.cls.run();
+                    },
+                    edx_postinit: function (state) {
+                        self.edx_postinit(state);
+                        self.in_reset = false;
+                    },
+                    log: function (message, context) {
+                        if (self.Raven && self.Raven.captureMessage) {
+                            try  {
+                                self.Raven.captureMessage(message, context);
+                            } catch (e) {
+                            }
+                        }
+                    }
+                };
+            } else if (config['serialization_mode'] == 'local') {
+                this.context['io'] = {
+                    load: function () {
+                        return decodeURI(localStorage['stargenetics']);
+                    },
+                    save: function (state) {
+                        localStorage['stargenetics'] = encodeURI(state);
+                    },
+                    reset: function (state) {
+                        delete localStorage['stargenetics'];
                         self.in_reset = true;
                         self.cls = new JSStarGenetics.StarGeneticsJSAppWidget(self.context, config);
                         self.cls.run();
