@@ -45,10 +45,12 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
                 [map[1], map[3]]
             ];
             var is_genotype = individual.is_genotype(dipAlleles);
-            if (is_genotype) {
-                $button.text($button.data('text') + "- OK");
-            } else {
-                $button.text($button.data('text') + "- NOT OK!");
+            if ($button) {
+                if (is_genotype) {
+                    $button.text($button.data('text') + "- OK");
+                } else {
+                    $button.text($button.data('text') + "- NOT OK!");
+                }
             }
             individual.ui_metadata['genotype'] = dipAlleles;
             return is_genotype;
@@ -61,6 +63,20 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
                     value = $(this).val();
                 }
             });
+            var map = {};
+            $('.starpedigree_genotype_dialog_select[data-id="' + id + '"]').each(function () {
+                var $select = $(this);
+                var val = $select.val();
+                var index = $select.data('index');
+                map[index] = val;
+            });
+            var dipAlleles = [
+                [map[0], map[2]],
+                [map[1], map[3]]
+            ];
+            var check_phase = individual.is_phase(dipAlleles, value);
+            console.info("check_phase", check_phase);
+            return check_phase;
         };
 
         Widget.prototype.show_genotype_dialog = function (w, individual_id) {
@@ -83,6 +99,13 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
                 var id = $button.data('id');
                 var is_genotype = self.save_genotype(id, individual, $('.starpedigree_genotype_dialog_check_genotype[data-id="' + id + '"'));
                 self.check_phase(id, individual, $button);
+            });
+            $('.starpedigree_genotype_dialog_check_genotype_and_phase').off('click').on('click', function () {
+                var $button = $(this);
+                var id = $button.data('id');
+                var is_genotype = self.save_genotype(id, individual, $('.starpedigree_genotype_dialog_check_genotype[data-id="' + id + '"'));
+                var is_correct = is_genotype && self.check_phase(id, individual, $button);
+                console.info("Check", is_correct);
             });
             $('.starpedigree_genotype_dialog_close').off('click').on('click', function () {
                 $('.starpedigree_genotype_dialog', w).remove();

@@ -323,30 +323,68 @@ export class Individual extends Base {
             });
             ret = ret + (exist ? 1 : 0);
         });
-        console.info("is_genotype", ret == 2 );
+        console.info("is_genotype", ret == 2);
         return ret == 2;
     }
 
+    is_phase(diploidAllelesArray, value):boolean {
+        var self = this;
+        var val = [];
+
+        function compare_diploidAlleles(a, b) {
+            var first = ( a[0] == b[0] && a[1] == b[1] );
+            var second = ( a[0] == b[1] && a[1] == b[0] );
+            if( first ) { return 1; }
+            if( second ) { return -1; }
+            return 0;
+        }
+
+        var alleles = [];
+        var genotype_map = self.__data__.genotype;
+        _.each(genotype_map, function (diploidArray) {
+            _.each(diploidArray, function (thisDiploid) {
+                alleles.push(thisDiploid);
+            });
+        });
+
+        _.each(diploidAllelesArray, function (thatDiploid) {
+            var exist = false;
+            _.each(alleles, function (thisDiploid) {
+                var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                if (cmp != 0) {
+                    alleles = _.without(alleles, thisDiploid);
+                    val.push( cmp );
+                }
+            });
+        });
+        if( value == 'inphase' ) {
+            ret = (val[0] == val[1]);
+        }
+        else if( value == 'outofphase') {
+            ret = (val[0] == -val[1]) && val[0] != 0;
+        }
+        else if( value == 'unknown') {
+            ret = true;
+        }
+        return ret;
+    }
+
     get genotype() {
-        if( this.ui_metadata && this.ui_metadata['genotype'] )
-        {
+        if (this.ui_metadata && this.ui_metadata['genotype']) {
             var f = _.flatten(this.ui_metadata['genotype'])
             var ret = [];
-            for( var i = 0 ; i < f.length ; i+=2 )
-            {
+            for (var i = 0; i < f.length; i += 2) {
                 ret.push(f[i]);
             }
-            for( var i = 1 ; i < f.length ; i+=2 )
-            {
+            for (var i = 1; i < f.length; i += 2) {
                 ret.push(f[i]);
             }
             return ret;
-        } else
-        {
+        } else {
             var ret = [];
-            for( var i = 0 ; i < 20 ; i++ ) //TODO: this needs to be max size of genotype
+            for (var i = 0; i < 20; i++) //TODO: this needs to be max size of genotype
             {
-                ret.push( '' );
+                ret.push('');
             }
             return ret;
         }
