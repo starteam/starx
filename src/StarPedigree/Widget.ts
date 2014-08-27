@@ -43,7 +43,7 @@ export class Widget {
         this.add_interactions(w);
     }
 
-    save_genotype(id:string,individual,$button:JQuery):boolean {
+    save_genotype(id:string, individual, $button:JQuery):boolean {
         var map = {}
         $('.starpedigree_genotype_dialog_select[data-id="' + id + '"]').each(function () {
             var $select = $(this);
@@ -51,23 +51,29 @@ export class Widget {
             var index = $select.data('index');
             map[index] = val;
         });
-        var dipAlleles = [[map[0],map[2]],[map[1],map[3]]];
+        var dipAlleles = [
+            [map[0], map[2]],
+            [map[1], map[3]]
+        ];
         var is_genotype = individual.is_genotype(dipAlleles);
-        if( is_genotype )
-        {
-            $button.text( $button.data('text') + "- OK" );
+        if (is_genotype) {
+            $button.text($button.data('text') + "- OK");
         }
-        else
-        {
-            $button.text( $button.data('text') + "- NOT OK!" );
+        else {
+            $button.text($button.data('text') + "- NOT OK!");
         }
+        individual.ui_metadata['genotype'] = dipAlleles;
         return is_genotype;
     }
 
-    check_phase(id,individual,$button:JQuery) {
-        var value = null ;
-        $('input[kind-id="'+id+'"]').each( function() { if( $(this).prop('checked') ) { value = $(this).val() } } );
-        
+    check_phase(id, individual, $button:JQuery) {
+        var value = null;
+        $('input[kind-id="' + id + '"]').each(function () {
+            if ($(this).prop('checked')) {
+                value = $(this).val()
+            }
+        });
+
     }
 
     show_genotype_dialog(w:JQuery, individual_id:number) {
@@ -83,13 +89,16 @@ export class Widget {
         $('.starpedigree_genotype_dialog_check_genotype').off('click').on('click', function () {
             var $button = $(this);
             var id = $button.data('id');
-            self.save_genotype(id,individual, $button);
+            self.save_genotype(id, individual, $button);
         });
-        $('.starpedigree_genotype_dialog_check_phase').off('click').on('click',function(){
+        $('.starpedigree_genotype_dialog_check_phase').off('click').on('click', function () {
             var $button = $(this);
             var id = $button.data('id');
-            var is_genotype = self.save_genotype(id,individual,$('.starpedigree_genotype_dialog_check_genotype[data-id="'+id+'"'));
-            self.check_phase(id,individual,$button);
+            var is_genotype = self.save_genotype(id, individual, $('.starpedigree_genotype_dialog_check_genotype[data-id="' + id + '"'));
+            self.check_phase(id, individual, $button);
+        });
+        $('.starpedigree_genotype_dialog_close').off('click').on('click', function () {
+            $('.starpedigree_genotype_dialog', w).remove();
         });
     }
 

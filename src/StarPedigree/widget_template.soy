@@ -195,7 +195,7 @@
 {template .genotype_dialog_select}
         <select data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
                 {foreach $marker in $individual.markers}
-                   <option value="{$marker.id}">{$marker.id}</option>
+                   <option value="{$marker.id}" {if $individual.genotype[$index] == $marker.id}selected='selected'{/if}>{$marker.id}</option>
                 {/foreach}
         <select>
 {/template}
@@ -257,6 +257,7 @@
     {/call}
     {$options}
     <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_check_phase' data-text="Check phase">Check phase</button>
+    <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_close' data-text="Close">Close</button>
 
 </div>
 {/template}

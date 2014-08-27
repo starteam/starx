@@ -231,6 +231,7 @@ export class Individual extends Base {
     markers:Marker[];
     sex:Sex;
     location:Location;
+    ui_metadata:any;
 
     get affected():boolean {
         var self:Individual = this;
@@ -326,11 +327,37 @@ export class Individual extends Base {
         return ret == 2;
     }
 
+    get genotype() {
+        if( this.ui_metadata && this.ui_metadata['genotype'] )
+        {
+            var f = _.flatten(this.ui_metadata['genotype'])
+            var ret = [];
+            for( var i = 0 ; i < f.length ; i+=2 )
+            {
+                ret.push(f[i]);
+            }
+            for( var i = 1 ; i < f.length ; i+=2 )
+            {
+                ret.push(f[i]);
+            }
+            return ret;
+        } else
+        {
+            var ret = [];
+            for( var i = 0 ; i < 20 ; i++ ) //TODO: this needs to be max size of genotype
+            {
+                ret.push( '' );
+            }
+            return ret;
+        }
+    }
+
 }
 Base.defineStaticRWField(Individual, "id", null);
 Base.readOnlyWrappedListById(Individual, "markers", 'UI');
 Base.readOnlyWrappedFieldById(Individual, "sex", 'UI');
 Base.readOnlyWrappedField(Individual, "location", Location);
+Base.defineStaticRWField(Individual, "ui_metadata", {});
 
 export class Relationship extends Base {
     id:string;

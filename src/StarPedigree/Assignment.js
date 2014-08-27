@@ -348,6 +348,30 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             console.info("is_genotype", ret == 2);
             return ret == 2;
         };
+
+        Object.defineProperty(Individual.prototype, "genotype", {
+            get: function () {
+                if (this.ui_metadata && this.ui_metadata['genotype']) {
+                    var f = _.flatten(this.ui_metadata['genotype']);
+                    var ret = [];
+                    for (var i = 0; i < f.length; i += 2) {
+                        ret.push(f[i]);
+                    }
+                    for (var i = 1; i < f.length; i += 2) {
+                        ret.push(f[i]);
+                    }
+                    return ret;
+                } else {
+                    var ret = [];
+                    for (var i = 0; i < 20; i++) {
+                        ret.push('');
+                    }
+                    return ret;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Individual;
     })(Base);
     exports.Individual = Individual;
@@ -355,6 +379,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.readOnlyWrappedListById(Individual, "markers", 'UI');
     Base.readOnlyWrappedFieldById(Individual, "sex", 'UI');
     Base.readOnlyWrappedField(Individual, "location", Location);
+    Base.defineStaticRWField(Individual, "ui_metadata", {});
 
     var Relationship = (function (_super) {
         __extends(Relationship, _super);
