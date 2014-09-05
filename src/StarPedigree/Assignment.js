@@ -16,7 +16,6 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             this.__data__ = jsonmodel;
             this.__context__ = _.clone(context || {});
             this.__context__[this.getName()] = this;
-            console.info("Context for ", this.getName(), this.__context__);
         }
         Base.prototype.getName = function () {
             var funcNameRegex = /function (.{1,})\(/;
@@ -257,6 +256,166 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             enumerable: true,
             configurable: true
         });
+
+        Object.defineProperty(Individual.prototype, "parents", {
+            get: function () {
+                var relationship = this.child_relationship;
+                if (relationship) {
+                    return relationship.parents;
+                } else {
+                    return [];
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "children", {
+            get: function () {
+                var relationship = this.parent_relationship;
+                if (relationship) {
+                    return relationship.children;
+                } else {
+                    return [];
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "child_relationship", {
+            get: function () {
+                var self = this;
+                var relationships = this.__context__['UI'].relationships;
+                var relationship = _.find(relationships, function (e) {
+                    var c = e.children;
+                    return _.find(c, function (ee) {
+                        return ee.id == self.id;
+                    });
+                });
+                return relationship;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "parent_relationship", {
+            get: function () {
+                var self = this;
+                var relationships = this.__context__['UI'].relationships;
+                var relationship = _.find(relationships, function (e) {
+                    var c = e.parents;
+                    console.info("Checking ", e.parents[0].id, e.parents[1].id);
+                    return _.find(c, function (ee) {
+                        return ee.id == self.id;
+                    });
+                });
+                return relationship;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Individual.prototype.is_genotype = function (diploidAllelesArray) {
+            var self = this;
+            var ret = 0;
+
+            function compare_diploidAlleles(a, b) {
+                var first = (a[0] == b[0] && a[1] == b[1]);
+                var second = (a[0] == b[1] && a[1] == b[0]);
+                return first || second;
+            }
+
+            var alleles = [];
+            var genotype_map = self.__data__.genotype;
+            _.each(genotype_map, function (diploidArray) {
+                _.each(diploidArray, function (thisDiploid) {
+                    alleles.push(thisDiploid);
+                });
+            });
+
+            _.each(diploidAllelesArray, function (thatDiploid) {
+                var exist = false;
+                _.each(alleles, function (thisDiploid) {
+                    var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                    if (cmp) {
+                        alleles = _.without(alleles, thisDiploid);
+                    }
+                    exist = exist || cmp;
+                });
+                ret = ret + (exist ? 1 : 0);
+            });
+            console.info("is_genotype", ret == 2);
+            return ret == 2;
+        };
+
+        Individual.prototype.is_phase = function (diploidAllelesArray, value) {
+            var self = this;
+            var val = [];
+
+            function compare_diploidAlleles(a, b) {
+                var first = (a[0] == b[0] && a[1] == b[1]);
+                var second = (a[0] == b[1] && a[1] == b[0]);
+                if (first) {
+                    return 1;
+                }
+                if (second) {
+                    return -1;
+                }
+                return 0;
+            }
+
+            var alleles = [];
+            var genotype_map = self.__data__.genotype;
+            _.each(genotype_map, function (diploidArray) {
+                _.each(diploidArray, function (thisDiploid) {
+                    alleles.push(thisDiploid);
+                });
+            });
+
+            _.each(diploidAllelesArray, function (thatDiploid) {
+                var exist = false;
+                _.each(alleles, function (thisDiploid) {
+                    var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                    if (cmp != 0) {
+                        alleles = _.without(alleles, thisDiploid);
+                        val.push(cmp);
+                    }
+                });
+            });
+            if (value == 'inphase') {
+                ret = (val[0] == val[1]);
+            } else if (value == 'outofphase') {
+                ret = (val[0] == -val[1]) && val[0] != 0;
+            } else if (value == 'unknown') {
+                ret = true;
+            }
+            return ret;
+        };
+
+        Object.defineProperty(Individual.prototype, "genotype", {
+            get: function () {
+                if (this.ui_metadata && this.ui_metadata['genotype']) {
+                    var f = _.flatten(this.ui_metadata['genotype']);
+                    var ret = [];
+                    for (var i = 0; i < f.length; i += 2) {
+                        ret.push(f[i]);
+                    }
+                    for (var i = 1; i < f.length; i += 2) {
+                        ret.push(f[i]);
+                    }
+                    return ret;
+                } else {
+                    var ret = [];
+                    for (var i = 0; i < 20; i++) {
+                        ret.push('');
+                    }
+                    return ret;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Individual;
     })(Base);
     exports.Individual = Individual;
@@ -264,6 +423,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.readOnlyWrappedListById(Individual, "markers", 'UI');
     Base.readOnlyWrappedFieldById(Individual, "sex", 'UI');
     Base.readOnlyWrappedField(Individual, "location", Location);
+    Base.defineStaticRWField(Individual, "ui_metadata", {});
 
     var Relationship = (function (_super) {
         __extends(Relationship, _super);
@@ -304,6 +464,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         UI.prototype.sex = function (id) {
             return this.sexes[id];
         };
+
         Object.defineProperty(UI.prototype, "individuals_as_map", {
             get: function () {
                 var ret = {};
@@ -323,6 +484,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             enumerable: true,
             configurable: true
         });
+
         Object.defineProperty(UI.prototype, "children", {
             get: function () {
                 return this.individuals_as_map;

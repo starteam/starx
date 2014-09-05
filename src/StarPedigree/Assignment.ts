@@ -15,7 +15,6 @@ export class Base {
         this.__data__ = jsonmodel;
         this.__context__ = _.clone(context || {});
         this.__context__[this.getName()] = this;
-        console.info("Context for ", this.getName(), this.__context__);
     }
 
     getName() {
@@ -111,7 +110,7 @@ export class Base {
                 if (typeof self.__data__[name] === 'undefined') {
                     throw "__data__[" + name + "] is undefined for " + cls;
                 }
-                if (Base.is_rebuild_cache(self,name)) {
+                if (Base.is_rebuild_cache(self, name)) {
                     var raw_array = self.__data__[name];
                     var cache = {
                         __cache_data__: self.__data__[name]
@@ -119,7 +118,7 @@ export class Base {
                     _.each(raw_array, function (e) {
                         cache[e.id] = new wrapper(e, self.__context__);
                     });
-                    Base.set_cache(self,name,cache);
+                    Base.set_cache(self, name, cache);
                 }
                 return this.__cache__[name];
 
@@ -130,7 +129,7 @@ export class Base {
         });
     }
 
-    static is_rebuild_cache(self:Base,name:string):boolean {
+    static is_rebuild_cache(self:Base, name:string):boolean {
         var rebuild_cache = false;
         if (!self.__cache__[name]) {
             rebuild_cache = true;
@@ -140,9 +139,9 @@ export class Base {
         return rebuild_cache;
     }
 
-    static set_cache(self:Base,name:string,obj:any) {
+    static set_cache(self:Base, name:string, obj:any) {
         obj['__cache_data__'] = self.__data__[name];
-        self.__cache__[name]=obj;
+        self.__cache__[name] = obj;
     }
 
     static readOnlyWrappedList(cls, name, wrapper) {
@@ -152,12 +151,12 @@ export class Base {
                 if (typeof self.__data__[name] === 'undefined') {
                     throw "__data__[" + name + "] is undefined for " + cls;
                 }
-                if (Base.is_rebuild_cache(self,name)) {
+                if (Base.is_rebuild_cache(self, name)) {
                     var raw_array = self.__data__[name];
                     var cache = _.map(self.__data__[name], function (q) {
                         return new wrapper(q, self.__context__);
                     });
-                    Base.set_cache(self,name,cache);
+                    Base.set_cache(self, name, cache);
                 }
                 return self.__cache__[name];
             },
@@ -232,24 +231,171 @@ export class Individual extends Base {
     markers:Marker[];
     sex:Sex;
     location:Location;
+    ui_metadata:any;
 
     get affected():boolean {
         var self:Individual = this;
         var affected:boolean = false;
         var symbol_markers = this.__context__['UI'].options['symbol_markers'] || [];
-        _.each( symbol_markers , function(id) {
-            var marker = _.find(self.markers, function( marker ) { return id == marker.id;});
-            if( marker ) {
+        _.each(symbol_markers, function (id) {
+            var marker = _.find(self.markers, function (marker) {
+                return id == marker.id;
+            });
+            if (marker) {
                 affected = true;
             }
         });
         return affected;
     }
+
+    get parents():Individual[] {
+        var relationship = this.child_relationship;
+        if (relationship) {
+            return relationship.parents;
+        }
+        else {
+            return [];
+        }
+    }
+
+    get children():Individual[] {
+        var relationship = this.parent_relationship;
+        if (relationship) {
+            return relationship.children;
+        }
+        else {
+            return [];
+        }
+    }
+
+    get child_relationship():Relationship {
+        var self:Individual = this;
+        var relationships = this.__context__['UI'].relationships;
+        var relationship = _.find(relationships, function (e) {
+            var c = e.children;
+            return _.find(c, function (ee) {
+                return ee.id == self.id;
+            });
+        })
+        return relationship;
+
+    }
+
+    get parent_relationship():Relationship {
+        var self:Individual = this;
+        var relationships = this.__context__['UI'].relationships;
+        var relationship = _.find(relationships, function (e) {
+            var c = e.parents;
+            console.info("Checking ", e.parents[0].id, e.parents[1].id);
+            return _.find(c, function (ee) {
+                return ee.id == self.id;
+            });
+        })
+        return relationship;
+    }
+
+    is_genotype(diploidAllelesArray):boolean {
+        var self = this;
+        var ret = 0;
+
+        function compare_diploidAlleles(a, b) {
+            var first = ( a[0] == b[0] && a[1] == b[1] );
+            var second = ( a[0] == b[1] && a[1] == b[0] );
+            return first || second;
+        }
+
+        var alleles = [];
+        var genotype_map = self.__data__.genotype;
+        _.each(genotype_map, function (diploidArray) {
+            _.each(diploidArray, function (thisDiploid) {
+                alleles.push(thisDiploid);
+            });
+        });
+
+        _.each(diploidAllelesArray, function (thatDiploid) {
+            var exist = false;
+            _.each(alleles, function (thisDiploid) {
+                var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                if (cmp) {
+                    alleles = _.without(alleles, thisDiploid);
+                }
+                exist = exist || cmp;
+            });
+            ret = ret + (exist ? 1 : 0);
+        });
+        console.info("is_genotype", ret == 2);
+        return ret == 2;
+    }
+
+    is_phase(diploidAllelesArray, value):boolean {
+        var self = this;
+        var val = [];
+
+        function compare_diploidAlleles(a, b) {
+            var first = ( a[0] == b[0] && a[1] == b[1] );
+            var second = ( a[0] == b[1] && a[1] == b[0] );
+            if( first ) { return 1; }
+            if( second ) { return -1; }
+            return 0;
+        }
+
+        var alleles = [];
+        var genotype_map = self.__data__.genotype;
+        _.each(genotype_map, function (diploidArray) {
+            _.each(diploidArray, function (thisDiploid) {
+                alleles.push(thisDiploid);
+            });
+        });
+
+        _.each(diploidAllelesArray, function (thatDiploid) {
+            var exist = false;
+            _.each(alleles, function (thisDiploid) {
+                var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
+                if (cmp != 0) {
+                    alleles = _.without(alleles, thisDiploid);
+                    val.push( cmp );
+                }
+            });
+        });
+        if( value == 'inphase' ) {
+            ret = (val[0] == val[1]);
+        }
+        else if( value == 'outofphase') {
+            ret = (val[0] == -val[1]) && val[0] != 0;
+        }
+        else if( value == 'unknown') {
+            ret = true;
+        }
+        return ret;
+    }
+
+    get genotype() {
+        if (this.ui_metadata && this.ui_metadata['genotype']) {
+            var f = _.flatten(this.ui_metadata['genotype'])
+            var ret = [];
+            for (var i = 0; i < f.length; i += 2) {
+                ret.push(f[i]);
+            }
+            for (var i = 1; i < f.length; i += 2) {
+                ret.push(f[i]);
+            }
+            return ret;
+        } else {
+            var ret = [];
+            for (var i = 0; i < 20; i++) //TODO: this needs to be max size of genotype
+            {
+                ret.push('');
+            }
+            return ret;
+        }
+    }
+
 }
 Base.defineStaticRWField(Individual, "id", null);
 Base.readOnlyWrappedListById(Individual, "markers", 'UI');
 Base.readOnlyWrappedFieldById(Individual, "sex", 'UI');
 Base.readOnlyWrappedField(Individual, "location", Location);
+Base.defineStaticRWField(Individual, "ui_metadata", {});
 
 export class Relationship extends Base {
     id:string;
@@ -259,20 +405,18 @@ export class Relationship extends Base {
     get children_column_span():Location[] {
         var children = this.children;
         var min:Location = children[0].location;
-        _.each( children , function(c) {
-            if(c.location.column < min.column )
-            {
+        _.each(children, function (c) {
+            if (c.location.column < min.column) {
                 min = c.location;
             }
         });
         var max:Location = children[0].location;
-        _.each( children , function(c) {
-            if(c.location.column > max.column )
-            {
+        _.each(children, function (c) {
+            if (c.location.column > max.column) {
                 max = c.location;
             }
         });
-        return [min,max];
+        return [min, max];
     }
 }
 Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
@@ -288,10 +432,10 @@ export class UI extends Base {
     sex(id:string):Sex {
         return this.sexes[id];
     }
-    get individuals_as_map():{[id:string]:Individual}
-    {
-        var ret:{[id:string]:Individual} = {} ;
-        _.each(this.individuals,function(q) {
+
+    get individuals_as_map():{[id:string]:Individual} {
+        var ret:{[id:string]:Individual} = {};
+        _.each(this.individuals, function (q) {
             ret[q.id] = q;
         });
         return ret;
@@ -300,6 +444,7 @@ export class UI extends Base {
     get parents():{[id:string]:Individual} {
         return this.individuals_as_map;
     }
+
     get children():{[id:string]:Individual} {
         return this.individuals_as_map;
     }
@@ -309,7 +454,7 @@ Base.readOnlyWrappedList(UI, "individuals", Individual);
 Base.readOnlyWrappedList(UI, "relationships", Relationship);
 Base.readOnlyWrappedMap(UI, "sexes", Sex);
 Base.readOnlyWrappedMap(UI, "markers", Marker);
-Base.readOnlyField(UI,"options",{});
+Base.readOnlyField(UI, "options", {});
 
 export class Assignment extends Base {
     ui:UI;
