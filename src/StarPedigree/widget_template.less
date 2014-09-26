@@ -133,32 +133,45 @@
 }
 
 .starpedigree_genotype_dialog {
-  width: 400px;
+  width: 100%;
+  max-width: 600px;
   height: 400px;
   background-color: whitesmoke;
   position: relative;
   top: 75px;
-  left: 75px;
+  left: 0px;
+
 }
 
+.starpedigree_genotype_dialog_title {
+  display: block;
+  position: absolute;
+  width:100%;
+  height:30px;
+  color:white;
+  font-size:18px;
+  background-color: green;
+  z-index: @ZINDEX_DIALOG;
+  text-align: center;
+}
 .starpedigree_genotype_dialog_lhs {
-  width: 200px;
+  width: 300px;
   height: 400px;
   background-color: lime;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 30px;
+  left: 300px;
   display: inline-block;
   z-index: @ZINDEX_DIALOG;
 }
 
 .starpedigree_genotype_dialog_rhs {
-  width: 200px;
+  width: 300px;
   height: 400px;
   background-color: yellowgreen;
   position: absolute;
-  top: 0px;
-  left: 200px;
+  top: 30px;
+  left: 000px;
   display: inline-block;
   z-index: @ZINDEX_DIALOG;
 }
@@ -233,4 +246,14 @@
   text-align: right;
   display:block;
   color:black;
+}
+
+.starpedigree_pa_informative_label_wrapper {
+  position: relative;
+  top: 200px;
+}
+
+.starpedigree_genotype_dialog_render {
+  top: -80px;
+  position: relative;
 }

@@ -89,6 +89,8 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
             var html = '';
             html += ui.genotype_dialog({ individual: individual, options: options });
             $(w).append(html);
+            $('.starpedigree_genotype_dialog', w).css({ top: (individual.location.top + self.model.ui.options['cell_height']) + "px" });
+
             $('.starpedigree_genotype_dialog_check_genotype').off('click').on('click', function () {
                 var $button = $(this);
                 var id = $button.data('id');

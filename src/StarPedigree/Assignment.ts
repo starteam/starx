@@ -262,6 +262,15 @@ export class Location extends Base {
     layout:string;
     row:number;
     column:number;
+
+    get top():number {
+        return parseFloat(this.__context__['UI'].options['cell_height'])*this.row;
+    }
+
+    get left(): number {
+        return parseFloat(this.__context__['UI'].options['cell_width'])*this.column;
+
+    }
 }
 Base.defineStaticRWField(Location, "layout", null);
 Base.defineStaticRWField(Location, "row", null);
@@ -531,6 +540,26 @@ export class Relationship extends Base {
 Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
 Base.readOnlyWrappedListById(Relationship, "children", 'UI');
 
+export class OptionsHelper extends Base {
+    selected_marker: string;
+    markers:any;
+    cell_height:number;
+    cell_width:number;
+
+    get selected_marker_name()
+    {
+        return this.markers[this.selected_marker].label;
+    }
+}
+Base.defineStaticRWField(OptionsHelper, "selected_marker", null);
+Base.defineStaticRWField(OptionsHelper, "markers", {});
+Base.defineStaticRWField(OptionsHelper, "cell_height", 100);
+Base.defineStaticRWField(OptionsHelper, "cell_width", 100);
+Base.defineStaticRWField(OptionsHelper, "generations", []);
+Base.defineStaticRWField(OptionsHelper, "layout", "grid");
+Base.defineStaticRWField(OptionsHelper, "cell_offset_x", 100);
+Base.defineStaticRWField(OptionsHelper, "cell_offset_y", 100);
+Base.defineStaticRWField(OptionsHelper, "symbol_markers", []);
 
 export class UI extends Base {
     individuals:Individual[];
@@ -564,7 +593,7 @@ Base.readOnlyWrappedList(UI, "individuals", Individual);
 Base.readOnlyWrappedList(UI, "relationships", Relationship);
 Base.readOnlyWrappedMap(UI, "sexes", Sex);
 Base.readOnlyWrappedMap(UI, "markers", Marker);
-Base.readOnlyField(UI, "options", {});
+Base.readOnlyWrappedField(UI, "options", OptionsHelper);
 
 export class Assignment extends Base {
     ui:UI;

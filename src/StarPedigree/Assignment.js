@@ -265,6 +265,21 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         function Location() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(Location.prototype, "top", {
+            get: function () {
+                return parseFloat(this.__context__['UI'].options['cell_height']) * this.row;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Location.prototype, "left", {
+            get: function () {
+                return parseFloat(this.__context__['UI'].options['cell_width']) * this.column;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Location;
     })(Base);
     exports.Location = Location;
@@ -578,6 +593,31 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
     Base.readOnlyWrappedListById(Relationship, "children", 'UI');
 
+    var OptionsHelper = (function (_super) {
+        __extends(OptionsHelper, _super);
+        function OptionsHelper() {
+            _super.apply(this, arguments);
+        }
+        Object.defineProperty(OptionsHelper.prototype, "selected_marker_name", {
+            get: function () {
+                return this.markers[this.selected_marker].label;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return OptionsHelper;
+    })(Base);
+    exports.OptionsHelper = OptionsHelper;
+    Base.defineStaticRWField(OptionsHelper, "selected_marker", null);
+    Base.defineStaticRWField(OptionsHelper, "markers", {});
+    Base.defineStaticRWField(OptionsHelper, "cell_height", 100);
+    Base.defineStaticRWField(OptionsHelper, "cell_width", 100);
+    Base.defineStaticRWField(OptionsHelper, "generations", []);
+    Base.defineStaticRWField(OptionsHelper, "layout", "grid");
+    Base.defineStaticRWField(OptionsHelper, "cell_offset_x", 100);
+    Base.defineStaticRWField(OptionsHelper, "cell_offset_y", 100);
+    Base.defineStaticRWField(OptionsHelper, "symbol_markers", []);
+
     var UI = (function (_super) {
         __extends(UI, _super);
         function UI() {
@@ -621,7 +661,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.readOnlyWrappedList(UI, "relationships", Relationship);
     Base.readOnlyWrappedMap(UI, "sexes", Sex);
     Base.readOnlyWrappedMap(UI, "markers", Marker);
-    Base.readOnlyField(UI, "options", {});
+    Base.readOnlyWrappedField(UI, "options", OptionsHelper);
 
     var Assignment = (function (_super) {
         __extends(Assignment, _super);

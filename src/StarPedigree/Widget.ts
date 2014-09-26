@@ -93,7 +93,7 @@ export class Widget {
 
     show_genotype_dialog(w:JQuery, individual_id:number) {
         var self = this;
-        var individual = _.find(self.model.ui.individuals, function (e) {
+        var individual:Individual = _.find(self.model.ui.individuals, function (e) {
             return e.id == individual_id;
         });
         var options:any = self.model.ui.options;
@@ -101,6 +101,8 @@ export class Widget {
         var html = '';
         html += ui.genotype_dialog({individual: individual, options: options});
         $(w).append(html);
+        $('.starpedigree_genotype_dialog', w).css({top:(individual.location.top+self.model.ui.options['cell_height'])+"px"});
+
         $('.starpedigree_genotype_dialog_check_genotype').off('click').on('click', function () {
             var $button = $(this);
             var id = $button.data('id');
