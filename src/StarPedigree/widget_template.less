@@ -25,12 +25,12 @@
   z-index: @ZINDEX_INDIVIDUAL;
 }
 
-.starpedigree_individual_label {
-  position: relative;
-  top: 10px;
-  left: 10px;
-  width: 40px;
-}
+//.starpedigree_individual_label {
+//  position: relative;
+//  top: 10px;
+//  left: 10px;
+//  width: 40px;
+//}
 
 .starpedigree_individual_genotype {
   position: absolute;
@@ -90,7 +90,7 @@
   left: 50%;
   top: 20px;
   width: 1px;
-  height: 45px; /*TODO: this should be options.cell_height - 40px */
+  height: 60px; /*TODO: this should be options.cell_height - 40px */
   background-color: black;
 }
 
@@ -213,4 +213,24 @@
   width: 10px;
   height: 10px;
   font-size: 8px;
+}
+
+.starpedigree_individual_not_annotated {
+  position: relative;
+  top:40px;
+  left:5px;
+  color:black;
+  width:30px;
+  display:block;
+  text-align: center;
+}
+
+.starpedigree_individual_name {
+  position: relative;
+  top:-20px;
+  left:-40px;
+  width:38px;
+  text-align: right;
+  display:block;
+  color:black;
 }

@@ -23,27 +23,54 @@
 
 /**
 * @param individual
+*/
+{template .render_individual_not_annotated}
+    <span class='starpedigree_individual_not_annotated' >
+    {foreach $m in $individual.genotype_markers}
+        {$m.id}{if not isLast($m)}/{/if}
+    {/foreach}
+    </span>
+{/template}
+
+/**
+* @param individual
+*/
+{template .render_individuals_name}
+    <span class='starpedigree_individual_name'>
+        {$individual.name}
+    </span>
+{/template}
+
+/**
+* @param individual
+* @/param options
+*/
+{template .render_below_individual}
+            {if $individual.annotator.is_annotated}
+             <span class='starpedigree_individual_label' >
+                {$individual.id} An
+            </span>
+            {else}
+                {call .render_individual_not_annotated}
+                    {param individual:$individual/}
+                {/call}
+            {/if}
+{/template}
+/**
+* @param individual
 * @param options
 */
 {template .render_individual}
         <div class='starpedigree_individual starpedigree_sexsymbol_{$individual.sex.kind} {if $individual.affected}starpedigree_individual_label_affected_1{else}starpedigree_individual_label_unaffected_1{/if}' style='left:{$options.cell_width*$individual.location.column}px;top:{$options.cell_height*$individual.location.row}px'
             data-id='{$individual.id}' data-kind='starpedigree_individual'
             >
-             <span class='starpedigree_individual_label' >
-                {$individual.id}
-            </span>
-            <span class='starpedigree_individual_markers'>
-                {foreach $marker in $individual.markers}
-                    {$marker.id}
-                {/foreach}
-            </span>
-            <span class='starpedigree_individual_genotype'>
-                            {$individual.id}
-                            <br>
-                {foreach $marker in $individual.markers}
-                    {$marker.id}
-                {/foreach}
-            </span>
+            {call .render_below_individual}
+                {param individual:$individual/}
+                {param options:$options/}
+            {/call}
+            {call .render_individuals_name}
+                {param individual:$individual/}
+            {/call}
         </div>
 {/template}
 /**

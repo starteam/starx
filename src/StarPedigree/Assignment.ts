@@ -165,6 +165,28 @@ export class Base {
         });
     }
 
+    static readOnlyWrappedFieldWithDefault(cls, name, wrapper, defaults) {
+        Object.defineProperty(cls.prototype, name, {
+            'get': function () {
+                var self = this;
+                if (typeof self.__data__[name] === 'undefined') {
+                    self.__data__[name] = defaults;
+                }
+                if (Base.is_rebuild_cache(self, name)) {
+                    var raw_array = self.__data__[name];
+                    var cache = _.map(self.__data__[name], function (q) {
+                        return new wrapper(q, self.__context__);
+                    });
+                    Base.set_cache(self, name, cache);
+                }
+                return self.__cache__[name];
+            },
+            'enumerable': true,
+            'configurable': true
+        });
+    }
+
+
     static readOnlyWrappedListById(cls, name, context_id) {
         Object.defineProperty(cls.prototype, name, {
             'get': function () {
@@ -173,6 +195,25 @@ export class Base {
                     throw "__data__[" + name + "] is undefined for " + cls;
                 }
                 var list = this.__context__[context_id][name];
+                var ret = _.map(self.__data__[name], function (q) {
+                    return list[q] || q;
+                });
+                return ret;
+            },
+            'enumerable': true,
+            'configurable': true
+        });
+    }
+
+
+    static readOnlyWrappedListByIdAs(cls, name, context_id, as) {
+        Object.defineProperty(cls.prototype, name, {
+            'get': function () {
+                var self = this;
+                if (typeof self.__data__[name] === 'undefined') {
+                    throw "__data__[" + name + "] is undefined for " + cls;
+                }
+                var list = this.__context__[context_id][as];
                 var ret = _.map(self.__data__[name], function (q) {
                     return list[q] || q;
                 });
@@ -226,6 +267,33 @@ Base.defineStaticRWField(Location, "layout", null);
 Base.defineStaticRWField(Location, "row", null);
 Base.defineStaticRWField(Location, "column", null);
 
+export class AnnotatorState extends Base {
+    markers:Marker[];
+    disease:Marker[];
+    phase:string;
+    informative:string;
+
+    constructor(jsonmodel:any, context:any = {}) {
+        super(jsonmodel, context);
+    }
+
+    static staticinit() {
+        return {markers: [], disease: [], phase: 'undefined', informative: 'undefined'};
+    }
+
+    private static individual():Individual {
+        return this['__data__']['Individual'];
+    }
+
+    get is_annotated() {
+        return ( this.markers.length == 2 && this.disease.length == 2);
+    }
+}
+Base.readOnlyWrappedListById(AnnotatorState, "markers", 'UI');
+Base.readOnlyWrappedListByIdAs(AnnotatorState, "disease", 'UI', "markers");
+Base.defineStaticRWField(AnnotatorState, "phase", null);
+Base.defineStaticRWField(AnnotatorState, "informative", null);
+
 export class Individual extends Base {
     id:string;
     markers:Marker[];
@@ -246,6 +314,23 @@ export class Individual extends Base {
             }
         });
         return affected;
+    }
+
+    get genotype_markers():Marker[] {
+        var self:Individual = this;
+        var display_markers = this.__context__['UI'].options['selected_marker'];
+        var markers = _.filter(self.markers, function (marker) {
+            var found = _.find(display_markers, function (hid) {
+                return hid == marker.id
+            });
+            if (found) {
+                return true;
+            }
+        });
+        markers = _.sortBy(markers, function (m) {
+            return m.id;
+        });
+        return markers;
     }
 
     get parents():Individual[] {
@@ -334,8 +419,12 @@ export class Individual extends Base {
         function compare_diploidAlleles(a, b) {
             var first = ( a[0] == b[0] && a[1] == b[1] );
             var second = ( a[0] == b[1] && a[1] == b[0] );
-            if( first ) { return 1; }
-            if( second ) { return -1; }
+            if (first) {
+                return 1;
+            }
+            if (second) {
+                return -1;
+            }
             return 0;
         }
 
@@ -353,17 +442,18 @@ export class Individual extends Base {
                 var cmp = compare_diploidAlleles(thatDiploid, thisDiploid);
                 if (cmp != 0) {
                     alleles = _.without(alleles, thisDiploid);
-                    val.push( cmp );
+                    val.push(cmp);
                 }
             });
         });
-        if( value == 'inphase' ) {
+        var ret = false;
+        if (value == 'inphase') {
             ret = (val[0] == val[1]);
         }
-        else if( value == 'outofphase') {
+        else if (value == 'outofphase') {
             ret = (val[0] == -val[1]) && val[0] != 0;
         }
-        else if( value == 'unknown') {
+        else if (value == 'unknown') {
             ret = true;
         }
         return ret;
@@ -390,6 +480,25 @@ export class Individual extends Base {
         }
     }
 
+    private get annotator_map() {
+        if (this.ui_metadata && !this.ui_metadata['annotator']) {
+            this.ui_metadata['annotator'] = {};
+        }
+        return this.ui_metadata['annotator'];
+    }
+
+    get annotator():any {
+        var map = this.annotator_map;
+        var selected_marker = this.__context__['UI'].options['selected_marker'];
+        if (!map[selected_marker]) {
+            map[selected_marker] = AnnotatorState.staticinit();
+        }
+        return new AnnotatorState(map[selected_marker], this.__context__);
+    }
+
+    get name():string {
+        return this.__data__['name'] || this.id;
+    }
 }
 Base.defineStaticRWField(Individual, "id", null);
 Base.readOnlyWrappedListById(Individual, "markers", 'UI');
@@ -421,6 +530,7 @@ export class Relationship extends Base {
 }
 Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
 Base.readOnlyWrappedListById(Relationship, "children", 'UI');
+
 
 export class UI extends Base {
     individuals:Individual[];
