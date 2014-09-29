@@ -233,13 +233,41 @@
 */
 {template .genotype_dialog_select}
         <select data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
-                {foreach $marker in $individual.markers}
+                {foreach $marker in $individual.genotype_markers}
                    <option value="{$marker.id}" {if $individual.genotype[$index] == $marker.id}selected='selected'{/if}>{$marker.id}</option>
+                {/foreach}
+        <select>
+{/template}
+
+/**
+*   @param individual
+* @param options
+* @param index
+*/
+{template .genotype_dialog_select_disease}
+        <select data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
+                {foreach $marker in $options.disease_markers}
+                   <option value="{$marker}" {if $individual.genotype[$index] == $marker}selected='selected'{/if}>{$marker}</option>
+                {/foreach}
+        <select>
+{/template}
+
+/**
+*
+* @param individual
+* @param individuals
+* @/param options
+*/
+{template .genotype_dialog_select_individual}
+       <select data-current="{$individual.id}" class="genotype_dialog_select_individual">
+                {foreach $i in $individuals}
+                   <option value="{$i.id}" {if $i.id == $individual.id}selected='selected'{/if}>{$i.id}</option>
                 {/foreach}
         <select>
 {/template}
 /**
 * @param individual
+* @param individuals
 * @param options
 */
 {template .genotype_dialog_rhs}
@@ -248,8 +276,11 @@
         <tr>
             <td>Individual</td>
             <td>
-            // TODO: allow individual switching
-            {$individual.name}
+            {call .genotype_dialog_select_individual}
+                {param individuals:$individuals/}
+                {param individual:$individual/}
+                {param options:$options/}
+            {/call}
             </td>
         </tr>
         <tr>
@@ -279,8 +310,9 @@
                 {/call}
             </td>
             <td>
-                {call .genotype_dialog_select}
+                {call .genotype_dialog_select_disease}
                     {param individual:$individual /}
+                    {param options:$options /}
                     {param index:1/}
                 {/call}
             </td>
@@ -296,8 +328,9 @@
                 {/call}
             </td>
             <td>
-                {call .genotype_dialog_select}
+                {call .genotype_dialog_select_disease}
                     {param individual:$individual /}
+                    {param options:$options /}
                     {param index:3/}
                 {/call}
             </td>
@@ -346,6 +379,27 @@
     </span>
     {$individual.id}
 {/template}
+
+/**
+*
+*
+*/
+{template .genotype_dialog_prev}
+<span class='starpedigree_genotype_prev'>
+    <span class='starpedigree_genotype_arrow'>&lt;</span>
+</span>
+{/template}
+
+/**
+*
+*
+*/
+{template .genotype_dialog_next}
+<span class='starpedigree_genotype_next'>
+    <span class='starpedigree_genotype_arrow'>&gt;</span>
+</span>
+{/template}
+
 /**
 * @param individual
 * @param options
@@ -354,7 +408,13 @@
 <div class='starpedigree_genotype_dialog' title='Genotype editor for {$individual.id}'>
 <span class='starpedigree_genotype_dialog_title'>
     Pedigree annotator
+        <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_close_x' data-text="Close">X</button>
+
 </span>
+    {call .genotype_dialog_prev}
+            {param individual:$individual/}
+            {param options:$options/}
+    {/call}
     {call .genotype_dialog_lhs}
             {param individual:$individual/}
             {param options:$options/}
@@ -363,5 +423,10 @@
             {param individual:$individual/}
             {param options:$options/}
     {/call}
+    {call .genotype_dialog_next}
+            {param individual:$individual/}
+            {param options:$options/}
+    {/call}
+
 </div>
 {/template}

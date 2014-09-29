@@ -1,5 +1,7 @@
 @ZINDEX_INDIVIDUAL: 2;
 @ZINDEX_DIALOG: 3;
+@GREEN: #00AE63;
+@DIALOG_BG: #F1F1F1;
 
 .starpedigree_workspace {
   display: block;
@@ -150,30 +152,62 @@
   height:30px;
   color:white;
   font-size:18px;
-  background-color: green;
+  background-color: @GREEN;
   z-index: @ZINDEX_DIALOG;
   text-align: center;
 }
 .starpedigree_genotype_dialog_lhs {
-  width: 300px;
+  width: 290px;
   height: 400px;
-  background-color: lime;
+  background-color: @DIALOG_BG;
   position: absolute;
   top: 30px;
   left: 300px;
   display: inline-block;
   z-index: @ZINDEX_DIALOG;
+
 }
 
 .starpedigree_genotype_dialog_rhs {
-  width: 300px;
+  width: 290px;
   height: 400px;
-  background-color: yellowgreen;
+  background-color: @DIALOG_BG;
   position: absolute;
   top: 30px;
-  left: 000px;
+  left: 010px;
+  padding-left:2px;
   display: inline-block;
   z-index: @ZINDEX_DIALOG;
+}
+
+.starpedigree_genotype_prev {
+  position: absolute;
+  width: 10px;
+  height: 400px;
+  left:0px;
+  top: 30px;
+  display: inline-block;
+  background-color: @DIALOG_BG;
+  z-index: @ZINDEX_DIALOG;
+}
+
+.starpedigree_genotype_next {
+  position: absolute;
+  width: 10px;
+  height: 400px;
+  left:588px;
+  top: 30px;
+  display: inline-block;
+  background-color: @DIALOG_BG;
+  z-index: @ZINDEX_DIALOG;
+}
+
+.starpedigree_genotype_arrow {
+  position: absolute;
+  top:160px;
+  transform: scaleX(.50);
+  font-size:40px;
+  left:-6px;
 }
 
 .starpedigree_genotype {
@@ -256,4 +290,18 @@
 .starpedigree_genotype_dialog_render {
   top: -80px;
   position: relative;
+}
+
+.starpedigree_genotype_dialog_close_x {
+  float: right;
+  border: 0px;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  margin: 4px;
+  font-weight: 900;
+  font-size:12px;
+  font-family:arial;
+  padding: 2px;
+  background-color: white;
 }

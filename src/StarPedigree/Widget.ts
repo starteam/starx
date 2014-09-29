@@ -91,15 +91,17 @@ export class Widget {
         return check_phase;
     }
 
+
     show_genotype_dialog(w:JQuery, individual_id:number) {
         var self = this;
-        var individual:Individual = _.find(self.model.ui.individuals, function (e) {
+        var individual:m.Individual = _.find(self.model.ui.individuals, function (e) {
             return e.id == individual_id;
         });
         var options:any = self.model.ui.options;
         $('.starpedigree_genotype_dialog', w).remove();
         var html = '';
-        html += ui.genotype_dialog({individual: individual, options: options});
+        var individuals = _.sortBy(self.model.ui.individuals,function(q){return q.id;});
+        html += ui.genotype_dialog({individual: individual, options: options, individuals:individuals });
         $(w).append(html);
         $('.starpedigree_genotype_dialog', w).css({top:(individual.location.top+self.model.ui.options['cell_height'])+"px"});
 
@@ -121,15 +123,41 @@ export class Widget {
             var is_correct = is_genotype && self.check_phase(id, individual, $button);
             console.info("Check", is_correct);
         });
-        $('.starpedigree_genotype_dialog_close').off('click').on('click', function () {
+        $('.starpedigree_genotype_dialog_close',w).off('click').on('click', function () {
             $('.starpedigree_genotype_dialog', w).remove();
+        });
+        $('.starpedigree_genotype_dialog_close_x',w).off('click').on('click', function () {
+            $('.starpedigree_genotype_dialog', w).remove();
+        });
+        $('.genotype_dialog_select_individual',w).off('change').on('change', function() {
+            console.info("genotype_dialog_select_individual", $(this).val());
+            //$('.starpedigree_genotype_dialog', w).remove();
+            self.show_genotype_dialog(w,$(this).val());
+        });
+        $('.starpedigree_genotype_prev',w).off('click').on('click', function() {
+            var this_index = _.indexOf( individuals, individual);
+            this_index--;
+            if( this_index < 0 )
+            {
+                this_index = 0;
+            }
+            self.show_genotype_dialog(w,individuals[this_index].id);
+        });
+        $('.starpedigree_genotype_next',w).off('click').on('click', function() {
+            var this_index = _.indexOf( individuals, individual);
+            this_index++;
+            if( this_index >= individuals.length )
+            {
+                this_index = individuals.length - 1 ;
+            }
+            self.show_genotype_dialog(w,individuals[this_index].id);
         });
     }
 
     add_interactions(w:JQuery) {
         var self = this;
         $('.starpedigree_individual', w).off('click').on('click', function (e) {
-            console.info($(this).data('id'));
+            console.info("add_interactions",$(this).data('id'));
             var individual_id = $(this).data('id');
             self.show_genotype_dialog(w, individual_id);
         });

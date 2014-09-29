@@ -617,6 +617,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.defineStaticRWField(OptionsHelper, "cell_offset_x", 100);
     Base.defineStaticRWField(OptionsHelper, "cell_offset_y", 100);
     Base.defineStaticRWField(OptionsHelper, "symbol_markers", []);
+    Base.defineStaticRWField(OptionsHelper, "disease_markers", []);
 
     var UI = (function (_super) {
         __extends(UI, _super);

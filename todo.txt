@@ -1,0 +1,7 @@
+- Phenotypes selector
+- Dynamic phenotypes
+- Phenotypes pagination
+
+- DNA markers
+- DNA markers in phenotypes
+

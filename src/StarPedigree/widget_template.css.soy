@@ -134,14 +134,14 @@ css file
   height: 30px;
   color: white;
   font-size: 18px;
-  background-color: green;
+  background-color: #00ae63;
   z-index: 3;
   text-align: center;
 {rb}
 .starpedigree_genotype_dialog_lhs {lb}
-  width: 300px;
+  width: 290px;
   height: 400px;
-  background-color: lime;
+  background-color: #f1f1f1;
   position: absolute;
   top: 30px;
   left: 300px;
@@ -149,14 +149,42 @@ css file
   z-index: 3;
 {rb}
 .starpedigree_genotype_dialog_rhs {lb}
-  width: 300px;
+  width: 290px;
   height: 400px;
-  background-color: yellowgreen;
+  background-color: #f1f1f1;
   position: absolute;
   top: 30px;
-  left: 000px;
+  left: 010px;
+  padding-left: 2px;
   display: inline-block;
   z-index: 3;
+{rb}
+.starpedigree_genotype_prev {lb}
+  position: absolute;
+  width: 10px;
+  height: 400px;
+  left: 0px;
+  top: 30px;
+  display: inline-block;
+  background-color: #f1f1f1;
+  z-index: 3;
+{rb}
+.starpedigree_genotype_next {lb}
+  position: absolute;
+  width: 10px;
+  height: 400px;
+  left: 588px;
+  top: 30px;
+  display: inline-block;
+  background-color: #f1f1f1;
+  z-index: 3;
+{rb}
+.starpedigree_genotype_arrow {lb}
+  position: absolute;
+  top: 160px;
+  transform: scaleX(0.5);
+  font-size: 40px;
+  left: -6px;
 {rb}
 .starpedigree_genotype {lb}
   position: relative;
@@ -229,5 +257,18 @@ css file
 .starpedigree_genotype_dialog_render {lb}
   top: -80px;
   position: relative;
+{rb}
+.starpedigree_genotype_dialog_close_x {lb}
+  float: right;
+  border: 0px;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  margin: 4px;
+  font-weight: 900;
+  font-size: 12px;
+  font-family: arial;
+  padding: 2px;
+  background-color: white;
 {rb}
 {/template}

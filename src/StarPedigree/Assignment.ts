@@ -545,6 +545,7 @@ export class OptionsHelper extends Base {
     markers:any;
     cell_height:number;
     cell_width:number;
+    disease_markers:any;
 
     get selected_marker_name()
     {
@@ -560,6 +561,7 @@ Base.defineStaticRWField(OptionsHelper, "layout", "grid");
 Base.defineStaticRWField(OptionsHelper, "cell_offset_x", 100);
 Base.defineStaticRWField(OptionsHelper, "cell_offset_y", 100);
 Base.defineStaticRWField(OptionsHelper, "symbol_markers", []);
+Base.defineStaticRWField(OptionsHelper, "disease_markers", []);
 
 export class UI extends Base {
     individuals:Individual[];
