@@ -91,6 +91,10 @@ export class Widget {
         return check_phase;
     }
 
+    hide_genotype_dialog(w:JQuery) {
+        $('.starpedigree_genotype_dialog', w).remove();
+        $('.starpedigree_individual_border',w).css({'display':'none'});
+    }
 
     show_genotype_dialog(w:JQuery, individual_id:number) {
         var self = this;
@@ -98,11 +102,12 @@ export class Widget {
             return e.id == individual_id;
         });
         var options:any = self.model.ui.options;
-        $('.starpedigree_genotype_dialog', w).remove();
+        self.hide_genotype_dialog(w);
         var html = '';
         var individuals = _.sortBy(self.model.ui.individuals,function(q){return q.id;});
         html += ui.genotype_dialog({individual: individual, options: options, individuals:individuals });
         $(w).append(html);
+        $('.starpedigree_individual_border[data-id='+individual_id+']',w).css({'display':'block'});
         $('.starpedigree_genotype_dialog', w).css({top:(individual.location.top+self.model.ui.options['cell_height'])+"px"});
 
         $('.starpedigree_genotype_dialog_check_genotype').off('click').on('click', function () {
@@ -124,14 +129,13 @@ export class Widget {
             console.info("Check", is_correct);
         });
         $('.starpedigree_genotype_dialog_close',w).off('click').on('click', function () {
-            $('.starpedigree_genotype_dialog', w).remove();
+            self.hide_genotype_dialog(w);
         });
         $('.starpedigree_genotype_dialog_close_x',w).off('click').on('click', function () {
-            $('.starpedigree_genotype_dialog', w).remove();
+            self.hide_genotype_dialog(w);
         });
         $('.genotype_dialog_select_individual',w).off('change').on('change', function() {
             console.info("genotype_dialog_select_individual", $(this).val());
-            //$('.starpedigree_genotype_dialog', w).remove();
             self.show_genotype_dialog(w,$(this).val());
         });
         $('.starpedigree_genotype_prev',w).off('click').on('click', function() {

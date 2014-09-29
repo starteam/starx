@@ -63,6 +63,8 @@
         style='left:{$individual.location.left}px;top:{$individual.location.top}px'
             data-id='{$individual.id}' data-kind='starpedigree_individual'
             >
+            <div data-id='{$individual.id}' class='starpedigree_individual_border'>
+            &nbsp; B </div>
             {call .render_below_individual}
                 {param individual:$individual/}
             {/call}
