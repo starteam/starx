@@ -94,7 +94,7 @@ widget_template.render_below_individual = function(opt_data, opt_sb) {
  */
 widget_template.render_individual = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class=\'starpedigree_individual starpedigree_sexsymbol_', soy.$$escapeHtml(opt_data.individual.sex.kind), ' ', (opt_data.individual.affected) ? 'starpedigree_individual_label_affected_1' : 'starpedigree_individual_label_unaffected_1', '\' style=\'left:', soy.$$escapeHtml(opt_data.individual.location.left), 'px;top:', soy.$$escapeHtml(opt_data.individual.location.top), 'px\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' data-kind=\'starpedigree_individual\' ><div data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' class=\'starpedigree_individual_border\'>&nbsp; B </div>');
+  output.append('<div class=\'starpedigree_individual starpedigree_sexsymbol_', soy.$$escapeHtml(opt_data.individual.sex.kind), ' ', (opt_data.individual.affected) ? 'starpedigree_individual_label_affected_1' : 'starpedigree_individual_label_unaffected_1', '\' style=\'left:', soy.$$escapeHtml(opt_data.individual.location.left), 'px;top:', soy.$$escapeHtml(opt_data.individual.location.top), 'px\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' data-kind=\'starpedigree_individual\' ><div data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' class=\'starpedigree_individual_border\'>&nbsp; </div>');
   widget_template.render_below_individual(opt_data, output);
   widget_template.render_individuals_name(opt_data, output);
   output.append('</div>');
@@ -192,21 +192,10 @@ widget_template.render_children_links = function(opt_data, opt_sb) {
  */
 widget_template.render_individual_in_dialog = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class=\'starpedigree_individual starpedigree_sexsymbol_', soy.$$escapeHtml(opt_data.individual.sex.kind), ' ', (opt_data.individual.affected) ? 'starpedigree_individual_label_affected_1' : 'starpedigree_individual_label_unaffected_1', '\' style=\'left:', soy.$$escapeHtml(opt_data.options.cell_width * opt_data.column), 'px;top:', soy.$$escapeHtml(opt_data.options.cell_height * opt_data.row), 'px\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' data-kind=\'starpedigree_individual\' ><span class=\'starpedigree_individual_label\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\'>', soy.$$escapeHtml(opt_data.individual.id), '</span><span class=\'starpedigree_individual_markers\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\'>');
-  var markerList134 = opt_data.individual.markers;
-  var markerListLen134 = markerList134.length;
-  for (var markerIndex134 = 0; markerIndex134 < markerListLen134; markerIndex134++) {
-    var markerData134 = markerList134[markerIndex134];
-    output.append(soy.$$escapeHtml(markerData134.id));
-  }
-  output.append('</span><span class=\'starpedigree_individual_genotype\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\'>', soy.$$escapeHtml(opt_data.individual.id), '<br>');
-  var markerList142 = opt_data.individual.markers;
-  var markerListLen142 = markerList142.length;
-  for (var markerIndex142 = 0; markerIndex142 < markerListLen142; markerIndex142++) {
-    var markerData142 = markerList142[markerIndex142];
-    output.append(soy.$$escapeHtml(markerData142.id));
-  }
-  output.append('</span></div>');
+  output.append('<div class=\'starpedigree_individual starpedigree_sexsymbol_', soy.$$escapeHtml(opt_data.individual.sex.kind), ' ', (opt_data.individual.affected) ? 'starpedigree_individual_label_affected_1' : 'starpedigree_individual_label_unaffected_1', '\' style=\'left:', soy.$$escapeHtml(opt_data.options.cell_width * opt_data.column + opt_data.options.cell_width), 'px;top:', soy.$$escapeHtml(opt_data.options.cell_height * opt_data.row), 'px\' data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' data-kind=\'starpedigree_individual\' ><div data-id=\'', soy.$$escapeHtml(opt_data.individual.id), '\' class=\'starpedigree_individual_border\'>&nbsp; </div>');
+  widget_template.render_below_individual(opt_data, output);
+  widget_template.render_individuals_name(opt_data, output);
+  output.append('</div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -221,13 +210,13 @@ widget_template.genotype_dialog_lhs = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div class=\'starpedigree_genotype_dialog_lhs\'><span class=\'starpedigree_genotype_dialog_render\'>');
   widget_template.render_individual_in_dialog({individual: opt_data.individual, options: opt_data.options, column: 1, row: 1.75}, output);
-  var parentList153 = opt_data.individual.parents;
-  var parentListLen153 = parentList153.length;
-  for (var parentIndex153 = 0; parentIndex153 < parentListLen153; parentIndex153++) {
-    var parentData153 = parentList153[parentIndex153];
-    widget_template.render_individual_in_dialog({individual: parentData153, options: opt_data.options, column: 0.5 + parentIndex153, row: 1}, output);
+  var parentList142 = opt_data.individual.parents;
+  var parentListLen142 = parentList142.length;
+  for (var parentIndex142 = 0; parentIndex142 < parentListLen142; parentIndex142++) {
+    var parentData142 = parentList142[parentIndex142];
+    widget_template.render_individual_in_dialog({individual: parentData142, options: opt_data.options, column: 0.5 + parentIndex142, row: 1}, output);
   }
-  output.append((opt_data.individual.parents.length > 0) ? '<div class=\'starpedigree_parents_link\' style=\'top:' + soy.$$escapeHtml(1 * opt_data.options.cell_width) + 'px;left:' + soy.$$escapeHtml(0.5 * opt_data.options.cell_height) + 'px;width:' + soy.$$escapeHtml(1 * opt_data.options.cell_height) + 'px;height:' + soy.$$escapeHtml(opt_data.options.cell_height) + 'px\'><div class=\'starpedigree_parents_link_horizontal\'></div><div class=\'starpedigree_parents_link_vertical_2\'><div class=\'starpedigree_parents_link_vertical\'></div></div></div>' : '', '</span><div class=\'starpedigree_pa_informative_label_wrapper\'><div class=\'starpedigree_pa_informative_label\'>Informative:</div><div class=\'starpedigree_pa_informative_question\'>Does this individual represents the result of an informative meiosis?</div><div class=\'starpedigree_pa_informative_select\'><input type="radio" value="yes" kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_yes"><label for="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_yes">Yes</label><input type="radio" value="no" kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_no"><label for="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_no">No</label></div></div></div>');
+  output.append((opt_data.individual.parents.length > 0) ? '<div class=\'starpedigree_parents_link\' style=\'top:' + soy.$$escapeHtml(1 * opt_data.options.cell_width) + 'px;left:' + soy.$$escapeHtml(1.5 * opt_data.options.cell_height) + 'px;width:' + soy.$$escapeHtml(1 * opt_data.options.cell_height) + 'px;height:' + soy.$$escapeHtml(opt_data.options.cell_height) + 'px\'><div class=\'starpedigree_parents_link_horizontal\'></div><div class=\'starpedigree_parents_link_vertical_2\'><div class=\'starpedigree_parents_link_vertical\'></div></div></div>' : '', '</span><div class=\'starpedigree_pa_informative_label_wrapper\'><div class=\'starpedigree_pa_informative_label starpedigree_genotype_dialog_bold\'>Informative:</div><span class=\'starpedigree_genotype_phase_indent\'><div class=\'starpedigree_pa_informative_question\'>Does this individual represents the result of an informative meiosis?</div><div class=\'starpedigree_pa_informative_select\'><input class=\'starpedigree_flat_radio\' type="radio" value="yes" kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_yes"><label for="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_yes">yes</label><input class=\'starpedigree_flat_radio\' type="radio" value="no" kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_no"><label for="starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_no">no</label></div></span></div><button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_check_genotype_and_phase\' data-text="Check phase">Check</button><!--        <button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_close\' data-text="Close">Close</button> --></div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -240,14 +229,14 @@ widget_template.genotype_dialog_lhs = function(opt_data, opt_sb) {
  */
 widget_template.genotype_dialog_select = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<select data-index="', soy.$$escapeHtml(opt_data.index), '" data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class="starpedigree_genotype_dialog_select">');
-  var markerList194 = opt_data.individual.genotype_markers;
-  var markerListLen194 = markerList194.length;
-  for (var markerIndex194 = 0; markerIndex194 < markerListLen194; markerIndex194++) {
-    var markerData194 = markerList194[markerIndex194];
-    output.append('<option value="', soy.$$escapeHtml(markerData194.id), '" ', (opt_data.individual.genotype[opt_data.index] == markerData194.id) ? 'selected=\'selected\'' : '', '>', soy.$$escapeHtml(markerData194.id), '</option>');
+  output.append('<label for=\'starpedigree_genotype_dialog_select_', soy.$$escapeHtml(opt_data.individual.id), '_', soy.$$escapeHtml(opt_data.index), '\' class=\'starpedigree_genotype_dialog_select_label\'><select id=\'starpedigree_genotype_dialog_select_', soy.$$escapeHtml(opt_data.individual.id), '_', soy.$$escapeHtml(opt_data.index), '\' data-index="', soy.$$escapeHtml(opt_data.index), '" data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class="starpedigree_genotype_dialog_select">');
+  var markerList195 = opt_data.individual.genotype_markers;
+  var markerListLen195 = markerList195.length;
+  for (var markerIndex195 = 0; markerIndex195 < markerListLen195; markerIndex195++) {
+    var markerData195 = markerList195[markerIndex195];
+    output.append('<option value="', soy.$$escapeHtml(markerData195.id), '" ', (opt_data.individual.genotype[opt_data.index] == markerData195.id) ? 'selected=\'selected\'' : '', '>', soy.$$escapeHtml(markerData195.id), '</option>');
   }
-  output.append('<select>');
+  output.append('<select></label>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -260,14 +249,14 @@ widget_template.genotype_dialog_select = function(opt_data, opt_sb) {
  */
 widget_template.genotype_dialog_select_disease = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<select data-index="', soy.$$escapeHtml(opt_data.index), '" data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class="starpedigree_genotype_dialog_select">');
-  var markerList212 = opt_data.options.disease_markers;
-  var markerListLen212 = markerList212.length;
-  for (var markerIndex212 = 0; markerIndex212 < markerListLen212; markerIndex212++) {
-    var markerData212 = markerList212[markerIndex212];
-    output.append('<option value="', soy.$$escapeHtml(markerData212), '" ', (opt_data.individual.genotype[opt_data.index] == markerData212) ? 'selected=\'selected\'' : '', '>', soy.$$escapeHtml(markerData212), '</option>');
+  output.append('<label for=\'starpedigree_genotype_dialog_select_', soy.$$escapeHtml(opt_data.individual.id), '_', soy.$$escapeHtml(opt_data.index), '\' class=\'starpedigree_genotype_dialog_select_label\'><select id=\'starpedigree_genotype_dialog_select_', soy.$$escapeHtml(opt_data.individual.id), '_', soy.$$escapeHtml(opt_data.index), '\' data-index="', soy.$$escapeHtml(opt_data.index), '" data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class="starpedigree_genotype_dialog_select">');
+  var markerList221 = opt_data.options.disease_markers;
+  var markerListLen221 = markerList221.length;
+  for (var markerIndex221 = 0; markerIndex221 < markerListLen221; markerIndex221++) {
+    var markerData221 = markerList221[markerIndex221];
+    output.append('<option value="', soy.$$escapeHtml(markerData221), '" ', (opt_data.individual.genotype[opt_data.index] == markerData221) ? 'selected=\'selected\'' : '', '>', soy.$$escapeHtml(markerData221), '</option>');
   }
-  output.append('<select>');
+  output.append('<select></label>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -280,14 +269,14 @@ widget_template.genotype_dialog_select_disease = function(opt_data, opt_sb) {
  */
 widget_template.genotype_dialog_select_individual = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<select data-current="', soy.$$escapeHtml(opt_data.individual.id), '" class="genotype_dialog_select_individual">');
-  var iList228 = opt_data.individuals;
-  var iListLen228 = iList228.length;
-  for (var iIndex228 = 0; iIndex228 < iListLen228; iIndex228++) {
-    var iData228 = iList228[iIndex228];
-    output.append('<option value="', soy.$$escapeHtml(iData228.id), '" ', (iData228.id == opt_data.individual.id) ? 'selected=\'selected\'' : '', '>', soy.$$escapeHtml(iData228.id), '</option>');
+  output.append('<label for=\'genotype_dialog_select_individual_', soy.$$escapeHtml(opt_data.individual.id), '\' class=\'genotype_dialog_select_individual_label\'><select id=\'genotype_dialog_select_individual_', soy.$$escapeHtml(opt_data.individual.id), '\' data-current="', soy.$$escapeHtml(opt_data.individual.id), '" class="genotype_dialog_select_individual">');
+  var iList241 = opt_data.individuals;
+  var iListLen241 = iList241.length;
+  for (var iIndex241 = 0; iIndex241 < iListLen241; iIndex241++) {
+    var iData241 = iList241[iIndex241];
+    output.append('<option value="', soy.$$escapeHtml(iData241.id), '" ', (iData241.id == opt_data.individual.id) ? 'selected=\'selected\'' : '', '>', soy.$$escapeHtml(iData241.id), '</option>');
   }
-  output.append('<select>');
+  output.append('<select></label>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -302,7 +291,14 @@ widget_template.genotype_dialog_rhs = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div class=\'starpedigree_genotype_dialog_rhs\'><table><tr><td>Individual</td><td>');
   widget_template.genotype_dialog_select_individual(opt_data, output);
-  output.append('</td></tr><tr><td>Marker</td><td>', soy.$$escapeHtml(opt_data.options.selected_marker_name), '</td></tr></table><table><tr><th>Genotype</th><th>Marker</th><th>Disease</th><tr><td>Allele 1</td><td>');
+  output.append('</td></tr><tr><td><span class=\'starpedigree_genotype_dialog_bold\'>Marker:</span></td><td>', soy.$$escapeHtml(opt_data.options.selected_marker_name), ', alleles detected:&nbsp;');
+  var mList262 = opt_data.individual.genotype_markers;
+  var mListLen262 = mList262.length;
+  for (var mIndex262 = 0; mIndex262 < mListLen262; mIndex262++) {
+    var mData262 = mList262[mIndex262];
+    output.append(soy.$$escapeHtml(mData262.id), (! (mIndex262 == mListLen262 - 1)) ? '/' : '');
+  }
+  output.append('</td></tr></table><span class=\'starpedigree_genotype_phase_indent\'><table><tr><th>Genotype</th><th>Marker</th><th>Disease</th><tr><td>Allele 1</td><td>');
   widget_template.genotype_dialog_select({individual: opt_data.individual, index: 0}, output);
   output.append('</td><td>');
   widget_template.genotype_dialog_select_disease({individual: opt_data.individual, options: opt_data.options, index: 1}, output);
@@ -310,9 +306,9 @@ widget_template.genotype_dialog_rhs = function(opt_data, opt_sb) {
   widget_template.genotype_dialog_select({individual: opt_data.individual, index: 2}, output);
   output.append('</td><td>');
   widget_template.genotype_dialog_select_disease({individual: opt_data.individual, options: opt_data.options, index: 3}, output);
-  output.append('</td></tr></table><div class=\'starpedigree_genotype_phase_select_label\'>Phase</div><span class="starpedigree_genotype_phase_select_label_info">Arrangement of alleles on chromosome</span><br><span class=\'starpedigree_genotype_phase_select\'><input type=\'radio\' value=\'known\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_known\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_known\'>Known</label></input><input type=\'radio\' value=\'unknown\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'>Unknown</label></input></span><div class=\'starpedigree_genotype_phase_options_label\'>Possible Phases</div><div class=\'starpedigree_genotype_phase_options_label\'>Phase 1 or Phase 2 HERE GOES VISUAL</div><br>');
+  output.append('</td></tr></table></span><div class=\'starpedigree_genotype_phase_select_label starpedigree_genotype_dialog_bold\'>Phase:</div><span class=\'starpedigree_genotype_phase_indent\'><span class="starpedigree_genotype_phase_select_label_info">Arrangement of alleles on chromosome:</span><br><span class=\'starpedigree_genotype_phase_select\'><input class=\'starpedigree_flat_radio\' type=\'radio\' value=\'known\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_known\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_known\'>known</label></input><input class=\'starpedigree_flat_radio\' type=\'radio\' value=\'unknown\' kind-id="', soy.$$escapeHtml(opt_data.individual.id), '" name="radio_starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '" id=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'><label for=\'starpedigree_genotype_phase_select_', soy.$$escapeHtml(opt_data.individual.id), '_unknown\'>unknown</label></input></span><br><div class=\'starpedigree_genotype_phase_options_label starpedigree_genotype_dialog_bold starpedigree_genotype_pad_top\'>Possible Phases</div><div class=\'starpedigree_genotype_phase_options_label\'>Phase 1 or Phase 2 HERE GOES VISUAL</div></span><br>');
   widget_template.render_genotype(opt_data, output);
-  output.append('<button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_check_genotype_and_phase\' data-text="Check phase">Check & Save</button><button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_close\' data-text="Close">Close</button></div>');
+  output.append('</div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -364,7 +360,7 @@ widget_template.genotype_dialog_next = function(opt_data, opt_sb) {
  */
 widget_template.genotype_dialog = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class=\'starpedigree_genotype_dialog\' title=\'Genotype editor for ', soy.$$escapeHtml(opt_data.individual.id), '\'><span class=\'starpedigree_genotype_dialog_title\'>Pedigree annotator<button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_close_x\' data-text="Close">X</button></span>');
+  output.append('<div class=\'starpedigree_genotype_dialog\' title=\'Genotype editor for ', soy.$$escapeHtml(opt_data.individual.id), '\'><span class=\'starpedigree_genotype_dialog_title\'><span class=\'starpedigree_genotype_dialog_title_text\'>Pedigree Annotator</span><span class=\'starpedigree_genotype_dialog_title_triangle\'></span><span class=\'starpedigree_genotype_dialog_title_line\'></span><button data-id="', soy.$$escapeHtml(opt_data.individual.id), '" class=\'starpedigree_genotype_dialog_close_x\' data-text="Close">X</button></span>');
   widget_template.genotype_dialog_prev(opt_data, output);
   widget_template.genotype_dialog_lhs(opt_data, output);
   widget_template.genotype_dialog_rhs(opt_data, output);

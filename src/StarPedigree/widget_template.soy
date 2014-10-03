@@ -64,7 +64,7 @@
             data-id='{$individual.id}' data-kind='starpedigree_individual'
             >
             <div data-id='{$individual.id}' class='starpedigree_individual_border'>
-            &nbsp; B </div>
+            &nbsp; </div>
             {call .render_below_individual}
                 {param individual:$individual/}
             {/call}
@@ -160,27 +160,21 @@
 * @param row
 */
 {template .render_individual_in_dialog}
+
         <div class='starpedigree_individual starpedigree_sexsymbol_{$individual.sex.kind} {if $individual.affected}starpedigree_individual_label_affected_1{else}starpedigree_individual_label_unaffected_1{/if}'
-        style='left:{$options.cell_width*$column}px;top:{$options.cell_height*$row}px'
+        style='left:{$options.cell_width*$column+$options.cell_width}px;top:{$options.cell_height*$row}px'
             data-id='{$individual.id}' data-kind='starpedigree_individual'
             >
-             <span class='starpedigree_individual_label' data-id='{$individual.id}'>
-                {$individual.id}
-            </span>
-            <span class='starpedigree_individual_markers' data-id='{$individual.id}'>
-                {foreach $marker in $individual.markers}
-                    {$marker.id}
-                {/foreach}
-            </span>
-            <span class='starpedigree_individual_genotype' data-id='{$individual.id}'>
-                {$individual.id}
-                <br>
-                {foreach $marker in $individual.markers}
-                    {$marker.id}
-                {/foreach}
-            </span>
-
+            <div data-id='{$individual.id}' class='starpedigree_individual_border'>
+            &nbsp; </div>
+            {call .render_below_individual}
+                {param individual:$individual/}
+            {/call}
+            {call .render_individuals_name}
+                {param individual:$individual/}
+            {/call}
         </div>
+
 {/template}
 /**
 * @param individual
@@ -204,7 +198,7 @@
             {/call}
         {/foreach}
         {if $individual.parents.length > 0}
-        <div class='starpedigree_parents_link' style='top:{1*$options.cell_width}px;left:{0.5*$options.cell_height}px;width:{1*$options.cell_height}px;height:{$options.cell_height}px'>
+        <div class='starpedigree_parents_link' style='top:{1*$options.cell_width}px;left:{1.5*$options.cell_height}px;width:{1*$options.cell_height}px;height:{$options.cell_height}px'>
             <div class='starpedigree_parents_link_horizontal'></div>
             <div class='starpedigree_parents_link_vertical_2'>
                 <div class='starpedigree_parents_link_vertical'></div>
@@ -213,19 +207,25 @@
         {/if}
         </span>
         <div class='starpedigree_pa_informative_label_wrapper'>
-            <div class='starpedigree_pa_informative_label'>
+            <div class='starpedigree_pa_informative_label starpedigree_genotype_dialog_bold'>
                 Informative:
             </div>
-            <div class='starpedigree_pa_informative_question'>
-                Does this individual represents the result of an informative meiosis?
-            </div>
-            <div class='starpedigree_pa_informative_select'>
-                <input type="radio" value="yes" kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id="starpedigree_genotype_phase_select_{$individual.id}_yes">
-                <label for="starpedigree_genotype_phase_select_{$individual.id}_yes">Yes</label>
-                <input type="radio" value="no" kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id="starpedigree_genotype_phase_select_{$individual.id}_no">
-                <label for="starpedigree_genotype_phase_select_{$individual.id}_no">No</label>
-            </div>
+            <span class='starpedigree_genotype_phase_indent'>
+                <div class='starpedigree_pa_informative_question'>
+                    Does this individual represents the result of an informative meiosis?
+                </div>
+                <div class='starpedigree_pa_informative_select'>
+                    <input class='starpedigree_flat_radio' type="radio" value="yes" kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id="starpedigree_genotype_phase_select_{$individual.id}_yes">
+                    <label for="starpedigree_genotype_phase_select_{$individual.id}_yes">yes</label>
+                    <input class='starpedigree_flat_radio' type="radio" value="no" kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id="starpedigree_genotype_phase_select_{$individual.id}_no">
+                    <label for="starpedigree_genotype_phase_select_{$individual.id}_no">no</label>
+                </div>
+            </span>
         </div>
+
+        <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_check_genotype_and_phase' data-text="Check phase">Check</button>
+<!--        <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_close' data-text="Close">Close</button> -->
+
 </div>
 {/template}
 
@@ -234,11 +234,13 @@
 * @param index
 */
 {template .genotype_dialog_select}
-        <select data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
+    <label for='starpedigree_genotype_dialog_select_{$individual.id}_{$index}' class='starpedigree_genotype_dialog_select_label'>
+        <select id='starpedigree_genotype_dialog_select_{$individual.id}_{$index}' data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
                 {foreach $marker in $individual.genotype_markers}
                    <option value="{$marker.id}" {if $individual.genotype[$index] == $marker.id}selected='selected'{/if}>{$marker.id}</option>
                 {/foreach}
         <select>
+    </label>
 {/template}
 
 /**
@@ -247,11 +249,13 @@
 * @param index
 */
 {template .genotype_dialog_select_disease}
-        <select data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
+    <label for='starpedigree_genotype_dialog_select_{$individual.id}_{$index}' class='starpedigree_genotype_dialog_select_label'>
+        <select id='starpedigree_genotype_dialog_select_{$individual.id}_{$index}' data-index="{$index}" data-id="{$individual.id}" class="starpedigree_genotype_dialog_select">
                 {foreach $marker in $options.disease_markers}
                    <option value="{$marker}" {if $individual.genotype[$index] == $marker}selected='selected'{/if}>{$marker}</option>
                 {/foreach}
         <select>
+    </label>
 {/template}
 
 /**
@@ -261,11 +265,13 @@
 * @/param options
 */
 {template .genotype_dialog_select_individual}
-       <select data-current="{$individual.id}" class="genotype_dialog_select_individual">
+        <label for='genotype_dialog_select_individual_{$individual.id}' class='genotype_dialog_select_individual_label'>
+       <select id='genotype_dialog_select_individual_{$individual.id}' data-current="{$individual.id}" class="genotype_dialog_select_individual">
                 {foreach $i in $individuals}
                    <option value="{$i.id}" {if $i.id == $individual.id}selected='selected'{/if}>{$i.id}</option>
                 {/foreach}
         <select>
+        </label>
 {/template}
 /**
 * @param individual
@@ -286,85 +292,92 @@
             </td>
         </tr>
         <tr>
-            <td>Marker</td>
-            <td>{$options.selected_marker_name}</td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>
-            Genotype
-            </th>
-            <th>
-            Marker
-            </th>
-            <th>
-            Disease
-            </th>
-        <tr>
-        <td>
-            Allele 1
-        </td>
-            <td>
-                {call .genotype_dialog_select}
-                    {param individual:$individual /}
-                    {param index:0/}
-                {/call}
-            </td>
-            <td>
-                {call .genotype_dialog_select_disease}
-                    {param individual:$individual /}
-                    {param options:$options /}
-                    {param index:1/}
-                {/call}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Alleles 2
-            </td>
-            <td>
-                {call .genotype_dialog_select}
-                    {param individual:$individual /}
-                    {param index:2/}
-                {/call}
-            </td>
-            <td>
-                {call .genotype_dialog_select_disease}
-                    {param individual:$individual /}
-                    {param options:$options /}
-                    {param index:3/}
-                {/call}
+            <td><span class='starpedigree_genotype_dialog_bold'>Marker:</span></td>
+            <td>{$options.selected_marker_name}, alleles detected:&nbsp;
+                {foreach $m in $individual.genotype_markers}
+                    {$m.id}{if not isLast($m)}/{/if}
+                {/foreach}
             </td>
         </tr>
     </table>
-    <div class='starpedigree_genotype_phase_select_label'>
-    Phase
-    </div>
-    <span class="starpedigree_genotype_phase_select_label_info">
-    Arrangement of alleles on chromosome
+    <span class='starpedigree_genotype_phase_indent'>
+        <table>
+            <tr>
+                <th>
+                Genotype
+                </th>
+                <th>
+                Marker
+                </th>
+                <th>
+                Disease
+                </th>
+            <tr>
+            <td>
+                Allele 1
+            </td>
+                <td>
+                    {call .genotype_dialog_select}
+                        {param individual:$individual /}
+                        {param index:0/}
+                    {/call}
+                </td>
+                <td>
+                    {call .genotype_dialog_select_disease}
+                        {param individual:$individual /}
+                        {param options:$options /}
+                        {param index:1/}
+                    {/call}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Alleles 2
+                </td>
+                <td>
+                    {call .genotype_dialog_select}
+                        {param individual:$individual /}
+                        {param index:2/}
+                    {/call}
+                </td>
+                <td>
+                    {call .genotype_dialog_select_disease}
+                        {param individual:$individual /}
+                        {param options:$options /}
+                        {param index:3/}
+                    {/call}
+                </td>
+            </tr>
+        </table>
     </span>
+    <div class='starpedigree_genotype_phase_select_label starpedigree_genotype_dialog_bold'>
+    Phase:
+    </div>
+    <span class='starpedigree_genotype_phase_indent'>
+        <span class="starpedigree_genotype_phase_select_label_info">
+        Arrangement of alleles on chromosome:
+        </span>
 
-//    <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_check_genotype' data-text="Check genotype">Check genotype</button>
-    <br>
-    <span class='starpedigree_genotype_phase_select'>
-            <input type='radio' value='known' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_known'><label for='starpedigree_genotype_phase_select_{$individual.id}_known'>Known</label></input>
-            <input type='radio' value='unknown' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_unknown'><label for='starpedigree_genotype_phase_select_{$individual.id}_unknown'>Unknown</label></input>
+        <br>
+        <span class='starpedigree_genotype_phase_select'>
+                <input class='starpedigree_flat_radio' type='radio' value='known' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_known'><label for='starpedigree_genotype_phase_select_{$individual.id}_known'>known</label></input>
+                <input class='starpedigree_flat_radio' type='radio' value='unknown' kind-id="{$individual.id}" name="radio_starpedigree_genotype_phase_select_{$individual.id}" id='starpedigree_genotype_phase_select_{$individual.id}_unknown'><label for='starpedigree_genotype_phase_select_{$individual.id}_unknown'>unknown</label></input>
+        </span>
+        <br>
+
+        <div class='starpedigree_genotype_phase_options_label starpedigree_genotype_dialog_bold starpedigree_genotype_pad_top'>
+            Possible Phases
+        </div>
+        <div class='starpedigree_genotype_phase_options_label'>
+            Phase 1 or Phase 2
+            HERE GOES VISUAL
+        </div>
     </span>
-    <div class='starpedigree_genotype_phase_options_label'>
-        Possible Phases
-    </div>
-    <div class='starpedigree_genotype_phase_options_label'>
-        Phase 1 or Phase 2
-        HERE GOES VISUAL
-    </div>
     <br>
     {call .render_genotype}
         {param individual:$individual/}
     {/call}
 //    <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_check_phase' data-text="Check phase">Check phase</button>
-    <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_check_genotype_and_phase' data-text="Check phase">Check & Save</button>
-    <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_close' data-text="Close">Close</button>
 </div>
 {/template}
 
@@ -409,9 +422,14 @@
 {template .genotype_dialog}
 <div class='starpedigree_genotype_dialog' title='Genotype editor for {$individual.id}'>
 <span class='starpedigree_genotype_dialog_title'>
-    Pedigree annotator
+    <span class='starpedigree_genotype_dialog_title_text'>
+    Pedigree Annotator
+    </span>
+        <span class='starpedigree_genotype_dialog_title_triangle'>
+        </span>
+        <span class='starpedigree_genotype_dialog_title_line'>
+        </span>
         <button data-id="{$individual.id}" class='starpedigree_genotype_dialog_close_x' data-text="Close">X</button>
-
 </span>
     {call .genotype_dialog_prev}
             {param individual:$individual/}

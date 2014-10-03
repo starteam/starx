@@ -98,7 +98,9 @@ define(["require", "exports", 'jquery', "StarPedigree/widget_template.soy", "Sta
             html += ui.genotype_dialog({ individual: individual, options: options, individuals: individuals });
             $(w).append(html);
             $('.starpedigree_individual_border[data-id=' + individual_id + ']', w).css({ 'display': 'block' });
-            $('.starpedigree_genotype_dialog', w).css({ top: (individual.location.top + self.model.ui.options['cell_height']) + "px" });
+            var q = $('.starpedigree_genotype_dialog', w).css({ top: (individual.location.top + self.model.ui.options['cell_height']) + "px" });
+            $('.starpedigree_genotype_dialog_title_triangle', q).css({ left: (individual.location.left) + "px" });
+            $('.starpedigree_genotype_dialog_title_line', q).css({ left: (individual.location.left + self.model.ui.options['cell_width'] / 2) + "px", top: (60 - self.model.ui.options['cell_height']) + "px" });
 
             $('.starpedigree_genotype_dialog_check_genotype').off('click').on('click', function () {
                 var $button = $(this);
