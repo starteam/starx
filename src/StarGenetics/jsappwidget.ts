@@ -54,6 +54,13 @@ export class StarGeneticsJSAppWidget {
             backend_model = bundled_samples[config['config']['bundled_samples']];
             config['config']['model'] = backend_model;
         }
+        else if (config && config['config'] && config['config']['model_type'] == 'json' && config['config']['json']) {
+            tmi.event("StarGenetics", "Start", config['config']['json']);
+            backend_model = config['config']['json'];
+            console.info( backend_model);
+            config['config']['model'] = backend_model;
+
+        }
         else {
             tmi.event("StarGenetics", "Start", "Model1");
             backend_model = bundled_samples.model1;
@@ -792,15 +799,15 @@ export class StarGeneticsJSAppWidget {
 
         $('.sg_experiment_box_floaty') // floaty
             .parent().off('click') //
-                .find("*").off('click').end() //siblings
+            .find("*").off('click').end() //siblings
             //.end() //
             .on('click', function (e) { //add click event
-            var id = $(this).data('kind');
-            self.model.ui.experiments.show_experiment = id;
-            tmi.event("StarGenetics", "sg_select_experiment");
-            e.stopPropagation();
-            self.show();
-        });
+                var id = $(this).data('kind');
+                self.model.ui.experiments.show_experiment = id;
+                tmi.event("StarGenetics", "sg_select_experiment");
+                e.stopPropagation();
+                self.show();
+            });
 
     }
 
