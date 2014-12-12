@@ -2,6 +2,9 @@
 declare module "StarPedigree/widget_template.soy" {
 	function wrapper(state:any):any;
 	function render_generations(state:any):any;
+	function render_individual_not_annotated(state:any):any;
+	function render_individuals_name(state:any):any;
+	function render_below_individual(state:any):any;
 	function render_individual(state:any):any;
 	function render_individuals(state:any):any;
 	function render_relationships(state:any):any;
@@ -11,12 +14,19 @@ declare module "StarPedigree/widget_template.soy" {
 	function render_individual_in_dialog(state:any):any;
 	function genotype_dialog_lhs(state:any):any;
 	function genotype_dialog_select(state:any):any;
+	function genotype_dialog_select_disease(state:any):any;
+	function genotype_dialog_select_individual(state:any):any;
 	function genotype_dialog_rhs(state:any):any;
 	function render_genotype(state:any):any;
+	function genotype_dialog_prev(state:any):any;
+	function genotype_dialog_next(state:any):any;
 	function genotype_dialog(state:any):any;
 }
 declare function wrapper(state:any):any;
 declare function render_generations(state:any):any;
+declare function render_individual_not_annotated(state:any):any;
+declare function render_individuals_name(state:any):any;
+declare function render_below_individual(state:any):any;
 declare function render_individual(state:any):any;
 declare function render_individuals(state:any):any;
 declare function render_relationships(state:any):any;
@@ -26,6 +36,10 @@ declare function render_children_links(state:any):any;
 declare function render_individual_in_dialog(state:any):any;
 declare function genotype_dialog_lhs(state:any):any;
 declare function genotype_dialog_select(state:any):any;
+declare function genotype_dialog_select_disease(state:any):any;
+declare function genotype_dialog_select_individual(state:any):any;
 declare function genotype_dialog_rhs(state:any):any;
 declare function render_genotype(state:any):any;
+declare function genotype_dialog_prev(state:any):any;
+declare function genotype_dialog_next(state:any):any;
 declare function genotype_dialog(state:any):any;

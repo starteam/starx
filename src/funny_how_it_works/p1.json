@@ -1,0 +1,540 @@
+{
+   "ui" : {
+      "options" : {
+         "cell_height" : 100,
+         "cell_offset_x" : 75,
+         "cell_offset_y" : 75,
+         "disease_markers" : [
+            "H",
+            "h"
+         ],
+         "layout" : "grid",
+         "generations" : [
+            "",
+            "I",
+            "II",
+            "III"
+         ],
+         "cell_width" : 100,
+         "markers" : {
+            "AB" : {
+               "markers" : [
+                  "A",
+                  "B"
+               ],
+               "label" : "SSR37-1"
+            }
+         },
+         "symbol_markers" : [
+            "H"
+         ],
+         "selected_marker" : "AB"
+      },
+      "relationships" : [
+         {
+            "children" : [
+               "II-2"
+            ],
+            "id" : "GenI-1,2",
+            "parents" : [
+               "I-1",
+               "I-2"
+            ]
+         },
+         {
+            "children" : [
+               "III-1",
+               "III-2",
+               "III-3",
+               "III-4"
+            ],
+            "id" : "GenII-1,2",
+            "parents" : [
+               "II-1",
+               "II-2"
+            ]
+         }
+      ],
+      "markers" : [
+         {
+            "kind" : "fill",
+            "name" : "Huntington's",
+            "id" : "H"
+         },
+         {
+            "kind" : "label",
+            "name" : "A",
+            "id" : "A"
+         },
+         {
+            "kind" : "label",
+            "name" : "B",
+            "id" : "B"
+         }
+      ],
+      "sexes" : [
+         {
+            "kind" : "female",
+            "id" : "F"
+         },
+         {
+            "kind" : "male",
+            "id" : "M"
+         }
+      ],
+      "individuals" : [
+         {
+            "location" : {
+               "row" : 1,
+               "column" : 2.5
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "H",
+                     "h"
+                  ],
+                  [
+                     "A",
+                     "B"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "A_X",
+                     ""
+                  ]
+               ],
+               "Y" : [
+                  [
+                     "A_Y",
+                     ""
+                  ]
+               ]
+            },
+            "markers" : [
+               "H",
+               "A",
+               "B"
+            ],
+            "id" : "I-1",
+            "sex" : "M"
+         },
+         {
+            "location" : {
+               "row" : 1,
+               "column" : 3.5
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "h",
+                     "h"
+                  ],
+                  [
+                     "A",
+                     "B"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "A_X",
+                     "A_X"
+                  ]
+               ]
+            },
+            "markers" : [
+               "A",
+               "B"
+            ],
+            "id" : "I-2",
+            "sex" : "F"
+         },
+         {
+            "location" : {
+               "row" : 2,
+               "column" : 2
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "h",
+                     "h"
+                  ],
+                  [
+                     "A",
+                     "B"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "A_X",
+                     ""
+                  ]
+               ],
+               "Y" : [
+                  [
+                     "A_Y",
+                     ""
+                  ]
+               ]
+            },
+            "markers" : [
+               "A",
+               "B"
+            ],
+            "id" : "II-1",
+            "sex" : "M"
+         },
+         {
+            "location" : {
+               "row" : 2,
+               "column" : 3
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "H",
+                     "h"
+                  ],
+                  [
+                     "A",
+                     "B"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "A_X",
+                     "A_X"
+                  ]
+               ]
+            },
+            "markers" : [
+               "H",
+               "A",
+               "B"
+            ],
+            "id" : "II-2",
+            "sex" : "F"
+         },
+         {
+            "location" : {
+               "row" : 3,
+               "column" : 1
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "h",
+                     "H"
+                  ],
+                  [
+                     "B",
+                     "A"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "",
+                     "A_X"
+                  ]
+               ],
+               "Y" : [
+                  [
+                     "A_Y",
+                     ""
+                  ]
+               ]
+            },
+            "markers" : [
+               "H",
+               "B",
+               "A"
+            ],
+            "id" : "III-1",
+            "sex" : "M"
+         },
+         {
+            "location" : {
+               "row" : 3,
+               "column" : 2
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "h",
+                     "h"
+                  ],
+                  [
+                     "B",
+                     "B"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "A_X",
+                     "A_X"
+                  ]
+               ]
+            },
+            "markers" : [
+               "B"
+            ],
+            "id" : "III-2",
+            "sex" : "F"
+         },
+         {
+            "location" : {
+               "row" : 3,
+               "column" : 3
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "h",
+                     "h"
+                  ],
+                  [
+                     "B",
+                     "B"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "A_X",
+                     "A_X"
+                  ]
+               ]
+            },
+            "markers" : [
+               "B"
+            ],
+            "id" : "III-3",
+            "sex" : "F"
+         },
+         {
+            "location" : {
+               "row" : 3,
+               "column" : 4
+            },
+            "genotype" : {
+               "1" : [
+                  [
+                     "h",
+                     "H"
+                  ],
+                  [
+                     "B",
+                     "A"
+                  ]
+               ],
+               "X" : [
+                  [
+                     "",
+                     "A_X"
+                  ]
+               ],
+               "Y" : [
+                  [
+                     "A_Y",
+                     ""
+                  ]
+               ]
+            },
+            "markers" : [
+               "H",
+               "B",
+               "A"
+            ],
+            "id" : "III-4",
+            "sex" : "M"
+         }
+      ]
+   },
+   "rules" : {
+      "genes" : [
+         {
+            "location" : 20,
+            "alleles" : [
+               "H",
+               "h"
+            ],
+            "chromosome" : "1",
+            "id" : "Huntington's"
+         },
+         {
+            "location" : 25,
+            "alleles" : [
+               "A",
+               "B"
+            ],
+            "chromosome" : "1",
+            "id" : "Rest of alleles"
+         }
+      ],
+      "individuals" : [
+         {
+            "alleles" : [
+               [
+                  "H",
+                  "h"
+               ],
+               [
+                  "A",
+                  "B"
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "I-1"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "h"
+               ],
+               [
+                  "A",
+                  "B"
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "I-2"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "h"
+               ],
+               [
+                  "A",
+                  "B"
+               ],
+               [
+                  "A_X",
+                  ""
+               ],
+               [
+                  "A_Y",
+                  ""
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "II-1"
+         },
+         {
+            "alleles" : [
+               [
+                  "H",
+                  "h"
+               ],
+               [
+                  "A",
+                  "B"
+               ],
+               [
+                  "A_X",
+                  "A_X"
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "II-2"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "H"
+               ],
+               [
+                  "B",
+                  "A"
+               ],
+               [
+                  "",
+                  "A_X"
+               ],
+               [
+                  "A_Y",
+                  ""
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "III-1"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "h"
+               ],
+               [
+                  "B",
+                  "B"
+               ],
+               [
+                  "A_X",
+                  "A_X"
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "III-2"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "h"
+               ],
+               [
+                  "B",
+                  "B"
+               ],
+               [
+                  "A_X",
+                  "A_X"
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "III-3"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "H"
+               ],
+               [
+                  "B",
+                  "A"
+               ],
+               [
+                  "",
+                  "A_X"
+               ],
+               [
+                  "A_Y",
+                  ""
+               ]
+            ],
+            "genotype" : "complete",
+            "id" : "III-4"
+         },
+         {
+            "alleles" : [
+               [
+                  "h",
+                  "h"
+               ],
+               [
+                  "A",
+                  "B"
+               ]
+            ],
+            "genotype" : "template",
+            "id" : "default"
+         }
+      ]
+   }
+}

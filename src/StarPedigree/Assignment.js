@@ -161,6 +161,27 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
             });
         };
 
+        Base.readOnlyWrappedFieldWithDefault = function (cls, name, wrapper, defaults) {
+            Object.defineProperty(cls.prototype, name, {
+                'get': function () {
+                    var self = this;
+                    if (typeof self.__data__[name] === 'undefined') {
+                        self.__data__[name] = defaults;
+                    }
+                    if (Base.is_rebuild_cache(self, name)) {
+                        var raw_array = self.__data__[name];
+                        var cache = _.map(self.__data__[name], function (q) {
+                            return new wrapper(q, self.__context__);
+                        });
+                        Base.set_cache(self, name, cache);
+                    }
+                    return self.__cache__[name];
+                },
+                'enumerable': true,
+                'configurable': true
+            });
+        };
+
         Base.readOnlyWrappedListById = function (cls, name, context_id) {
             Object.defineProperty(cls.prototype, name, {
                 'get': function () {
@@ -169,6 +190,24 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
                         throw "__data__[" + name + "] is undefined for " + cls;
                     }
                     var list = this.__context__[context_id][name];
+                    var ret = _.map(self.__data__[name], function (q) {
+                        return list[q] || q;
+                    });
+                    return ret;
+                },
+                'enumerable': true,
+                'configurable': true
+            });
+        };
+
+        Base.readOnlyWrappedListByIdAs = function (cls, name, context_id, as) {
+            Object.defineProperty(cls.prototype, name, {
+                'get': function () {
+                    var self = this;
+                    if (typeof self.__data__[name] === 'undefined') {
+                        throw "__data__[" + name + "] is undefined for " + cls;
+                    }
+                    var list = this.__context__[context_id][as];
                     var ret = _.map(self.__data__[name], function (q) {
                         return list[q] || q;
                     });
@@ -226,12 +265,56 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
         function Location() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(Location.prototype, "top", {
+            get: function () {
+                return parseFloat(this.__context__['UI'].options['cell_height']) * this.row;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Location.prototype, "left", {
+            get: function () {
+                return parseFloat(this.__context__['UI'].options['cell_width']) * this.column;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Location;
     })(Base);
     exports.Location = Location;
     Base.defineStaticRWField(Location, "layout", null);
     Base.defineStaticRWField(Location, "row", null);
     Base.defineStaticRWField(Location, "column", null);
+
+    var AnnotatorState = (function (_super) {
+        __extends(AnnotatorState, _super);
+        function AnnotatorState(jsonmodel, context) {
+            if (typeof context === "undefined") { context = {}; }
+            _super.call(this, jsonmodel, context);
+        }
+        AnnotatorState.staticinit = function () {
+            return { markers: [], disease: [], phase: 'undefined', informative: 'undefined' };
+        };
+
+        AnnotatorState.individual = function () {
+            return this['__data__']['Individual'];
+        };
+
+        Object.defineProperty(AnnotatorState.prototype, "is_annotated", {
+            get: function () {
+                return (this.markers.length == 2 && this.disease.length == 2);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return AnnotatorState;
+    })(Base);
+    exports.AnnotatorState = AnnotatorState;
+    Base.readOnlyWrappedListById(AnnotatorState, "markers", 'UI');
+    Base.readOnlyWrappedListByIdAs(AnnotatorState, "disease", 'UI', "markers");
+    Base.defineStaticRWField(AnnotatorState, "phase", null);
+    Base.defineStaticRWField(AnnotatorState, "informative", null);
 
     var Individual = (function (_super) {
         __extends(Individual, _super);
@@ -252,6 +335,27 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
                     }
                 });
                 return affected;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "genotype_markers", {
+            get: function () {
+                var self = this;
+                var display_markers = this.__context__['UI'].options['selected_marker'];
+                var markers = _.filter(self.markers, function (marker) {
+                    var found = _.find(display_markers, function (hid) {
+                        return hid == marker.id;
+                    });
+                    if (found) {
+                        return true;
+                    }
+                });
+                markers = _.sortBy(markers, function (m) {
+                    return m.id;
+                });
+                return markers;
             },
             enumerable: true,
             configurable: true
@@ -383,6 +487,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
                     }
                 });
             });
+            var ret = false;
             if (value == 'inphase') {
                 ret = (val[0] == val[1]);
             } else if (value == 'outofphase') {
@@ -412,6 +517,38 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
                     }
                     return ret;
                 }
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "annotator_map", {
+            get: function () {
+                if (this.ui_metadata && !this.ui_metadata['annotator']) {
+                    this.ui_metadata['annotator'] = {};
+                }
+                return this.ui_metadata['annotator'];
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "annotator", {
+            get: function () {
+                var map = this.annotator_map;
+                var selected_marker = this.__context__['UI'].options['selected_marker'];
+                if (!map[selected_marker]) {
+                    map[selected_marker] = AnnotatorState.staticinit();
+                }
+                return new AnnotatorState(map[selected_marker], this.__context__);
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Individual.prototype, "name", {
+            get: function () {
+                return this.__data__['name'] || this.id;
             },
             enumerable: true,
             configurable: true
@@ -456,6 +593,32 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.readOnlyWrappedListById(Relationship, "parents", 'UI');
     Base.readOnlyWrappedListById(Relationship, "children", 'UI');
 
+    var OptionsHelper = (function (_super) {
+        __extends(OptionsHelper, _super);
+        function OptionsHelper() {
+            _super.apply(this, arguments);
+        }
+        Object.defineProperty(OptionsHelper.prototype, "selected_marker_name", {
+            get: function () {
+                return this.markers[this.selected_marker].label;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return OptionsHelper;
+    })(Base);
+    exports.OptionsHelper = OptionsHelper;
+    Base.defineStaticRWField(OptionsHelper, "selected_marker", null);
+    Base.defineStaticRWField(OptionsHelper, "markers", {});
+    Base.defineStaticRWField(OptionsHelper, "cell_height", 100);
+    Base.defineStaticRWField(OptionsHelper, "cell_width", 100);
+    Base.defineStaticRWField(OptionsHelper, "generations", []);
+    Base.defineStaticRWField(OptionsHelper, "layout", "grid");
+    Base.defineStaticRWField(OptionsHelper, "cell_offset_x", 100);
+    Base.defineStaticRWField(OptionsHelper, "cell_offset_y", 100);
+    Base.defineStaticRWField(OptionsHelper, "symbol_markers", []);
+    Base.defineStaticRWField(OptionsHelper, "disease_markers", []);
+
     var UI = (function (_super) {
         __extends(UI, _super);
         function UI() {
@@ -499,7 +662,7 @@ define(["require", "exports", "StarX/lib/underscore"], function(require, exports
     Base.readOnlyWrappedList(UI, "relationships", Relationship);
     Base.readOnlyWrappedMap(UI, "sexes", Sex);
     Base.readOnlyWrappedMap(UI, "markers", Marker);
-    Base.readOnlyField(UI, "options", {});
+    Base.readOnlyWrappedField(UI, "options", OptionsHelper);
 
     var Assignment = (function (_super) {
         __extends(Assignment, _super);

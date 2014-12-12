@@ -15,6 +15,7 @@ css file
 .starpedigree_workspace {lb}
   display: block;
   position: relative;
+  font-family: "sourcesanspro-regular", "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
 {rb}
 .starpedigree_generation {lb}
   display: block;
@@ -31,12 +32,6 @@ css file
   position: absolute;
   background-color: grey;
   z-index: 2;
-{rb}
-.starpedigree_individual_label {lb}
-  position: relative;
-  top: 10px;
-  left: 10px;
-  width: 40px;
 {rb}
 .starpedigree_individual_genotype {lb}
   position: absolute;
@@ -89,7 +84,7 @@ css file
   left: 50%;
   top: 20px;
   width: 1px;
-  height: 45px;
+  height: 60px;
   /*TODO: this should be options.cell_height - 40px */
   background-color: black;
 {rb}
@@ -125,32 +120,101 @@ css file
   border: 1px solid black;
 {rb}
 .starpedigree_genotype_dialog {lb}
-  width: 400px;
+  width: 800px;
   height: 400px;
   background-color: whitesmoke;
   position: relative;
   top: 75px;
-  left: 75px;
+  left: 0px;
+  padding: 0px;
+  margin: 0px;
+{rb}
+.starpedigree_genotype_dialog_title {lb}
+  display: block;
+  position: absolute;
+  width: 800px;
+  height: 30px;
+  color: white;
+  font-size: 18px;
+  background-color: #00ae63;
+  z-index: 3;
+  text-align: center;
+{rb}
+.starpedigree_genotype_dialog_title_text {lb}
+  position: relative;
+  top: 5px;
+  padding: 5px;
+{rb}
+.starpedigree_genotype_dialog_title_triangle {lb}
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 25px solid #00ae63;
+  top: -20px;
+  margin-left: 0px;
+  position: absolute;
+{rb}
+.starpedigree_genotype_dialog_title_line {lb}
+  width: 0px;
+  height: 30px;
+  top: -20px;
+  margin-left: -26px;
+  border: 1px solid #00ae63;
+  background-color: #00ae63;
+  position: absolute;
+  z-index: 3;
 {rb}
 .starpedigree_genotype_dialog_lhs {lb}
-  width: 200px;
-  height: 400px;
-  background-color: lime;
+  width: 380px;
+  padding-left: 10px;
+  height: 370px;
+  background-color: #f1f1f1;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 30px;
+  right: 10px;
   display: inline-block;
   z-index: 3;
+  border-left: 1px solid black;
 {rb}
 .starpedigree_genotype_dialog_rhs {lb}
-  width: 200px;
-  height: 400px;
-  background-color: yellowgreen;
+  width: 390px;
+  height: 370px;
+  background-color: #f1f1f1;
   position: absolute;
-  top: 0px;
-  left: 200px;
+  top: 30px;
+  left: 10px;
+  padding-left: 2px;
   display: inline-block;
   z-index: 3;
+  border-right: 1px solid #a0a0a0;
+{rb}
+.starpedigree_genotype_prev {lb}
+  position: absolute;
+  width: 10px;
+  height: 370px;
+  left: 0px;
+  top: 30px;
+  display: inline-block;
+  background-color: #f1f1f1;
+  z-index: 3;
+{rb}
+.starpedigree_genotype_next {lb}
+  position: absolute;
+  width: 10px;
+  height: 370px;
+  right: 0px;
+  top: 30px;
+  display: inline-block;
+  background-color: #f1f1f1;
+  z-index: 3;
+{rb}
+.starpedigree_genotype_arrow {lb}
+  position: absolute;
+  top: 160px;
+  transform: scaleX(0.5);
+  font-size: 40px;
+  left: -6px;
 {rb}
 .starpedigree_genotype {lb}
   position: relative;
@@ -197,5 +261,130 @@ css file
   width: 10px;
   height: 10px;
   font-size: 8px;
+{rb}
+.starpedigree_individual_not_annotated {lb}
+  position: relative;
+  top: 40px;
+  left: 5px;
+  color: black;
+  width: 30px;
+  display: block;
+  text-align: center;
+{rb}
+.starpedigree_individual_name {lb}
+  position: relative;
+  top: -20px;
+  left: -40px;
+  width: 38px;
+  text-align: right;
+  display: block;
+  color: black;
+{rb}
+.starpedigree_pa_informative_label_wrapper {lb}
+  position: relative;
+  top: 200px;
+{rb}
+.starpedigree_genotype_dialog_render {lb}
+  top: -80px;
+  position: relative;
+{rb}
+.starpedigree_genotype_dialog_close_x {lb}
+  float: right;
+  border: 0px;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  margin: 4px;
+  font-weight: 900;
+  font-size: 12px;
+  font-family: arial;
+  padding: 2px;
+  background-color: white;
+{rb}
+.starpedigree_individual_border {lb}
+  border: #00ae63 2px solid;
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 70px;
+  height: 70px;
+  background-color: transparent;
+  display: none;
+{rb}
+.genotype_dialog_select_individual,
+.starpedigree_genotype_dialog_select {lb}
+  background: transparent;
+  width: 60px;
+  color: #316f94;
+  font-family: Arial;
+  font-weight: normal;
+  font-size: 8pt;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 22px;
+  -webkit-appearance: none;
+  bottom: 1px;
+  outline: none;
+  margin-top: 3px;
+{rb}
+.genotype_dialog_select_individual_label,
+.starpedigree_genotype_dialog_select_label {lb}
+  width: 169px;
+  height: 21px;
+  padding-right: 2px;
+  padding-top: 0px;
+  padding-bottom: 3px;
+  padding-left: 4px;
+  overflow: hidden;
+  background: url("http://starcellbio.mit.edu/images/setup/scb_experiment_dropdown.png") no-repeat right #ffffff;
+{rb}
+.starpedigree_genotype_dialog_bold {lb}
+  font-weight: 900;
+{rb}
+.starpedigree_genotype_phase_indent {lb}
+  margin-left: 30px;
+  display: block;
+{rb}
+.starpedigree_flat_radio {lb}
+  margin-right: 7px;
+  -webkit-appearance: none;
+  margin-bottom: 0;
+  height: 13px;
+  width: 12px;
+  border: 1px solid #000;
+  background-color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+{rb}
+.starpedigree_flat_radio:checked {lb}
+  margin-right: 7px;
+  -webkit-appearance: none;
+  margin-bottom: 0;
+  height: 13px;
+  width: 12px;
+  border: 1px solid #000;
+  background-color: white;
+  border-radius: 6px;
+{rb}
+.starpedigree_flat_radio:checked:before {lb}
+  content: url("https://starcellbio.mit.edu/images/homepage/dot5.png");
+  bottom: 1px;
+  position: relative;
+  right: 2px;
+{rb}
+.starpedigree_genotype_dialog_check_genotype_and_phase {lb}
+  bottom: 20px;
+  left: 150px;
+  position: absolute;
+  border: none;
+  background-color: #00AE63;
+  border-radius: 9px;
+  padding: 10px;
+  color: white;
+  font-size: 14px;
+{rb}
+.starpedigree_genotype_pad_top {lb}
+  padding-top: 14px;
 {rb}
 {/template}

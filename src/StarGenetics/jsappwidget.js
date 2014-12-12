@@ -28,6 +28,11 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 tmi.event("StarGenetics", "Start", config['config']['bundled_samples']);
                 backend_model = bundled_samples[config['config']['bundled_samples']];
                 config['config']['model'] = backend_model;
+            } else if (config && config['config'] && config['config']['model_type'] == 'json' && config['config']['json']) {
+                tmi.event("StarGenetics", "Start", config['config']['json']);
+                backend_model = config['config']['json'];
+                console.info(backend_model);
+                config['config']['model'] = backend_model;
             } else {
                 tmi.event("StarGenetics", "Start", "Model1");
                 backend_model = bundled_samples.model1;
