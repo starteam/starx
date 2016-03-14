@@ -40,6 +40,8 @@
             "lib/raven": "StarX/lib/raven.min",
             "jquery-ui": base_url + "StarX/lib/jquery-1.10.3.ui.min",
             "jquery-ui-css": "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui",
+            "jquery-svg": base_url + "StarX/lib/jquery.svg.min",
+            "jquery-svgdom": base_url + "StarX/lib/jquery.svgdom.min"
         };
         if(! window.jQuery)
         {
