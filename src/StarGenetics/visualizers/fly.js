@@ -1,10 +1,10 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", "StarGenetics/visualizers/base"], function(require, exports, base) {
+define(["require", "exports", "StarGenetics/visualizers/base"], function (require, exports, base) {
+    "use strict";
     var Fly = (function (_super) {
         __extends(Fly, _super);
         function Fly() {
@@ -27,23 +27,18 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             }
             return default_value;
         };
-
         Fly.prototype.eyecolor = function (properties) {
             return this._get(properties, 'eyecolor', this.eyeColor);
         };
-
         Fly.prototype.bodycolor = function (properties) {
             return this._get(properties, 'bodycolor', this.bodyColor);
         };
-
         Fly.prototype.aristae = function (properties) {
             return parseFloat(this._get(properties, 'aristae', '' + this.aristaeLength));
         };
-
         Fly.prototype.wingsize = function (properties) {
             return parseFloat(this._get(properties, 'wingsize', '' + this.wingSize));
         };
-
         Fly.prototype.render = function (canvas, properties, organism) {
             var context = this.prepare(canvas);
             this.clearImage(context);
@@ -56,26 +51,23 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             this.drawWings(context, properties, organism['sex']);
             this.commit(context);
         };
-
         Fly.prototype.isFemale = function (sex) {
             return 'FEMALE'.toLowerCase() == ('' + sex).toLowerCase();
         };
-
         Fly.prototype.drawBody = function (context, properties, sex) {
             var radius = .4;
             context.translate(0, .2 * radius);
             if (this.isFemale(sex)) {
                 this.drawBody_female(context, properties);
-            } else {
+            }
+            else {
                 this.drawBody_male(context, properties);
             }
             context.translate(0, -.2 * radius);
         };
-
         Fly.prototype.drawBody_male = function (context, properties) {
             var scaler = 1;
             var radius = .4;
-
             var bodycolor = this.bodycolor(properties);
             context.save();
             context.beginPath();
@@ -86,7 +78,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
             context.restore();
-
             context.save();
             context.beginPath();
             context.translate(-radius, -radius);
@@ -97,7 +88,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
             context.restore();
             context.save();
-
             context.beginPath();
             context.scale(1, 2.27);
             context.arc(0, 0, scaler * radius, 0 * Math.PI, 1 * Math.PI, false);
@@ -106,13 +96,11 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
             context.restore();
         };
-
         Fly.prototype.drawBody_female = function (context, properties) {
             var scaler = 1;
             var radius = .4;
             var scale_down = 1.30;
             var bodycolor = this.bodycolor(properties);
-
             context.save();
             context.beginPath();
             context.translate(0, -radius);
@@ -122,7 +110,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
             context.restore();
-
             context.save();
             context.beginPath();
             context.scale(1, 1.1);
@@ -136,7 +123,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
             context.restore();
             context.save();
-
             context.beginPath();
             context.scale(scale_down, 3.5);
             context.arc(0, 0, scaler * radius, 0 * Math.PI, 1.01 * Math.PI, false);
@@ -145,7 +131,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
             context.restore();
         };
-
         Fly.prototype.drawLegs = function (context, properties, sex) {
             var dx = 0.375;
             var dy = -0.1;
@@ -155,15 +140,12 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.lineCap = "round";
             context.lineJoin = "mitter";
             context.fillStyle = this.legsColor;
-
             this.drawLine(context, dx, dy, dx * 2, -.5);
             this.drawLine(context, dx, dy, dx * 2, .1);
             this.drawLine(context, dx, dy, dx * 2, .8);
-
             this.drawLine(context, -dx, dy, -dx * 2, -.5);
             this.drawLine(context, -dx, dy, -dx * 2, .1);
             this.drawLine(context, -dx, dy, -dx * 2, .8);
-
             context.stroke();
             context.closePath();
             if (!this.isFemale(sex)) {
@@ -178,12 +160,10 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             }
             context.restore();
         };
-
         Fly.prototype.drawLine = function (context, x0, y0, x1, y1) {
             context.moveTo(x0, y0);
             context.lineTo(x1, y1);
         };
-
         Fly.prototype.drawHead = function (context, properties, sex) {
             var radius = .3;
             var scaler = 1;
@@ -197,7 +177,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
             context.restore();
         };
-
         Fly.prototype.drawEyes = function (context, properties, sex) {
             context.save();
             context.beginPath();
@@ -218,7 +197,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
             context.restore();
         };
-
         Fly.prototype.drawAristae = function (context, properties, sex) {
             context.save();
             context.lineWidth = 0.022;
@@ -232,7 +210,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.strokeStyle = undefined;
             context.restore();
         };
-
         Fly.prototype.drawWings = function (context, properties, sex) {
             // need to implement wing sizing
             var wingsize = this.wingsize(properties);
@@ -259,7 +236,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.restore();
         };
         return Fly;
-    })(base.BaseVisualizer);
+    }(base.BaseVisualizer));
     exports.Fly = Fly;
 });
 //# sourceMappingURL=fly.js.map

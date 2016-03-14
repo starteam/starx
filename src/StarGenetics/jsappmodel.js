@@ -3,15 +3,14 @@
 /// <reference path="../StarX/lib/underscore.d.ts" />
 /// <reference path="../StarGenetics/visualizers/property_name_remap.ts" />
 /// <amd-dependency path="jquery-ui" />
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "StarX/lib/underscore", "jquery-ui"], function(require, exports, remapper, underscore) {
+define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "StarX/lib/underscore", "jquery-ui"], function (require, exports, remapper, underscore) {
+    "use strict";
     var _ = underscore['_'];
-
     var Base = (function () {
         function Base(jsonmodel) {
             this.__data__ = jsonmodel;
@@ -19,7 +18,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
         Base.prototype.toJSON = function () {
             return this.__data__;
         };
-
         Base.defineStaticRWField = function (cls, name, default_value) {
             Object.defineProperty(cls.prototype, name, {
                 'get': function () {
@@ -35,7 +33,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 'configurable': true
             });
         };
-
         Base.readOnlyField = function (cls, name, default_value) {
             Object.defineProperty(cls.prototype, name, {
                 'get': function () {
@@ -48,7 +45,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 'configurable': true
             });
         };
-
         Base.readOnlyWrappedField = function (cls, name, wrapper) {
             Object.defineProperty(cls.prototype, name, {
                 'get': function () {
@@ -61,7 +57,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 'configurable': true
             });
         };
-
         Base.readOnlyWrappedList = function (cls, name, wrapper) {
             Object.defineProperty(cls.prototype, name, {
                 'get': function () {
@@ -76,7 +71,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 'configurable': true
             });
         };
-
         Base.readOnlyWrappedListReverse = function (cls, name, wrapper) {
             Object.defineProperty(cls.prototype, name, {
                 'get': function () {
@@ -92,12 +86,11 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             });
         };
         return Base;
-    })();
+    }());
     exports.Base = Base;
-
     /**
-    * Strain class
-    */
+     * Strain class
+     */
     var Strain = (function (_super) {
         __extends(Strain, _super);
         function Strain() {
@@ -109,24 +102,25 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             get: function () {
                 var ret = {};
                 var phenotypes = this.__data__['phenotype'];
-
                 if (phenotypes) {
                     if (this.properties_cached == null) {
                         _.each(phenotypes, function (v, k) {
                             if (typeof (v) === 'string' && v.charAt(0) == '{') {
-                                try  {
+                                try {
                                     var q = JSON.parse(v);
                                     if (typeof (q['text'] === 'string')) {
                                         ret[k] = q;
                                         return;
                                     }
-                                } finally {
+                                }
+                                finally {
                                 }
                             }
                             ret[k] = { text: v };
                         });
                         this.properties_cached = ret;
-                    } else {
+                    }
+                    else {
                         ret = this.properties_cached;
                     }
                 }
@@ -135,14 +129,12 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Strain.prototype, "capitalized_properties", {
             get: function () {
                 if (!this.properties_cached_capitalized) {
                     function capitalize(str) {
                         return remapper.Remapper.transform(str);
                     }
-
                     var properties = this.properties;
                     var ret = {};
                     _.each(properties, function (q, v) {
@@ -156,15 +148,14 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             configurable: true
         });
         return Strain;
-    })(Base);
+    }(Base));
     exports.Strain = Strain;
     Base.defineStaticRWField(Strain, "name", "--name not defined--");
     Base.readOnlyField(Strain, "id", null);
     Base.readOnlyField(Strain, "sex", null);
-
     /**
-    * Collapsable defines core UI element
-    */
+     * Collapsable defines core UI element
+     */
     var Collapsable = (function (_super) {
         __extends(Collapsable, _super);
         function Collapsable() {
@@ -186,7 +177,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 cp[e] = remapper.Remapper.transform(e);
             });
         };
-
         Object.defineProperty(Collapsable.prototype, "propertiesList", {
             get: function () {
                 return this.__data__.propertiesList || [];
@@ -194,7 +184,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Collapsable.prototype, "capitalized_properties", {
             get: function () {
                 return this.__data__.capitalized_properties || [];
@@ -202,18 +191,15 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Collapsable.prototype.set_list = function (strains) {
             this.__data__.list = strains;
             this.update_properties([this.list]);
         };
-
         Collapsable.prototype.get = function (id) {
             return _.find(this.list, function (element) {
                 return element.id == id;
             });
         };
-
         Collapsable.prototype.sublist = function (from, to) {
             var list = this.list;
             var ret = [];
@@ -224,7 +210,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             }
             return ret;
         };
-
         Object.defineProperty(Collapsable.prototype, "currpage", {
             get: function () {
                 return this.sublist(this.from, this.from + this.page_size);
@@ -232,7 +217,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Collapsable.prototype, "pages", {
             get: function () {
                 var from = 0;
@@ -254,7 +238,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             configurable: true
         });
         return Collapsable;
-    })(Base);
+    }(Base));
     exports.Collapsable = Collapsable;
     Base.defineStaticRWField(Collapsable, "expanded", true);
     Base.defineStaticRWField(Collapsable, "visualsVisible", true);
@@ -264,12 +248,11 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
     Base.readOnlyWrappedList(Collapsable, "list", Strain);
     Base.defineStaticRWField(Collapsable, "from", 0);
     Base.defineStaticRWField(Collapsable, "page_size", 5);
-
     var ExperimentStatistics = (function (_super) {
         __extends(ExperimentStatistics, _super);
         function ExperimentStatistics(e) {
-            this.experiment = e;
             _super.call(this, {});
+            this.experiment = e;
         }
         ExperimentStatistics.sex_generate_internal = function (list) {
             var males = 0;
@@ -280,7 +263,8 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 if (e.sex == 'MALE') {
                     males++;
                     males_list.push(e);
-                } else {
+                }
+                else {
                     females++;
                     females_list.push(e);
                 }
@@ -292,7 +276,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 females_list: females_list
             };
         };
-
         Object.defineProperty(ExperimentStatistics.prototype, "sex", {
             get: function () {
                 if (!this.sex_obj) {
@@ -304,12 +287,11 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             configurable: true
         });
         return ExperimentStatistics;
-    })(Base);
+    }(Base));
     exports.ExperimentStatistics = ExperimentStatistics;
-
     /**
-    * Experiment class adds parents to the mix
-    */
+     * Experiment class adds parents to the mix
+     */
     var Experiment = (function (_super) {
         __extends(Experiment, _super);
         function Experiment(q) {
@@ -329,24 +311,21 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 }
                 this.__data__.parents.push(s.__data__);
                 return true;
-            } else {
+            }
+            else {
                 alert("There is already two parents.");
                 return false;
             }
-            return false;
         };
-
         Experiment.prototype.clearParents = function () {
             this.__data__.parents = [];
         };
-
         Experiment.prototype.clearParent = function (id) {
             var new_parents = _.filter(this.__data__.parents, function (elem) {
                 return elem.id != id;
             });
             this.__data__.parents = new_parents;
         };
-
         Experiment.prototype.get = function (id) {
             var ret = _super.prototype.get.call(this, id);
             if (ret == null) {
@@ -356,7 +335,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             }
             return ret;
         };
-
         Object.defineProperty(Experiment.prototype, "canmate", {
             get: function () {
                 return (this.parents.length == 2);
@@ -364,7 +342,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiment.prototype, "canclearparents", {
             get: function () {
                 return this.parents.length != 0;
@@ -372,7 +349,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Experiment.prototype.update_experiment = function (data) {
             this.__data__.list = data.children;
             this.__data__.parents = data.parents;
@@ -381,7 +357,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             this.stats_cache = undefined;
             this.update_properties([this.list, this.parents]);
         };
-
         Object.defineProperty(Experiment.prototype, "stats", {
             get: function () {
                 if (!this.stats_cache) {
@@ -392,7 +367,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiment.prototype, "parent", {
             get: function () {
                 var parents = this.parents;
@@ -405,7 +379,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiment.prototype, "phenotypes", {
             get: function () {
                 var self = this;
@@ -442,7 +415,8 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                         set start_index_male(q) {
                             if (q < 0) {
                                 q = 0;
-                            } else if (q > sex_obj.males_list.length - 5) {
+                            }
+                            else if (q > sex_obj.males_list.length - 5) {
                                 q = sex_obj.males_list.length - 5;
                             }
                             self.phenotypes_map[key].start_index_male = q;
@@ -472,7 +446,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Experiment.prototype.sublist = function (from, to) {
             var dict = this.phenotypes;
             var list = _.keys(dict);
@@ -484,7 +457,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             }
             return ret;
         };
-
         Object.defineProperty(Experiment.prototype, "currpage", {
             get: function () {
                 return this.sublist(this.from, this.from + this.page_size);
@@ -492,7 +464,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiment.prototype, "pages", {
             get: function () {
                 var from = 0;
@@ -513,7 +484,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiment.prototype, "is_first_page", {
             get: function () {
                 return this.from == 0;
@@ -521,7 +491,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiment.prototype, "is_last_page", {
             get: function () {
                 var from = this.from;
@@ -533,7 +502,7 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             configurable: true
         });
         return Experiment;
-    })(Collapsable);
+    }(Collapsable));
     exports.Experiment = Experiment;
     Base.defineStaticRWField(Experiment, "phenotypes_map", {});
     Base.readOnlyWrappedList(Experiment, "parents", Strain);
@@ -541,10 +510,9 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
     Base.defineStaticRWField(Experiment, "discarded", false);
     Base.defineStaticRWField(Experiment, "from", 0);
     Base.defineStaticRWField(Experiment, "page_size", 2);
-
     /**
-    * Strains box
-    */
+     * Strains box
+     */
     var Strains = (function (_super) {
         __extends(Strains, _super);
         function Strains() {
@@ -556,18 +524,16 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             }
         };
         return Strains;
-    })(Collapsable);
+    }(Collapsable));
     exports.Strains = Strains;
-
     var NewExperiment = (function (_super) {
         __extends(NewExperiment, _super);
         function NewExperiment() {
             _super.apply(this, arguments);
         }
         return NewExperiment;
-    })(Experiment);
+    }(Experiment));
     exports.NewExperiment = NewExperiment;
-
     var Experiments = (function (_super) {
         __extends(Experiments, _super);
         function Experiments() {
@@ -586,7 +552,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             }
             this.show_experiment = experiment.id;
         };
-
         Experiments.prototype.show_more = function (count) {
             this.show_experiments += count;
             if (this.show_experiments < 1) {
@@ -596,7 +561,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
                 this.show_experiments == this.list.length;
             }
         };
-
         Experiments.prototype.remove = function (exp) {
             var exp_list = this.__data__.list;
             var data_exp = _.find(exp_list, function (e) {
@@ -607,16 +571,14 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             if (exp.id == this.show_experiment) {
                 if (exp_list.length > 0) {
                     this.show_experiment = exp_list[0].id;
-                } else {
+                }
+                else {
                     this.show_experiment = null;
                 }
             }
         };
-
         Experiments.prototype.sublist = function (from, to) {
-            var list = _.filter(this.list, function (e) {
-                return !e.discarded;
-            });
+            var list = _.filter(this.list, function (e) { return !e.discarded; });
             var ret = [];
             var ifrom = from > 0 ? from : 0;
             var ito = to < list.length ? to : list.length;
@@ -625,7 +587,6 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             }
             return ret;
         };
-
         Object.defineProperty(Experiments.prototype, "currpage", {
             get: function () {
                 return this.sublist(this.from, this.from + this.page_size);
@@ -633,13 +594,10 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(Experiments.prototype, "pages", {
             get: function () {
                 var from = 0;
-                var to = _.filter(this.list, function (e) {
-                    return !e.discarded;
-                }).length;
+                var to = _.filter(this.list, function (e) { return !e.discarded; }).length;
                 var step = this.page_size;
                 var ret = [];
                 for (var i = from; i < to / step; i++) {
@@ -657,17 +615,16 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             configurable: true
         });
         return Experiments;
-    })(Base);
+    }(Base));
     exports.Experiments = Experiments;
     Base.readOnlyWrappedList(Experiments, "list", Experiment);
     Base.defineStaticRWField(Experiments, "show_experiments", 0);
     Base.defineStaticRWField(Experiments, "show_experiment", undefined);
     Base.defineStaticRWField(Experiments, "from", 0);
     Base.defineStaticRWField(Experiments, "page_size", 2);
-
     /**
-    * UIModel
-    */
+     * UIModel
+     */
     var UIModel = (function (_super) {
         __extends(UIModel, _super);
         function UIModel() {
@@ -676,27 +633,28 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
         UIModel.prototype.get = function (str) {
             if (str == 'strains') {
                 return this.strains;
-            } else if (str == 'new_experiment') {
+            }
+            else if (str == 'new_experiment') {
                 return this.new_experiment;
-            } else {
+            }
+            else {
                 var experiment = _.find(this.experiments.list, function (e) {
                     return e.id == str;
                 });
                 if (experiment) {
                     return experiment;
-                } else {
+                }
+                else {
                     throw "Error " + str;
                 }
             }
         };
-
         UIModel.prototype.getPagable = function (str) {
             if (str == 'experiments') {
                 return this.experiments;
             }
             return this.get(str);
         };
-
         UIModel.prototype.clearNewExperiment = function () {
             this.__data__.new_experiment = {
                 list: [],
@@ -704,24 +662,23 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             };
         };
         return UIModel;
-    })(Base);
+    }(Base));
     exports.UIModel = UIModel;
     Base.readOnlyWrappedField(UIModel, "strains", Strains);
     Base.readOnlyWrappedField(UIModel, "new_experiment", NewExperiment);
     Base.readOnlyWrappedField(UIModel, "experiments", Experiments);
-
     /**
-    * Top wraps JSON its structure is:
-    *      model -- this is passed to GWT
-    *      ui -- this is wrapped by UIModel
-    */
+     * Top wraps JSON its structure is:
+     *      model -- this is passed to GWT
+     *      ui -- this is wrapped by UIModel
+     */
     var Top = (function (_super) {
         __extends(Top, _super);
         function Top() {
             _super.apply(this, arguments);
         }
         return Top;
-    })(Base);
+    }(Base));
     exports.Top = Top;
     Base.defineStaticRWField(Top, "backend", {});
     Base.readOnlyWrappedField(Top, "ui", UIModel);

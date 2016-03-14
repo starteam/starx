@@ -1,6 +1,7 @@
 /// <reference path="../StarX/lib/jquery.d.ts" />
 /// <reference path="../StarGenetics/config.d.ts" />
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
     var StudentIDWidgetState = (function () {
         function StudentIDWidgetState(config) {
             this.element_id = config.element_id;
@@ -13,7 +14,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(StudentIDWidgetState.prototype, "uid", {
             get: function () {
                 return this.element_id;
@@ -22,7 +22,7 @@ define(["require", "exports"], function(require, exports) {
             configurable: true
         });
         return StudentIDWidgetState;
-    })();
+    }());
     exports.StudentIDWidgetState = StudentIDWidgetState;
     var StarGeneticsSelectExperimentWidgetState = (function () {
         function StarGeneticsSelectExperimentWidgetState(config) {
@@ -38,7 +38,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(StarGeneticsSelectExperimentWidgetState.prototype, "uid", {
             get: function () {
                 return this.config.element_id;
@@ -47,9 +46,8 @@ define(["require", "exports"], function(require, exports) {
             configurable: true
         });
         return StarGeneticsSelectExperimentWidgetState;
-    })();
+    }());
     exports.StarGeneticsSelectExperimentWidgetState = StarGeneticsSelectExperimentWidgetState;
-
     var StarGeneticsAppWidgetState = (function () {
         function StarGeneticsAppWidgetState(config) {
             this.config = config;
@@ -64,7 +62,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(StarGeneticsAppWidgetState.prototype, "uid", {
             get: function () {
                 return this.config['element_id'];
@@ -72,7 +69,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(StarGeneticsAppWidgetState.prototype, "open", {
             get: function () {
                 return this.config['open'];
@@ -80,7 +76,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(StarGeneticsAppWidgetState.prototype, "new", {
             get: function () {
                 return this.config['new'];
@@ -88,7 +83,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Object.defineProperty(StarGeneticsAppWidgetState.prototype, "save", {
             get: function () {
                 return this.config['save'];
@@ -97,9 +91,8 @@ define(["require", "exports"], function(require, exports) {
             configurable: true
         });
         return StarGeneticsAppWidgetState;
-    })();
+    }());
     exports.StarGeneticsAppWidgetState = StarGeneticsAppWidgetState;
-
     var StarGeneticsState = (function () {
         function StarGeneticsState() {
             this.onmessages = {};
@@ -108,12 +101,10 @@ define(["require", "exports"], function(require, exports) {
             this.StudentIDWidgetState = new StudentIDWidgetState(config);
             return this.StudentIDWidgetState;
         };
-
         StarGeneticsState.prototype.setApp = function (config) {
             this.StarGeneticsAppWidgetState = new StarGeneticsAppWidgetState(config);
             return this.StarGeneticsAppWidgetState;
         };
-
         Object.defineProperty(StarGeneticsState.prototype, "student_id", {
             get: function () {
                 var sid = this.StudentIDWidgetState;
@@ -122,7 +113,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         StarGeneticsState.prototype.onmessage = function (message) {
             var map = this.onmessages;
             for (var k in map) {
@@ -130,7 +120,6 @@ define(["require", "exports"], function(require, exports) {
                 v.onmessage(message);
             }
         };
-
         StarGeneticsState.prototype.onopen = function (socket, event) {
             var map = this.onmessages;
             for (var k in map) {
@@ -142,9 +131,8 @@ define(["require", "exports"], function(require, exports) {
             this.onmessages[config.element_id] = listener;
         };
         return StarGeneticsState;
-    })();
+    }());
     exports.StarGeneticsState = StarGeneticsState;
-
     var StarGeneticsGlobalState = (function () {
         function StarGeneticsGlobalState() {
             this.state = {};
@@ -158,7 +146,7 @@ define(["require", "exports"], function(require, exports) {
             return my_state;
         };
         return StarGeneticsGlobalState;
-    })();
+    }());
     exports.StarGeneticsGlobalState = StarGeneticsGlobalState;
 });
 //# sourceMappingURL=state.js.map

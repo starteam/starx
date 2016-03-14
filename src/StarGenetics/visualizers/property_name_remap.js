@@ -1,11 +1,11 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
     var Remapper = (function () {
         function Remapper() {
         }
         Remapper.capitalize = function (str) {
             return str[0].toUpperCase() + str.substr(1);
         };
-
         Remapper.transform = function (input) {
             if (input == 'bodycolor') {
                 return 'Body color';
@@ -16,7 +16,7 @@ define(["require", "exports"], function(require, exports) {
             return Remapper.capitalize(input);
         };
         return Remapper;
-    })();
+    }());
     exports.Remapper = Remapper;
 });
 //# sourceMappingURL=property_name_remap.js.map

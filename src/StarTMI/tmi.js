@@ -1,4 +1,5 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
     var TMI = (function () {
         function TMI() {
             this.debug = false;
@@ -13,11 +14,10 @@ define(["require", "exports"], function(require, exports) {
             };
             top.window.postMessage(payload, '*');
         };
-
         TMI.prototype.event = function (category, action, label, value) {
-            if (typeof action === "undefined") { action = undefined; }
-            if (typeof label === "undefined") { label = undefined; }
-            if (typeof value === "undefined") { value = 0; }
+            if (action === void 0) { action = undefined; }
+            if (label === void 0) { label = undefined; }
+            if (value === void 0) { value = 0; }
             if (this.debug) {
                 console.debug("TMI:event c:" + category + " a:" + action + " l:" + label + " v:" + value);
             }
@@ -31,20 +31,21 @@ define(["require", "exports"], function(require, exports) {
             };
             top.window.postMessage(payload, '*');
         };
-
         TMI.prototype.configure_raven = function (a, b, callback) {
             if (window['RavenConfigStarX']) {
-                try  {
+                try {
                     window['RavenConfigStarX'](a, b, callback);
-                } catch (e) {
+                }
+                catch (e) {
                     console.debug(e);
                 }
-            } else {
+            }
+            else {
                 console.debug('no raven');
             }
         };
         return TMI;
-    })();
+    }());
     exports.TMI = TMI;
 });
 //# sourceMappingURL=tmi.js.map

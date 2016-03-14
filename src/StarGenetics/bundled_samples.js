@@ -1,4 +1,5 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
     exports.model1 = {
         "genetics": {
             "visualizer": { "name": "fly" },
@@ -7,16 +8,14 @@ define(["require", "exports"], function(require, exports) {
                     "C_1": {
                         "name": "Chromosome 1",
                         "genes": [
-                            {
-                                "name": "red_eyes",
+                            { "name": "red_eyes",
                                 "position": 25,
                                 "alleles": [
                                     { "name": "A" },
                                     { "name": "a" }
                                 ]
                             },
-                            {
-                                "name": "wingless",
+                            { "name": "wingless",
                                 "position": 40,
                                 "alleles": [
                                     { "name": "B" },
@@ -38,8 +37,7 @@ define(["require", "exports"], function(require, exports) {
             },
             "experiments": {},
             "phenotype_rules": [
-                {
-                    name: 'default',
+                { name: 'default',
                     matches: '*',
                     phenotype: {
                         bodycolor: {
@@ -88,7 +86,6 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
-
     exports.yeast = {
         "genetics": {
             "visualizer": { "name": "yeast" },
@@ -96,20 +93,19 @@ define(["require", "exports"], function(require, exports) {
                 "sex_type": "Aa",
                 "avg_offspring_count": 10
             },
-            "genome": { "chromosomes": {
+            "genome": {
+                "chromosomes": {
                     "C1": {
                         "name": "Chromosome 1",
                         "genes": [
-                            {
-                                "name": "LEU2",
+                            { "name": "LEU2",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "LEU2-3" },
                                     { "name": "leu2-3" }
                                 ]
                             },
-                            {
-                                "name": "LEU2.1",
+                            { "name": "LEU2.1",
                                 "position": 5,
                                 "alleles": [
                                     { "name": "LEU2-112" },
@@ -121,8 +117,7 @@ define(["require", "exports"], function(require, exports) {
                     "C2": {
                         "name": "Chromosome 2",
                         "genes": [
-                            {
-                                "name": "LEUX",
+                            { "name": "LEUX",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "LEUX" },
@@ -134,8 +129,7 @@ define(["require", "exports"], function(require, exports) {
                     "C4": {
                         "name": "Chromosome 4",
                         "genes": [
-                            {
-                                "name": "TRP1",
+                            { "name": "TRP1",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "TRP1" },
@@ -147,8 +141,7 @@ define(["require", "exports"], function(require, exports) {
                     "C3": {
                         "name": "Chromosome 3",
                         "genes": [
-                            {
-                                "name": "ADE1",
+                            { "name": "ADE1",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "ADE1" },
@@ -160,8 +153,7 @@ define(["require", "exports"], function(require, exports) {
                     "C7": {
                         "name": "Chromosome 7",
                         "genes": [
-                            {
-                                "name": "COX4",
+                            { "name": "COX4",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "COX4" },
@@ -173,8 +165,7 @@ define(["require", "exports"], function(require, exports) {
                     "C5": {
                         "name": "Chromosome 5",
                         "genes": [
-                            {
-                                "name": "PET1",
+                            { "name": "PET1",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "PET1" },
@@ -186,8 +177,7 @@ define(["require", "exports"], function(require, exports) {
                     "C10": {
                         "name": "Chromosome 10",
                         "genes": [
-                            {
-                                "name": "LYS9",
+                            { "name": "LYS9",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "LYS9" },
@@ -498,7 +488,6 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
-
     exports.tutorial = {
         "ui": {
             "title": "Tutorial Exercise"
@@ -510,8 +499,7 @@ define(["require", "exports"], function(require, exports) {
                     "X": {
                         "name": "Chromosome X",
                         "genes": [
-                            {
-                                "name": "Body Color",
+                            { "name": "Body Color",
                                 "position": 40,
                                 "alleles": [
                                     { "name": "B" },
@@ -533,8 +521,7 @@ define(["require", "exports"], function(require, exports) {
             },
             "experiments": {},
             "phenotype_rules": [
-                {
-                    name: 'default',
+                { name: 'default',
                     matches: '*',
                     phenotype: {
                         "bodycolor": {
@@ -578,7 +565,6 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
-
     //## Fruit Fly Exercise 5
     //## https://starwiki.mit.edu/media_files/uploads/genetics/excel_workbooks/fruit_fly_exercise_5_ver2.xls
     exports.fruit_fly_exercise_5 = {
@@ -589,24 +575,21 @@ define(["require", "exports"], function(require, exports) {
                     "C_1": {
                         "name": "Chromosome 2",
                         "genes": [
-                            {
-                                "name": "Brown body - dominant",
+                            { "name": "Brown body - dominant",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "B" },
                                     { "name": "b" }
                                 ]
                             },
-                            {
-                                "name": "Long artisae - dominant",
+                            { "name": "Long artisae - dominant",
                                 "position": 25,
                                 "alleles": [
                                     { "name": "A" },
                                     { "name": "a" }
                                 ]
                             },
-                            {
-                                "name": "Wingless - recessive",
+                            { "name": "Wingless - recessive",
                                 "position": 55,
                                 "alleles": [
                                     { "name": "W" },
@@ -628,8 +611,7 @@ define(["require", "exports"], function(require, exports) {
             },
             "experiments": {},
             "phenotype_rules": [
-                {
-                    name: 'default',
+                { name: 'default',
                     matches: '*',
                     phenotype: {
                         bodycolor: {
@@ -699,7 +681,6 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
-
     exports.fruit_fly_exercise_1 = {
         "genetics": {
             "visualizer": { "name": "fly" },
@@ -717,8 +698,7 @@ define(["require", "exports"], function(require, exports) {
                     "C_1": {
                         "name": "Chromosome 3",
                         "genes": [
-                            {
-                                "name": "Wingless - dominant",
+                            { "name": "Wingless - dominant",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "G" },
@@ -731,8 +711,7 @@ define(["require", "exports"], function(require, exports) {
             },
             "experiments": {},
             "phenotype_rules": [
-                {
-                    name: 'default',
+                { name: 'default',
                     matches: '*',
                     phenotype: {
                         bodycolor: {
@@ -778,7 +757,6 @@ define(["require", "exports"], function(require, exports) {
             }
         }
     };
-
     // 7QBW EX5
     exports.fruit_fly_exercise_7QBW_mapping_exercise = {
         "genetics": {
@@ -788,24 +766,21 @@ define(["require", "exports"], function(require, exports) {
                     "C_1": {
                         "name": "Chromosome 2",
                         "genes": [
-                            {
-                                "name": "Brown body - dominant",
+                            { "name": "Brown body - dominant",
                                 "position": 0,
                                 "alleles": [
                                     { "name": "B" },
                                     { "name": "b" }
                                 ]
                             },
-                            {
-                                "name": "Long artisae - dominant",
+                            { "name": "Long artisae - dominant",
                                 "position": 8,
                                 "alleles": [
                                     { "name": "A" },
                                     { "name": "a" }
                                 ]
                             },
-                            {
-                                "name": "Wingless - recessive",
+                            { "name": "Wingless - recessive",
                                 "position": 15,
                                 "alleles": [
                                     { "name": "W" },
@@ -827,8 +802,7 @@ define(["require", "exports"], function(require, exports) {
             },
             "experiments": {},
             "phenotype_rules": [
-                {
-                    name: 'default',
+                { name: 'default',
                     matches: '*',
                     phenotype: {
                         bodycolor: {

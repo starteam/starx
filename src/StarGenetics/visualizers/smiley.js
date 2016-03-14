@@ -1,11 +1,11 @@
 /// <reference path="base.ts" />
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", "StarGenetics/visualizers/base"], function(require, exports, base) {
+define(["require", "exports", "StarGenetics/visualizers/base"], function (require, exports, base) {
+    "use strict";
     var Smiley = (function (_super) {
         __extends(Smiley, _super);
         function Smiley() {
@@ -20,19 +20,16 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             console.info("Smiley render ");
             console.info(canvas);
             console.info(properties);
-
             var context = this.prepare(canvas);
             this.clearImage(context);
             this.drawBody(context, properties);
             this.drawEyes(context, properties);
             this.drawMouth(context, properties);
-
             //        this.drawSterile(context,properties);
             //        this.drawMatings(context,properties);
             this.commit(context);
             console.info("Smiley render done");
         };
-
         Smiley.prototype.drawBody = function (context, properties) {
             context.beginPath();
             context.arc(0, 0, this.bodyRadius, 0, 2 * Math.PI, false);
@@ -40,7 +37,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
         };
-
         Smiley.prototype.drawEyes = function (context, properties) {
             var x0 = this.bodyRadius * .4;
             var y0 = this.bodyRadius * .2;
@@ -52,17 +48,17 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
         };
-
         Smiley.prototype.drawMouth = function (context, properties) {
             if (properties['mouth'].value == 'happy') {
                 this.drawMouthHappy(context, properties);
-            } else if (properties['mouth'].value == 'sad') {
+            }
+            else if (properties['mouth'].value == 'sad') {
                 this.drawMouthSad(context, properties);
-            } else {
+            }
+            else {
                 this.drawMouthNeutral(context, properties);
             }
         };
-
         Smiley.prototype.drawMouthNeutral = function (context, properties) {
             var d = .5;
             var x0 = this.bodyRadius * d;
@@ -73,7 +69,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
         };
-
         Smiley.prototype.drawMouthHappy = function (context, properties) {
             var d = .5;
             var x0 = this.bodyRadius * d;
@@ -86,7 +81,6 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.fill();
             context.closePath();
         };
-
         Smiley.prototype.drawMouthSad = function (context, properties) {
             var d = .5;
             var x0 = this.bodyRadius * d;
@@ -100,7 +94,7 @@ define(["require", "exports", "StarGenetics/visualizers/base"], function(require
             context.closePath();
         };
         return Smiley;
-    })(base.BaseVisualizer);
+    }(base.BaseVisualizer));
     exports.Smiley = Smiley;
 });
 //# sourceMappingURL=smiley.js.map

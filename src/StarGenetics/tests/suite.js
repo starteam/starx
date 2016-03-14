@@ -2,12 +2,11 @@
 /// <reference path="../jsappwidget.ts" />
 /// <reference path="../jsappmodel.ts" />
 /// <reference path="../../../../starx/src/StarX/lib/jquery.d.ts" />
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
     var $ = jQuery;
-
     var q;
     var app;
-
     function testSuite(qunit, jsappwidget) {
         console.info("running tests");
         q = qunit;
@@ -24,7 +23,6 @@ define(["require", "exports"], function(require, exports) {
         set_experiment();
     }
     exports.testSuite = testSuite;
-
     function open_ps() {
         q.test("open", function () {
             app.open({
@@ -39,7 +37,6 @@ define(["require", "exports"], function(require, exports) {
             });
         });
     }
-
     function liststrains() {
         q.test("liststrains", function () {
             app.list_strains({
@@ -54,7 +51,6 @@ define(["require", "exports"], function(require, exports) {
             });
         });
     }
-
     function expand(kind, expanded) {
         q.test("expand " + kind, function () {
             var expand = $('.sg_expand[data-kind="' + kind + '"][data-expanded="' + expanded + '"]');
@@ -62,7 +58,6 @@ define(["require", "exports"], function(require, exports) {
             expand.click();
         });
     }
-
     function expand_visuals(kind, expanded) {
         q.test("expand_visuals " + kind, function () {
             var expand = $('.sg_strain_expand_visuals[data-kind="' + kind + '"][data-expanded-visuals="' + expanded + '"]');
@@ -70,31 +65,24 @@ define(["require", "exports"], function(require, exports) {
             expand.click();
         });
     }
-
     function expandstrains() {
         expand('strains', 'true');
     }
-
     function collapsestrains() {
         expand('strains', 'false');
     }
-
     function expand_visuals_strains() {
         expand_visuals('strains', 'true');
     }
-
     function collapse_visuals_strains() {
         expand_visuals('strains', 'false');
     }
-
     function expandnewexperiment() {
         expand('new_experiment', 'true');
     }
-
     function collapsenewexperiment() {
         expand('new_experiment', 'false');
     }
-
     function set_experiment() {
         q.test("set_new_experiment", function () {
             $('.sg_clear_parents[data-kind="new_experiment"]').click();
