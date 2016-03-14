@@ -262,8 +262,8 @@ export class ExperimentStatistics extends Base {
     sex_obj:any;
 
     constructor(e:Experiment) {
-        this.experiment = e;
         super({});
+        this.experiment = e;
     }
 
     public static sex_generate_internal(list) {
@@ -334,7 +334,6 @@ export class Experiment extends Collapsable {
             alert("There is already two parents.");
             return false;
         }
-        return false;
     }
 
     clearParents() {

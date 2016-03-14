@@ -210,7 +210,3 @@ export class StarGenetics {
     }
 
 }
-
-if (false) {
-    var x = new StarGenetics();
-}
