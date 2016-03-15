@@ -1,3 +1,4 @@
+define(['require','exports'],function(require,exports) {
 /*
  * Copyright 2008 Google Inc.
  *
@@ -3296,3 +3297,7 @@ soy.esc.$$LT_REGEX_ = /</g;
 soy.esc.$$SAFE_TAG_WHITELIST_ = {'b': 1, 'br': 1, 'em': 1, 'i': 1, 's': 1, 'sub': 1, 'sup': 1, 'u': 1};
 
 // END GENERATED CODE
+for(var i in soy) {
+    exports[i] = soy[i];
+}
+});
