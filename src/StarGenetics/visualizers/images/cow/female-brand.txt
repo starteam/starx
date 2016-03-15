@@ -1,0 +1,5 @@
+<g id="female-brand">
+	<circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" cx="272.375" cy="77.938" r="6.562"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="272.375" y1="84.5" x2="272.375" y2="92.375"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="268.219" y1="88.438" x2="276.531" y2="88.438"/>
+</g>

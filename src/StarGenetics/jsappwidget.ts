@@ -22,6 +22,7 @@ import SGState = require("StarGenetics/state");
 import VisualizerBase = require("StarGenetics/visualizers/base");
 import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
+import SGCow = require("StarGenetics/visualizers/cow");
 import SGTests = require( "StarGenetics/tests/qunit");
 import StarTMI = require('StarTMI/tmi');
 var tmi = new StarTMI.TMI();
@@ -827,20 +828,44 @@ export class StarGeneticsJSAppWidget {
         var self:StarGeneticsJSAppWidget = this;
         var visualizer_name:string = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
         var visualizer:VisualizerBase.Visualizer = new SGSmiley.Smiley();
+        var svgVisualizer: any;
         if (visualizer_name == 'fly') {
             visualizer = new SGFly.Fly();
         }
-        $('.sg_strain_visual canvas', scope).each(function () {
-            var c:SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-            var organism:SGModel.Strain = c.get($(this).data('id'));
-            visualizer.render($(this)[0], organism.properties, organism);
-            window['c'] = this;
-            window['v'] = visualizer;
-            var qq = this;
-            window['rr'] = function () {
-                visualizer.render($(qq)[0], organism.properties, organism);
-            };
-        });
+        else if (visualizer_name == 'cow') {
+            svgVisualizer = new SGCow.Cow();
+        }
+        if (visualizer_name == 'cow') {
+            $('.sg_strain_visual canvas', scope).each(function() {
+                var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+                var organism: SGModel.Strain = c.get($(this).data('id'));
+                var $container = $('<div class="sg_strain_visual_svg"></div>');
+                $container.data('king', $(this).data('kind')); // Should be done in soy template
+                $container.data('id', $(this).data('id')); // Should be done in soy template
+                $(this).parent().prepend($container);
+                svgVisualizer.render($container[0], organism);
+                // window['c'] = this;
+                // window['v'] = visualizer;
+                // var qq = this;
+                // window['rr'] = function() {
+                //     visualizer.render($(qq)[0], organism.properties, organism);
+                // };
+                $(this).remove();
+            });
+        }
+        else {
+            $('.sg_strain_visual canvas', scope).each(function() {
+                var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+                var organism: SGModel.Strain = c.get($(this).data('id'));
+                visualizer.render($(this)[0], organism.properties, organism);
+                window['c'] = this;
+                window['v'] = visualizer;
+                var qq = this;
+                window['rr'] = function() {
+                    visualizer.render($(qq)[0], organism.properties, organism);
+                };
+            });
+        }
     }
 
     apply_strain_drag_and_drop(scope) {

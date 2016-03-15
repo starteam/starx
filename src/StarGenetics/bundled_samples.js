@@ -872,5 +872,118 @@ define(["require", "exports"], function (require, exports) {
             }
         }
     };
+    //## Cow Exercise 1
+    exports.cow_exercise_1 = {
+        "genetics": {
+            "visualizer": { "name": "cow" },
+            "genome": {
+                "chromosomes": {
+                    "C_X": {
+                        "name": "Chromosome X",
+                        "genes": [
+                            {
+                                "name": "Polled horns - Dominant, sex-linked",
+                                "position": 0,
+                                "alleles": [
+                                    { "name": "H" },
+                                    { "name": "h" }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "engine": {
+                "sex_type": "xy",
+                "male_recombination_rate": 1,
+                "female_recombination_rate": 1,
+                "female_sex_ratio": .50,
+                "twinning": 5,
+                "identical_twins_frequency": 10,
+                "avg_offspring_count": 1
+            },
+            "experiments": {},
+            "phenotype_rules": [
+                {
+                    name: 'default',
+                    matches: '*',
+                    phenotype: {
+                        bodycolor: {
+                            text: 'Saddle brown',
+                            value: 'saddlebrown'
+                        },
+                        spots: {
+                            text: 'yes',
+                            value: true
+                        },
+                        spotscolor: {
+                            text: 'beige',
+                            value: 'beige'
+                        },
+                        speckles: {
+                            text: 'no',
+                            value: false
+                        },
+                        specklescolor: {
+                            text: 'black',
+                            value: 'black'
+                        },
+                        horns: {
+                            text: 'yes',
+                            value: true
+                        },
+                        hornshape: {
+                            text: 'up',
+                            value: 'up' // up, down, twisted, straight
+                        },
+                        hornsize: {
+                            text: 'short',
+                            value: 'short' // long, short
+                        },
+                        hump: {
+                            text: 'no',
+                            value: false
+                        },
+                        facecolor: {
+                            text: 'black',
+                            value: 'black'
+                        },
+                    }
+                },
+                {
+                    name: 'Female polled',
+                    matches: 'Sex:Female;H',
+                    phenotype: {
+                        horns: {
+                            text: 'no',
+                            value: false
+                        }
+                    }
+                },
+                {
+                    name: 'Male polled',
+                    matches: 'Sex:Male;H',
+                    phenotype: {
+                        horns: {
+                            text: 'no',
+                            value: false
+                        }
+                    }
+                }
+            ],
+            "gel_rules": {},
+            "model_metadata": {},
+            "strains": {
+                "initial": {
+                    "name": "Initial Strains",
+                    "list": [
+                        { "name": "Polled", "sex": "F", "alleles": ["H,h"] },
+                        { "name": "Hereford Cow", "sex": "F", "alleles": ["h,h"] },
+                        { "name": "Hereford Bull", "sex": "M", "alleles": ["h"] }
+                    ]
+                }
+            }
+        }
+    };
 });
 //# sourceMappingURL=bundled_samples.js.map

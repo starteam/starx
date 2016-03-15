@@ -1,0 +1,8 @@
+<g id="male-brand">
+	<g>
+		<circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" cx="272.811" cy="77.812" r="6.562"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="277.049" y1="73.482" x2="283.369" y2="66.763"/>
+	</g>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M277.049,66.109
+		c2.453,0.306,5.271,0.322,7.641-0.436c-0.236,2.388-0.611,4.961,0.123,7.296"/>
+</g>
