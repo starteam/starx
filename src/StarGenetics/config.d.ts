@@ -4,4 +4,5 @@ interface StarGeneticsConfig extends StarXConfig {
     State:string;
     Widget: string;
     StudentID: string;
+    renderer: string;
 }

@@ -439,11 +439,12 @@ export class StarGeneticsJSAppWidget {
         var zoom_bugs_factor = 2;
         var self:StarGeneticsJSAppWidget = this;
         console.info("CONFIG", self.config);
+        var renderer = self.config.renderer || 'canvas';
         if (self.config['feature_flag']) {
             this.model['_feature_flag_'] = self.config['feature_flag'];
         }
         var main = $('.sg_workspace', '#' + this.config.element_id);
-        main.html(SGUIMAIN.workspace({model: this.model}));
+        main.html(SGUIMAIN.workspace({model: this.model, renderer: renderer}));
 
 
         $('.sg_dialog_close', main).off('click').on('click', function () {
@@ -460,7 +461,7 @@ export class StarGeneticsJSAppWidget {
             tmi.event("StarGenetics", "sg_expand_males");
 //            self.show();
             var $parent = $(this).closest('.sg_experiment_box');
-            var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'males_list'})).appendTo($parent);
+            var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'males_list', renderer: renderer})).appendTo($parent);
             var offset_parent:any = $parent.offset();
             var offset_this:any = $(this).offset();
             $dialog.css({top: (offset_this['top'] - offset_parent['top']) + "px", left: (offset_this.left - offset_parent.left) + "px"});
@@ -483,7 +484,7 @@ export class StarGeneticsJSAppWidget {
 //            c['phenotypes'][phenotype].show_more_females = $(this).data('state');
             tmi.event("StarGenetics", "sg_expand_females");
             var $parent = $(this).closest('.sg_experiment_box');
-            var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'females_list'})).appendTo($parent);
+            var $dialog = $(SGUIMAIN.sg_expand_females({experiment: c, phenotype: phenotype, list_kind: 'females_list', renderer: renderer})).appendTo($parent);
             var offset_parent:any = $parent.offset();
             var offset_this:any = $(this).offset();
             $dialog.css({top: (offset_this.top - offset_parent.top) + "px", left: (offset_this.left - offset_parent.left) + "px"});
@@ -742,7 +743,7 @@ export class StarGeneticsJSAppWidget {
             tmi.event("StarGenetics", "sg_expand_class");
             var $table = $(this).closest('.sg_slider_table');
             var $parent = $table.parent();
-            var $dialog = $(SGUIMAIN.sg_expand_class({experiment: c, phenotype: phenotype, name: class_name})).appendTo($parent);
+            var $dialog = $(SGUIMAIN.sg_expand_class({experiment: c, phenotype: phenotype, name: class_name, renderer: renderer})).appendTo($parent);
             var offset_parent = $parent.offset();
             var offset_this = $(this).offset();
 //            setTimeout(function () {
@@ -825,35 +826,19 @@ export class StarGeneticsJSAppWidget {
     }
 
     apply_visualizer(scope) {
-        var self:StarGeneticsJSAppWidget = this;
-        var visualizer_name:string = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
-        var visualizer:VisualizerBase.Visualizer = new SGSmiley.Smiley();
+        var self: StarGeneticsJSAppWidget = this;
+        var renderer: string = this.config.renderer || 'canvas';
         var svgVisualizer: any;
-        if (visualizer_name == 'fly') {
-            visualizer = new SGFly.Fly();
-        }
-        else if (visualizer_name == 'cow') {
-            svgVisualizer = new SGCow.Cow();
-        }
-        if (visualizer_name == 'cow') {
-            $('.sg_strain_visual canvas', scope).each(function() {
-                var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-                var organism: SGModel.Strain = c.get($(this).data('id'));
-                var $container = $('<div class="sg_strain_visual_svg"></div>');
-                $container.data('king', $(this).data('kind')); // Should be done in soy template
-                $container.data('id', $(this).data('id')); // Should be done in soy template
-                $(this).parent().prepend($container);
-                svgVisualizer.render($container[0], organism);
-                // window['c'] = this;
-                // window['v'] = visualizer;
-                // var qq = this;
-                // window['rr'] = function() {
-                //     visualizer.render($(qq)[0], organism.properties, organism);
-                // };
-                $(this).remove();
-            });
-        }
-        else {
+        var visualizer_name:string = (((((this.config['config'] || {})['model'] || {})['genetics'] || {})['visualizer'] || {})['name'] || "Not defined");
+        var visualizer: VisualizerBase.Visualizer;
+
+        if (renderer == 'canvas') {
+            if (visualizer_name == 'fly') {
+                visualizer = new SGFly.Fly();
+            }
+            else {
+                visualizer = new SGSmiley.Smiley();
+            }
             $('.sg_strain_visual canvas', scope).each(function() {
                 var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
                 var organism: SGModel.Strain = c.get($(this).data('id'));
@@ -865,6 +850,22 @@ export class StarGeneticsJSAppWidget {
                     visualizer.render($(qq)[0], organism.properties, organism);
                 };
             });
+        }
+        else if (renderer == 'svg') {
+            if (visualizer_name == 'cow') {
+                svgVisualizer = new SGCow.Cow();
+                $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function() {
+                    var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+                    var organism: SGModel.Strain = c.get($(this).data('id'));
+                    svgVisualizer.render($(this)[0], organism);
+                    window['c'] = this;
+                    window['v'] = svgVisualizer;
+                    var qq = this;
+                    window['rr'] = function() {
+                        svgVisualizer.render($(qq)[0], organism);
+                    };
+                });
+            }
         }
     }
 

@@ -24,6 +24,7 @@
 /**
 * Structure of the main page
 * @param model
+* @param renderer
 */
 {template .workspace}
     <div class='sg_workspace'>
@@ -31,14 +32,17 @@
         {call .strains}
             {param strains: $model.ui.strains /}
             {param add_strain: $model.ui.experiments.list.length != 0 /}
+            {param renderer: $renderer /}
         {/call}
         {call .new_experiment}
             {param experiment: $model.ui.new_experiment /}
             {param progenies_count: $model.backend.genetics.engine.avg_offspring_count /}
+            {param renderer: $renderer /}
         {/call}
         {call .all_experiments}
             {param experiments:$model.ui.experiments /}
             {param feature_flag:$model['_feature_flag_']/}
+            {param renderer: $renderer /}
         {/call}
 <br>
         {call .io}
@@ -75,14 +79,21 @@ Sex:{$strain['sex']}{\n}
 * @param kind
 * @param name
 * @param testid
+* @param renderer
 */
 {template .strain}
 {if $count != 0}
     <div class='sg_strain_box sg_s_strain_box' data-kind='{$kind}' data-id="{$strain['id']}" data-name="{$strain['name']}" {if $testid}data-test-id="{$testid}"{/if}>
     {if $visuals}
         <div class='sg_strain_visual' title='{call .strain_tooltip}{param strain:$strain/}{/call}'>
-            <canvas data-kind='{$kind}' data-id='{$strain['id']}' class='sg_strain_visual_canvas'></canvas>
-            <div class='sg_strain_visual_canvas_sex'>{if $strain['sex'] == 'FEMALE'}{call .female_icon/}{else}{call .male_icon/}{/if}</div>
+            {if $renderer == 'canvas'}
+                <canvas data-kind='{$kind}' data-id='{$strain['id']}' class='sg_strain_visual_canvas'></canvas>
+                <div class='sg_strain_visual_canvas_sex'>
+                    {if $strain['sex'] == 'FEMALE'}{call .female_icon/}{else}{call .male_icon/}{/if}
+                </div>
+            {elseif $renderer == 'svg'}
+                <div data-kind='{$kind}' data-id='{$strain['id']}' class='sg_strain_visual_canvas'></div>
+            {/if}
         </div>
     {/if}
     </div>
@@ -123,6 +134,7 @@ Sex:{$strain['sex']}{\n}
 *   Strains
 * @param strains
 * @param add_strain
+* @param renderer
 */
 {template .strains}
 <div class='sg_strains_box'>
@@ -140,6 +152,7 @@ Sex:{$strain['sex']}{\n}
                     {param name: null /}
                     {param percentage: null /}
                     {param testid: null /}
+                    {param renderer: $renderer /}
                 {/call}
                 </td>
             {/foreach}
@@ -237,6 +250,7 @@ Sex:{$strain['sex']}{\n}
 Display parent or placeholder in new experiment
 @param experiment
 @param index
+@param renderer
 */
 {template .new_experiment_parent}
 {if $experiment.parents.length <$index}
@@ -253,6 +267,7 @@ Display parent or placeholder in new experiment
             {param name: null /}
             {param percentage: null /}
             {param testid: null /}
+            {param renderer: $renderer /}
     {/call}
     <button class='sg_experiment_parent_remove' data-id='{$experiment.parents[$index-1].id}' data-kind='new_experiment' title="Remove Parent"><span class='sg_experiment_parent_remove_text'>x</span>
     </button>
@@ -264,6 +279,7 @@ Display parent or placeholder in new experiment
 *   New Experiment - Expanded
 * @param experiment
 * @param prg_count
+* @param renderer
 *
 */
 {template .new_experiment_expanded}
@@ -275,11 +291,13 @@ Display parent or placeholder in new experiment
             {call .new_experiment_parent}
                 {param experiment:$experiment/}
                 {param index:1/}
+                {param renderer: $renderer/}
             {/call}
             <div class='sg_experiment_parent_x'>{literal}&#10799;{/literal}</div>
             {call .new_experiment_parent}
                 {param experiment:$experiment/}
                 {param index:2/}
+                {param renderer: $renderer/}
             {/call}
         </div>
     {if $experiment.canmate}
@@ -301,12 +319,14 @@ Display parent or placeholder in new experiment
 *   Active Experiment
 * @param experiment
 * @param progenies_count
+* @param renderer
 */
 {template .new_experiment}
     {if $experiment.expanded}
         {call .new_experiment_expanded}
             {param experiment:$experiment/}
             {param prg_count: $progenies_count /}
+            {param renderer: $renderer /}
         {/call}
     {else}
 <div class='sg_new_experiment_box'>
@@ -323,6 +343,7 @@ Display parent or placeholder in new experiment
 *   Active Experiment
 * @param experiments
 * @param feature_flag
+* @param renderer
 */
 {template .all_experiments}
     {foreach $experiment in $experiments.list}
@@ -334,6 +355,7 @@ Display parent or placeholder in new experiment
                     {param compact_view:false/}
                     {param css_class:''/}
                     {param selected: null /}
+                    {param renderer: $renderer /}
                 {/call}
             {else}
                 {call .one_experiment}
@@ -342,6 +364,7 @@ Display parent or placeholder in new experiment
                     {param compact_view:false/}
                     {param css_class:''/}
                     {param selected: null /}
+                    {param renderer: $renderer /}
                 {/call}
             {/if}
         <div class='sg_bottom_border'>
@@ -363,6 +386,7 @@ Display parent or placeholder in new experiment
                                 {param compact_view:true /}
                                 {param css_class:'sg_mini_experiment_box '/}
                                 {param selected: $experiments.show_experiment == $experiment.id/}
+                                {param renderer: $renderer /}
                             {/call}
                         {/if}
                 {/foreach}
@@ -384,6 +408,7 @@ Display parent or placeholder in new experiment
 * @param compact_view
 * @param css_class
 * @param selected
+* @param renderer
 */
 {template .compact_experiment}
 <div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}' data-kind='{$experiment.id}'>
@@ -453,6 +478,7 @@ Display parent or placeholder in new experiment
                         {param percentage: null /}
                         {param name: null /}
                         {param testid: null /}
+                        {param renderer: $renderer /}
                         {/call}
                         </div>
                      </td>
@@ -471,6 +497,7 @@ Display parent or placeholder in new experiment
                         {param percentage: null /}
                         {param name: null /}
                         {param testid: null /}
+                        {param renderer: $renderer /}
                         {/call}
                         </div>
 
@@ -489,6 +516,7 @@ Display parent or placeholder in new experiment
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
                             {param testid: null/}
+                            {param renderer: $renderer /}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_right'>
@@ -500,6 +528,7 @@ Display parent or placeholder in new experiment
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
                             {param testid: null/}
+                            {param renderer: $renderer /}
                         {/call}
                         </td>
                     {/foreach}
@@ -697,6 +726,7 @@ Display parent or placeholder in new experiment
 * @param experiment
 * @param css_class
 * @param selected
+* @param renderer
 */
 {template .one_experiment}
 <div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}'>
@@ -738,6 +768,7 @@ Display parent or placeholder in new experiment
                         {param percentage: null /}
                         {param name: null /}
                         {param testid: null /}
+                        {param renderer: $renderer /}
                         {/call}
                         </div>
                      </td>
@@ -757,6 +788,7 @@ Display parent or placeholder in new experiment
                         {param percentage: null /}
                         {param name: null /}
                         {param testid: null /}
+                        {param renderer: $renderer /}
                         {/call}
                         </div>
 
@@ -876,6 +908,7 @@ Display parent or placeholder in new experiment
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
                             {param testid: null/}
+                            {param renderer: $renderer /}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual '>
@@ -887,6 +920,7 @@ Display parent or placeholder in new experiment
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
                             {param testid: null/}
+                            {param renderer: $renderer /}
                         {/call}
                         </td>
                     {/foreach}
@@ -1084,6 +1118,7 @@ Display parent or placeholder in new experiment
 * @param experiment
 * @param css_class
 * @param selected
+* @param renderer
 */
 {template .one_experiment_horizontal}
 <div class='sg_experiment_box {$css_class} {if $selected}sg_experiment_selected{/if}'>
@@ -1123,6 +1158,7 @@ Display parent or placeholder in new experiment
                         {param percentage: null /}
                         {param name: null /}
                         {param testid: null /}
+                        {param renderer: $renderer /}
                         {/call}
                         </div>
                      </td>
@@ -1142,6 +1178,7 @@ Display parent or placeholder in new experiment
                         {param percentage: null /}
                         {param name: null /}
                         {param testid: null /}
+                        {param renderer: $renderer /}
                         {/call}
                         </div>
                     </td>
@@ -1156,6 +1193,7 @@ Display parent or placeholder in new experiment
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
                             {param testid:$experiment.name+' '+(index($phenotype)+1)+' F'/}
+                            {param renderer: $renderer /}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_right'>
@@ -1167,6 +1205,7 @@ Display parent or placeholder in new experiment
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
                             {param testid:$experiment.name+' '+(index($phenotype)+1)+' M'/}
+                            {param renderer: $renderer /}
                         {/call}
                         </td>
                     {/foreach}
@@ -1277,6 +1316,7 @@ Display parent or placeholder in new experiment
 * @param experiment
 * @param phenotype
 * @param list_kind
+* @param renderer
 */
 {template .sg_expand_females}
 <div class='sg_expand_females_dialog' data-widget="dialog" data-id='{$experiment.id}'>
@@ -1294,6 +1334,7 @@ Display parent or placeholder in new experiment
             {param percentage: null /}
             {param name: null /}
             {param testid: null /}
+            {param renderer: $renderer /}
         {/call}
         </span>
     {/foreach}
@@ -1307,6 +1348,7 @@ Display parent or placeholder in new experiment
 * @param experiment
 * @param phenotype
 * @param name
+* @param renderer
 */
 {template .sg_expand_class}
 <div class='sg_expand_class_dialog' data-widget="dialog" data-id='{$experiment.id}'>
@@ -1326,6 +1368,7 @@ Display parent or placeholder in new experiment
             {param percentage: null /}
             {param name: null /}
             {param testid: null /}
+            {param renderer: $renderer /}
         {/call}
         </span>
     {/foreach}
