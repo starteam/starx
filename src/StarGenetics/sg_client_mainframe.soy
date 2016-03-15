@@ -92,6 +92,7 @@ Sex:{$strain['sex']}{\n}
 {/if}
 {/template}
 
+
 /**
 * @param strain
 * @param kind
@@ -135,6 +136,10 @@ Sex:{$strain['sex']}{\n}
                     {param strain:$strain /}
                     {param visuals: true/}
                     {param kind:'strains'/}
+                    {param count: null /}
+                    {param name: null /}
+                    {param percentage: null /}
+                    {param testid: null /}
                 {/call}
                 </td>
             {/foreach}
@@ -244,6 +249,10 @@ Display parent or placeholder in new experiment
             {param strain:$experiment.parents[$index-1] /}
             {param visuals: $experiment.visualsVisible/}
             {param kind:'new_experiment'/}
+            {param count: null /}
+            {param name: null /}
+            {param percentage: null /}
+            {param testid: null /}
     {/call}
     <button class='sg_experiment_parent_remove' data-id='{$experiment.parents[$index-1].id}' data-kind='new_experiment' title="Remove Parent"><span class='sg_experiment_parent_remove_text'>x</span>
     </button>
@@ -291,13 +300,13 @@ Display parent or placeholder in new experiment
 /**
 *   Active Experiment
 * @param experiment
-* @param prg_count
+* @param progenies_count
 */
 {template .new_experiment}
     {if $experiment.expanded}
         {call .new_experiment_expanded}
             {param experiment:$experiment/}
-            {param prg_count: $prg_count /}
+            {param prg_count: $progenies_count /}
         {/call}
     {else}
 <div class='sg_new_experiment_box'>
@@ -324,6 +333,7 @@ Display parent or placeholder in new experiment
                     {param index:index($experiment) /}
                     {param compact_view:false/}
                     {param css_class:''/}
+                    {param selected: null /}
                 {/call}
             {else}
                 {call .one_experiment}
@@ -331,6 +341,7 @@ Display parent or placeholder in new experiment
                     {param index:index($experiment) /}
                     {param compact_view:false/}
                     {param css_class:''/}
+                    {param selected: null /}
                 {/call}
             {/if}
         <div class='sg_bottom_border'>
@@ -438,6 +449,10 @@ Display parent or placeholder in new experiment
                         {param strain:$experiment.parent.female /}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
+                        {param count: null /}
+                        {param percentage: null /}
+                        {param name: null /}
+                        {param testid: null /}
                         {/call}
                         </div>
                      </td>
@@ -452,6 +467,10 @@ Display parent or placeholder in new experiment
                         {param strain:$experiment.parent.male /}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
+                        {param count: null /}
+                        {param percentage: null /}
+                        {param name: null /}
+                        {param testid: null /}
                         {/call}
                         </div>
 
@@ -469,6 +488,7 @@ Display parent or placeholder in new experiment
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
+                            {param testid: null/}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual sg_experiment_phenotype_detail_right'>
@@ -479,6 +499,7 @@ Display parent or placeholder in new experiment
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
+                            {param testid: null/}
                         {/call}
                         </td>
                     {/foreach}
@@ -713,6 +734,10 @@ Display parent or placeholder in new experiment
                         {param strain:$experiment.parent.female /}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
+                        {param count: null /}
+                        {param percentage: null /}
+                        {param name: null /}
+                        {param testid: null /}
                         {/call}
                         </div>
                      </td>
@@ -728,6 +753,10 @@ Display parent or placeholder in new experiment
                         {param strain:$experiment.parent.male /}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
+                        {param count: null /}
+                        {param percentage: null /}
+                        {param name: null /}
+                        {param testid: null /}
                         {/call}
                         </div>
 
@@ -846,6 +875,7 @@ Display parent or placeholder in new experiment
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].females/}
+                            {param testid: null/}
                         {/call}
                         </td>
                         <td class='sg_experiment_p_visual '>
@@ -856,6 +886,7 @@ Display parent or placeholder in new experiment
                             {param visuals: $experiment.visualsVisible/}
                             {param kind:$experiment.id/}
                             {param name:$experiment.phenotypes[$phenotype].males/}
+                            {param testid: null/}
                         {/call}
                         </td>
                     {/foreach}
@@ -1088,6 +1119,10 @@ Display parent or placeholder in new experiment
                         {param strain:$experiment.parent.female /}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
+                        {param count: null /}
+                        {param percentage: null /}
+                        {param name: null /}
+                        {param testid: null /}
                         {/call}
                         </div>
                      </td>
@@ -1103,6 +1138,10 @@ Display parent or placeholder in new experiment
                         {param strain:$experiment.parent.male /}
                         {param visuals: $experiment.visualsVisible/}
                         {param kind:$experiment.id/}
+                        {param count: null /}
+                        {param percentage: null /}
+                        {param name: null /}
+                        {param testid: null /}
                         {/call}
                         </div>
                     </td>
@@ -1251,6 +1290,10 @@ Display parent or placeholder in new experiment
             {param strain:$strain /}
             {param visuals:true /}
             {param kind:$experiment.id/}
+            {param count: null /}
+            {param percentage: null /}
+            {param name: null /}
+            {param testid: null /}
         {/call}
         </span>
     {/foreach}
@@ -1279,6 +1322,10 @@ Display parent or placeholder in new experiment
             {param strain:$strain /}
             {param visuals:true /}
             {param kind:$experiment.id/}
+            {param count: null /}
+            {param percentage: null /}
+            {param name: null /}
+            {param testid: null /}
         {/call}
         </span>
     {/foreach}
