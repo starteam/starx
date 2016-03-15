@@ -5,10 +5,13 @@
  * @fileoverview Templates in namespace sg_client_mainframe.
  */
 
-goog.provide('sg_client_mainframe');
+define(['require', 'exports', 'lib/soyutils'], function(require, exports, soy) {
+var sg_client_mainframe= sg_client_mainframe ? sg_client_mainframe : {};
+var goog = soy;
+// goog.provide('sg_client_mainframe');
 
-goog.require('soy');
-goog.require('soydata');
+// goog.require('soy');
+// goog.require('soydata');
 
 
 /**
@@ -768,3 +771,5 @@ sg_client_mainframe.sg_select_strain_target = function(opt_data, opt_ignored) {
 if (goog.DEBUG) {
   sg_client_mainframe.sg_select_strain_target.soyTemplateName = 'sg_client_mainframe.sg_select_strain_target';
 }
+for(var i in sg_client_mainframe) { exports[i] = sg_client_mainframe[i] };
+});
