@@ -166,40 +166,52 @@ export class Cow {
     }
 
     loadOrganism(baseUrl: string, svg: any, organism: any) {
-        var self = this, fileName, bodyShapeCall, specklesCall, spotsCall, faceCall, hornsCall, udderCall, sexCall;
+        var self = this, specklesImage, spotsImage, hornsImage , udderImage,
+        bodyShapeCall, specklesCall, spotsCall, faceCall, hornsCall, udderCall, sexCall,
+        empty = $.Deferred().resolve();
         // Painting order that has to be respected (because shapes overlap):
-        // Body shape, body spots, face, horns udder, sex
+        // Body shape, speckles, spots, face, horns, udder, sex
+        // Speckles, spots, horns, udder are optional. If not defined, we set the function call to a
+        // resolved deferred, returning nothing. Passing an empty string to $.get is not a good idea,
+        // it will return unwanted data.
         svg.clear();
         // Get body shape image
         bodyShapeCall = $.get(this.getBodyShapeImage(baseUrl, organism));
 
-        // Get speckels image, if ever
-        specklesCall = $.get(this.getSpecklesImage(baseUrl, organism));
+        // Get speckles image, if ever
+        specklesImage = this.getSpecklesImage(baseUrl, organism);
+        specklesCall = specklesImage !== '' ? $.get(specklesImage) : empty;
 
         // Get spots image, if ever
-        spotsCall = $.get(this.getSpotsImage(baseUrl, organism));
+        spotsImage = this.getSpotsImage(baseUrl, organism);
+        spotsCall = spotsImage !== '' ? $.get(spotsImage) : empty;
 
         // Get face image
         faceCall = $.get(this.getFaceImage(baseUrl, organism));
 
         // Get horns image, if ever
-        hornsCall = $.get(this.getHornsImage(baseUrl, organism));
+        hornsImage = this.getHornsImage(baseUrl, organism);
+        hornsCall = hornsImage !== '' ? $.get(hornsImage) : empty;
 
         // Get udder image, if ever
-        udderCall = $.get(this.getUdderImage(baseUrl, organism));
+        udderImage = this.getUdderImage(baseUrl, organism);
+        udderCall = udderImage !== '' ? $.get(udderImage) : empty;
 
         // Get sex image
-        sexCall = $.get(this.getSexImage(baseUrl, organism));
+        var sexImage = this.getSexImage(baseUrl, organism);
+        sexCall = sexImage !== '' ? $.get(sexImage) : empty;
 
         $.when(bodyShapeCall, specklesCall, spotsCall, faceCall, hornsCall, udderCall, sexCall).done(function() {
             $.each(arguments, function(index, value) {
-                svg.add(value[0]);
+                if (value) {
+                    svg.add(value[0]);
+                }
             });
             self.colorBody(svg, organism);
             self.colorSpeckles(svg, organism);
             self.colorSpots(svg, organism);
             self.colorFace(svg, organism);
         });
-        console.info('The following phenotype is displayed: ' + organism);
+        console.info('The following phenotype is displayed: ', organism);
     }
 }
