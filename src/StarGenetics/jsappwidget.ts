@@ -23,6 +23,7 @@ import VisualizerBase = require("StarGenetics/visualizers/base");
 import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
 import SGCow = require("StarGenetics/visualizers/cow");
+import SGPea = require("StarGenetics/visualizers/pea");
 import SGTests = require( "StarGenetics/tests/qunit");
 import StarTMI = require('StarTMI/tmi');
 var tmi = new StarTMI.TMI();
@@ -855,18 +856,21 @@ export class StarGeneticsJSAppWidget {
         else if (renderer == 'svg') {
             if (visualizer_name == 'cow') {
                 svgVisualizer = new SGCow.Cow();
-                $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function() {
-                    var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
-                    var organism: SGModel.Strain = c.get($(this).data('id'));
-                    svgVisualizer.render($(this)[0], organism);
-                    window['c'] = this;
-                    window['v'] = svgVisualizer;
-                    var qq = this;
-                    window['rr'] = function() {
-                        svgVisualizer.render($(qq)[0], organism);
-                    };
-                });
             }
+            else if (visualizer_name == 'pea') {
+                svgVisualizer = new SGPea.Pea();
+            }
+            $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function() {
+                var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
+                var organism: SGModel.Strain = c.get($(this).data('id'));
+                svgVisualizer.render($(this)[0], organism);
+                window['c'] = this;
+                window['v'] = svgVisualizer;
+                var qq = this;
+                window['rr'] = function() {
+                    svgVisualizer.render($(qq)[0], organism);
+                };
+            });
         }
     }
 

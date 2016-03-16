@@ -323,8 +323,11 @@ export class Experiment extends Collapsable {
             if (this.parents.length == 1) {
                 //TODO: Depending on the model, it is possible that sex needs to be different...
                 if (this.parents[0].sex == s.sex) {
-                    alert("There is already a " + s.sex.toLowerCase() + " parent.");
-                    return false;
+                    // Quick hack to let peas (female only) mate
+                    if (!this.parents[0].properties.hasOwnProperty('flowercolor')) {
+                        alert("There is already a " + s.sex.toLowerCase() + " parent.");
+                        return false;
+                    }
                 }
             }
             this.__data__.parents.push(s.__data__);

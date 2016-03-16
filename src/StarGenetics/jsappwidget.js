@@ -8,7 +8,7 @@
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.css.soy.d.ts" />
 /// <reference path="../StarCommons/easy_deflate.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/visualizers/cow", "StarGenetics/tests/qunit", 'StarTMI/tmi', "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function (require, exports, SGCSS, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGCow, SGTests, StarTMI, TEST, compress) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/visualizers/cow", "StarGenetics/visualizers/pea", "StarGenetics/tests/qunit", 'StarTMI/tmi', "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function (require, exports, SGCSS, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGCow, SGPea, SGTests, StarTMI, TEST, compress) {
     "use strict";
     var tmi = new StarTMI.TMI();
     var $ = jQuery;
@@ -755,18 +755,21 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
             else if (renderer == 'svg') {
                 if (visualizer_name == 'cow') {
                     svgVisualizer = new SGCow.Cow();
-                    $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function () {
-                        var c = self.model.ui.get($(this).data('kind'));
-                        var organism = c.get($(this).data('id'));
-                        svgVisualizer.render($(this)[0], organism);
-                        window['c'] = this;
-                        window['v'] = svgVisualizer;
-                        var qq = this;
-                        window['rr'] = function () {
-                            svgVisualizer.render($(qq)[0], organism);
-                        };
-                    });
                 }
+                else if (visualizer_name == 'pea') {
+                    svgVisualizer = new SGPea.Pea();
+                }
+                $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function () {
+                    var c = self.model.ui.get($(this).data('kind'));
+                    var organism = c.get($(this).data('id'));
+                    svgVisualizer.render($(this)[0], organism);
+                    window['c'] = this;
+                    window['v'] = svgVisualizer;
+                    var qq = this;
+                    window['rr'] = function () {
+                        svgVisualizer.render($(qq)[0], organism);
+                    };
+                });
             }
         };
         StarGeneticsJSAppWidget.prototype.apply_strain_drag_and_drop = function (scope) {

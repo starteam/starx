@@ -985,5 +985,230 @@ define(["require", "exports"], function (require, exports) {
             }
         }
     };
+    //## Peas Guided Exercise
+    exports.peas_guided_exercise = {
+        "genetics": {
+            "visualizer": { "name": "pea" },
+            "genome": {
+                "chromosomes": {
+                    "C_1": {
+                        "name": "Chromosome 1",
+                        "genes": [
+                            {
+                                "name": "Plant height - Tall dominant",
+                                "position": 1,
+                                "alleles": [
+                                    { "name": "S" },
+                                    { "name": "s" }
+                                ]
+                            }
+                        ]
+                    },
+                    "C_2": {
+                        "name": "Chromosome 2",
+                        "genes": [
+                            {
+                                "name": "Flower color - Purple dominant",
+                                "position": 1,
+                                "alleles": [
+                                    { "name": "W" },
+                                    { "name": "w" }
+                                ]
+                            }
+                        ]
+                    },
+                    "C_3": {
+                        "name": "Chromosome 3",
+                        "genes": [
+                            {
+                                "name": "Flower pod position - Axial dominant",
+                                "position": 10,
+                                "alleles": [
+                                    { "name": "T" },
+                                    { "name": "t" }
+                                ]
+                            }
+                        ]
+                    },
+                    "C_4": {
+                        "name": "Chromosome 4",
+                        "genes": [
+                            {
+                                "name": "Pod color - Green dominant",
+                                "position": 10,
+                                "alleles": [
+                                    { "name": "Y" },
+                                    { "name": "y" }
+                                ]
+                            }
+                        ]
+                    },
+                    "C_5": {
+                        "name": "Chromosome 5",
+                        "genes": [
+                            {
+                                "name": "Pod shape - Inflated dominant",
+                                "position": 1,
+                                "alleles": [
+                                    { "name": "P" },
+                                    { "name": "p" }
+                                ]
+                            }
+                        ]
+                    },
+                    "C_6": {
+                        "name": "Chromosome 6",
+                        "genes": [
+                            {
+                                "name": "Pea color - Green dominant",
+                                "position": 1,
+                                "alleles": [
+                                    { "name": "Py" },
+                                    { "name": "py" }
+                                ]
+                            }
+                        ]
+                    },
+                    "C_7": {
+                        "name": "Chromosome 7",
+                        "genes": [
+                            {
+                                "name": "Pea shape - Smooth dominant",
+                                "position": 1,
+                                "alleles": [
+                                    { "name": "Wr" },
+                                    { "name": "wr" }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "engine": {
+                "sex_type": "Self",
+                "female_recombination_rate": 1,
+                "avg_offspring_count": 100
+            },
+            "experiments": {},
+            "phenotype_rules": [
+                {
+                    name: 'default',
+                    matches: '*',
+                    phenotype: {
+                        plantheight: {
+                            text: 'tall',
+                            value: 'tall' // tall, short
+                        },
+                        flowercolor: {
+                            text: 'purple',
+                            value: 'purple'
+                        },
+                        flowerpodposition: {
+                            text: 'axial',
+                            value: 'axial' // axial, terminal
+                        },
+                        podcolor: {
+                            text: 'green',
+                            value: 'green'
+                        },
+                        podshape: {
+                            text: 'inflated',
+                            value: 'inflated' // inflated, pinched
+                        },
+                        peacolor: {
+                            text: 'green',
+                            value: 'green'
+                        },
+                        peashape: {
+                            text: 'smooth',
+                            value: 'smooth' // smooth wrinkled
+                        },
+                    }
+                },
+                {
+                    name: 'Short plant',
+                    matches: 's,s',
+                    phenotype: {
+                        plantheight: {
+                            text: 'short',
+                            value: 'short'
+                        }
+                    }
+                },
+                {
+                    name: 'White flower',
+                    matches: 'w,w',
+                    phenotype: {
+                        flowercolor: {
+                            text: 'white',
+                            value: 'white'
+                        }
+                    }
+                },
+                {
+                    name: 'Terminal flower pod',
+                    matches: 't,t',
+                    phenotype: {
+                        flowerpodposition: {
+                            text: 'terminal',
+                            value: 'terminal'
+                        }
+                    }
+                },
+                {
+                    name: 'Yellow pod',
+                    matches: 'y,y',
+                    phenotype: {
+                        podcolor: {
+                            text: 'yellow',
+                            value: 'yellow'
+                        }
+                    }
+                },
+                {
+                    name: 'Pinched pod',
+                    matches: 'p,p',
+                    phenotype: {
+                        podshape: {
+                            text: 'pinched',
+                            value: 'pinched'
+                        }
+                    }
+                },
+                {
+                    name: 'Yellow pea',
+                    matches: 'py,py',
+                    phenotype: {
+                        peacolor: {
+                            text: 'yellow',
+                            value: 'yellow'
+                        }
+                    }
+                },
+                {
+                    name: 'Wrinkled pea',
+                    matches: 'wr,wr',
+                    phenotype: {
+                        peashape: {
+                            text: 'wrinkled',
+                            value: 'wrinkled'
+                        }
+                    }
+                },
+            ],
+            "gel_rules": {},
+            "model_metadata": {},
+            "strains": {
+                "initial": {
+                    "name": "Initial Strains",
+                    "list": [
+                        { "name": "Plant A", "sex": "F", "alleles": ["S,S", "W,W", "t,t", "Y,y", "p,p", "Py,Py", "Wr,Wr"] },
+                        { "name": "Plant B", "sex": "F", "alleles": ["s,s", "W,W", "t,t", "y,y", "P,P", "py,py", "wr,wr"] },
+                        { "name": "Plant C", "sex": "F", "alleles": ["s,s", "W,W", "t,t", "y,y", "P,P", "py,py", "Wr,Wr"] },
+                    ]
+                }
+            }
+        }
+    };
 });
 //# sourceMappingURL=bundled_samples.js.map
