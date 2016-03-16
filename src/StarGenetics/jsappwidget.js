@@ -46,7 +46,8 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
          */
         StarGeneticsJSAppWidget.prototype.init = function () {
             var config = this.config;
-            var url = (config['base_url'] ? config['base_url'] : '') + '/StarGenetics/gwtframe.html';
+            // var url = (config['base_url'] ? config['base_url'] : '') + '/StarGenetics/gwtframe.html';
+            var url = 'http://math.mit.edu/~jmc/stargenetics_gwt_java/war/Stargenetics_gwt_java.html';
             $('#' + config.element_id).html("StarGenetics: ClientApp starting");
             var jq = $('<iframe id="' + config.element_id + '_gwt" style="width:0px;height:0px"/>').appendTo($('#' + config.element_id).parent()).hide({});
             var q = jq[0];
