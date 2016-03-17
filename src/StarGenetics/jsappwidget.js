@@ -8,7 +8,7 @@
 /// <reference path="../StarGenetics/sg_client_mainframe.soy.d.ts" />
 /// <reference path="../StarGenetics/sg_client_mainframe.css.soy.d.ts" />
 /// <reference path="../StarCommons/easy_deflate.d.ts" />
-define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/visualizers/cow", "StarGenetics/visualizers/pea", "StarGenetics/tests/qunit", 'StarTMI/tmi', "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function (require, exports, SGCSS, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGCow, SGPea, SGTests, StarTMI, TEST, compress) {
+define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarGenetics/sg_client_mainframe.soy", "StarGenetics/bundled_samples", "StarGenetics/jsappmodel", "StarGenetics/visualizers/smiley", "StarGenetics/visualizers/fly", "StarGenetics/visualizers/cow", "StarGenetics/visualizers/pea", "StarGenetics/visualizers/fly_svg", "StarGenetics/tests/qunit", 'StarTMI/tmi', "StarGenetics/tests/suite", "StarCommons/easy_deflate", "jquery", "jquery-ui", "StarGenetics/bundled_samples"], function (require, exports, SGCSS, SGUIMAIN, bundled_samples, SGModel, SGSmiley, SGFly, SGCow, SGPea, SGFlySVG, SGTests, StarTMI, TEST, compress) {
     "use strict";
     var tmi = new StarTMI.TMI();
     var $ = jQuery;
@@ -758,6 +758,9 @@ define(["require", "exports", "StarGenetics/sg_client_mainframe.css.soy", "StarG
                 }
                 else if (visualizer_name == 'pea') {
                     svgVisualizer = new SGPea.Pea();
+                }
+                else if (visualizer_name == 'fly') {
+                    svgVisualizer = new SGFlySVG.FlySVG();
                 }
                 $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function () {
                     var c = self.model.ui.get($(this).data('kind'));

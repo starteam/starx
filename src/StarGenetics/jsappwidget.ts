@@ -24,6 +24,7 @@ import SGSmiley = require("StarGenetics/visualizers/smiley");
 import SGFly = require("StarGenetics/visualizers/fly");
 import SGCow = require("StarGenetics/visualizers/cow");
 import SGPea = require("StarGenetics/visualizers/pea");
+import SGFlySVG = require("StarGenetics/visualizers/fly_svg");
 import SGTests = require( "StarGenetics/tests/qunit");
 import StarTMI = require('StarTMI/tmi');
 var tmi = new StarTMI.TMI();
@@ -859,6 +860,9 @@ export class StarGeneticsJSAppWidget {
             }
             else if (visualizer_name == 'pea') {
                 svgVisualizer = new SGPea.Pea();
+            }
+            else if (visualizer_name == 'fly') {
+                svgVisualizer = new SGFlySVG.FlySVG();
             }
             $('.sg_strain_visual div.sg_strain_visual_canvas', scope).each(function() {
                 var c: SGModel.Collapsable = self.model.ui.get($(this).data('kind'));
