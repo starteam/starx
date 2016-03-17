@@ -141,16 +141,17 @@ export class Strain extends Base {
         return ret;
     }
 
+    capitalize(str: string): string {
+        return remapper.Remapper.transform(str);
+    }
+
     get capitalized_properties():any {
         if (!this.properties_cached_capitalized) {
-            function capitalize(str) {
-                return remapper.Remapper.transform(str);
-            }
-
+            var self = this;
             var properties = this.properties;
             var ret = {};
             _.each(properties, function (q, v) {
-                ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value']};
+                ret[self.capitalize(v)] = { 'text': self.capitalize(q['text']), 'value': q['value']};
             });
             this.properties_cached_capitalized = ret;
         }

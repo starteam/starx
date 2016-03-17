@@ -1,13 +1,5 @@
 <g id="smooth-seed">
     <g>
-        <defs>
-            <rect id="SVGID_1_" width="200" height="200"/>
-        </defs>
-        <clipPath id="SVGID_2_">
-            <use xlink:href="#SVGID_1_"  overflow="visible"/>
-        </clipPath>
-    </g>
-    <g>
         <path class="seed-color" fill="#50B461" d="M49.898,187.888c0,5.015-4.063,9.069-9.072,9.069c-5.005,0-9.066-4.055-9.066-9.069
             c0-5.004,4.062-9.064,9.066-9.064C45.834,178.823,49.898,182.884,49.898,187.888"/>
         <path fill="none" stroke="#231F20" stroke-miterlimit="10" d="M49.898,187.888c0,5.015-4.063,9.069-9.072,9.069

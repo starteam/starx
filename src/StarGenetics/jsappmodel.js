@@ -129,16 +129,17 @@ define(["require", "exports", "StarGenetics/visualizers/property_name_remap", "S
             enumerable: true,
             configurable: true
         });
+        Strain.prototype.capitalize = function (str) {
+            return remapper.Remapper.transform(str);
+        };
         Object.defineProperty(Strain.prototype, "capitalized_properties", {
             get: function () {
                 if (!this.properties_cached_capitalized) {
-                    function capitalize(str) {
-                        return remapper.Remapper.transform(str);
-                    }
+                    var self = this;
                     var properties = this.properties;
                     var ret = {};
                     _.each(properties, function (q, v) {
-                        ret[capitalize(v)] = { 'text': capitalize(q['text']), 'value': q['value'] };
+                        ret[self.capitalize(v)] = { 'text': self.capitalize(q['text']), 'value': q['value'] };
                     });
                     this.properties_cached_capitalized = ret;
                 }

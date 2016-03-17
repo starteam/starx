@@ -1,13 +1,5 @@
 <g id="wrinkled-seed">
     <g>
-        <defs>
-            <rect id="SVGID_1_" width="200" height="200"/>
-        </defs>
-        <clipPath id="SVGID_2_">
-            <use xlink:href="#SVGID_1_"  overflow="visible"/>
-        </clipPath>
-    </g>
-    <g>
         <g>
             <path fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="12" d="M62.59,195.62
                 c-3.803-3.62-7.803-5.62-13.063-3.552"/>
