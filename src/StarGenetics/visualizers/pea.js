@@ -19,6 +19,9 @@ define(["require", "exports", "jquery", "jquery-svg", "jquery-svgdom"], function
                 yellow: '#f1da68',
                 white: '#ffffff'
             };
+            if (location.hostname == 'math.mit.edu') {
+                this.baseUrl = 'http://math.mit.edu/~jmc/starx/StarGenetics/visualizers/images/pea/';
+            }
         }
         Pea.prototype.render = function (container, organism) {
             var $container = $(container);

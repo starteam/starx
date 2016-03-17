@@ -6,9 +6,9 @@
 
 export class Pea {
 
-    baseUrl = '/StarGenetics/visualizers/images/pea/';
-    initWidth = 200;  // Initial SVG file width
-    initHeight = 200; // Initial SVG file height
+    baseUrl: string = '/StarGenetics/visualizers/images/pea/';
+    initWidth: number = 200;  // Initial SVG file width
+    initHeight: number = 200; // Initial SVG file height
     // Color dictionary
     colors = {
         green: '#50b461',
@@ -18,6 +18,12 @@ export class Pea {
         yellow: '#f1da68',
         white: '#ffffff'
     };
+
+    constructor() {
+        if (location.hostname == 'math.mit.edu') {
+            this.baseUrl = 'http://math.mit.edu/~jmc/starx/StarGenetics/visualizers/images/pea/';
+        }
+    }
 
     render(container: any, organism: any) {
         var $container = $(container);

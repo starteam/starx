@@ -10,6 +10,9 @@ define(["require", "exports", "jquery", "jquery-svg", "jquery-svgdom"], function
             this.baseUrl = '/StarGenetics/visualizers/images/cow/';
             this.initWidth = 305; // Initial SVG file width
             this.initHeight = 220; // Initial SVG file height
+            if (location.hostname == 'math.mit.edu') {
+                this.baseUrl = 'http://math.mit.edu/~jmc/starx/StarGenetics/visualizers/images/cow/';
+            }
         }
         Cow.prototype.render = function (container, organism) {
             var $container = $(container);

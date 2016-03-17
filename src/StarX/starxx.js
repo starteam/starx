@@ -6,8 +6,11 @@
         if (location.hostname == 'localhost') {
             base_url = 'http://localhost:8002/';
         }
-        if (location.hostname == 'icstar.mit.edu') {
+        else if (location.hostname == 'icstar.mit.edu') {
             base_url = 'http://icstar.mit.edu/';
+        }
+        else if (location.hostname == 'math.mit.edu') {
+            base_url = 'http://math.mit.edu/~jmc/starx/';
         }
 
         var main_url;

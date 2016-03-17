@@ -6,9 +6,15 @@
 
 export class Cow {
 
-    baseUrl = '/StarGenetics/visualizers/images/cow/';
-    initWidth = 305;  // Initial SVG file width
-    initHeight = 220; // Initial SVG file height
+    baseUrl: string = '/StarGenetics/visualizers/images/cow/';
+    initWidth: number = 305;  // Initial SVG file width
+    initHeight: number = 220; // Initial SVG file height
+
+    constructor() {
+        if (location.hostname == 'math.mit.edu') {
+            this.baseUrl = 'http://math.mit.edu/~jmc/starx/StarGenetics/visualizers/images/cow/';
+        }
+    }
 
     render(container: any, organism: any) {
         var $container = $(container);
